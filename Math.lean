@@ -1,3 +1,5 @@
--- This module serves as the root of the `Math` library.
--- Import modules here that should be built as part of the library.
-import Math.Basic
+module
+
+-- This module is the public root of the Math library.
+public import Math.Basic
+public import Math.Rudin

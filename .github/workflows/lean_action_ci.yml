@@ -12,3 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: leanprover/lean-action@v1
+      - uses: astral-sh/setup-uv@v6
+      - name: Check exercise inventory and proof trust
+        run: ./scripts/check.sh

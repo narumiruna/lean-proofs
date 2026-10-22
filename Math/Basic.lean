@@ -1,1 +1,3 @@
-def hello := "world"
+module
+
+public def hello := "world"

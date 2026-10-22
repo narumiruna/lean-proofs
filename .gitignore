@@ -59,5 +59,8 @@ tmbootpicker.efi
 # Lean
 /.lake
 
+# Python checks
+__pycache__/
+
 # Project
 data/
