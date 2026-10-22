@@ -2,7 +2,7 @@
 
 ## Result and scope
 
-The pinned Mathlib supports most required mathematical objects. It does not provide a single API that identifies Rudin's integrals, oriented chains, and Stokes theory. The two prototypes below prove restricted bridges and boundary identities. Neither completes its P3 work item.
+The pinned Mathlib supplies many required objects, but no single API identifies Rudin's integrals, oriented chains and Stokes theory. The current Stieltjes modules prove the actual Darboux/tagged equivalence and a continuous real-integrand measure bridge with explicit right-continuity hypotheses. Oriented parameterized chains and general Stokes integration remain incomplete.
 
 Evidence uses Lean `v4.35.0` and Mathlib commit `56a005855ea17e0b0958f73ec801ae140b0a1679`. All Mathlib paths below are relative to `.lake/packages/mathlib/Mathlib/`. `Math/Rudin/Support/ApiExamples.lean` contains compiled `#check` probes and usage proofs for the listed topics. This is a topic survey, not a verified classification of every exercise.
 
@@ -10,8 +10,8 @@ Evidence uses Lean `v4.35.0` and Mathlib commit `56a005855ea17e0b0958f73ec801ae1
 
 | Chapters/topic | Available declarations and source | Classification and remaining work |
 | --- | --- | --- |
-| 1: cuts and real numbers | `Order/Completion.lean`: `DedekindCut.principal`, `principalEmbedding`, `factorEmbedding`. `Basic/Real/Basic.lean`: `Real.equivCauchy`, `Real.mk_eq`. | **Bridge/new construction.** `DedekindCut` is the Dedekind–MacNeille completion. A principal left set is `Iic q`, with a greatest element. It is not Rudin's nonempty proper rational lower cut without a greatest element. Mathlib's real numbers use a Cauchy construction. Explicit cut exercises still require a model and a comparison with `ℝ`. |
-| 2–3: metric completion | `Topology/UniformSpace/Completion.lean`: `UniformSpace.Completion`, `denseRange_coe`, `extension_coe`. `Topology/MetricSpace/Completion.lean`: `UniformSpace.Completion.coe_isometry`. | **Direct use, with a construction bridge when required.** The completion is a separation quotient of Cauchy filters. Isometry, density, extension, and completeness are available. An exercise that specifies equivalence classes of Cauchy sequences still needs that construction and its identification with this completion. |
+| 1: cuts and real numbers | `Order/Completion.lean`: `DedekindCut.principal`, `principalEmbedding`, `factorEmbedding`. `Basic/Real/Basic.lean`: `Real.equivCauchy`, `Real.mk_eq`. | **Bridge/new construction.** `DedekindCut` is the Dedekind–MacNeille completion. A principal left set is `Iic q`, with a greatest element. It is not Rudin's nonempty proper rational lower cut without a greatest element. Mathlib's real numbers use a Cauchy construction. `R01E20` now has a literal modified-cut model in `Chapter01/Exercise20.lean`, including the new closed zero and inverse failure. It is not identified with `ℝ`; source cuts with no greatest element require a separate comparison when needed. |
+| 2–3: metric completion | `Topology/UniformSpace/Completion.lean`: `UniformSpace.Completion`, `denseRange_coe`, `extension_coe`. `Topology/MetricSpace/Completion.lean`: `UniformSpace.Completion.coe_isometry`. | **Direct use, with a construction bridge when required.** The completion is a separation quotient of Cauchy filters. Isometry, density, extension, and completeness are available. `R03E24` supplies the actual Cauchy-sequence quotient and a proved isometric identification with this completion, including its limit-distance metric and the empty-space case. |
 | 5, 7: ODE | `Analysis/ODE/ExistUnique.lean`: `IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt`, `ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt₀`, `ODE_solution_unique`. | **Direct use under checked hypotheses.** Existence requires completeness and local regularity/bounds. The checked uniqueness theorem uses Lipschitz control, continuity on `Icc`, and right-sided derivatives on `Ico`. Do not change a problem's endpoint or initial-value conditions to fit it. |
 | 6: Stieltjes measures | `MeasureTheory/Measure/Stieltjes.lean`: `StieltjesFunction`, `measure_Ioc`, `measure_Icc`, `measure_singleton`, `Monotone.stieltjesFunction_eq`. | **Bridge required.** A Stieltjes function is monotone and right-continuous. Its measure is not a definition of Rudin's Riemann–Stieltjes integral. See the endpoint test below. |
 | 6, 10: tagged integrals | `Analysis/BoxIntegral/Basic.lean`: `BoxIntegral.HasIntegral`, `Integrable.hasIntegral`. `Analysis/BoxIntegral/Partition/Filter.lean`: `IntegrationParams.Riemann`. `Analysis/BoxIntegral/Partition/Additive.lean`: `BoxAdditiveMap.upperSubLower`. `Analysis/BoxIntegral/Integrability.lean`: `MeasureTheory.IntegrableOn.hasBoxIntegral`, `MeasureTheory.ContinuousOn.hasBoxIntegral`, `MeasureTheory.AEContinuous.hasBoxIntegral`. | **Existing bridge components.** Box integrals accept box-additive increments, not just Lebesgue volume. The continuous-function bridge works for the Riemann parameter and any locally finite measure; a compiled one-dimensional-box example verifies this. The general `IntegrableOn` bridge requires `bRiemann = false`. Neither result alone identifies arbitrary Rudin Darboux sums with these filters. |
@@ -45,12 +45,58 @@ For `a ≤ b`, `intervalIntegral.integral_of_le` uses `(a,b]`, not `[a,b]`. Ther
 
 Right normalization is also unsafe without a bridge. `Monotone.stieltjesFunction` replaces `α x` by `rightLim α x`. The compiled theorem `normalization_changes_endpoint` uses `α(x) = 0` for `x ≤ 0` and `α(x) = 1` for `x > 0`. The Darboux integral of `1` on `[-1,0]` is `0`. The interval integral against the right-normalized Stieltjes measure is `1`.
 
-Remaining Chapter 6 work, in dependency order:
+### Partition and refinement foundation
 
-1. Prove partition refinement and common-refinement results, sum bounds, and the general Darboux/tagged equivalence.
-2. Relate the one-dimensional representation to `BoxIntegral` or prove a direct measure bridge for a useful nonconstant class, initially continuous integrands.
-3. Handle integrators given only on a compact interval, arbitrary jump values, and endpoint corrections. State and prove the required continuity conditions on the integrand at jumps.
-4. Add complex/vector-valued integrands and the remaining exercise-specific integral laws. The degenerate interval is proved. `Math/Rudin/Chapter06/Exercise01.lean` separately proves the point-supported integrand result directly from these Darboux sums, for `a ≤ b` and interval-relative continuity, including both endpoints and the singleton interval. Completion status is recorded only in the registry and progress report.
+`Support/StieltjesRefinement.lean` uses the unchanged prototype definitions.
+It constructs a partition whose node set is exactly the union of two node
+sets. Sorted finite vertices and a repeated final node preserve `n>0`, including
+for a singleton interval. It proves reflexivity and transitivity of refinement,
+`lowerSum <= taggedSum <= upperSum`, global bounds, lower/upper monotonicity
+under refinement, cross-partition bounds, and boundedness of both Darboux sum
+ranges. Zero-weight cells and repeated nodes are included.
+
+`hasRSIntegral_of_hasDarbouxRSIntegral` proves the forward implication with
+interval-only monotonicity and boundedness. Tagged values are unique, and
+singleton tagged integrals are zero.
+
+`Support/StieltjesEquivalence.lean` proves the converse and the exact iff for
+`a ≤ b`. It approximates cell infima and suprema by finitely many tags; it
+does not assume extrema are attained. The error scale uses `Δα+1`, not a
+possibly zero total increment. Repeated nodes, zero mass and singleton
+intervals are included. This equivalence needs no right continuity of `α`.
+
+### Continuous integrands and measures
+
+`Support/StieltjesMeasureBridge.lean` proves:
+
+- For any raw `α` monotone on `[a,b]`, a real continuous integrand has an
+  actual Darboux integral. This is existence, not a measure comparison.
+- For `α : StieltjesFunction ℝ`, `a ≤ b`, and `ContinuousOn f (Icc a b)`,
+  `continuous_bridge` identifies that Darboux integral with
+  `∫ x in a..b, f x ∂α.measure`. `continuous_tagged_bridge` gives the
+  matching tagged criterion.
+- The proof establishes finite cell-integral additivity and lower/upper sum
+  bounds, then uses uniform continuity and an explicit uniform grid to make
+  the Darboux gap arbitrarily small. No desired equality is assumed.
+- Singleton intervals, repeated cells and zero mass are proved separately.
+  Endpoint regressions include a terminal jump and exclude an initial atom,
+  consistently with `(a,b]`. No regularity of `f` outside `[a,b]` is required.
+
+The measure bridge explicitly uses the integrator's right continuity. It
+does not normalize an arbitrary raw integrator without correction. The
+existing endpoint counterexample still refutes that shortcut.
+
+Remaining Chapter 6 work, as required by the exercises:
+
+1. Extend measure comparisons only where needed to compact-interval raw
+   integrators, with proved normalization and endpoint corrections.
+2. State and prove jump-compatibility conditions for more general or
+   discontinuous integrands before using measure identification.
+3. Add complex/vector-valued integrands and the remaining exercise-specific
+   integral laws. `Chapter06/Exercise01.lean` already proves the point-supported
+   result directly from Darboux sums, including endpoints and `a=b`.
+
+Completion status is recorded only in the registry and progress report.
 
 ## Chapter 10 prototype
 
@@ -74,10 +120,31 @@ Targeted source-text review of PDF pages 300–308 identifies the following need
 
 The source search found algebraic/topological simplex and singular-homology infrastructure, but no complete interface connecting smooth parameterized chains, continuous differential forms, oriented boundary, and integration. Do not interpret the separate orientation or homology APIs as that interface.
 
+### Ordered-chain foundation
+
+`Support/OrderedChains.lean` represents formal signed sums of ordered vertex
+lists by `FreeAbelianGroup (List E)`. It proves the boundary is the alternating
+sum of vertex deletions, its square is zero on every formal chain, the edge and
+triangle formulas, and preservation of integer multiplicity. Vertex maps
+commute with that combinatorial boundary.
+
+This is an augmented, ungraded presentation: `boundary [] = 0` while
+`boundary [a]` is the nonzero empty-list generator. It does not impose the
+orientation-permutation relation. Reversed raw edges therefore do not cancel
+as they do after Rudin's orientation/integration comparison. Mapping vertices
+is not nonlinear postcomposition of affine surfaces. Fixed-degree chains,
+affine and smooth parameterization, orientation relations, and integration
+comparisons remain open. This foundation is not a completed Chapter 10
+exercise or a general Stokes theorem.
+
+The compiler-generated unsafe recursion helper reported during review was
+removed by expressing the recursion through `List.rec`. The unchanged project
+audit then passed; no unsafe-declaration exception was added.
+
 Remaining Chapter 10 work, in dependency order:
 
 1. Fix continuous scalar-valued exterior product, degree indexing, normalization, and Leibniz lemmas.
-2. Define the needed affine/parameterized chains and signed face maps; prove `∂² = 0` and cancellation, including multiplicity.
+2. Add fixed degrees, orientation relations, affine/parameterized realization and signed face comparisons to the proved formal-list boundary. Establish the required square/cube reversed-face cancellations and multiplicities.
 3. Define form integration by pullback on segments, rectangles, and simplexes. Prove change-of-variables and comparison with Rudin's integral conventions.
 4. Extend the proved coordinate-rectangle identity to pullbacks and chains, then to the required exactness and homotopy results.
 5. Treat general domains, outward normals, Green identities, and nonorientable examples separately. No general manifold Stokes theorem is claimed.
@@ -90,13 +157,17 @@ The following commands succeeded with exit code `0`:
 lake env lean Math/Rudin/Support/ApiExamples.lean
 lake env lean Math/Rudin/Support/StieltjesPrototype.lean
 lake env lean Math/Rudin/Support/FormsPrototype.lean
+lake env lean Math/Rudin/Support/OrderedChains.lean
+lake env lean Math/Rudin/Support/StieltjesRefinement.lean
+lake env lean Math/Rudin/Support/StieltjesEquivalence.lean
+lake env lean Math/Rudin/Support/StieltjesMeasureBridge.lean
 ```
 
-The prototype `#print axioms` commands for the main bridge, endpoint, computation, and boundary theorems report only `propext`, `Classical.choice`, and `Quot.sound`. No proof placeholder or custom axiom was added. This is theorem-level evidence, not the project's planned automatic audit of every Support declaration.
+The prototype `#print axioms` commands for the main bridge, endpoint, computation, and boundary theorems report only `propext`, `Classical.choice`, and `Quot.sound`. No proof placeholder or custom axiom was added. The project audit now also checks every imported Support declaration, including private proof bodies. Current integrated results are recorded in the plan; theorem-level prototype output alone does not replace that audit.
 
 P3 remains open:
 
 - The requested high-risk topics have source and compilation evidence; the complete exercise-by-exercise coverage classification remains open.
-- Chapter 6 has a genuine constant-integrand Darboux/measure bridge, a checked endpoint obstruction, and an actual weak-partition treatment of the degenerate interval. Its general bridge and the other cases listed above remain open.
+- Chapter 6 has literal weak-partition Darboux sums, full Darboux/tagged equivalence, raw monotone continuous-integrand existence, and a continuous-integrand measure bridge for right-continuous Stieltjes functions. General raw normalization corrections and more general integrands remain open; no unconditional normalization is claimed.
 - Chapter 10 has nontrivial exterior-derivative computations and genuine segment/rectangle boundary identities. Smooth chains, integration comparisons, and the exercise-specific infrastructure remain open.
 - This investigation alone does not certify the six representative exercises. Subsequent source/type reviews, root integration, registry evidence and project-wide checks are tracked in the current plan and progress report. Full-book completion remains open.

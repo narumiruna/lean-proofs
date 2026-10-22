@@ -6,7 +6,7 @@
     "edition": "Third Edition (1976)",
     "sha256": "c0d8530ad52ff06bb3b949b4b27245c446cde045e70b3efcad0cd51804e938e7",
     "exercise_count": 287,
-    "obligation_count": 839
+    "obligation_count": 847
   },
   "chapters": [
     {
@@ -264,9 +264,33 @@
           "id": "R01E02.no_rational_root",
           "summary": "For every rational q, prove q^2 is not 12.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise02"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "Every rational q is quantified and q^2=12 is excluded, with no positivity restriction on q."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise02": "d2b2a6dd2b7c71985c3f935d3742767b8f0c3b942e4832faf70417603f8ffe7a"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise02.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -295,33 +319,129 @@
           "id": "R01E03.a",
           "summary": "For field elements x,y,z with x nonzero and x*y=x*z, prove y=z.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise03_a"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "All four field consequences preserve nonzero x, including identity and reciprocal uniqueness, and apply over arbitrary fields."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise03": "ff3783bac87ba310cfe57f0428980028aa6c6ef447a78ff63e8ec151362057fb"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise03.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E03.b",
           "summary": "For nonzero x, prove x*y=x implies y=1; this includes uniqueness of the multiplicative identity.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise03_b"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "All four field consequences preserve nonzero x, including identity and reciprocal uniqueness, and apply over arbitrary fields."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise03": "ff3783bac87ba310cfe57f0428980028aa6c6ef447a78ff63e8ec151362057fb"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise03.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E03.c",
           "summary": "For nonzero x, prove x*y=1 implies y=1/x; this includes uniqueness of the reciprocal.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise03_c"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "All four field consequences preserve nonzero x, including identity and reciprocal uniqueness, and apply over arbitrary fields."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise03": "ff3783bac87ba310cfe57f0428980028aa6c6ef447a78ff63e8ec151362057fb"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise03.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E03.d",
           "summary": "For nonzero x, prove 1/(1/x)=x.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise03_d"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "All four field consequences preserve nonzero x, including identity and reciprocal uniqueness, and apply over arbitrary fields."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise03": "ff3783bac87ba310cfe57f0428980028aa6c6ef447a78ff63e8ec151362057fb"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise03.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 4,
@@ -350,9 +470,33 @@
           "id": "R01E04.bound_order",
           "summary": "Show every lower bound of this nonempty E is <= every upper bound.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise04"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "A witness of the nonempty set lies above every lower bound and below every upper bound; the order is the source total order."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise04": "3e844058f586a470b91e2288bfb6a5649043d69a4d2332a4c6a1174a4b6ed053"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise04.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -381,9 +525,33 @@
           "id": "R01E05.negated_bounds",
           "summary": "Show -A is nonempty and bounded above, and inf A = -sup(-A).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise05"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent elementary reviewer; main",
+              "notes": "The negated set is explicitly nonempty and bounded above. Both conditional extrema comparisons use real nonempty bounded sets, not default extrema."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise05": "61e495bd49c7745802b08c57120249526c23e2cc2742a170d1fa5daf9181f869"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise05.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -412,41 +580,167 @@
           "id": "R01E06.a",
           "summary": "For integers m,n,p,q with n,q>0 and m/n=p/q, show (b^m)^(1/n)=(b^p)^(1/q), so the rational power is independent of its representation.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise06_a",
+            "Rudin.Chapter01.exercise06_root_exists",
+            "Rudin.Chapter01.exercise06_root_spec",
+            "Rudin.Chapter01.exercise06_rationalPower_fraction"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "Root powers use a proved unique positive root of an integer-power equation. Arbitrary fraction representations agree. B(x) uses rational t<=x, is nonempty/bounded, and realPower is literally its supremum; continuity/density prove the rpow bridge."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise06.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E06.b",
           "summary": "For rational r,s, prove b^(r+s)=b^r*b^s for the root-defined powers.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise06_b"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "Root powers use a proved unique positive root of an integer-power equation. Arbitrary fraction representations agree. B(x) uses rational t<=x, is nonempty/bounded, and realPower is literally its supremum; continuity/density prove the rpow bridge."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise06.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E06.c.supremum",
           "summary": "For B(x)={b^t:t rational and t<=x}, show b^r=sup B(r) for rational r.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise06_c_supremum"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "Root powers use a proved unique positive root of an integer-power equation. Arbitrary fraction representations agree. B(x) uses rational t<=x, is nonempty/bounded, and realPower is literally its supremum; continuity/density prove the rpow bridge."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise06.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E06.c.real_power",
           "summary": "Show B(x) is nonempty and bounded above for every real x and use sup B(x) to define b^x, compatibly with rational powers.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise06_lowerPowers_nonempty",
+            "Rudin.Chapter01.exercise06_lowerPowers_bddAbove",
+            "Rudin.Chapter01.exercise06_realPower_eq_rpow",
+            "Rudin.Chapter01.exercise06_c_real_power"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "Root powers use a proved unique positive root of an integer-power equation. Arbitrary fraction representations agree. B(x) uses rational t<=x, is nonempty/bounded, and realPower is literally its supremum; continuity/density prove the rpow bridge."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise06.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E06.d",
           "summary": "For all real x,y, prove b^(x+y)=b^x*b^y for the supremum-defined powers.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise06_d"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "Root powers use a proved unique positive root of an integer-power equation. Arbitrary fraction representations agree. B(x) uses rational t<=x, is nonempty/bounded, and realPower is literally its supremum; continuity/density prove the rpow bridge."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise06.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 5,
@@ -469,63 +763,243 @@
         "notes": "Exercise text and formulas checked against PDF page images 31. The image gives >=, not the strict inequality shown by OCR, in part (a)."
       },
       "issues": [],
-      "depends_on": [],
+      "depends_on": [
+        "R01E06"
+      ],
       "obligations": [
         {
           "id": "R01E07.a",
           "summary": "For each positive integer n, show b^n-1 >= n*(b-1).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_a"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E07.b",
           "summary": "For positive integer n, show b-1 >= n*(b^(1/n)-1).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_b"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E07.c",
           "summary": "If t>1 and positive integer n>(b-1)/(t-1), show b^(1/n)<t.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_c"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E07.d",
           "summary": "If b^w<y, show b^(w+1/n)<y for every sufficiently large positive integer n.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_d"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E07.e",
           "summary": "If b^w>y, show b^(w-1/n)>y for every sufficiently large positive integer n.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_e"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E07.f",
           "summary": "For A={w real:b^w<y}, establish a finite real supremum x and prove b^x=y.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_A_nonempty",
+            "Rudin.Chapter01.exercise07_A_bddAbove",
+            "Rudin.Chapter01.exercise07_f"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E07.g",
           "summary": "Show any two real solutions of b^x=y coincide.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise07_g",
+            "Rudin.Chapter01.exercise07"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent power-construction reviewer; main",
+              "notes": "All seven specified steps use the constructed powers. Positive natural thresholds quantify over every sufficiently large n. A is nonempty/bounded and its supremum attains y via both neighboring-exponent steps, not a substitute log existence proof."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise06": "616b50f83266a34a851518db02c96d8a9c03193a3b18108f9afc61761231f911",
+              "Math.Rudin.Chapter01.Exercise07": "a03d8a584eb2750b78784a9127cbac4403a401eb40f6bab66431038aa4b093b7"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise07.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 7,
@@ -554,9 +1028,33 @@
           "id": "R01E08.no_ordered_field",
           "summary": "Rule out every linear order on the complex numbers compatible with the ordered-field axioms.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise08"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The elaborated type quantifies over every LinearOrder on the usual complex field and excludes the compatible strict ordered-ring structure."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise08": "eb8e94b84bf81ef396fe64d662a3b593ddf6f33a1810498ee4ec635ebf594155"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise08.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -585,17 +1083,67 @@
           "id": "R01E09.lex_order",
           "summary": "Verify the strict linear-order axioms for a+bi<c+di iff a<c or (a=c and b<d).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise09_lt_iff",
+            "Rudin.Chapter01.exercise09_linear_order"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The local pulled-back order is exactly lexicographic real/imaginary order. The imaginary-axis set is nonempty and bounded above but has no LUB. No global complex-order instance escapes the module."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise09": "79bc11191cdb108a70bdf5ef0fa3f907483dd1d41b19196d61085e14815d4c10"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise09.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E09.least_upper_bound",
           "summary": "Give a nonempty lexicographically bounded-above complex set with no least upper bound.",
           "kind": "counterexample",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise09_upperBounds",
+            "Rudin.Chapter01.exercise09_no_lub"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The local pulled-back order is exactly lexicographic real/imaginary order. The imaginary-axis set is nonempty and bounded above but has no LUB. No global complex-order instance escapes the module."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise09": "79bc11191cdb108a70bdf5ef0fa3f907483dd1d41b19196d61085e14815d4c10"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise09.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 2,
@@ -626,33 +1174,129 @@
           "id": "R01E10.nonnegative_imaginary",
           "summary": "For v>=0, prove z^2=w with the stated nonnegative a,b.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise10_nonnegative_imaginary"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The exact nonnegative sqrt coefficients and sign-dependent conjugation formulas are proved, including zero imaginary part. The two opposite roots are distinct and exhaustive for nonzero w; zero has one root."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise10": "5f0f2e32e3a6cb55cdd42aec7000db821a5652d87941a229206d626d5e24cb0c"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise10.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E10.nonpositive_imaginary",
           "summary": "For v<=0, prove conjugate(z)^2=w.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise10_nonpositive_imaginary"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The exact nonnegative sqrt coefficients and sign-dependent conjugation formulas are proved, including zero imaginary part. The two opposite roots are distinct and exhaustive for nonzero w; zero has one root."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise10": "5f0f2e32e3a6cb55cdd42aec7000db821a5652d87941a229206d626d5e24cb0c"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise10.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E10.nonzero_roots",
           "summary": "For w nonzero, show exactly two distinct complex numbers square to w and identify them from the sign-dependent construction.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise10_nonzero_roots"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The exact nonnegative sqrt coefficients and sign-dependent conjugation formulas are proved, including zero imaginary part. The two opposite roots are distinct and exhaustive for nonzero w; zero has one root."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise10": "5f0f2e32e3a6cb55cdd42aec7000db821a5652d87941a229206d626d5e24cb0c"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise10.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E10.zero_root",
           "summary": "Identify the exceptional value w=0 and show it has exactly one distinct square root.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise10_zero_root"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The exact nonnegative sqrt coefficients and sign-dependent conjugation formulas are proved, including zero imaginary part. The two opposite roots are distinct and exhaustive for nonzero w; zero has one root."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise10": "5f0f2e32e3a6cb55cdd42aec7000db821a5652d87941a229206d626d5e24cb0c"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise10.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 4,
@@ -681,25 +1325,99 @@
           "id": "R01E11.polar_factor",
           "summary": "Construct r>=0 and |w|=1 with z=r*w for every complex z.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise11"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "Explicit zero-safe unit factor gives the polar decomposition. Radius uniqueness includes zero; the unit factor is unique exactly for nonzero z, and every zero decomposition has radius0 and arbitrary unit factor."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise11": "6dcb50ee16e23d1a27e43dcb83b7958a9ba0a0dca7359109423cc754f908e532"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise11.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E11.radius_uniqueness",
           "summary": "Show r is uniquely determined for every z.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise11_radius_uniqueness"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "Explicit zero-safe unit factor gives the polar decomposition. Radius uniqueness includes zero; the unit factor is unique exactly for nonzero z, and every zero decomposition has radius0 and arbitrary unit factor."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise11": "6dcb50ee16e23d1a27e43dcb83b7958a9ba0a0dca7359109423cc754f908e532"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise11.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E11.unit_uniqueness",
           "summary": "Determine when w is unique and describe all choices when z=0.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise11_unit_uniqueness",
+            "Rudin.Chapter01.exercise11_unit_unique_iff",
+            "Rudin.Chapter01.exercise11_zero_choices"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "Explicit zero-safe unit factor gives the polar decomposition. Radius uniqueness includes zero; the unit factor is unique exactly for nonzero z, and every zero decomposition has radius0 and arbitrary unit factor."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise11": "6dcb50ee16e23d1a27e43dcb83b7958a9ba0a0dca7359109423cc754f908e532"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise11.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 3,
@@ -728,9 +1446,33 @@
           "id": "R01E12.finite_triangle",
           "summary": "For each positive integer n, prove |sum(j=1..n) z_j| <= sum(j=1..n) |z_j|.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise12"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The source finite complex triangle inequality is stated for all Fin n index sets; this includes every positive source n and also n0."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise12": "9643ed4570b617b24f8cd0420d77ad8c5d71c7c9dfc8f4ad154e2432dd18db4d"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise12.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -759,9 +1501,33 @@
           "id": "R01E13.reverse_triangle",
           "summary": "Show abs(|x|-|y|) <= |x-y| for all complex x,y.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise13"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The absolute difference of scalar complex norms is bounded by the norm of their difference, with no extra hypotheses."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise13": "9307c29986072214749134bd7c374168c80229791981bd1e56535c331667097e"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise13.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -790,9 +1556,33 @@
           "id": "R01E14.unit_sum",
           "summary": "Determine the value of |1+z|^2+|1-z|^2 for every unit complex z.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise14"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The numerical value of the squared-norm sum is4 under the exact unit-complex hypothesis."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise14": "b3e36a8255df98d8332e3af4d5a6b7a4977504031826d33e1fd61710dcadb28f"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise14.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -821,9 +1611,36 @@
           "id": "R01E15.equality_cases",
           "summary": "For finite complex vectors a,b, classify equality in |sum a_j*conjugate(b_j)|^2 <= (sum |a_j|^2)*(sum |b_j|^2), with either vector allowed to be zero.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise15",
+            "Rudin.Chapter01.exercise15_inner_sum",
+            "Rudin.Chapter01.exercise15_norm_sq_sum",
+            "Rudin.Chapter01.exercise15_schwarz"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent complex/norm reviewer; main",
+              "notes": "The finite complex Schwarz equality includes both zero branches and otherwise nonzero complex proportionality. Explicit inner-product and squared-Euclidean-norm bridges preserve the source conjugation and finite sums, including n0."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise15": "c44a97efbe3a178bb12df0831499fd31b79f5c1eaeb4e57e6ff7f5b8a831e7ed"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise15.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 1,
@@ -852,41 +1669,163 @@
           "id": "R01E16.a",
           "summary": "For k>=3 and 2*r>d, prove infinitely many such z exist.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise16_a",
+            "Rudin.Chapter01.exercise16_bridge",
+            "Rudin.Chapter01.exercise16_sphere_image"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "The actual Euclidean source locus is proved equal to a translated sphere in the perpendicular bisector subspace with squared radius r^2-d^2/4. Dimension and injectivity are proved; complete infinity/one/zero, two/one/zero and zero/one/zero classifications cover k>=3,k2,k1."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise16": "3dbef535037552ed6da3cf6f9233d86eb69794379909899bd2c845e6b925e76a"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise16.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E16.b",
           "summary": "For k>=3 and 2*r=d, prove exactly one such z exists.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise16_b"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "The actual Euclidean source locus is proved equal to a translated sphere in the perpendicular bisector subspace with squared radius r^2-d^2/4. Dimension and injectivity are proved; complete infinity/one/zero, two/one/zero and zero/one/zero classifications cover k>=3,k2,k1."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise16": "3dbef535037552ed6da3cf6f9233d86eb69794379909899bd2c845e6b925e76a"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise16.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E16.c",
           "summary": "For k>=3 and 2*r<d, prove no such z exists.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise16_c"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "The actual Euclidean source locus is proved equal to a translated sphere in the perpendicular bisector subspace with squared radius r^2-d^2/4. Dimension and injectivity are proved; complete infinity/one/zero, two/one/zero and zero/one/zero classifications cover k>=3,k2,k1."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise16": "3dbef535037552ed6da3cf6f9233d86eb69794379909899bd2c845e6b925e76a"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise16.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E16.dimension_two",
           "summary": "For k=2, determine the number of such z separately for 2*r>d, 2*r=d, and 2*r<d.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise16_dimension_two"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "The actual Euclidean source locus is proved equal to a translated sphere in the perpendicular bisector subspace with squared radius r^2-d^2/4. Dimension and injectivity are proved; complete infinity/one/zero, two/one/zero and zero/one/zero classifications cover k>=3,k2,k1."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise16": "3dbef535037552ed6da3cf6f9233d86eb69794379909899bd2c845e6b925e76a"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise16.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E16.dimension_one",
           "summary": "For k=1, determine the number of such z separately for 2*r>d, 2*r=d, and 2*r<d.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise16_dimension_one_cases"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "The actual Euclidean source locus is proved equal to a translated sphere in the perpendicular bisector subspace with squared radius r^2-d^2/4. Dimension and injectivity are proved; complete infinity/one/zero, two/one/zero and zero/one/zero classifications cover k>=3,k2,k1."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise16": "3dbef535037552ed6da3cf6f9233d86eb69794379909899bd2c845e6b925e76a"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise16.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 5,
@@ -915,17 +1854,65 @@
           "id": "R01E17.identity",
           "summary": "Show |x+y|^2+|x-y|^2=2*|x|^2+2*|y|^2.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise17"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "Both the Euclidean parallelogram identity and the four-vertex diagonal-squares/all-four-sides relation are proved. The algebraic parallelogram condition allows coincident and collinear vertices and zero diagonals."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise17": "2f39887ced2db0e167c452bf64230179b04f4701df1bc747b20b6cf08b336abb"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise17.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E17.geometry",
           "summary": "Express the identity as the relation between squared diagonal lengths and squared side lengths of a parallelogram, including degenerate parallelograms.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise17_geometry"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "Both the Euclidean parallelogram identity and the four-vertex diagonal-squares/all-four-sides relation are proved. The algebraic parallelogram condition allows coincident and collinear vertices and zero diagonals."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise17": "2f39887ced2db0e167c452bf64230179b04f4701df1bc747b20b6cf08b336abb"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise17.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 2,
@@ -954,17 +1941,66 @@
           "id": "R01E18.orthogonal_vector",
           "summary": "For each x in R^k, k>=2, construct y nonzero with x dot y=0.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise18",
+            "Rudin.Chapter01.exercise18_vector_spec"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "An explicit two-coordinate orthogonal vector with a separate zero-coordinate branch is nonzero for every x in k>=2. In dimension1 a nonzero orthogonal vector exists exactly when x0."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise18": "069cb27a8702706dd6dc505636f5a5be9a358d19e226c99867fb43b2ba941662"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise18.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E18.dimension_one",
           "summary": "For k=1, classify which x admit a nonzero orthogonal y, including x=0.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise18_dimension_one"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent Euclidean geometry reviewer; main",
+              "notes": "An explicit two-coordinate orthogonal vector with a separate zero-coordinate branch is nonzero for every x in k>=2. In dimension1 a nonzero orthogonal vector exists exactly when x0."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise18": "069cb27a8702706dd6dc505636f5a5be9a358d19e226c99867fb43b2ba941662"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise18.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 2,
@@ -1152,57 +2188,230 @@
           "id": "R01E20.order",
           "summary": "Verify that strict inclusion linearly orders the modified cuts.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_order",
+            "Rudin.Chapter01.exercise20_cut_properties"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E20.least_upper_bounds",
           "summary": "Every nonempty family of modified cuts with an upper bound has a least upper bound.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_least_upper_bounds",
+            "Rudin.Chapter01.exercise20_union_isLUB"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E20.addition_closed",
           "summary": "A1: the set {r+s:r in alpha,s in beta} is a modified cut for any modified cuts alpha,beta.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_addition_closed",
+            "Rudin.Chapter01.exercise20_mem_add"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E20.addition_commutative",
           "summary": "A2: prove alpha+beta=beta+alpha.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_addition_commutative"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E20.addition_associative",
           "summary": "A3: prove (alpha+beta)+gamma=alpha+(beta+gamma).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_addition_associative"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E20.zero",
           "summary": "A4: identify the modified zero cut and prove it is an additive identity for every modified cut.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_zero",
+            "Rudin.Chapter01.exercise20_zero_has_greatest"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         },
         {
           "id": "R01E20.inverse_failure",
           "summary": "A5: exhibit a modified cut with no additive inverse relative to the new zero.",
           "kind": "counterexample",
-          "status": "todo",
-          "declarations": [],
-          "evidence": null
+          "status": "verified",
+          "declarations": [
+            "Rudin.Chapter01.exercise20_inverse_failure",
+            "Rudin.Chapter01.exercise20_not_A5"
+          ],
+          "evidence": {
+            "semantic_review": {
+              "result": "passed",
+              "reviewer": "independent modified-cut reviewer; main",
+              "notes": "Literal nonempty proper lower rational sets allow greatest elements. Strict-inclusion order, actual union LUB, actual pairwise-sum closure, all A1-A4 laws, closed zero Iic0 and lack of inverse for Iio0 match the source; no MacNeille replacement."
+            },
+            "checks": {
+              "single_file": "passed",
+              "project_build": "passed",
+              "axiom_audit": "passed",
+              "coverage": "passed"
+            },
+            "source_hashes": {
+              "Math.Rudin.Chapter01.Exercise20": "964dbfba61c17f68e212e1acffa7f07d92e5e31d6a7245e65da60761e71ef66b"
+            },
+            "environment_sha256": "d6952647b1c1d7df59f50ff96ec98cb98514321af3e69d3703adac556b8b972a",
+            "verified_on": "2026-10-22",
+            "commands": [
+              "lake env lean Math/Rudin/Chapter01/Exercise20.lean",
+              "./scripts/check.sh"
+            ],
+            "integration_evidence": "Final second-batch main and fresh-source snapshot checks passed:538 local declarations,104 registered theorem references,23 regression tests. Snapshot reuses only pinned dependency cache and has fresh project build outputs; full-book final gate remains unfinished."
+          }
         }
       ],
       "obligation_count": 7,
@@ -2406,7 +3615,9 @@
         }
       ],
       "obligation_count": 4,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Use Rudin countably-infinite meaning for the source corollary. Prove the decomposition including the empty set, the stronger nonempty at-most-countable Euclidean corollary, and the empty translation check; do not generalize that corollary to arbitrary separable metric spaces.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R02E29",
@@ -2460,7 +3671,9 @@
         }
       ],
       "obligation_count": 3,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Use nonempty open interval components allowing bounded intervals, either ray and the whole line, as supported by book278. Also retain the bounded-only segment obstruction. Empty open sets use an empty family.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R02E30",
@@ -2754,7 +3967,9 @@
         }
       ],
       "obligation_count": 5,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "In part d separate undefined parameters (some positive n has 1+z^n=0) from divergence. Under the explicit domain condition classify convergence exactly by norm(z)>1; no totalized-division replacement.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R03E07",
@@ -3501,7 +4716,9 @@
         }
       ],
       "obligation_count": 3,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Retain alpha>0 and the inherited x1>sqrt(alpha). For p1 prove one-step termination; for p>=2 classify positive starts below/at/above the positive p-th root, allowing a first-step increase before descent.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R03E19",
@@ -4370,10 +5587,20 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R04E09.diameter_convention",
+          "summary": "Prove the selected extended diameter is zero on the empty set, infinite on unbounded sets, and agrees with the source diameter on nonempty finite-diameter sets; justify all-subset quantification.",
+          "kind": "classification",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 2,
-      "disposition": "needs_review"
+      "obligation_count": 3,
+      "disposition": "needs_review",
+      "formalization_contract": "Select extended nonnegative diameter, zero on the empty set and infinity for unbounded sets. Prove agreement with source finite nonempty diameter before the two uniform-continuity equivalences; do not use a real diameter with default zero on unbounded sets.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R04E10",
@@ -5719,10 +6946,20 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R05E13.domain_obstruction",
+          "summary": "Formalize the obstruction to the printed negative-base real power, for example no real square root of a negative real number, and distinguish the explicitly corrected absolute-power function.",
+          "kind": "counterexample",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 7,
-      "disposition": "needs_review"
+      "obligation_count": 8,
+      "disposition": "needs_review",
+      "formalization_contract": "Preserve the negative-base real-power domain obstruction. For c>0 explicitly correct the off-zero function to abs(x)^a*sin(abs(x)^(-c)) with value0 atzero. Prove all7 stated thresholds for that corrected function, including endpoint and derivative-existence conventions.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R05E14",
@@ -6368,10 +7605,28 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R05E25.termination_counterexample",
+          "summary": "Use an affine function satisfying the source hypotheses to refute unrestricted strict descent and existence of an interior Taylor point after finite Newton termination.",
+          "kind": "counterexample",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
+        },
+        {
+          "id": "R05E25.zero_bound_domain_obstruction",
+          "summary": "Treat M=0 and A=0 separately: prove immediate Newton termination and that the displayed reciprocal estimate needs A>0; prove the denominator-free alternative without using totalized division.",
+          "kind": "classification",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 10,
-      "disposition": "needs_review"
+      "obligation_count": 12,
+      "disposition": "needs_review",
+      "formalization_contract": "Use the root as an absorbing Newton fixed point. Retain formal counterexamples to unrestricted strict descent and interior Taylor points after termination. Prove weak descent, strict until termination, and the denominator-free quadratic estimate including M0; recover division by A only for A>0.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R05E26",
@@ -7385,10 +8640,20 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R06E18.endpoint_extension",
+          "summary": "Define the printed third curve at t=0 by1 and prove continuity of this unique continuous endpoint extension before its range and length assertions.",
+          "kind": "construction",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 4,
-      "disposition": "needs_review"
+      "obligation_count": 5,
+      "disposition": "needs_review",
+      "formalization_contract": "Define gamma3(0)=1 and the printed exp(2*pi*i*t*sin(1/t)) formula only for t>0. Prove continuity, common range, first2 lengths and infinite variation of the third curve; do not replace the phase by sin(1/t) alone.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R06E19",
@@ -11039,7 +12304,9 @@
         }
       ],
       "obligation_count": 4,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Classify both affine solution branches u0 andu3. Prove neighborhood-local unique graphs over x,y,z and genuine failure of local unique graph over u; do not assume global uniqueness or equate a vanishing minor with impossibility.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R09E20",
@@ -11672,7 +12939,9 @@
         }
       ],
       "obligation_count": 4,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Retain same-quadratic-jet semidefinite counterexamples. Prove positive/negative definite and indefinite second-derivative tests; state singular semidefinite cases inconclusive with their one-sided exclusions. Cover dimension1 separately and extend obstruction to all n>=2.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R10E01",
@@ -12101,10 +13370,20 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R10E09.literal_order_obstruction",
+          "summary": "For the literal printed nested differential/bound assignment exhibit the constant-function numerical mismatch with disk area; distinguish this from the corrected polar theorem.",
+          "kind": "counterexample",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 4,
-      "disposition": "needs_review"
+      "obligation_count": 5,
+      "disposition": "needs_review",
+      "formalization_contract": "Use unambiguous radial/angular binding and prove the literal-order obstruction. Keep T(r,theta)=(r*cos(theta),r*sin(theta)) and angular interval(0,2*pi), hence the positive-x-axis slit. Prove the required approximation/removal of slit and handle radius0.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R10E10",
@@ -12153,10 +13432,20 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R10E10.literal_order_obstruction",
+          "summary": "Exhibit a rapidly decreasing function showing the literal printed radial/angular binding does not give the claimed whole-plane formula; keep the corrected improper-integral statement separate.",
+          "kind": "counterexample",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 3,
-      "disposition": "needs_review"
+      "obligation_count": 4,
+      "disposition": "needs_review",
+      "formalization_contract": "Select continuous real/complex f bounded by C*(1+norm(x))^(-q), C>=0,q>2. Prove absolute improper convergence, disk/rectangle comparison, polar passage to the limit and Gaussian bound; retain literal-order obstruction and any Lebesgue/improper bridge.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R10E11",
@@ -12821,7 +14110,9 @@
         }
       ],
       "obligation_count": 9,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Retain the origin-domain obstruction in c. Correct radial surfaces by h(s)!=0 at every source parameter. Prove d already supplies nonvanishing through its positive radius and unit vector; do not totalize the singular form atzero.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R10E23",
@@ -12892,10 +14183,20 @@
           "status": "todo",
           "declarations": [],
           "evidence": null
+        },
+        {
+          "id": "R10E23.degree_zero_convention",
+          "summary": "Define the explicit exactness-image convention in degree0, relate it to source positive-degree exactness, and justify the separate n1 closed but nonexact case without assuming negative-degree forms.",
+          "kind": "classification",
+          "status": "todo",
+          "declarations": [],
+          "evidence": null
         }
       ],
-      "obligation_count": 5,
-      "disposition": "needs_review"
+      "obligation_count": 6,
+      "disposition": "needs_review",
+      "formalization_contract": "Select exactness image{0} in degree0 and explicitly justify the n1 nonexactness convention. For d select sphere flux equals positive geometric area and pullback radial invariance for positive C2 rho and C2 unit-sphere sigma on compact cells/simplexes; no negative-degree primitive or assumed area-as-flux definition.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R10E24",
@@ -13804,7 +15105,9 @@
         }
       ],
       "obligation_count": 3,
-      "disposition": "needs_review"
+      "disposition": "needs_review",
+      "formalization_contract": "Use a.e. equivalence classes of integrable real/complex functions, prove raw-function zero-distance degeneracy and representative independence, then identify the displayed integral distance with Lp exponent1 and prove completeness without finite total measure.",
+      "contract_evidence": "docs/rudin/source-clarifications.md; primary PDF/book references and inspected methods in the corresponding exercise section. Contract selected for implementation; mathematical proof gates remain open."
     },
     {
       "id": "R11E12",

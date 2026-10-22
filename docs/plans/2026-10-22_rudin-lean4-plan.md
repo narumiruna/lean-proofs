@@ -28,7 +28,7 @@
 
 ### 已盤點範圍
 
-三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` 目前記錄 287 題、839 個子義務，包含追問與已知原題問題的處置義務。這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
+三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` 目前記錄 287 題、847 個義務，包含追問與已知原題問題的處置義務。初版 839 個義務在第二批來源釐清後新增 8 個明確的 domain／termination／endpoint／literal-order／diameter／degree-zero 檢查；依據見 `docs/rudin/source-clarifications.md`。這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
 
 | 章 | 主題 | 題號範圍 | 書頁 | PDF 頁，從 1 起算 |
 | --- | --- | --- | --- | --- |
@@ -51,13 +51,21 @@
 - 上述兩題現已完成 Lean 反例、修正版及獨立題意覆核，並在清單分別標為 `refuted_and_corrected`；不是原命題已證明。
 - 其餘來源疑點仍在 `exercises.json` 與 `progress.md` 保留為 pending，不以這兩題的完成推論其他敘述正確。
 
-### 本批執行結果（2026-10-22）
+### 第一批執行結果（2026-10-22）
 
 - 已驗證 8／287 題的解答處置、23／839 個義務：6 題按原敘述證明，2 題以反例與修正版完成；尚餘 279 題、816 個義務。
 - `./scripts/check.sh` 通過：清單／import／declaration 檢查、預設建置、211 個 declaration 的公理檢查，以及 23 個回歸測試。
 - 已在隔離的專案來源副本重建首批程式，使用新的 project build outputs，僅重用鎖定的 dependency cache。這不是全書 `--final` 驗收。
 - `./scripts/check.sh --final` 仍正確失敗於未完成義務；不豁免全書完成門檻。遠端 CI 尚未執行。
 - 目前的驗證狀態、來源／相依環境指紋與逐題覆核依據存於 `exercises.json`；摘要存於 `docs/rudin/progress.md`。本計畫尚未完成，須保留。
+
+### 第二批執行結果（2026-10-22）
+
+- 新增完成第 1 章剩餘 18 題；該章 20／20 題、55／55 個義務均已驗證。全書目前 26／287 題、72／847 個義務；24 題按原敘述證明，2 題以反例及修正版處置。尚餘 261 題、775 個義務。
+- 完成來源問題的 discovery：15 題／18 個問題有明確契約，新增 8 個原先未獨立追蹤的 domain／convention／obstruction 義務，沒有移除原義務。相關數學證明仍為 todo／pending，不把契約選定當作解題完成。
+- 新增 Stieltjes common refinement、sum bounds、完整 Darboux／tagged equivalence、raw monotone continuous-integrand existence，以及 explicit right-continuous measure bridge；另有受限 raw ordered-chain boundary 基礎。所有適用範圍及未完成比較見 `mathlib-coverage.md`。
+- `./scripts/check.sh` 與使用 fresh project build outputs 的隔離來源副本檢查均通過：538 個 declaration、104 個交付參照及 23 個回歸測試；只重用鎖定的 dependency cache。
+- `./scripts/check.sh --final` 仍失敗於 `R02E01.empty_subset`，這是尚未完成的全書義務，不豁免最終門檻。遠端 CI 未執行。本計畫尚未完成並繼續保留。
 
 ## Architecture
 
@@ -117,8 +125,8 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 ### P1 — 鎖定完整範圍與題意
 
 - [x] 建立 `docs/rudin/source.md` 與 `exercises.json`，逐頁核對 11 章全部題號及所有追問；驗收：每一來源題目恰有一個主 ID，子義務可回溯到頁碼，章別總數與總分母一致。證據：三份來源盤點合併為 287 題／839 個義務；`scripts/check_exercises.py` 核對題號、子義務分母與書頁／PDF 頁偏移。來源覆核不代表 Lean 語義覆核完成。
-- [ ] 逐題建立簡短語義契約、題型與相依項，並登記 OCR 疑點、缺漏條件及所需構造；驗收：全部題目均有可執行的形式化目標，高風險題有具體發現任務，不以未確認的定理名稱作前提。進度：全部題目已有來源契約與子義務；原題疑點及方法相依仍需釐清。
-- [ ] 釐清清單中的全部 pending 來源問題，將定義慣例、開放式範圍與真正錯誤分開處置；驗收：每項有來源／上下文依據、明確的待證契約與相依義務，需反例的問題在完成 Lean 證明前不得標為已解決。
+- [x] 逐題建立簡短語義契約、題型與相依項，並登記 OCR 疑點、缺漏條件及所需構造；驗收：全部題目均有可執行的形式化目標，高風險題有具體發現任務，不以未確認的定理名稱作前提。證據：287 題均有來源契約與子義務；15 題的明確修正／慣例／有限延伸契約已記錄於清單與 `source-clarifications.md`，並通過獨立 discovery 覆核。
+- [x] 釐清清單中的全部 pending 來源問題，將定義慣例、開放式範圍與真正錯誤分開處置；驗收：每項有來源／上下文依據、明確的待證契約與相依義務，需反例的問題在完成 Lean 證明前不得標為已解決。證據：18 個問題均有書頁／PDF 頁、影像／上下文依據及明確待證契約；新增 8 個漏列義務且未移除原義務。數學反例與修正版尚未證明的問題仍保持 pending；不新增外部接受或人工審批門檻。
 
 ### P2 — 建立可重現的 Lean 與檢查基礎
 
@@ -132,17 +140,17 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 
 ### P3 — 先做高風險探索與代表題試作
 
-本階段在展開全書解題前完成，避免做到第 10 章才發現需要大量新基礎設施。
+本階段在展開依賴高風險基礎設施的全書題組前完成，避免做到第 10 章才發現需要大量新基礎設施。探索期間可平行完成定義已確定、且不依賴缺口的基礎題組；第二批已完成第 1 章。後續仍按相依關係選題，不豁免第 6／10 章所需的橋接與方向條件。
 
 - [x] 調查鎖定 Mathlib 的章別支援，建立「可直接用／需橋接／需新增」對照；驗收：每項引用有實際 source path 與可編譯使用例，特別涵蓋 Dedekind cuts、metric completion、Riemann–Stieltjes integral、ODE、Fourier／Gamma、differential forms／Stokes 及 `Lp`。證據：`docs/rudin/mathlib-coverage.md` 的來源對照與 `Support/ApiExamples.lean` 已編譯、納入根 imports 及全專案公理檢查；不宣稱已逐題完成 API 選型。
-- [ ] 建立第 6 章積分表示法的可編譯 prototype；驗收：明確說明表示法如何涵蓋 Rudin 的 monotone integrator、discontinuities 與 endpoint conventions，完成一個等價性或適用條件下的橋接結果。不能未經證明就以 Lebesgue integral 取代 Riemann–Stieltjes integral。進度：實際 Darboux sums、常數 integrand 的橋接與右正規化端點反例已編譯；非定值 integrand 與完整端點處置仍未完成。
+- [x] 建立第 6 章積分表示法的可編譯 prototype；驗收：明確說明表示法如何涵蓋 Rudin 的 monotone integrator、discontinuities 與 endpoint conventions，完成一個等價性或適用條件下的橋接結果。證據：literal weak-partition Darboux sums、完整 Darboux／tagged equivalence、raw interval-monotone integrator 的 continuous-integrand existence，以及 `StieltjesFunction ℝ` 下的 continuous real-integrand measure bridge 均已編譯並獨立覆核，涵蓋 singleton、zero mass、repeated nodes 與左右端點 atom 慣例。一般 raw normalization／endpoint correction 與 discontinuous integrand bridge 仍未完成，既有反例繼續禁止無條件替換。
 - [ ] 建立第 10 章所需基礎設施的可編譯 prototype；驗收：按實際習題需求檢查 differential forms、pullback、exterior derivative、chains、orientation 與 integration 的表示法，完成一個非平凡運算及一個實際所需的 integration／boundary identity，列出尚缺定理與相依順序。不預設 Mathlib 已具備整套 Stokes theory。進度：實際 `extDeriv` 計算與 segment／rectangle boundary identities 已編譯；一般 chains、simplex integration 與書中積分的比較仍未完成。
-- [ ] 補齊第 6 章 partitions 的 common refinement、sum bounds 與 Darboux／tagged equivalence；驗收：有不依賴待證結論的 Lean 定理，並以定值及點支撐 integrand 檢查表示法。
-- [ ] 建立第 6 章非定值 integrand 的積分橋接及必要 jump／endpoint 條件；驗收：至少覆蓋 continuous integrands 並形式化比較，既有端點反例仍成立，不放寬信任條件。
-- [ ] 建立第 10 章所需的 signed affine／parameterized chains 與 face maps；驗收：證明 `∂² = 0`、面抵消與 multiplicity，並對照第 16–19、32 題的義務。
+- [x] 補齊第 6 章 partitions 的 common refinement、sum bounds 與 Darboux／tagged equivalence；驗收：有不依賴待證結論的 Lean 定理，並以定值及點支撐 integrand 檢查表示法。證據：`StieltjesRefinement.lean` 的 exact node-union refinement、sum／refinement bounds 與 `StieltjesEquivalence.lean` 的 actual predicate iff 通過獨立覆核及全專案檢查；regression 包含定值、pointSpike、singleton、zero increment、repeated nodes 及 extrema 不取得的例子。
+- [x] 建立第 6 章非定值 integrand 的積分橋接及必要 jump／endpoint 條件；驗收：至少覆蓋 continuous integrands 並形式化比較，既有端點反例仍成立，不放寬信任條件。證據：`StieltjesMeasureBridge.continuous_bridge` 在 explicit right-continuous `StieltjesFunction ℝ`、`a ≤ b`、`ContinuousOn f (Icc a b)` 下證明 actual Darboux integral 與 `(a,b]` measure integral 相同；非定值、terminal jump、initial atom 排除、singleton／zero mass 測試通過。獨立覆核 final SHA256 `2e59487e32734474713a6d4e7f8f43e1b62d0e84010c5134d6a18271a1f6f37a`；不宣稱任意 raw integrator 的 measure comparison。
+- [ ] 建立第 10 章所需的 signed affine／parameterized chains 與 face maps；驗收：證明 `∂² = 0`、面抵消與 multiplicity，並對照第 16–19、32 題的義務。進度：`Support/OrderedChains.lean` 已證明 raw ordered vertex chains 的 alternating deletion formula、`∂² = 0`、multiplicity 與 vertex-map 相容；fixed degree、orientation relation、affine／smooth realization 及積分比較尚未完成，不能將 raw reversed edges 當作相消。
 - [ ] 建立第 10 章 forms 的 pullback／simplex integration 與 Rudin 積分的比較；驗收：在所需規則性與方向條件下證明比較和 boundary identities，不用已假設的 Stokes identity 證明自身。
 - [x] 完成代表題 `R01E01`、`R02E02`、`R03E24`、`R06E01`、`R09E01`、`R11E01` 的全部義務；驗收：每題語義覆核、編譯、公理檢查及清單對照均通過。證據：六題共 15 個義務均為 `verified`；獨立覆核確認實際 Cauchy-sequence quotient 與完備化橋接，以及實際 Darboux 積分。R06E01 首輪發現嚴格 partition／零長區間漏列，已修正成 weak partition 與 `a ≤ b`，第二輪獨立覆核、singleton／endpoint 測試及整合檢查均通過。
-- [ ] 根據 prototype 與代表題更新此計畫、共用表示法及章別工作量；驗收：重大缺口拆成可執行任務，未解決的正確性問題明確阻塞受影響題目，時程估計只依實測分類，不宣稱各題成本相同。
+- [x] 根據 prototype 與代表題更新此計畫、共用表示法及章別工作量；驗收：重大缺口拆成可執行任務，未解決的正確性問題明確阻塞受影響題目，時程估計只依實測分類，不宣稱各題成本相同。證據：更新 `formalization.md`、`mathlib-coverage.md` 與 P3 相依任務，並完成來源契約分類。工作量分為現成 lemma 題組、需明確構造／比較定理的題組、Darboux／measure 基礎設施、oriented parameterized chain／integration 基礎設施；依第 1 章與兩類 prototype 的實作證據分類，不給未量測的全書工期。
 
 ### P4 — 驗證已知原題問題
 
@@ -153,7 +161,7 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 
 以下每項均只處理尚未完成的題目；P3、P4 的成果不重複計數。章順序是預設順序，實際以清單中的題目相依關係為準。每批以 3–5 題為起點，大型構造題單獨處理。
 
-- [ ] 完成第 1 章 1–20 題；驗收：全部子義務通過本節的逐批門檻，包含複數根、等號條件、維度分類與修改 cuts 定義的構造。
+- [x] 完成第 1 章 1–20 題；驗收：全部子義務通過本節的逐批門檻，包含複數根、等號條件、維度分類與修改 cuts 定義的構造。證據：20／20 題、55／55 個義務已完成單檔編譯、獨立來源／型別覆核與第二批整合公理檢查；19 題按原敘述證明，R01E19 以反例與修正版完成。根 imports 已涵蓋所有 20 題。
 - [ ] 完成第 2 章 1–30 題；驗收：全部子義務通過逐批門檻，並明確區分有限、至多可數與可數無限。
 - [ ] 完成第 3 章 1–25 題；驗收：全部子義務通過逐批門檻，包含完備化構造、稠密嵌入與相關識別結果。
 - [ ] 完成第 4 章 1–26 題；驗收：全部子義務通過逐批門檻，逆命題及移除假設的問題均有判定與所需反例。
@@ -181,11 +189,11 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 
 ## Completion Checklist
 
-- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。證據：`exercises.json` 的 287 題／839 個義務與 `source.md`；839 包含追問及已知錯誤的處置義務。這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
+- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。證據：`exercises.json` 的 287 題／847 個義務與 `source.md`；初版 839 加上來源釐清補足的 8 個義務，差異依據見 `source-clarifications.md`。這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
 - [ ] 全部義務均為 `verified`，沒有 `todo`、`in_progress`、`blocked` 或未完成的構造／追問。
 - [ ] 原題不成立的情況有 Lean 反例與標示清楚的正確替代結果；沒有將錯誤原命題計為已證明。
-- [x] 全部目前交付模組納入預設建置；不存在以未匯入檔案隱藏未完成證明的情況。證據：來源檔案 import closure 與實際 Lean environment 模組檢查均通過；新增檔案後須重跑。
-- [x] 全部目前交付與 Support declarations 通過公理檢查，無佔位證明、自訂公理或未授權的信任擴充。證據：211 個 declaration 的傳遞相依只含 `propext`、`Classical.choice`、`Quot.sound`；新增或修改來源後須重跑。
+- [x] 全部目前交付模組納入預設建置；不存在以未匯入檔案隱藏未完成證明的情況。證據：第二批新增 18 題及 4 個 Support 模組後，source import closure 與實際 Lean environment 模組檢查、預設建置及隔離來源副本重建均通過；新增檔案後須重跑。
+- [x] 全部目前交付與 Support declarations 通過公理檢查，無佔位證明、自訂公理或未授權的信任擴充。證據：第二批全專案與隔離副本檢查均通過 538 個 declaration、104 個交付參照，只含標準三個公理。OrderedChains 首輪發現的編譯器 unsafe recursion helper 已用 explicit `List.rec` 消除；未放寬檢查規則。新增或修改來源後須重跑。
 - [ ] 逐題語義覆核與第二輪全書覆核均有記錄，所有重大正確性疑問已解決。
 - [ ] 乾淨環境的全專案建置與最終檢查通過；本機與 CI 使用相同檢查入口，遠端 CI 執行結果若尚未取得則明確記錄，不宣稱已通過。
 - [ ] 文件足以重建、定位題目及理解敘述差異，未提交教材 PDF、整本 OCR 或其他非必要二進位檔。

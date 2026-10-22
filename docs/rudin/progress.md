@@ -4,21 +4,21 @@ Generated from `exercises.json`. Do not edit counts by hand.
 
 | Chapter | Verified resolutions | As stated | Refuted/corrected | Verified obligations |
 | --- | --- | --- | --- | --- |
-| 1 | 2/20 | 1 | 1 | 6/55 |
+| 1 | 20/20 | 19 | 1 | 55/55 |
 | 2 | 1/30 | 1 | 0 | 1/71 |
 | 3 | 1/25 | 1 | 0 | 8/88 |
-| 4 | 0/26 | 0 | 0 | 0/73 |
-| 5 | 0/29 | 0 | 0 | 0/81 |
-| 6 | 1/19 | 1 | 0 | 2/52 |
+| 4 | 0/26 | 0 | 0 | 0/74 |
+| 5 | 0/29 | 0 | 0 | 0/84 |
+| 6 | 1/19 | 1 | 0 | 2/53 |
 | 7 | 0/26 | 0 | 0 | 0/79 |
 | 8 | 0/31 | 0 | 0 | 0/79 |
 | 9 | 1/31 | 1 | 0 | 1/110 |
-| 10 | 0/32 | 0 | 0 | 0/114 |
+| 10 | 0/32 | 0 | 0 | 0/117 |
 | 11 | 2/18 | 1 | 1 | 5/37 |
 
-Total: **8/287 verified resolutions**; **23/839 obligations** verified.
+Total: **26/287 verified resolutions**; **72/847 obligations** verified.
 
-These comprise 6 exercises proved as stated and 2 false source claims resolved by counterexamples and explicit corrections. A refuted claim is not counted as a proved original statement.
+These comprise 24 exercises proved as stated and 2 false source claims resolved by counterexamples and explicit corrections. A refuted claim is not counted as a proved original statement.
 
 ## Source issues and blockers
 

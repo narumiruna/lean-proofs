@@ -2,7 +2,7 @@
 
 This project formalizes the exercises in Walter Rudin's *Principles of
 Mathematical Analysis*, Third Edition. It is in progress, not a complete solution
-set. The source inventory contains 287 exercises and 839 obligations. Verified
+set. The source inventory contains 287 exercises and 847 obligations. Verified
 counts are generated in [the progress report](docs/rudin/progress.md).
 
 ## Toolchain
@@ -45,7 +45,8 @@ uv run --no-project python scripts/check_exercises.py --update-progress
 - `exercises.json`: original summaries, subquestion IDs, source pages, issues,
   theorem references, status, and review evidence.
 - [Source](docs/rudin/source.md), [formalization rules](docs/rudin/formalization.md),
-  [source issues](docs/rudin/errata.md), and
+  [source issues](docs/rudin/errata.md),
+  [source contracts](docs/rudin/source-clarifications.md), and
   [Mathlib coverage](docs/rudin/mathlib-coverage.md).
 - [Current implementation plan](docs/plans/2026-10-22_rudin-lean4-plan.md).
 

@@ -19,6 +19,12 @@ marking an obligation verified. Compilation alone does not establish fidelity.
   requires the Cauchy-sequence quotient construction.
 - Preserve a false source claim in the issue record. Supply a counterexample
   and an explicitly corrected theorem; do not hide extra hypotheses.
+- For unresolved source wording, apply the explicit contracts in
+  `source-clarifications.md` and the inventory. Contract selection does not
+  complete the proof or resolve an unproved source obstruction.
+- Use literal ordered-chain results only within their stated scope. Raw vertex
+  lists do not impose orientation signs, and mapping vertices is not nonlinear
+  postcomposition of a parameterized surface.
 
 ## Proof trust
 
