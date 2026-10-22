@@ -1,8 +1,9 @@
-# Pending source clarifications
+# Source clarification contracts
 
 ## Scope and evidence
 
-This note records the 18 source issues in 15 exercises found during inventory.
+This note records 19 source issues in 16 exercises. The initial discovery
+covered 18 issues in 15 exercises; execution added R03E14's zero-bound check.
 It follows P1 of `docs/plans/2026-10-22_rudin-lean4-plan.md`. The contracts below
 are selected for implementation under the authorized plan. The inventory
 records their obligation mappings; no proof is complete merely because its
@@ -28,11 +29,13 @@ The classifications are:
    The proposed choice must be explicit before implementation.
 
 Some issues have more than one classification under different readings.
-All mathematical examples below are source-analysis arguments, not compiled
-Lean counterexamples. No Lean proof was written or compiled for this note.
-Any required counterexample, corrected theorem, bridge, compilation, semantic
-review, and axiom audit remains mandatory. A proposed contract is not evidence
-that an obligation is complete.
+The arguments below first established source contracts, not proof completion.
+R02E28, R02E29, R03E06, R03E14, R03E18 and R04E09 now have independently
+reviewed Lean proofs and pass project and isolated-source checks; their inventory
+issues are resolved. R05E13 and R05E25 also have independently reviewed
+proofs and pass project and isolated-source checks; their issues are resolved. Other entries
+still require their counterexamples, corrected results, bridges, compilation,
+semantic review and axiom audit. Contract selection alone is not completion.
 
 ## R02E28 — Countable does not include finite
 
@@ -54,6 +57,9 @@ that an obligation is complete.
   this corollary to arbitrary separable metric spaces.
 - **Affected IDs:** `R02E28.decomposition`, `R02E28.source_corollary`,
   `R02E28.empty_corollary`, `R02E28.nonempty_corollary`.
+- **Verified:** `exercise28_decomposition`, `exercise28_source`,
+  `exercise28_empty`, and `exercise28_nonempty`. The source reading is counted
+  as stated; the empty-set result is a translation check.
 
 ## R02E29 — Segments, rays, and the whole line
 
@@ -77,6 +83,11 @@ that an obligation is complete.
 - **Affected IDs:** `R02E29.source_segments`,
   `R02E29.bounded_segment_obstruction`,
   `R02E29.open_interval_decomposition`.
+- **Verified:** `exercise29_source_segments`,
+  `exercise29_bounded_segment_obstruction`, and
+  `exercise29_open_interval_decomposition`. The inventory counts the
+  bounded-only refutation and extended-interval correction separately from
+  proofs of unmodified source claims.
 
 ## R03E06(d) — Undefined complex terms are a separate case
 
@@ -98,6 +109,28 @@ that an obligation is complete.
   Do not use Lean's totalized division to redefine the source series.
 - **Affected IDs:** `R03E06.d.defined_parameters`,
   `R03E06.d.convergence`. Parts (a)–(c) are not affected by this issue.
+- **Verified:** `exercise06_d_defined_parameters` and
+  `exercise06_d_undefined_even` identify the excluded parameters.
+  `exercise06_d_convergence` proves the full ordered-convergence classification
+  under the domain condition. Undefined cases are not counted as divergence.
+
+## R03E14(e) — A strict estimate with a zero bound
+
+- **Evidence:** book 80 / PDF 89, primary page image. The outline prints
+  `|s_n-s_i| < M*epsilon`, with only a finite bound `M`.
+- **Classification: 2 for that intermediate estimate.** With `s_n=0` and
+  `M=0`, all assumptions hold but the estimate says `0<0`, including at
+  `i=n`. This does not refute the final Tauberian converse.
+- **Contract:** retain the prescribed identities, floor choice, estimates
+  and limsup argument. Prove `<= M*epsilon` for the original hypotheses.
+  Retain the strict result under explicit `M>0` and prove the zero-bound
+  obstruction at the source's floor index.
+- **Affected ID:** added `R03E14.e.zero_bound_obstruction`; all ten original
+  obligations remain. The book denominator is now 848, not 847.
+- **Verified:** `exercise14_e_zero_bound_obstruction`,
+  `exercise14_e_index_estimate`, and `exercise14_e_index_estimate_strict`.
+  Independent review checked all eleven obligations and the full prescribed
+  argument. The source's final converse is proved without a stronger bound.
 
 ## R03E18 — Keep the inherited starting bound
 
@@ -122,6 +155,10 @@ that an obligation is complete.
   the starting bound to obtain monotonicity from the first term.
 - **Affected IDs:** `R03E18.well_defined`, `R03E18.unit_exponent`,
   `R03E18.higher_exponents`.
+- **Verified:** `exercise18_well_defined` and `exercise18_source_update`
+  preserve the inherited data and integer exponent. The unit-exponent
+  theorems and `exercise18_higher_exponents` give the full classification,
+  including a proved inherited-bound example with an initial overshoot.
 
 ## R04E09 — Empty diameter needs an explicit extension
 
@@ -143,7 +180,11 @@ that an obligation is complete.
   Do not use a real-valued diameter that assigns zero to unbounded sets
   without adding boundedness hypotheses and proving the comparison.
 - **Affected IDs:** `R04E09.uniform_to_diameter`,
-  `R04E09.diameter_to_uniform`.
+  `R04E09.diameter_to_uniform`, `R04E09.diameter_convention`.
+- **Verified:** `exercise09_diameter_empty`, `exercise09_diameter_unbounded`,
+  and `exercise09_diameter_agrees` prove the selected extension and comparison.
+  Both uniform-continuity implications quantify over all subsets with strict
+  tolerances. This is a convention resolution, not a false-source refutation.
 
 ## R05E13 — The negative-base real power is not defined
 
@@ -176,6 +217,10 @@ that an obligation is complete.
 - **Affected IDs:** `R05E13.a`, `R05E13.b`, `R05E13.c`, `R05E13.d`,
   `R05E13.e`, `R05E13.f`, `R05E13.g`. The domain-obstruction proof is separately mapped to
   `R05E13.domain_obstruction`.
+- **Verified:** `exercise13_a` through `exercise13_g` prove all thresholds for
+  the labelled correction; `exercise13_domain_obstruction` preserves the
+  original domain defect. Local derivative and equality-case bridges are
+  proved. This exercise is counted as corrected, not as stated.
 
 ## R05E25 — Newton termination and a zero curvature bound
 
@@ -217,7 +262,12 @@ The root and tangent contracts need no correction. For (e), use
 root without assuming continuity of `f''`. The correction does not remove
 `R05E25.root`, `R05E25.a.tangent`, `R05E25.e.fixed_point`,
 `R05E25.e.derivative`, or `R05E25.f` from the exercise's requirements.
-The false-claim proofs need explicit mappings during later integration.
+All false-claim proofs now have explicit registry mappings.
+`exercise25_termination_counterexample` refutes the two unrestricted claims;
+`exercise25_denominator_free`, `exercise25_printed_bound`, and the zero-bound
+results prove the selected corrections. The source prints `x_1` in `(xi,b)`;
+the verified construction also admits `x_1=b` using the source one-sided
+endpoint derivatives. This exercise is counted as corrected, not as stated.
 
 ## R06E18 — Continuity forces the missing endpoint
 
@@ -464,8 +514,9 @@ The false-claim proofs need explicit mappings during later integration.
    R09E31's semidefinite Hessian, literal polar bounds, and R10E22's origin.
    The second batch adds eight explicit obligations for source-domain,
    termination, endpoint, literal-order, diameter and degree-zero checks.
-   Exercise count remains 287; the obligation count changes from 839 to 847.
-   The inventory records the exact IDs and source-page justification.
+   Exercise count remains 287. The second batch changed the obligation count
+   from 839 to 847. The fourth batch added R03E14's strict-estimate obstruction,
+   giving 848. The inventory records the exact IDs and source-page evidence.
 3. Compile and review all required proofs and bridges before closing any
    affected obligation. Definition-based clarification, source images, and
    the arguments in this note do not waive any mandatory proof gate.

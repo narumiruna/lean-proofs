@@ -20,12 +20,14 @@ Third Edition (1976).
 
 ## Inventory review
 
-The current inventory has 287 exercise IDs and 847 obligations. The obligation
+The current inventory has 287 exercise IDs and 848 obligations. The obligation
 count includes lettered parts, unlettered questions, required constructions, and
 explicit dispositions of problematic source claims. The initial inventory had
 839 obligations. The second batch added eight explicit domain, termination,
 endpoint, literal-order, diameter and degree-zero checks, justified in
-`source-clarifications.md`; the number of source exercises did not change. All exercise-section page
+`source-clarifications.md`. The fourth batch added the R03E14 zero-bound
+strict-estimate obstruction after inspecting book page 80 / PDF page 89.
+The number of source exercises did not change. All exercise-section page
 images were checked across three inventory workers; the main agent checked PDF
 page 30 separately. This review does not establish that every formal theorem
 matches its source. Proof-specific semantic review is recorded separately.

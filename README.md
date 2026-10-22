@@ -2,7 +2,7 @@
 
 This project formalizes the exercises in Walter Rudin's *Principles of
 Mathematical Analysis*, Third Edition. It is in progress, not a complete solution
-set. The source inventory contains 287 exercises and 847 obligations. Verified
+set. The source inventory contains 287 exercises and 848 obligations. Verified
 counts are generated in [the progress report](docs/rudin/progress.md).
 
 ## Toolchain

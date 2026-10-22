@@ -28,7 +28,7 @@
 
 ### 已盤點範圍
 
-三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` 目前記錄 287 題、847 個義務，包含追問與已知原題問題的處置義務。初版 839 個義務在第二批來源釐清後新增 8 個明確的 domain／termination／endpoint／literal-order／diameter／degree-zero 檢查；依據見 `docs/rudin/source-clarifications.md`。這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
+三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` currently records 287 exercises and 848 obligations, including follow-up questions and source-issue dispositions. The initial 839 obligations gained eight explicit checks in the second batch and R03E14's zero-bound strict-estimate obstruction in the fourth batch. Evidence is in `docs/rudin/source-clarifications.md`.這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
 
 | 章 | 主題 | 題號範圍 | 書頁 | PDF 頁，從 1 起算 |
 | --- | --- | --- | --- | --- |
@@ -66,6 +66,41 @@
 - 新增 Stieltjes common refinement、sum bounds、完整 Darboux／tagged equivalence、raw monotone continuous-integrand existence，以及 explicit right-continuous measure bridge；另有受限 raw ordered-chain boundary 基礎。所有適用範圍及未完成比較見 `mathlib-coverage.md`。
 - `./scripts/check.sh` 與使用 fresh project build outputs 的隔離來源副本檢查均通過：538 個 declaration、104 個交付參照及 23 個回歸測試；只重用鎖定的 dependency cache。
 - `./scripts/check.sh --final` 仍失敗於 `R02E01.empty_subset`，這是尚未完成的全書義務，不豁免最終門檻。遠端 CI 未執行。本計畫尚未完成並繼續保留。
+
+### Third execution batch (2026-10-22)
+
+- Completed the remaining 29 exercises in Chapter 2. The chapter now has 30/30 verified resolutions and 71/71 verified obligations. The book total is 55/287 resolutions and 142/847 obligations; 232 exercises and 705 obligations remain open.
+- Of the 55 resolutions, 52 prove the source claim as stated and 3 retain a refutation and explicit correction. The third correction is the bounded-only reading of R02E29. Its extended interval convention is stated separately. R02E28 preserves Rudin's countably-infinite convention; its empty-set check is a translation check, not a source erratum.
+- Every new exercise passed independent page-to-type review, single-file compilation, default project build, coverage and origin checks, and the proof-body axiom audit. The full current audit covers 991 local declarations and 185 delivery references. All 23 regression tests pass.
+- Added a boundary-stable orientation quotient, fixed-degree boundaries, affine face comparisons, signed square/cube identities, and actual parameterized-square/Möbius seam multiplicities. Independent model checks prove infinite-order generators and retained seam multiplicity. General smooth simplex chains, geometric orientation/coverage, form integration and comparison with Rudin remain open; P3 is not complete.
+- An isolated source copy ran `lake exe cache get` and `./scripts/check.sh` successfully with fresh project outputs, reusing only the pinned dependency cache. The cache confirmed all 9031 entries. This is batch validation, not full-book acceptance.
+- `./scripts/check.sh --final` still fails correctly at `R03E01.absolute_values`. Remote CI has not run. This plan remains active and must be retained.
+
+### Fourth execution batch (2026-10-22)
+
+- Completed the remaining 24 exercises in Chapter 3. The chapter now has 25/25 resolutions and 89/89 obligations. The book total is 79/287 resolutions and 223/848 obligations; 208 exercises and 625 obligations remain open.
+- Added one source-backed obligation for R03E14(e): the printed strict estimate fails for the allowed bound `M=0`. The constant-sequence obstruction, non-strict correction and strict `M>0` result are proved. The final Tauberian converse remains valid. All ten original obligations remain.
+- Of the 79 resolutions, 75 are as stated and 4 retain a refutation/correction. R03E06 separates undefined parameters from divergence. R03E18 retains the inherited square-root starting bound and the possible first-step overshoot. Ordinary conditional series are not replaced by unconditional `Summable` assumptions.
+- Independent page/type reviews cover every new obligation. Default project checks and an isolated-source rebuild pass for 1356 local declarations, 280 delivery references and 23 regression tests. The isolated copy ran `lake exe cache get`, `lake build`, and `./scripts/check.sh` with fresh project outputs and only the pinned dependency cache reused.
+- The first integration audit rejected generated unsafe recursion helpers in the three Newton iterations. Explicit `Nat.rec` definitions and safe equations remove them. Final independent review and the unchanged strict project gate pass; no exception was added.
+- `./scripts/check.sh --final` still fails correctly at `R04E01.symmetric_difference_converse`. Remote CI has not run. General Chapter 10 integration infrastructure and all remaining chapters stay open; this plan is retained.
+
+### Fifth execution batch (2026-10-22)
+
+- Completed Chapter 4: 26/26 resolutions and 74/74 obligations. The book total is 105/287 resolutions and 297/848 obligations; 182 exercises and 551 obligations remain open. Of the completed resolutions, 101 are as stated and 4 retain refutations/corrections.
+- Every new exercise has independent page-to-type review, compilation and current project evidence. Includes all affine-line counterexamples, explicit Cauchy-sequence extension, rational triples for all simple discontinuities, literal Thomae values, complete-range cases, extended-diameter conventions and required compact-subsequence arguments. R04E09's convention is resolved without a source-refutation count.
+- Added real Stieltjes algebra, absolute-value existence/bounds and full interval joining/restriction with raw endpoints. Added genuine path-quotient integration, actual exterior-derivative comparison and a source-Darboux boundary identity. Independent review passed both modules, with 30 and 22 additional model checks respectively. No Chapter 6 or general Chapter 10 exercise is counted complete from infrastructure alone.
+- `./scripts/check.sh` and an isolated-source rebuild pass: 1692 local declarations, 367 delivery references and 23 regression tests. The isolated copy ran cache retrieval, the default build and the shared check entry point with fresh project outputs. All nine dependency checkouts match the locked revisions and have clean worktrees.
+- `./scripts/check.sh --final` still fails correctly at `R05E01.constant`. Remote CI has not run. Products/complex Stieltjes integrands, improper limits, general smooth simplex integration and higher-dimensional Stokes remain open. This plan remains active.
+
+### Sixth execution batch (2026-10-22)
+
+- Completed Chapter 5: 29/29 resolutions and 84/84 obligations. The book total is 134/287 resolutions and 381/848 obligations; 153 exercises and 467 obligations remain open. Of the completed resolutions, 128 are as stated and 6 retain obstructions/refutations and corrections.
+- Independent source/type/body reviews cover every new obligation. Closed-interval derivatives remain one-sided. Genuine derivative jets prevent default-zero higher-derivative shortcuts. Includes all seven sharp oscillatory thresholds, exact Landau suprema and vector bounds, actual fixed-point orbits and diagrams, full Newton termination corrections, and complete forward square-root ODE classification and system uniqueness.
+- R05E13 retains the printed negative-base obstruction and proves the explicitly labelled absolute-power correction. R05E25 retains the affine termination counterexample, absorbing iteration and separate zero-curvature estimates. A follow-up review verifies that R05E24's two comment changes clarify scalar side reversal without changing any proof or contract.
+- Added continuous composition and product existence for raw Stieltjes integrals, plus actual complex tagged sums, component equivalence, norm integrability/bounds, algebra and full interval splitting. Independent reviews include 35 and 33 model checks. General discontinuous-integrand measure comparisons, vector integrands, improper integration and integration by parts remain open.
+- Current project and isolated-source checks pass: 2241 local declarations, 504 delivery references and 23 regression tests. The isolated copy retrieved the locked cache, rebuilt fresh project outputs, and ran the shared check entry point. All nine dependency revisions match the manifest and have clean worktrees. These audit counts include R06E02, which remains in_progress and is not counted complete.
+- `./scripts/check.sh --final` still fails correctly at `R06E02.vanishing`. Remote CI has not run. Chapter 6 work has started; Chapters 7–11 and the remaining geometric infrastructure stay open. This plan remains active.
 
 ## Architecture
 
@@ -144,11 +179,11 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 
 - [x] 調查鎖定 Mathlib 的章別支援，建立「可直接用／需橋接／需新增」對照；驗收：每項引用有實際 source path 與可編譯使用例，特別涵蓋 Dedekind cuts、metric completion、Riemann–Stieltjes integral、ODE、Fourier／Gamma、differential forms／Stokes 及 `Lp`。證據：`docs/rudin/mathlib-coverage.md` 的來源對照與 `Support/ApiExamples.lean` 已編譯、納入根 imports 及全專案公理檢查；不宣稱已逐題完成 API 選型。
 - [x] 建立第 6 章積分表示法的可編譯 prototype；驗收：明確說明表示法如何涵蓋 Rudin 的 monotone integrator、discontinuities 與 endpoint conventions，完成一個等價性或適用條件下的橋接結果。證據：literal weak-partition Darboux sums、完整 Darboux／tagged equivalence、raw interval-monotone integrator 的 continuous-integrand existence，以及 `StieltjesFunction ℝ` 下的 continuous real-integrand measure bridge 均已編譯並獨立覆核，涵蓋 singleton、zero mass、repeated nodes 與左右端點 atom 慣例。一般 raw normalization／endpoint correction 與 discontinuous integrand bridge 仍未完成，既有反例繼續禁止無條件替換。
-- [ ] 建立第 10 章所需基礎設施的可編譯 prototype；驗收：按實際習題需求檢查 differential forms、pullback、exterior derivative、chains、orientation 與 integration 的表示法，完成一個非平凡運算及一個實際所需的 integration／boundary identity，列出尚缺定理與相依順序。不預設 Mathlib 已具備整套 Stokes theory。進度：實際 `extDeriv` 計算與 segment／rectangle boundary identities 已編譯；一般 chains、simplex integration 與書中積分的比較仍未完成。
+- [ ] 建立第 10 章所需基礎設施的可編譯 prototype；驗收：按實際習題需求檢查 differential forms、pullback、exterior derivative、chains、orientation 與 integration 的表示法，完成一個非平凡運算及一個實際所需的 integration／boundary identity，列出尚缺定理與相依順序。不預設 Mathlib 已具備整套 Stokes theory。Progress: actual `extDeriv` computations and segment/rectangle boundary identities compile. The orientation quotient, fixed degrees, affine faces and parameterized-square boundaries now pass independent review. The new path-only integration/source-Darboux comparison also passes review and project checks. General smooth simplex chains, higher-dimensional simplex integration and their Rudin comparisons remain open.
 - [x] 補齊第 6 章 partitions 的 common refinement、sum bounds 與 Darboux／tagged equivalence；驗收：有不依賴待證結論的 Lean 定理，並以定值及點支撐 integrand 檢查表示法。證據：`StieltjesRefinement.lean` 的 exact node-union refinement、sum／refinement bounds 與 `StieltjesEquivalence.lean` 的 actual predicate iff 通過獨立覆核及全專案檢查；regression 包含定值、pointSpike、singleton、zero increment、repeated nodes 及 extrema 不取得的例子。
 - [x] 建立第 6 章非定值 integrand 的積分橋接及必要 jump／endpoint 條件；驗收：至少覆蓋 continuous integrands 並形式化比較，既有端點反例仍成立，不放寬信任條件。證據：`StieltjesMeasureBridge.continuous_bridge` 在 explicit right-continuous `StieltjesFunction ℝ`、`a ≤ b`、`ContinuousOn f (Icc a b)` 下證明 actual Darboux integral 與 `(a,b]` measure integral 相同；非定值、terminal jump、initial atom 排除、singleton／zero mass 測試通過。獨立覆核 final SHA256 `2e59487e32734474713a6d4e7f8f43e1b62d0e84010c5134d6a18271a1f6f37a`；不宣稱任意 raw integrator 的 measure comparison。
-- [ ] 建立第 10 章所需的 signed affine／parameterized chains 與 face maps；驗收：證明 `∂² = 0`、面抵消與 multiplicity，並對照第 16–19、32 題的義務。進度：`Support/OrderedChains.lean` 已證明 raw ordered vertex chains 的 alternating deletion formula、`∂² = 0`、multiplicity 與 vertex-map 相容；fixed degree、orientation relation、affine／smooth realization 及積分比較尚未完成，不能將 raw reversed edges 當作相消。
-- [ ] 建立第 10 章 forms 的 pullback／simplex integration 與 Rudin 積分的比較；驗收：在所需規則性與方向條件下證明比較和 boundary identities，不用已假設的 Stokes identity 證明自身。
+- [ ] 建立第 10 章所需的 signed affine／parameterized chains 與 face maps；驗收：證明 `∂² = 0`、面抵消與 multiplicity，並對照第 16–19、32 題的義務。Progress: `OrderedChains.lean` retains the raw augmented model. `OrientedChains.lean` adds a proved boundary-stable orientation quotient, fixed degrees, affine realization and face maps, square/cube signs and actual parameterized-square/Möbius multiplicities. `OrientedChainChecks.lean` proves nontriviality and coordinate-insertion signs. General smooth simplex chains, geometric coverage/orientation, square-triangulation comparison and integration remain open. Raw reversed edges are not identified without the quotient.
+- [ ] 建立第 10 章 forms 的 pullback／simplex integration 與 Rudin 積分的比較；驗收：在所需規則性與方向條件下證明比較和 boundary identities，不用已假設的 Stokes identity 證明自身。 Progress: `PathIntegration.lean` proves the path-only coefficient, quotient integral, actual exterior-derivative boundary identity and continuous-coefficient Darboux bridge. Higher-dimensional simplexes and general reparameterization remain open.
 - [x] 完成代表題 `R01E01`、`R02E02`、`R03E24`、`R06E01`、`R09E01`、`R11E01` 的全部義務；驗收：每題語義覆核、編譯、公理檢查及清單對照均通過。證據：六題共 15 個義務均為 `verified`；獨立覆核確認實際 Cauchy-sequence quotient 與完備化橋接，以及實際 Darboux 積分。R06E01 首輪發現嚴格 partition／零長區間漏列，已修正成 weak partition 與 `a ≤ b`，第二輪獨立覆核、singleton／endpoint 測試及整合檢查均通過。
 - [x] 根據 prototype 與代表題更新此計畫、共用表示法及章別工作量；驗收：重大缺口拆成可執行任務，未解決的正確性問題明確阻塞受影響題目，時程估計只依實測分類，不宣稱各題成本相同。證據：更新 `formalization.md`、`mathlib-coverage.md` 與 P3 相依任務，並完成來源契約分類。工作量分為現成 lemma 題組、需明確構造／比較定理的題組、Darboux／measure 基礎設施、oriented parameterized chain／integration 基礎設施；依第 1 章與兩類 prototype 的實作證據分類，不給未量測的全書工期。
 
@@ -162,10 +197,10 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 以下每項均只處理尚未完成的題目；P3、P4 的成果不重複計數。章順序是預設順序，實際以清單中的題目相依關係為準。每批以 3–5 題為起點，大型構造題單獨處理。
 
 - [x] 完成第 1 章 1–20 題；驗收：全部子義務通過本節的逐批門檻，包含複數根、等號條件、維度分類與修改 cuts 定義的構造。證據：20／20 題、55／55 個義務已完成單檔編譯、獨立來源／型別覆核與第二批整合公理檢查；19 題按原敘述證明，R01E19 以反例與修正版完成。根 imports 已涵蓋所有 20 題。
-- [ ] 完成第 2 章 1–30 題；驗收：全部子義務通過逐批門檻，並明確區分有限、至多可數與可數無限。
-- [ ] 完成第 3 章 1–25 題；驗收：全部子義務通過逐批門檻，包含完備化構造、稠密嵌入與相關識別結果。
-- [ ] 完成第 4 章 1–26 題；驗收：全部子義務通過逐批門檻，逆命題及移除假設的問題均有判定與所需反例。
-- [ ] 完成第 5 章 1–29 題；驗收：全部子義務通過逐批門檻，端點導數、ODE uniqueness 與指定初始條件語義一致。
+- [x] 完成第 2 章 1–30 題；驗收：全部子義務通過逐批門檻，並明確區分有限、至多可數與可數無限。 Evidence: 30/30 exercises and 71/71 obligations passed independent source/type review, compilation, project and isolated-source checks. R02E29 retains the bounded-segment obstruction and explicit extended-interval correction; R02E28 keeps the source countably-infinite convention. Actual decimal4/7 expansions, irrational perfect-set construction and the required nested-ball Baire proof are included.
+- [x] 完成第 3 章 1–25 題；驗收：全部子義務通過逐批門檻，包含完備化構造、稠密嵌入與相關識別結果。 Evidence: 25/25 resolutions and 89/89 obligations pass independent source/type review, compilation, full project and isolated-source checks. Includes ordinary conditional series, full Tauberian outline, vector-series extensions, Newton classifications, literal Cantor digits and the actual quotient completion of the rationals. R03E14's added source obstruction is retained.
+- [x] 完成第 4 章 1–26 題；驗收：全部子義務通過逐批門檻，逆命題及移除假設的問題均有判定與所需反例。 Evidence: all 26 resolutions and 74 obligations pass independent source/type review, full project checks and isolated-source rebuild. R04E05 also covers the arbitrary metric domain stated in the source; R04E26's optional forward helpers add no source obligations.
+- [x] 完成第 5 章 1–29 題；驗收：全部子義務通過逐批門檻，端點導數、ODE uniqueness 與指定初始條件語義一致。 Evidence: all 29 resolutions and 84 obligations pass independent source/type/body reviews, default project checks and isolated-source rebuilding. Actual one-sided derivative chains, every initial datum, complete ODE waiting-time classification, sharp threshold equality cases, and both explicit source corrections are retained.
 - [ ] 完成第 6 章 1–19 題；驗收：全部子義務通過逐批門檻，積分存在性、積分值及 rectifiable curves 的要求均有對應結果。
 - [ ] 完成第 7 章 1–26 題；驗收：全部子義務通過逐批門檻，uniform convergence、equicontinuity 與 ODE existence 的型別及定義域一致。
 - [ ] 完成第 8 章 1–31 題；驗收：全部子義務通過逐批門檻，涵蓋 Fourier、Gamma、winding number、fixed point 與 asymptotics，不只完成初等函數題。
@@ -189,11 +224,11 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 
 ## Completion Checklist
 
-- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。證據：`exercises.json` 的 287 題／847 個義務與 `source.md`；初版 839 加上來源釐清補足的 8 個義務，差異依據見 `source-clarifications.md`。這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
+- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。Evidence: `exercises.json` and `source.md` record 287 exercises and 848 obligations: the initial 839, eight source-clarification checks, and R03E14's zero-bound obstruction. Changes are justified in `source-clarifications.md`.這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
 - [ ] 全部義務均為 `verified`，沒有 `todo`、`in_progress`、`blocked` 或未完成的構造／追問。
 - [ ] 原題不成立的情況有 Lean 反例與標示清楚的正確替代結果；沒有將錯誤原命題計為已證明。
-- [x] 全部目前交付模組納入預設建置；不存在以未匯入檔案隱藏未完成證明的情況。證據：第二批新增 18 題及 4 個 Support 模組後，source import closure 與實際 Lean environment 模組檢查、預設建置及隔離來源副本重建均通過；新增檔案後須重跑。
-- [x] 全部目前交付與 Support declarations 通過公理檢查，無佔位證明、自訂公理或未授權的信任擴充。證據：第二批全專案與隔離副本檢查均通過 538 個 declaration、104 個交付參照，只含標準三個公理。OrderedChains 首輪發現的編譯器 unsafe recursion helper 已用 explicit `List.rec` 消除；未放寬檢查規則。新增或修改來源後須重跑。
+- [ ] 全部目前交付模組納入預設建置；不存在以未匯入檔案隱藏未完成證明的情況。 Sixth-batch checks pass for all 135 integrated exercise modules, including the unfinished R06E02. Kept open while new Chapter 6 sources are developed and await root integration.
+- [ ] 全部目前交付與 Support declarations 通過公理檢查，無佔位證明、自訂公理或未授權的信任擴充。 Sixth-batch project and isolated-copy audits pass for 2241 local declarations and 504 references. Kept open for new Chapter 6 sources; no unsafe, partial or nonstandard-axiom exception is permitted.
 - [ ] 逐題語義覆核與第二輪全書覆核均有記錄，所有重大正確性疑問已解決。
 - [ ] 乾淨環境的全專案建置與最終檢查通過；本機與 CI 使用相同檢查入口，遠端 CI 執行結果若尚未取得則明確記錄，不宣稱已通過。
 - [ ] 文件足以重建、定位題目及理解敘述差異，未提交教材 PDF、整本 OCR 或其他非必要二進位檔。

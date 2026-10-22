@@ -9,6 +9,21 @@ marking an obligation verified. Compilation alone does not establish fidelity.
 - Use Mathlib results from the pinned revision. Later textbook results are
   allowed unless the exercise specifies a construction or proof method.
 - Use `EuclideanSpace ℝ (Fin n)` when the Euclidean norm matters.
+- On a closed interval, use within derivatives at the endpoints when the
+  source permits one-sided derivatives. Do not add ambient differentiability.
+- State genuine lower-derivative existence on the required domain before
+  using higher derivatives. Total `deriv` and `fderiv` can return zero where
+  no derivative exists; this is not proof of differentiability.
+  - Explicit derivative jets must connect every successive order by
+    `HasDerivAt` or `HasDerivWithinAt`.
+  - Do not replace existence of a highest derivative by `ContDiff` unless the
+    source permits the additional continuity or the proof derives it.
+- Numerical series convergence means convergence of ordered natural partial
+  sums. Mathlib `Summable` means unconditional summability. Do not use it as
+  a stronger input for a conditionally convergent real or complex series.
+  - A nonnegative-series or absolute-convergence bridge must be proved before
+    replacing the source predicate by `Summable`.
+  - A proved `Summable` conclusion can supply ordered convergence.
 - Distinguish convergence at every point from convergence almost everywhere.
 - Distinguish functions from equivalence classes in `MeasureTheory.Lp`.
 - For a Bochner integral, state integrability or prove it. A non-integrable
@@ -25,6 +40,11 @@ marking an obligation verified. Compilation alone does not establish fidelity.
 - Use literal ordered-chain results only within their stated scope. Raw vertex
   lists do not impose orientation signs, and mapping vertices is not nonlinear
   postcomposition of a parameterized surface.
+  - `OrientedChains` proves an orientation quotient and affine face comparison.
+    Its nonlinear API covers paths and parameterized squares, not general
+    smooth simplex chains or integration functionals.
+  - Keep the ordinary degree-zero boundary separate from augmentation. Do not
+    treat a parameterized Möbius boundary as its geometric edge.
 
 ## Proof trust
 

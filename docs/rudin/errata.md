@@ -20,6 +20,87 @@ review, compilation, and the project axiom checks.
   unrestricted positive-radius claim. See `exercises.json` for review evidence
   and source/environment fingerprints.
 
+## R02E28: countability translation
+
+- Source: book page 45, PDF page 54; Definition 2.4 distinguishes countably
+  infinite from finite-or-countable sets.
+- The source corollary already excludes the empty set under its own convention.
+  `exercise28_source` uses countability and infinitude. This is not a source
+  refutation.
+- `exercise28_nonempty` proves the stronger at-most-countable result with an
+  explicit nonempty hypothesis. `exercise28_empty` refutes the translation
+  without that hypothesis. `exercise28_decomposition` includes empty sets.
+- Status: verified convention and translation check; counted as stated.
+
+## R02E29: bounded segments do not cover the line disjointly
+
+- Source: book page 45, PDF page 54. Definition 2.17 displays finite real
+  endpoints. Later usage on book page 278 permits unbounded segments.
+- `exercise29_bounded_segment_obstruction` proves that the open connected
+  whole real line cannot be covered by any pairwise-disjoint family of
+  finite-endpoint open segments. Countability does not repair that reading.
+- `exercise29_open_interval_decomposition` constructs the countable family
+  of nonempty open connected components. Each is a bounded interval, an open
+  ray, or the whole line. `exercise29_source_segments` uses this explicitly
+  extended convention; the empty input uses the empty family.
+- Status: verified refutation of the bounded-only reading and explicit
+  extended-interval correction. Counted as refuted/corrected, not as proof of
+  the finite-endpoint claim. This does not refute the later extended usage.
+
+## R03E14(e): zero bound in the strict intermediate estimate
+
+- Source: book page 80, PDF page 89; primary page image checked.
+- The outline prints `|s_n-s_i| < M*epsilon`, but permits `M=0`.
+  `exercise14_e_zero_bound_obstruction` uses the constant zero sequence and
+  proves strict failure for every positive final index with the prescribed
+  floor index. All bound and mean-convergence assumptions hold.
+- `exercise14_e_index_estimate` proves `<= M*epsilon` without a stronger
+  assumption. `exercise14_e_index_estimate_strict` proves the printed strict
+  inequality under the separately stated `M>0` hypothesis.
+- Status: verified refutation and correction of the intermediate estimate.
+  The final Tauberian converse is valid and proved by the required outline.
+  All ten original obligations remain; the new obstruction is an eleventh
+  obligation. The inventory denominator is 848.
+
+## R05E13: real powers on negative inputs
+
+- Source: book page 115, PDF page 124; the image prints `x^a`, not `|x|^a`.
+  Rudin's real-power construction does not define arbitrary real powers on
+  negative inputs. `exercise13_domain_obstruction` proves that no real square
+  root of `-1` exists, covering the allowed choice `a=1/2`, `x=-1`.
+- The explicitly corrected `exercise13F` uses `|x|^a` off zero and value zero
+  at zero. `exercise13_a` through `exercise13_g` prove all seven sharp
+  thresholds for `c>0`: `a>0`, `a>1`, `a>=1+c`, `a>1+c`, `a>2+c`,
+  `a>=2+2c`, and `a>2+2c`, respectively.
+- Derivative assertions include genuine existence and one-sided endpoint
+  derivatives. `exercise13_e_local_iff_interval` connects the local
+  second-derivative condition to interval witnesses. The two equality-case
+  theorems prove boundedness without continuity at the non-strict thresholds.
+- Status: verified domain obstruction and explicit correction, not an OCR
+  repair or proof of the printed arbitrary-real-power formula. All names are
+  in `Rudin.Chapter05`.
+
+## R05E25: finite Newton termination and zero curvature
+
+- Source: book page 118, PDF page 127. The printed all-step strict descent
+  fails after termination; its interior Taylor interval then becomes empty.
+  `exercise25_termination_counterexample` verifies an admissible affine
+  example and proves both failures.
+- The actual infinite iteration absorbs the root. `exercise25_iteration`,
+  `exercise25_strict_step`, and `exercise25_convergence` prove its invariant,
+  weak descent, strict descent off the root, and convergence. The Taylor
+  theorem is split into off-root and terminated cases.
+- `exercise25_denominator_free` includes zero curvature. The printed form
+  requires `A>0`; `exercise25_zero_A_termination` proves immediate termination
+  at `A=0`. `exercise25_zero_bound_domain_obstruction` proves that zero has
+  no multiplicative inverse, rather than using totalized division.
+- Both derivatives are genuine within derivatives on the closed interval.
+  No continuity of the second derivative is assumed. The source starts in
+  `(xi,b)`; the verified construction also permits `x_1=b`.
+- Status: verified refutation and correction of the affected subclaims.
+  Root, tangent, derivative, and cube-root questions remain included and are
+  proved. All names are in `Rudin.Chapter05`.
+
 ## R11E18: equality case with a zero first function
 
 - Source: book page 334, PDF page 343; page image checked.
@@ -43,5 +124,5 @@ review, compilation, and the project axiom checks.
 Other source questions are retained in `exercises.json` and the generated
 [progress report](progress.md). They include possible false claims, notation
 problems, quotient conventions, and open-ended scope. A pending issue is not
-an established erratum. No unresolved issue is waived by the two corrections
-above.
+an established erratum. No unresolved issue is waived by the verified
+resolutions above.

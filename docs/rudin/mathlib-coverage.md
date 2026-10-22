@@ -86,14 +86,63 @@ The measure bridge explicitly uses the integrator's right continuity. It
 does not normalize an arbitrary raw integrator without correction. The
 existing endpoint counterexample still refutes that shortcut.
 
+### Algebra and interval splitting
+
+`Support/StieltjesIntegralLaws.lean` proves real-integrand algebra for both
+literal predicates: addition, arbitrary real scaling, negation, subtraction,
+interval-wise congruence, order and bounds. Integrator addition and nonnegative
+scaling preserve raw integrator values. Absolute-value integrability is proved
+by a cell-gap contraction and a genuine small-gap existence criterion; the
+absolute integral bound does not assume the missing integral exists.
+
+Partition concatenation proves joining. Filtered vertices and inserted cut
+points give genuine weak partitions for restriction. Cut/rejoin refinement
+bounds each restricted gap by the original gap, so full splitting constructs
+both restricted integrals and proves value additivity. Endpoint cuts, singleton
+intervals, repeated nodes and jumps at the cut are included. Bounded integrands
+with zero raw mass need no continuity assumption.
+
+Independent review passed at SHA256
+`7e0de819804fcb97aed6ce7f520657775322e6822803dd2868ce380d7cee2d24`.
+The reviewer compiled 30 independent model checks, including a discontinuous
+endpoint-integrand counterexample that forbids an unconditional measure bridge.
+These are real foundations for Theorem 6.12(a–e) and 6.13(b), not completion of
+any remaining exercise. The composition and complex results below extend
+this foundation. Vector integrands, integration by parts and improper arguments
+remain open.
+
+### Continuous composition, products and complex values
+
+`Support/StieltjesComposition.lean` proves an affine cell-oscillation gap
+estimate. Compact-range uniform continuity then proves actual integrability
+of `phi ∘ f` without continuity of `f`. Squares, products by polarization,
+natural powers including zero, and tagged versions follow from proved laws.
+This supplies Rudin 6.11 and 6.13(a), not a measure substitution.
+Independent review passed 35 model checks, including square root on a range
+where it is not Lipschitz. Final SHA256:
+`92e56ea46a1f7927d5778178096f6531ed888c9511097d33475c6c20089732e1`.
+
+`Support/StieltjesComplex.lean` defines actual complex tagged sums and norm
+convergence over the same weak partitions. The real/imaginary component iff
+is proved. It gives uniqueness, complex algebra, conjugation, product and norm
+integrability, the integral norm inequality, integrator laws and full interval
+splitting. The norm construction uses real squares and square-root composition;
+it does not assume that the norm is integrable. Independent review passed
+33 boundary checks. Final SHA256:
+`f42959dd681c290793461d59de971570431c26e3c74dda32ee4a3ebdc65d6dfe`.
+
+Both modules retain raw integrator values, repeated nodes, singleton intervals
+and zero mass. Neither supplies a general discontinuous-integrand measure
+bridge, improper integration, or a general vector-valued predicate.
+
 Remaining Chapter 6 work, as required by the exercises:
 
 1. Extend measure comparisons only where needed to compact-interval raw
    integrators, with proved normalization and endpoint corrections.
 2. State and prove jump-compatibility conditions for more general or
    discontinuous integrands before using measure identification.
-3. Add complex/vector-valued integrands and the remaining exercise-specific
-   integral laws. `Chapter06/Exercise01.lean` already proves the point-supported
+3. Add the needed vector-valued integrands, integration by parts, improper
+   limits and remaining exercise-specific integral laws. `Chapter06/Exercise01.lean` already proves the point-supported
    result directly from Darboux sums, including endpoints and `a=b`.
 
 Completion status is recorded only in the registry and progress report.
@@ -134,17 +183,86 @@ orientation-permutation relation. Reversed raw edges therefore do not cancel
 as they do after Rudin's orientation/integration comparison. Mapping vertices
 is not nonlinear postcomposition of affine surfaces. Fixed-degree chains,
 affine and smooth parameterization, orientation relations, and integration
-comparisons remain open. This foundation is not a completed Chapter 10
-exercise or a general Stokes theorem.
+comparisons are not part of this raw model. The separate oriented model below
+adds some of these structures. Neither model alone completes a Chapter 10
+exercise or supplies a general Stokes theorem.
 
 The compiler-generated unsafe recursion helper reported during review was
 removed by expressing the recursion through `List.rec`. The unchanged project
 audit then passed; no unsafe-declaration exception was added.
 
+### Oriented chains and parameterized squares
+
+`Support/OrientedChains.lean` quotients raw vertex chains by adjacent swaps
+and repeated-vertex relations. It proves that the boundary preserves these
+relations before defining the quotient boundary. Homogeneous subgroups give
+fixed vertex counts and dimensions, with typed boundaries and `∂² = 0`.
+The ordinary boundary of a zero-dimensional chain is zero; the augmented
+boundary is kept separate. Square and six-tetrahedron cube identities retain
+signs and integer multiplicity.
+
+Barycentric realization and zero-coordinate face inclusions give an actual
+affine comparison. Cartesian parameters recover Rudin's formula (76).
+Nonlinear postcomposition acts on the full parameterized maps, not merely
+their vertices.
+
+The separate `Parametric` API uses actual paths and maps from the parameter
+plane. Path reversal and constant paths define a quotient; square boundaries
+are sums of four restricted paths. Boundary-square-zero and postcomposition
+naturality are proved. The actual Möbius parameterization has a proved seam
+identity and the boundary `Γ₁ + Γ₃ + 2Γ₂`. This is not a claim about its
+geometric edge or its integrals.
+
+`Support/OrientedChainChecks.lean` retains independently developed model
+checks. Exterior-algebra evaluation proves infinite order for simplex
+generators in every vertex degree, so the quotient equations are not vacuous.
+It also checks the six coordinate-insertion cube-face signs, a nonadjacent
+repeated vertex, a nonzero segment, and `2Γ₂ ≠ Γ₂` for a nonzero band width.
+
+Independent source/type review and the project proof-body audit passed.
+The reviewed `OrientedChains.lean` SHA256 is
+`6ea0aab7581897268da9356dd4bea40d705e19a30ac661a7fdd2fd2f52910a1a`.
+The model still has these limits:
+
+- Homogeneous subgroups are not proved to form an internal direct sum.
+- Arbitrary permutation signs are not packaged as a general theorem.
+- Paths are full real-domain maps, identified by reversal and constants, not
+  by equality restricted to `[0,1]` or by integration functionals.
+- No regularity is bundled. General smooth parameterized simplex chains and
+  the comparison of square parameterizations with affine triangulations are
+  not implemented.
+- Determinants, geometric coverage, positive orientation, the remaining
+  Möbius geometry, and all form-integration comparisons remain open.
+
+### Path integration and a source-integral comparison
+
+`Support/PathIntegration.lean` uses the actual coefficient
+`ω(p(t))(deriv p t)`. Reversal and constant-path identities prove descent to the
+existing signed path quotient. The alternating-map representation is connected
+to continuous linear 1-forms; the exterior derivative of an actual scalar
+0-form is compared with `fderiv`.
+
+The differentiable-potential theorem identifies the integral with evaluation
+on the actual endpoint boundary. With a continuous coefficient, the identity
+integrator bridge proves the literal Darboux integral. A quadratic affine-path
+example proves both the chain value and the Darboux result `b²-a²`, including
+reversal and constant paths, without remaining regularity hypotheses.
+
+The total integral and derivative defaults are explicit: nonintegrable
+coefficients and missing derivatives can produce zero. The scalar-coefficient
+bridge alone does not certify a differentiable source path. The actual
+exterior-boundary comparison includes the required derivative hypotheses.
+
+Independent review passed at SHA256
+`62191f3c70fbea6d116aadf3603cb914e6ee2cd48bd664daa3b2603c4ab17c24`,
+with a fresh local import closure and 22 independent checks. This is a
+path-only bridge, not general simplex integration, arbitrary
+reparameterization or higher-dimensional Stokes.
+
 Remaining Chapter 10 work, in dependency order:
 
-1. Fix continuous scalar-valued exterior product, degree indexing, normalization, and Leibniz lemmas.
-2. Add fixed degrees, orientation relations, affine/parameterized realization and signed face comparisons to the proved formal-list boundary. Establish the required square/cube reversed-face cancellations and multiplicities.
+1. Fix continuous scalar-valued exterior product, normalization, and Leibniz lemmas.
+2. Extend the fixed-degree model to the required smooth parameterized simplexes. Prove general permutation signs, square-triangulation comparison, and exercise-specific orientation and coverage results.
 3. Define form integration by pullback on segments, rectangles, and simplexes. Prove change-of-variables and comparison with Rudin's integral conventions.
 4. Extend the proved coordinate-rectangle identity to pullbacks and chains, then to the required exactness and homotopy results.
 5. Treat general domains, outward normals, Green identities, and nonorientable examples separately. No general manifold Stokes theorem is claimed.
@@ -158,6 +276,12 @@ lake env lean Math/Rudin/Support/ApiExamples.lean
 lake env lean Math/Rudin/Support/StieltjesPrototype.lean
 lake env lean Math/Rudin/Support/FormsPrototype.lean
 lake env lean Math/Rudin/Support/OrderedChains.lean
+lake env lean Math/Rudin/Support/OrientedChains.lean
+lake env lean Math/Rudin/Support/OrientedChainChecks.lean
+lake env lean Math/Rudin/Support/PathIntegration.lean
+lake env lean Math/Rudin/Support/StieltjesIntegralLaws.lean
+lake env lean Math/Rudin/Support/StieltjesComposition.lean
+lake env lean Math/Rudin/Support/StieltjesComplex.lean
 lake env lean Math/Rudin/Support/StieltjesRefinement.lean
 lake env lean Math/Rudin/Support/StieltjesEquivalence.lean
 lake env lean Math/Rudin/Support/StieltjesMeasureBridge.lean
@@ -168,6 +292,6 @@ The prototype `#print axioms` commands for the main bridge, endpoint, computatio
 P3 remains open:
 
 - The requested high-risk topics have source and compilation evidence; the complete exercise-by-exercise coverage classification remains open.
-- Chapter 6 has literal weak-partition Darboux sums, full Darboux/tagged equivalence, raw monotone continuous-integrand existence, and a continuous-integrand measure bridge for right-continuous Stieltjes functions. General raw normalization corrections and more general integrands remain open; no unconditional normalization is claimed.
-- Chapter 10 has nontrivial exterior-derivative computations and genuine segment/rectangle boundary identities. Smooth chains, integration comparisons, and the exercise-specific infrastructure remain open.
+- Chapter 6 has literal weak-partition Darboux sums, full Darboux/tagged equivalence, raw monotone continuous-integrand existence, and a continuous-integrand measure bridge for right-continuous Stieltjes functions. Real algebra, absolute values, full interval splitting, continuous composition, products and actual complex tagged integrals are also proved. General raw normalization corrections, discontinuous-integrand measure bridges and vector integrands remain open; no unconditional normalization is claimed.
+- Chapter 10 has nontrivial exterior-derivative computations, genuine segment/rectangle boundary identities, an orientation quotient with fixed degrees and affine faces, and actual parameterized-square/Möbius boundary multiplicities. The path-only integration/source-Darboux bridge is proved. General smooth chains, higher-dimensional integration comparisons, and the remaining geometric exercise requirements remain open.
 - This investigation alone does not certify the six representative exercises. Subsequent source/type reviews, root integration, registry evidence and project-wide checks are tracked in the current plan and progress report. Full-book completion remains open.
