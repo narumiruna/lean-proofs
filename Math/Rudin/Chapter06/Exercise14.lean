@@ -1,6 +1,7 @@
 module
 
 public import Math.Rudin.Chapter06.Exercise13
+public import Math.Rudin.Support.EulerIrrational
 public import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
 public import Mathlib.Topology.Instances.AddCircle.Real
 public import Mathlib.Topology.Algebra.Group.SubmonoidClosure
@@ -250,63 +251,8 @@ theorem exercise14_improper_convergence :
 
 /-- The irrationality needed for the two exponential phase sequences.
 This uses a finite exponential-series remainder bound. -/
-theorem exponential_phase_irrational : Irrational (Real.exp 1) := by
-  rintro ⟨q, hq⟩
-  let N : ℕ := q.den + 2
-  have hN : 2 ≤ N := by dsimp [N]; omega
-  have hfac : (0 : ℝ) < (N.factorial : ℝ) := by positivity
-  let S : ℝ := ∑ i ∈ Finset.range (N + 1), 1 / (i.factorial : ℝ)
-  have hpos : 0 < Real.exp 1 - S := by
-    have h := Real.sum_le_exp_of_nonneg (x := 1) (by norm_num) (N + 2)
-    rw [show N + 2 = (N + 1) + 1 by omega, Finset.sum_range_succ] at h
-    simp only [one_pow] at h
-    have hi : (0 : ℝ) < 1 / ((N + 1).factorial : ℝ) := by positivity
-    dsimp only [S]
-    linarith
-  have herr := Real.exp_bound (x := 1) (n := N + 1) (by norm_num) (by omega)
-  simp only [abs_one, one_pow, one_mul] at herr
-  change |Real.exp 1 - S| ≤ _ at herr
-  rw [abs_of_pos hpos] at herr
-  have hsmall : (N.factorial : ℝ) * (Real.exp 1 - S) < 1 := by
-    calc
-      _ ≤ (N.factorial : ℝ) * ((N + 1).succ / (((N + 1).factorial : ℝ) * (N + 1))) :=
-        by simpa only [Nat.cast_add, Nat.cast_one] using
-          mul_le_mul_of_nonneg_left herr hfac.le
-      _ = ((N : ℝ) + 2) / ((N : ℝ) + 1) ^ 2 := by
-        simp only [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one, Nat.succ_eq_add_one]
-        field_simp
-        ring
-      _ < 1 := (div_lt_one (by positivity)).mpr (by
-        have hNr : (2 : ℝ) ≤ N := by exact_mod_cast hN
-        nlinarith)
-  have hden : q.den ∣ N.factorial := Nat.dvd_factorial (Rat.den_pos q) (by dsimp [N]; omega)
-  obtain ⟨k, hk⟩ := hden
-  have hkR : (N.factorial : ℝ) = (q.den : ℝ) * k := by exact_mod_cast hk
-  have hqint : ((q.num * (k : ℤ) : ℤ) : ℝ) = (N.factorial : ℝ) * Real.exp 1 := by
-    rw [← hq, Rat.cast_def, hkR]
-    push_cast
-    field_simp
-  let K : ℕ := ∑ i ∈ Finset.range (N + 1), N.factorial / i.factorial
-  have hsum : (K : ℝ) = (N.factorial : ℝ) * S := by
-    dsimp only [K, S]
-    rw [Nat.cast_sum, Finset.mul_sum]
-    apply Finset.sum_congr rfl
-    intro i hi
-    have hiN : i ≤ N := by have := Finset.mem_range.mp hi; omega
-    rw [Nat.cast_div (Nat.factorial_dvd_factorial hiN) (by positivity : (i.factorial : ℝ) ≠ 0)]
-    ring
-  let z : ℤ := q.num * (k : ℤ) - (K : ℤ)
-  have hz : (z : ℝ) = (N.factorial : ℝ) * (Real.exp 1 - S) := by
-    dsimp only [z]
-    rw [Int.cast_sub, hqint, Int.cast_natCast, hsum]
-    ring
-  have hzpos : (0 : ℤ) < z := by
-    have : (0 : ℝ) < z := by rw [hz]; exact mul_pos hfac hpos
-    exact_mod_cast this
-  have hzlt : z < (1 : ℤ) := by
-    have : (z : ℝ) < 1 := by rwa [hz]
-    exact_mod_cast this
-  omega
+theorem exponential_phase_irrational : Irrational (Real.exp 1) :=
+  Rudin.Support.EulerIrrational.irrational_exp_one
 
 /-- Irrational rotation supplies genuine phase sequences in every required
 phase class. The first cosine is exact and the second approaches its target. -/

@@ -1,5 +1,6 @@
 module
 
+public import Math.Rudin.Chapter06.Exercise01
 public import Math.Rudin.Support.StieltjesMeasureBridge
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 
@@ -48,5 +49,24 @@ theorem exercise02_singleton_obstruction (a : ℝ) :
   intro h
   have := h a ⟨le_rfl, le_rfl⟩
   norm_num at this
+
+/-- The requested comparison with Exercise 1: without continuity of the
+integrand, a nonnegative nonzero function can have zero ordinary integral. -/
+theorem exercise02_comparison :
+    (∀ x ∈ Icc (0 : ℝ) 1, 0 ≤ pointSpike (1 / 2) x) ∧
+    HasDarbouxRSIntegral (pointSpike (1 / 2)) id 0 1 0 ∧
+    pointSpike (1 / 2) (1 / 2) = 1 ∧
+    ¬ ContinuousOn (pointSpike (1 / 2)) (Icc (0 : ℝ) 1) := by
+  have hn : ∀ x ∈ Icc (0 : ℝ) 1, 0 ≤ pointSpike (1 / 2) x := by
+    intro x _
+    unfold pointSpike
+    split_ifs <;> norm_num
+  have hi : HasDarbouxRSIntegral (pointSpike (1 / 2)) id 0 1 0 :=
+    exercise01_of_lt (by norm_num) (by norm_num)
+      (fun _ _ _ _ h => h) continuousWithinAt_id
+  refine ⟨hn, hi, by simp [pointSpike], ?_⟩
+  intro hc
+  have hz := exercise02 (by norm_num) hc hn hi (1 / 2) (by norm_num)
+  norm_num [pointSpike] at hz
 
 end Rudin.Chapter06

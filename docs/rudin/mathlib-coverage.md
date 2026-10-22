@@ -135,14 +135,51 @@ Both modules retain raw integrator values, repeated nodes, singleton intervals
 and zero mass. Neither supplies a general discontinuous-integrand measure
 bridge, improper integration, or a general vector-valued predicate.
 
+### Ordinary Riemann criterion and value comparison
+
+`Support/RiemannIntegrability.lean` proves ordinary results for the identity
+integrator. Bounded functions that are relatively continuous almost everywhere
+have arbitrarily small literal Darboux gaps and an actual Riemann integral.
+Conversely, an arbitrary actual Darboux integral gives `IntervalIntegrable` and
+the same interval-integral value. No measurability or continuity hypothesis is
+added in that converse: measurable step envelopes and an almost-everywhere
+subsequence supply the required measurability.
+
+The step coefficients use closed cells; half-open supports are used only for
+Lebesgue integration. Repeated nodes and singleton intervals are included.
+Monotone and antitone functions have actual ordinary Riemann integrals,
+including jumps. Independent review passed at SHA256
+`5abd6040ef2b9476c70822e8579a8135eea47101e15ec235257992c6b659f614`.
+The rational indicator is an explicit boundary check: it is Lebesgue integrable
+with value zero but is not Riemann integrable. Neither an unconditional converse
+nor invariance under almost-everywhere changes is claimed.
+
+### Raw integration by parts and improper limits
+
+`Support/StieltjesIntegrationByParts.lean` constructs both integrals in
+Exercise 6.17. Actual finite summation by parts and uniform within derivatives
+control the remainder. Refinement preserves the mesh bound, including repeated
+nodes. The integrator is only monotone on the closed interval; it need not be
+continuous. The complex case is reduced to actual real and imaginary derivative
+witnesses, as required by the source hint. The real proof passed independent
+review; the added complex reduction is under follow-up review.
+
+`Chapter06/Exercise07.lean` defines improper integrals by finite limits and
+actual proper Darboux witnesses at every cut. These predicates do not assign a
+value to a divergent integral. Exercises 7–16 now contain the conditional,
+Holder, approximation and oscillatory results; their independent reviews and
+whole-project integration remain in progress. The registry, not this API note,
+determines verified exercise counts.
+
 Remaining Chapter 6 work, as required by the exercises:
 
 1. Extend measure comparisons only where needed to compact-interval raw
    integrators, with proved normalization and endpoint corrections.
 2. State and prove jump-compatibility conditions for more general or
    discontinuous integrands before using measure identification.
-3. Add the needed vector-valued integrands, integration by parts, improper
-   limits and remaining exercise-specific integral laws. `Chapter06/Exercise01.lean` already proves the point-supported
+3. Finish independent reviews and integration checks for the new exercise
+   results. Add further vector-valued integral interfaces only if a remaining
+   exercise requires them. `Chapter06/Exercise01.lean` already proves the point-supported
    result directly from Darboux sums, including endpoints and `a=b`.
 
 Completion status is recorded only in the registry and progress report.
@@ -282,6 +319,8 @@ lake env lean Math/Rudin/Support/PathIntegration.lean
 lake env lean Math/Rudin/Support/StieltjesIntegralLaws.lean
 lake env lean Math/Rudin/Support/StieltjesComposition.lean
 lake env lean Math/Rudin/Support/StieltjesComplex.lean
+lake env lean Math/Rudin/Support/RiemannIntegrability.lean
+lake env lean Math/Rudin/Support/StieltjesIntegrationByParts.lean
 lake env lean Math/Rudin/Support/StieltjesRefinement.lean
 lake env lean Math/Rudin/Support/StieltjesEquivalence.lean
 lake env lean Math/Rudin/Support/StieltjesMeasureBridge.lean

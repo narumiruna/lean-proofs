@@ -155,6 +155,18 @@ theorem exercise04_not_uniform_of_approaches_zero {E : Set ℝ}
   obtain ⟨x, hx, hlt⟩ := hE δ hδ
   exact (not_lt_of_ge (hb x hx)) hlt
 
+/-- Exact failure criterion, including sets which omit zero but approach it. -/
+theorem exercise04_no_uniform_limit_iff (E : Set ℝ) :
+    (¬ ∃ g : ℝ → ℝ, TendstoUniformlyOn exercise04PartialSum g atTop E) ↔
+      ∀ δ > 0, ∃ x ∈ E, |x| < δ := by
+  constructor
+  · intro h δ hδ
+    by_contra hn
+    push Not at hn
+    exact h ⟨exercise04Sum, exercise04_uniform_of_away hδ hn⟩
+  · rintro h ⟨g, hg⟩
+    exact exercise04_not_uniform_of_approaches_zero h g hg
+
 theorem exercise04_uniform_empty :
     TendstoUniformlyOn exercise04PartialSum exercise04Sum atTop ∅ := by
   exact (exercise04_uniform_iff ∅).mpr ⟨1, by norm_num, by simp⟩

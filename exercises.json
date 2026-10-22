@@ -6,7 +6,7 @@
     "edition": "Third Edition (1976)",
     "sha256": "c0d8530ad52ff06bb3b949b4b27245c446cde045e70b3efcad0cd51804e938e7",
     "exercise_count": 287,
-    "obligation_count": 848
+    "obligation_count": 849
   },
   "chapters": [
     {
@@ -15506,9 +15506,19 @@
             "Rudin.Chapter06.exercise02"
           ],
           "evidence": null
+        },
+        {
+          "id": "R06E02.continuity_comparison",
+          "summary": "Complete the printed comparison with Exercise 1: exhibit a nonnegative, nonzero function with zero ordinary Riemann integral and prove its failure of continuity; do not refute the original continuous theorem.",
+          "kind": "counterexample",
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise02_comparison"
+          ],
+          "evidence": null
         }
       ],
-      "obligation_count": 1,
+      "obligation_count": 2,
       "disposition": "as_stated"
     },
     {
@@ -15534,48 +15544,64 @@
           "id": "R06E03.a.integrability",
           "summary": "Prove f in R(beta_1) iff f(0+) exists and equals f(0).",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise03_a_integrability"
+          ],
           "evidence": null
         },
         {
           "id": "R06E03.a.value",
           "summary": "Under that condition prove integral f d beta_1=f(0).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise03_a_integral",
+            "Rudin.Chapter06.exercise03_a_value"
+          ],
           "evidence": null
         },
         {
           "id": "R06E03.b.integrability",
           "summary": "State and prove the beta_2 criterion: the left limit f(0-) exists and equals f(0).",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise03_b_integrability"
+          ],
           "evidence": null
         },
         {
           "id": "R06E03.b.value",
           "summary": "For f in R(beta_2), prove integral f d beta_2=f(0).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise03_b_integral",
+            "Rudin.Chapter06.exercise03_b_value"
+          ],
           "evidence": null
         },
         {
           "id": "R06E03.c",
           "summary": "Prove f in R(beta_3) iff f is continuous at zero.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise03_c_integrability",
+            "Rudin.Chapter06.exercise03_c_integral",
+            "Rudin.Chapter06.exercise03_c_value"
+          ],
           "evidence": null
         },
         {
           "id": "R06E03.d",
           "summary": "For f continuous at zero prove all three integrals exist and equal f(0).",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise03_d"
+          ],
           "evidence": null
         }
       ],
@@ -15605,8 +15631,12 @@
           "id": "R06E04.nonintegrability",
           "summary": "Prove nonintegrability on every nondegenerate real compact interval.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise04",
+            "Rudin.Chapter06.exercise04_source",
+            "Rudin.Chapter06.exercise04_darboux_extrema"
+          ],
           "evidence": null
         }
       ],
@@ -15636,16 +15666,21 @@
           "id": "R06E05.square",
           "summary": "Give a bounded real f with integrable square but nonintegrable f.",
           "kind": "counterexample",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise05_square"
+          ],
           "evidence": null
         },
         {
           "id": "R06E05.cube",
           "summary": "Decide and prove the implication from integrability of f^3 to integrability of f.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise05_cube",
+            "Rudin.Chapter06.exercise05_cube_stieltjes"
+          ],
           "evidence": null
         }
       ],
@@ -15675,8 +15710,11 @@
           "id": "R06E06.cantor_exception_set",
           "summary": "Prove Riemann integrability with discontinuities allowed at any subset of P.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise06",
+            "Rudin.Chapter06.exercise06_cantor_null"
+          ],
           "evidence": null
         }
       ],
@@ -15706,16 +15744,20 @@
           "id": "R06E07.a",
           "summary": "If f extends to a Riemann-integrable function on [0,1], prove the improper integral equals the proper one.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise07_a"
+          ],
           "evidence": null
         },
         {
           "id": "R06E07.b",
           "summary": "Construct a locally Riemann-integrable f whose improper integral exists finitely but whose absolute-value integral does not exist finitely.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise07_b"
+          ],
           "evidence": null
         }
       ],
@@ -15747,8 +15789,11 @@
           "id": "R06E08.integral_test",
           "summary": "Prove both directions of the equivalence for the stated nonnegative monotone f.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise08_integral_test",
+            "Rudin.Chapter06.exercise08_proper"
+          ],
           "evidence": null
         }
       ],
@@ -15778,40 +15823,50 @@
           "id": "R06E09.finite_endpoint_rule",
           "summary": "State and prove integration by parts with explicit local regularity, boundary-limit, and convergence hypotheses at a finite improper endpoint.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise09_finite_endpoint_rule"
+          ],
           "evidence": null
         },
         {
           "id": "R06E09.infinite_endpoint_rule",
           "summary": "State and prove the corresponding rule at an infinite endpoint.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise09_infinite_endpoint_rule"
+          ],
           "evidence": null
         },
         {
           "id": "R06E09.example_equality",
           "summary": "Prove both displayed improper integrals converge and are equal.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise09_example_equality"
+          ],
           "evidence": null
         },
         {
           "id": "R06E09.sine_absolute",
           "summary": "Prove absolute convergence of the sine integral with squared denominator.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise09_sine_absolute"
+          ],
           "evidence": null
         },
         {
           "id": "R06E09.cosine_not_absolute",
           "summary": "Prove the cosine integral with denominator 1+x is not absolutely convergent.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise09_cosine_not_absolute"
+          ],
           "evidence": null
         }
       ],
@@ -15841,40 +15896,51 @@
           "id": "R06E10.a.inequality",
           "summary": "For u,v>=0 prove u*v<=u^p/p+v^q/q.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.young"
+          ],
           "evidence": null
         },
         {
           "id": "R06E10.a.equality",
           "summary": "Prove equality holds exactly when u^p=v^q, including zero values.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.young_eq_iff"
+          ],
           "evidence": null
         },
         {
           "id": "R06E10.b",
           "summary": "For nonnegative f,g in R(alpha), normalized by integral f^p d alpha=integral g^q d alpha=1, prove integral f*g d alpha<=1.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.holder_normalized"
+          ],
           "evidence": null
         },
         {
           "id": "R06E10.c",
           "summary": "For complex f,g in R(alpha), prove |integral f*g d alpha|<=(integral |f|^p d alpha)^(1/p)*(integral |g|^q d alpha)^(1/q), including zero norm cases.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.holder_complex"
+          ],
           "evidence": null
         },
         {
           "id": "R06E10.d",
           "summary": "For both finite-endpoint and infinite-endpoint improper integrals, state and prove Holder under finite p- and q-power integrals, including existence of the product integral.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.holder_improper_left_complex",
+            "Rudin.Chapter06.holder_improper_top_complex"
+          ],
           "evidence": null
         }
       ],
@@ -15904,8 +15970,11 @@
           "id": "R06E11.triangle_inequality",
           "summary": "For f,g,h in R(alpha), prove ||f-h||_2<=||f-g||_2+||g-h||_2 by the Schwarz inequality; do not assume this seminorm separates functions.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.rsL2Norm_difference_triangle",
+            "Rudin.Chapter06.rsL2Norm_real_difference_triangle"
+          ],
           "evidence": null
         }
       ],
@@ -15935,8 +16004,11 @@
           "id": "R06E12.continuous_approximation",
           "summary": "Construct continuous g and prove its weighted L2 error is below epsilon, for an arbitrary increasing alpha including discontinuous integrators.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.continuous_approximation_complex",
+            "Rudin.Chapter06.continuous_approximation_real"
+          ],
           "evidence": null
         }
       ],
@@ -15966,40 +16038,55 @@
           "id": "R06E13.a",
           "summary": "For x>0 prove |f(x)|<1/x.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise13_a",
+            "Rudin.Chapter06.quadraticWindow_hasDarboux"
+          ],
           "evidence": null
         },
         {
           "id": "R06E13.b",
           "summary": "Prove 2*x*f(x)=cos(x^2)-cos((x+1)^2)+r(x), with a constant c independent of x and |r(x)|<c/x for x>0.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise13_b"
+          ],
           "evidence": null
         },
         {
           "id": "R06E13.c.upper_limit",
           "summary": "Determine limsup_{x->infinity} x*f(x).",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise13_c",
+            "Rudin.Chapter06.exercise13_c_sequences"
+          ],
           "evidence": null
         },
         {
           "id": "R06E13.c.lower_limit",
           "summary": "Determine liminf_{x->infinity} x*f(x).",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise13_c",
+            "Rudin.Chapter06.exercise13_c_sequences"
+          ],
           "evidence": null
         },
         {
           "id": "R06E13.d",
           "summary": "Determine whether integral_0^infinity sin(t^2) dt converges as an improper Riemann integral.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise13_d",
+            "Rudin.Chapter06.quadratic_hasDarboux",
+            "Rudin.Chapter06.quadratic_tail_bound"
+          ],
           "evidence": null
         }
       ],
@@ -16029,40 +16116,55 @@
           "id": "R06E14.decay_bound",
           "summary": "Prove exp(x)*|f(x)|<2.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise14_decay_bound",
+            "Rudin.Chapter06.exponentialWindow_hasDarboux"
+          ],
           "evidence": null
         },
         {
           "id": "R06E14.asymptotic",
           "summary": "Prove exp(x)*f(x)=cos(exp(x))-exp(-1)*cos(exp(x+1))+r(x), with |r(x)|<C*exp(-x) for a constant C.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise14_asymptotic"
+          ],
           "evidence": null
         },
         {
           "id": "R06E14.upper_limit",
           "summary": "As in Exercise 13, determine the upper limit of exp(x)*f(x) as x->infinity.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise14_limits",
+            "Rudin.Chapter06.exercise14_limit_sequences"
+          ],
           "evidence": null
         },
         {
           "id": "R06E14.lower_limit",
           "summary": "As in Exercise 13, determine the lower limit of exp(x)*f(x) as x->infinity.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise14_limits",
+            "Rudin.Chapter06.exercise14_limit_sequences"
+          ],
           "evidence": null
         },
         {
           "id": "R06E14.improper_convergence",
           "summary": "As in Exercise 13, decide convergence of integral_0^infinity sin(exp(t)) dt.",
           "kind": "classification",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise14_improper_convergence",
+            "Rudin.Chapter06.exponential_hasDarboux",
+            "Rudin.Chapter06.exponential_tail_bound"
+          ],
           "evidence": null
         }
       ],
@@ -16092,16 +16194,22 @@
           "id": "R06E15.integration_identity",
           "summary": "Prove integral_a^b x*f(x)*f'(x) dx=-1/2.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise15_integration_identity",
+            "Rudin.Chapter06.exercise15"
+          ],
           "evidence": null
         },
         {
           "id": "R06E15.strict_product_bound",
           "summary": "Prove (integral_a^b f'(x)^2 dx)*(integral_a^b x^2*f(x)^2 dx)>1/4; exclude the equality case rather than proving only >=.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise15_strict_product_bound",
+            "Rudin.Chapter06.exercise15"
+          ],
           "evidence": null
         }
       ],
@@ -16131,24 +16239,33 @@
           "id": "R06E16.a",
           "summary": "For s>1 prove zeta(s)=s*integral_1^infinity floor(x)/x^(s+1) dx.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise16_a",
+            "Rudin.Chapter06.exercise16_ordered_series",
+            "Rudin.Chapter06.exercise16_proper_integrals",
+            "Rudin.Chapter06.exercise16_finite_identity"
+          ],
           "evidence": null
         },
         {
           "id": "R06E16.b",
           "summary": "For s>1 prove zeta(s)=s/(s-1)-s*integral_1^infinity (x-floor(x))/x^(s+1) dx.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise16_b"
+          ],
           "evidence": null
         },
         {
           "id": "R06E16.remainder_convergence",
           "summary": "Prove the latter integral converges for every real s>0, without claiming the defining zeta series converges for s<=1.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise16_remainder_convergence"
+          ],
           "evidence": null
         }
       ],
@@ -16178,8 +16295,11 @@
           "id": "R06E17.stieltjes_parts",
           "summary": "Prove the integrals exist and integral_a^b alpha(x)*g(x) dx=G(b)*alpha(b)-G(a)*alpha(a)-integral_a^b G d alpha, without assuming alpha continuous.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise17_stieltjes_parts",
+            "Rudin.Chapter06.exercise17_stieltjes_parts_complex"
+          ],
           "evidence": null
         }
       ],
@@ -16214,40 +16334,56 @@
           "id": "R06E18.common_range",
           "summary": "Show all three curves have the unit circle as their range once gamma_3 at zero is specified.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise18_common_range"
+          ],
           "evidence": null
         },
         {
           "id": "R06E18.first_length",
           "summary": "Prove gamma_1 is rectifiable with length 2*pi.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise18_gamma1_continuous",
+            "Rudin.Chapter06.exercise18_first_length"
+          ],
           "evidence": null
         },
         {
           "id": "R06E18.second_length",
           "summary": "Prove gamma_2 is rectifiable with length 4*pi.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise18_gamma2_continuous",
+            "Rudin.Chapter06.exercise18_second_length"
+          ],
           "evidence": null
         },
         {
           "id": "R06E18.third_nonrectifiable",
           "summary": "Prove the specified continuous gamma_3 is not rectifiable.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise18_endpoint_extension",
+            "Rudin.Chapter06.exercise18_third_nonrectifiable",
+            "Rudin.Chapter06.exercise18_third_infinite_variation"
+          ],
           "evidence": null
         },
         {
           "id": "R06E18.endpoint_extension",
           "summary": "Define the printed third curve at t=0 by1 and prove continuity of this unique continuous endpoint extension before its range and length assertions.",
           "kind": "construction",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise18_endpoint_extension",
+            "Rudin.Chapter06.exercise18_endpoint_unique",
+            "Rudin.Chapter06.exercise18_printed_endpoint_obstruction"
+          ],
           "evidence": null
         }
       ],
@@ -16279,32 +16415,44 @@
           "id": "R06E19.arc",
           "summary": "Prove gamma_2 is an arc iff gamma_1 is an arc.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise19_arc",
+            "Rudin.Chapter06.exercise19_euclidean"
+          ],
           "evidence": null
         },
         {
           "id": "R06E19.closed_curve",
           "summary": "Prove gamma_2 is closed iff gamma_1 is closed.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise19_closed_curve",
+            "Rudin.Chapter06.exercise19_euclidean"
+          ],
           "evidence": null
         },
         {
           "id": "R06E19.rectifiability",
           "summary": "Prove gamma_2 is rectifiable iff gamma_1 is rectifiable.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise19_rectifiability",
+            "Rudin.Chapter06.exercise19_euclidean"
+          ],
           "evidence": null
         },
         {
           "id": "R06E19.length",
           "summary": "Prove equality of their lengths, with infinite-length cases interpreted consistently.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter06.exercise19_length",
+            "Rudin.Chapter06.exercise19_euclidean"
+          ],
           "evidence": null
         }
       ],
@@ -16334,8 +16482,10 @@
           "id": "R07E01.uniform_bound",
           "summary": "Prove existence of M with |f_n(x)|<=M for all n and x in E.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter07.exercise01_uniform_bound"
+          ],
           "evidence": null
         }
       ],
@@ -16365,16 +16515,20 @@
           "id": "R07E02.sums",
           "summary": "Prove f_n+g_n converges uniformly to f+g.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter07.exercise02_sums"
+          ],
           "evidence": null
         },
         {
           "id": "R07E02.products",
           "summary": "With the additional bounded-function assumptions, prove f_n*g_n converges uniformly to f*g.",
           "kind": "proof",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter07.exercise02_products"
+          ],
           "evidence": null
         }
       ],
@@ -16404,8 +16558,10 @@
           "id": "R07E03.unbounded_product_example",
           "summary": "Specify E and f_n,g_n with uniform limits and prove their products fail uniform convergence.",
           "kind": "counterexample",
-          "status": "todo",
-          "declarations": [],
+          "status": "in_progress",
+          "declarations": [
+            "Rudin.Chapter07.exercise03_unbounded_product_example"
+          ],
           "evidence": null
         }
       ],
@@ -16435,7 +16591,7 @@
           "id": "R07E04.absolute_domain",
           "summary": "Determine exactly the real x where the series converges absolutely, including x=0.",
           "kind": "classification",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16443,7 +16599,7 @@
           "id": "R07E04.uniform_intervals",
           "summary": "Classify all intervals on which the series converges uniformly and all intervals on which it does not, including intervals approaching zero and degenerate intervals in the convergence domain.",
           "kind": "classification",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16451,7 +16607,7 @@
           "id": "R07E04.continuity",
           "summary": "Determine continuity of the sum at every point in its convergence domain.",
           "kind": "classification",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16459,7 +16615,7 @@
           "id": "R07E04.boundedness",
           "summary": "Determine whether the sum is bounded on its full convergence domain.",
           "kind": "classification",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         }
@@ -16490,7 +16646,7 @@
           "id": "R07E05.pointwise_limit",
           "summary": "Determine the pointwise limit of f_n on all R.",
           "kind": "proof",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16498,7 +16654,7 @@
           "id": "R07E05.limit_continuity",
           "summary": "Prove the pointwise limit is continuous on R.",
           "kind": "proof",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16506,7 +16662,7 @@
           "id": "R07E05.sequence_not_uniform",
           "summary": "Prove f_n does not converge uniformly on R.",
           "kind": "proof",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16514,7 +16670,7 @@
           "id": "R07E05.series_absolute",
           "summary": "Prove sum f_n converges absolutely at every real x.",
           "kind": "proof",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16522,7 +16678,7 @@
           "id": "R07E05.series_not_uniform",
           "summary": "Prove this same series fails uniform convergence on R.",
           "kind": "counterexample",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         }
@@ -16553,7 +16709,7 @@
           "id": "R07E06.local_uniform",
           "summary": "Prove uniform convergence on every bounded real interval.",
           "kind": "proof",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         },
@@ -16561,7 +16717,7 @@
           "id": "R07E06.nowhere_absolute",
           "summary": "For every real x prove divergence of the absolute-value series.",
           "kind": "proof",
-          "status": "todo",
+          "status": "in_progress",
           "declarations": [],
           "evidence": null
         }

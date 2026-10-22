@@ -6,7 +6,7 @@ public import Mathlib.Topology.Instances.CantorSet
 /-!
 # R06E06: discontinuities in the middle-thirds Cantor set
 
-Source: Rudin, Third Edition, book page 139 (PDF 148).
+Source: Rudin, Third Edition, book page 138 (PDF 147).
 The standard `cantorSet` is the intersection of the finite middle-thirds
 constructions. Its self-similarity proves zero volume. The proved ordinary
 Riemann criterion then gives the literal Darboux integral, not only a

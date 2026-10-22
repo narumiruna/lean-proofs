@@ -9,14 +9,14 @@ Generated from `exercises.json`. Do not edit counts by hand.
 | 3 | 25/25 | 24 | 1 | 89/89 |
 | 4 | 26/26 | 26 | 0 | 74/74 |
 | 5 | 29/29 | 27 | 2 | 84/84 |
-| 6 | 1/19 | 1 | 0 | 2/53 |
+| 6 | 1/19 | 1 | 0 | 2/54 |
 | 7 | 0/26 | 0 | 0 | 0/79 |
 | 8 | 0/31 | 0 | 0 | 0/79 |
 | 9 | 1/31 | 1 | 0 | 1/110 |
 | 10 | 0/32 | 0 | 0 | 0/117 |
 | 11 | 2/18 | 1 | 1 | 5/37 |
 
-Total: **134/287 verified resolutions**; **381/848 obligations** verified.
+Total: **134/287 verified resolutions**; **381/849 obligations** verified.
 
 These comprise 128 exercises proved as stated and 6 false source claims resolved by counterexamples and explicit corrections. A refuted claim is not counted as a proved original statement.
 

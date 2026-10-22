@@ -28,7 +28,7 @@
 
 ### 已盤點範圍
 
-三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` currently records 287 exercises and 848 obligations, including follow-up questions and source-issue dispositions. The initial 839 obligations gained eight explicit checks in the second batch and R03E14's zero-bound strict-estimate obstruction in the fourth batch. Evidence is in `docs/rudin/source-clarifications.md`.這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
+三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` currently records 287 exercises and 849 obligations, including follow-up questions and source-issue dispositions. The initial 839 obligations gained eight explicit checks in the second batch, R03E14's zero-bound strict-estimate obstruction in the fourth batch, and the printed R06E02 comparison in the seventh batch. Evidence is in `docs/rudin/source-clarifications.md`.這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
 
 | 章 | 主題 | 題號範圍 | 書頁 | PDF 頁，從 1 起算 |
 | --- | --- | --- | --- | --- |
@@ -224,7 +224,7 @@ docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘�
 
 ## Completion Checklist
 
-- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。Evidence: `exercises.json` and `source.md` record 287 exercises and 848 obligations: the initial 839, eight source-clarification checks, and R03E14's zero-bound obstruction. Changes are justified in `source-clarifications.md`.這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
+- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。Evidence: `exercises.json` and `source.md` record 287 exercises and 849 obligations: the initial 839, eight source-clarification checks, R03E14's zero-bound obstruction, and R06E02's explicit comparison. Changes are justified in `source-clarifications.md`.這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
 - [ ] 全部義務均為 `verified`，沒有 `todo`、`in_progress`、`blocked` 或未完成的構造／追問。
 - [ ] 原題不成立的情況有 Lean 反例與標示清楚的正確替代結果；沒有將錯誤原命題計為已證明。
 - [ ] 全部目前交付模組納入預設建置；不存在以未匯入檔案隱藏未完成證明的情況。 Sixth-batch checks pass for all 135 integrated exercise modules, including the unfinished R06E02. Kept open while new Chapter 6 sources are developed and await root integration.

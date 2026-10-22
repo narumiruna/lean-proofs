@@ -37,6 +37,18 @@ proofs and pass project and isolated-source checks; their issues are resolved. O
 still require their counterexamples, corrected results, bridges, compilation,
 semantic review and axiom audit. Contract selection alone is not completion.
 
+## Inventory follow-up: R06E02 comparison
+
+The primary image at book page 138 / PDF 147 ends Exercise 2 with
+“Compare this with Exercise 1.” `R06E02.continuity_comparison` now tracks that
+separate follow-up. `exercise02_comparison` uses the actual point-supported
+function at `1/2` on `[0,1]`: it is nonnegative, has literal ordinary integral
+zero, has value one at `1/2`, and is not continuous. Thus continuity in
+Exercise 2 cannot be removed. The source theorem remains valid and is counted
+as stated. The denominator is now 849; this addition is not a twentieth source
+issue or a new erratum. Independent follow-up review and integration gates
+remain required before this new obligation is verified.
+
 ## R02E28 — Countable does not include finite
 
 - **Evidence:** exercise, book 45 / PDF 54, text and image. Definition 2.4,

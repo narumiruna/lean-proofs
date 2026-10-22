@@ -2,6 +2,7 @@ module
 
 public import Math.Rudin.Support.RiemannIntegrability
 public import Math.Rudin.Support.StieltjesComposition
+public import Math.Rudin.Support.StieltjesComplex
 public import Math.Rudin.Chapter05.Exercise08
 
 /-!
@@ -192,5 +193,39 @@ theorem stieltjes_parts {G g α : ℝ → ℝ} (hab : a ≤ b)
   have he := parts_of_integrals hab hg hG
     (hasRSIntegral_of_hasDarbouxRSIntegral hab hA) (hasRSIntegral_of_hasDarbouxRSIntegral hab hB)
   exact ⟨A, B, hA, hB, by linarith⟩
+
+/-- The source's complex-valued case follows by the proved real/imaginary
+reduction. Derivatives are with respect to a real parameter. -/
+theorem stieltjes_parts_complex {G g : ℝ → ℂ} {α : ℝ → ℝ} (hab : a ≤ b)
+    (hα : MonotoneOn α (Icc a b)) (hg : ContinuousOn g (Icc a b))
+    (hG : ∀ x ∈ Icc a b, HasDerivWithinAt G (g x) (Icc a b) x) :
+    ∃ A B : ℂ, StieltjesComplex.HasComplexRSIntegral (fun x => α x • g x) id a b A ∧
+      StieltjesComplex.HasComplexRSIntegral G α a b B ∧
+        A = α b • G b - α a • G a - B := by
+  have hgr : ContinuousOn (fun x => (g x).re) (Icc a b) :=
+    Complex.continuous_re.comp_continuousOn hg
+  have hgi : ContinuousOn (fun x => (g x).im) (Icc a b) :=
+    Complex.continuous_im.comp_continuousOn hg
+  have hGr : ∀ x ∈ Icc a b,
+      HasDerivWithinAt (fun x => (G x).re) (g x).re (Icc a b) x := by
+    intro x hx
+    simpa only [Function.comp_def, Complex.reCLM_apply] using
+      Complex.reCLM.hasFDerivAt.comp_hasDerivWithinAt x (hG x hx)
+  have hGi : ∀ x ∈ Icc a b,
+      HasDerivWithinAt (fun x => (G x).im) (g x).im (Icc a b) x := by
+    intro x hx
+    simpa only [Function.comp_def, Complex.imCLM_apply] using
+      Complex.imCLM.hasFDerivAt.comp_hasDerivWithinAt x (hG x hx)
+  obtain ⟨Ar, Br, hAr, hBr, hr⟩ := stieltjes_parts hab hα hgr hGr
+  obtain ⟨Ai, Bi, hAi, hBi, hi⟩ := stieltjes_parts hab hα hgi hGi
+  refine ⟨⟨Ar, Ai⟩, ⟨Br, Bi⟩, StieltjesComplex.hasComplexRSIntegral_iff.mpr ⟨?_, ?_⟩,
+    StieltjesComplex.hasComplexRSIntegral_iff.mpr
+      ⟨hasRSIntegral_of_hasDarbouxRSIntegral hab hBr,
+        hasRSIntegral_of_hasDarbouxRSIntegral hab hBi⟩, ?_⟩
+  · simpa using hasRSIntegral_of_hasDarbouxRSIntegral hab hAr
+  · simpa using hasRSIntegral_of_hasDarbouxRSIntegral hab hAi
+  · apply Complex.ext
+    · simpa [mul_comm] using hr
+    · simpa [mul_comm] using hi
 
 end Rudin.Support.StieltjesIntegrationByParts

@@ -32,6 +32,8 @@ marking an obligation verified. Compilation alone does not establish fidelity.
   proving the required bridge, including endpoint and jump conventions.
 - Do not assume the library completion solves an exercise that explicitly
   requires the Cauchy-sequence quotient construction.
+- Use source hints to check implicit scope. A proof for real-valued functions
+  does not establish a complex-valued claim without a proved reduction.
 - Preserve a false source claim in the issue record. Supply a counterexample
   and an explicitly corrected theorem; do not hide extra hypotheses.
 - For unresolved source wording, apply the explicit contracts in

@@ -36,7 +36,8 @@ theorem exercise05_nonneg (n : ℕ) (x : ℝ) : 0 ≤ exercise05Term n x := by
 
 theorem exercise05_sin_reciprocal (m : ℕ) :
     Real.sin (Real.pi / (1 / (m : ℝ))) ^ 2 = 0 := by
-  simp [div_eq_mul_inv, mul_comm, Real.sin_nat_mul_pi]
+  rw [div_eq_mul_inv, one_div, inv_inv, mul_comm, Real.sin_nat_mul_pi]
+  norm_num
 
 theorem exercise05_endpoints (n : ℕ) :
     exercise05Term n (1 / (n + 2 : ℝ)) = 0 ∧
@@ -45,10 +46,30 @@ theorem exercise05_endpoints (n : ℕ) :
     simpa only [Nat.cast_add, Nat.cast_one] using exercise05_sin_reciprocal (n + 1)
   have h2 : Real.sin (Real.pi / (1 / (n + 2 : ℝ))) ^ 2 = 0 := by
     simpa only [Nat.cast_add, Nat.cast_ofNat] using exercise05_sin_reciprocal (n + 2)
-  simp [exercise05Term, h1, h2]
+  simp only [exercise05Term, h1, h2, ite_self, and_self]
 
 theorem exercise05_zero (n : ℕ) : exercise05Term n 0 = 0 := by
   simp [exercise05Term]
+
+/-- The endpoint zeros make each literal piecewise function continuous. -/
+theorem exercise05_term_continuous (n : ℕ) : Continuous (exercise05Term n) := by
+  unfold exercise05Term
+  apply continuous_if
+  · intro x hx
+    have hab : 1 / (n + 2 : ℝ) ≤ 1 / (n + 1 : ℝ) :=
+      one_div_le_one_div_of_le (by positivity) (by linarith)
+    simp only [ofPred_mem_eq] at hx
+    rw [frontier_Icc hab, mem_insert_iff, mem_singleton_iff] at hx
+    rcases hx with rfl | rfl
+    · simpa only [Nat.cast_add, Nat.cast_ofNat] using exercise05_sin_reciprocal (n + 2)
+    · simpa only [Nat.cast_add, Nat.cast_one] using exercise05_sin_reciprocal (n + 1)
+  · simp only [ofPred_mem_eq, isClosed_Icc.closure_eq]
+    apply ContinuousOn.pow
+    apply Real.continuous_sin.comp_continuousOn
+    apply continuousOn_const.div continuousOn_id
+    intro x hx
+    exact ne_of_gt (lt_of_lt_of_le (by positivity : 0 < 1 / (n + 2 : ℝ)) hx.1)
+  · exact continuousOn_const
 
 /-- At each real point only finitely many source functions can be nonzero. -/
 theorem exercise05_eventually_zero (x : ℝ) :
@@ -57,12 +78,12 @@ theorem exercise05_eventually_zero (x : ℝ) :
   · have he : ∀ᶠ n : ℕ in atTop, 1 / (n + 1 : ℝ) < x :=
       (tendsto_order.mp tendsto_one_div_add_atTop_nhds_zero_nat).2 x hx
     filter_upwards [he] with n hn
-    apply if_neg
+    apply ite_eq_right
     intro hm
     exact (not_le_of_gt hn) hm.2
   · apply Filter.Eventually.of_forall
     intro n
-    apply if_neg
+    apply ite_eq_right
     intro hm
     have hp : 0 < 1 / (n + 2 : ℝ) := by positivity
     exact hx (lt_of_lt_of_le hp hm.1)
@@ -70,7 +91,7 @@ theorem exercise05_eventually_zero (x : ℝ) :
 /-- Pointwise convergence on all of `ℝ`, including zero and support endpoints. -/
 theorem exercise05_pointwise_limit (x : ℝ) :
     Tendsto (fun n => exercise05Term n x) atTop (𝓝 0) := by
-  exact tendsto_const_nhds.congr' (exercise05_eventually_zero x).symm
+  exact (tendsto_congr' (exercise05_eventually_zero x)).mpr tendsto_const_nhds
 
 theorem exercise05_limit_continuity : Continuous (fun _ : ℝ => (0 : ℝ)) :=
   continuous_const
@@ -90,11 +111,12 @@ theorem exercise05_peak_value (n : ℕ) : exercise05Term n (exercise05Peak n) = 
   have hphase : Real.pi / exercise05Peak n =
       Real.pi / 2 + ((n + 1 : ℕ) : ℝ) * Real.pi := by
     unfold exercise05Peak
-    simp only [div_div, div_one, Nat.cast_add, Nat.cast_one]
+    simp only [div_eq_mul_inv, one_mul, inv_inv, Nat.cast_add, Nat.cast_one]
     ring
-  rw [exercise05Term, if_pos (exercise05_peak_mem n), hphase,
+  rw [exercise05Term, ite_eq_left (exercise05_peak_mem n), hphase,
     Real.sin_add_nat_mul_pi, Real.sin_pi_div_two, mul_one]
-  simp [← pow_mul, Nat.mul_comm _ 2, pow_mul]
+  rw [← pow_mul, Nat.mul_comm (n + 1) 2, pow_mul]
+  norm_num
 
 /-- The sequence does not converge uniformly to its continuous pointwise limit. -/
 theorem exercise05_sequence_not_uniform :
