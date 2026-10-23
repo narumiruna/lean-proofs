@@ -101,6 +101,55 @@ review, compilation, and the project axiom checks.
   Root, tangent, derivative, and cube-root questions remain included and are
   proved. All names are in `Rudin.Chapter05`.
 
+## R06E18: the missing endpoint of the third curve
+
+- Source: book page141, PDF page150; Definition6.26 requires continuity on
+  the closed interval. The printed expression contains `1/t` at `t=0`.
+- `Rudin.Chapter06.exercise18_printed_endpoint_obstruction` proves that zero
+  has no multiplicative inverse. Totalized reciprocal notation does not
+  supply the missing source definition.
+- The corrected curve explicitly has `gamma3(0)=1` and the printed formula
+  for positive `t`. `exercise18_endpoint_extension` proves continuity;
+  `exercise18_endpoint_unique` proves that this extension is unique.
+- `exercise18_common_range` proves the common unit-circle range. The three
+  actual partition lengths are `2*pi`, `4*pi` and infinity; the third curve
+  is not rectifiable despite continuity.
+- Status: verified domain obstruction and explicit endpoint correction.
+  Counted as corrected, not as a defined literal source formula.
+
+## R09E19: local solution branches
+
+- Source: book page 241, PDF page 250. The implicit-function question is local
+  to each solution, not a claim of global uniqueness across both branches.
+- `Rudin.Chapter09.exercise19_solve_in_x`, `exercise19_solve_in_y`, and
+  `exercise19_solve_in_z` classify both branches, with `u=0` or `u=3`.
+  `exercise19_local_graphs` and `exercise19_smooth_graphs` supply the actual
+  neighborhood graphs and their regularity.
+- `exercise19_failure_in_u` constructs distinct solutions with the same `u`
+  in every neighborhood of every solution. A zero minor alone is not used
+  to infer failure.
+- Status: verified local-graph convention; counted as stated, not as a source
+  refutation.
+
+## R09E31: a nonzero Hessian does not classify every extremum
+
+- Source: book page 244, PDF page 253. The printed condition permits a
+  nonzero singular semidefinite Hessian.
+- `Rudin.Chapter09.exercise31_counterexample` and `exercise31_planar_formula`
+  give the actual functions `x²+y⁴` and `x²-y⁴`. They have the same quadratic
+  Taylor polynomial and Hessian `diag(2,0)`, but only the first has a local
+  minimum. The construction extends to every dimension at least two.
+- The negative-semidefinite examples have matching negative jets and different
+  maximum behavior. Dimension one has a separate complete sign test;
+  dimension zero cannot have a nonzero Hessian.
+- `exercise31_quadratic_expansion` derives the Peano remainder from local C3
+  hypotheses. `exercise31_positive_test`, `exercise31_negative_test`,
+  `exercise31_indefinite_test`, and `exercise31_semidefinite_exclusions` prove
+  the valid tests without assuming the expansion or the extremum.
+- Status: **verified refutation and correction**, not proof of the printed
+  nonzero-Hessian classification. All four obligations passed independent
+  page/type/body review and the Chapter 8–9 project gate.
+
 ## R11E18: equality case with a zero first function
 
 - Source: book page 334, PDF page 343; page image checked.

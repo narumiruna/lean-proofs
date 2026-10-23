@@ -5,6 +5,13 @@ Mathematical Analysis*, Third Edition. It is in progress, not a complete solutio
 set. The source inventory contains 287 exercises and 849 obligations. Verified
 counts are generated in [the progress report](docs/rudin/progress.md).
 
+## Read the solutions
+
+The [Markdown solution article](docs/rudin/solutions.md) gives mathematical
+statements and proofs for the exercise files in this checkout. It distinguishes
+verified solutions from newer or partial formalizations and keeps source
+corrections explicit.
+
 ## Toolchain
 
 - Lean: `leanprover/lean4:v4.35.0`.

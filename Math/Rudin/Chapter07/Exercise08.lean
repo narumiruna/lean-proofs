@@ -94,11 +94,9 @@ theorem exercise08_continuity_off_jumps {F : Type*} [NormedAddCommGroup F] [Comp
   apply exercise08_continuousAt_of_uniform
     (exercise08_uniform_global p (exercise08_absolute_bridge hc))
   intro N
-  induction N with
-  | zero => simpa using (continuousAt_const (y := (0 : F)) (x := x))
-  | succ N ih =>
-    simpa only [Finset.sum_range_succ] using
-      ih.add (exercise08_term_continuousAt c p N (hoff N))
+  have hc : ∀ n, ContinuousAt (exercise08Term c p n) x :=
+    fun n => exercise08_term_continuousAt c p n (hoff n)
+  fun_prop
 
 end
 

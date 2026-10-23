@@ -161,26 +161,31 @@ Exercise 6.17. Actual finite summation by parts and uniform within derivatives
 control the remainder. Refinement preserves the mesh bound, including repeated
 nodes. The integrator is only monotone on the closed interval; it need not be
 continuous. The complex case is reduced to actual real and imaginary derivative
-witnesses, as required by the source hint. The real proof passed independent
-review; the added complex reduction is under follow-up review.
+witnesses, as required by the source hint. The real proof and complex reduction passed independent source/type and
+private-body review at SHA256
+`1c9c24e845ea2236ec3bebbab583fc453fe8f3ba08ad7e47f88ccfb9d0e5f1ac`.
+This is the source monotone-integrator theorem, not a general signed/BV theorem.
 
 `Chapter06/Exercise07.lean` defines improper integrals by finite limits and
 actual proper Darboux witnesses at every cut. These predicates do not assign a
 value to a divergent integral. Exercises 7–16 now contain the conditional,
-Holder, approximation and oscillatory results; their independent reviews and
-whole-project integration remain in progress. The registry, not this API note,
+Holder, approximation and oscillatory results; their independent reviews passed.
+The frozen execution checkpoint and its isolated-source rebuild pass. The registry, not this API note,
 determines verified exercise counts.
 
-Remaining Chapter 6 work, as required by the exercises:
+Limits of the current integral comparisons:
 
-1. Extend measure comparisons only where needed to compact-interval raw
-   integrators, with proved normalization and endpoint corrections.
-2. State and prove jump-compatibility conditions for more general or
-   discontinuous integrands before using measure identification.
-3. Finish independent reviews and integration checks for the new exercise
-   results. Add further vector-valued integral interfaces only if a remaining
-   exercise requires them. `Chapter06/Exercise01.lean` already proves the point-supported
-   result directly from Darboux sums, including endpoints and `a=b`.
+1. General compact-interval raw measure normalization and endpoint corrections
+   are not claimed. A new use must prove its own required comparison.
+2. General discontinuous-integrand identification still requires proved
+   jump-compatibility conditions.
+3. `Chapter07/Exercise17.lean` now proves uniform-limit integration for actual
+   raw Stieltjes coordinate integrals in EuclideanSpace. This does not define
+   a general Banach-valued raw Stieltjes calculus.
+
+All Chapter6 exercise obligations are verified. `Chapter06/Exercise01.lean`
+proves the point-supported result directly from Darboux sums, including
+endpoints and `a=b`.
 
 Completion status is recorded only in the registry and progress report.
 
@@ -296,6 +301,51 @@ with a fresh local import closure and 22 independent checks. This is a
 path-only bridge, not general simplex integration, arbitrary
 reparameterization or higher-dimensional Stokes.
 
+### Smooth simplex and triangle integration
+
+`Support/SimplexIntegration.lean` adds actual C² parameter maps on open
+neighborhoods of Euclidean standard simplexes, alternating-form pullbacks,
+continuous coefficients, and proved integrability. It proves parameter-triangle
+boundary cancellation and nonlinear postcomposition. The horizontal-form
+boundary identity follows from slice FTC and genuine derivatives.
+
+For `S(x,y)=(x,y²)` and `ω=-y dx`, the computed pullback coefficient is `2y`;
+both the surface and parameter-boundary integrals are `1/3`. The source bridge
+uses the literal closed-triangle zero extension inside the unit square, with
+Darboux witnesses for every row and the outer integral. A separate Fubini
+result proves two-dimensional order independence for ambient continuous
+coefficients. Independent source/type/private-body review,20 model checks,
+the frozen project gate and isolated-source rebuilding pass. Its source SHA256
+is `31edd64463e237f83f6f6369e47c9dbf3a1653eb96c82e79a7b6044dc9e975c2`.
+
+`Support/TriangleStokes.lean` removes the horizontal-form restriction. It proves
+the full `P dx+Q dy` identity by FTC and order exchange, decomposes every plane
+1-form into those coordinates, and derives C1 pullback regularity from a global
+C1 form and global C2 map. It gives literal source witnesses for the exterior
+zero extension and all three actual parameter edges. The nonhorizontal form
+`-y dx+x dy` has value1. Independent review and10 additional model checks pass
+at SHA256 `35206f3ff8b5db6bf1235b5d5371ea7b8825114625d378395a457d7f5c0a94d3`;
+the frozen project and isolated gates include it.
+
+`Support/MultivariateRiemann.lean` now proves the real scalar comparison in
+arbitrary dimension for closed coordinate boxes and standard simplexes. It
+constructs every literal Darboux stage, including closed-cut singleton fibers,
+and proves all-coordinate-order equality, Euclidean volume normalization and
+standard-simplex volume `1/n!`. Its smooth-simplex comparison requires only
+C2 regularity on an open neighborhood and a continuous form on the image.
+Independent review passed a fresh 13-module build, 743 local declarations,
+51,378 transitive constants and 34 model checks at source SHA-256
+`154e9e5959e242dba2f9dd454826ae35fb3552221be537c48cc052d179b34ca7`.
+The Chapter 8–9 root and isolated checkpoint gates include this source.
+
+This does not complete P3 or a Chapter 10 exercise. General compact convex
+domains, complex/vector source witnesses, mixed monomial formulas, orientation
+integral descent, change of variables and higher-dimensional Stokes remain
+separate requirements. Neighborhood-only regularity is established for the
+scalar simplex comparison, not for the existing triangle Stokes theorem.
+`SmoothChains.lean` is integrated and builds, but its independent review and
+higher-degree integration comparisons remain open.
+
 Remaining Chapter 10 work, in dependency order:
 
 1. Fix continuous scalar-valued exterior product, normalization, and Leibniz lemmas.
@@ -324,6 +374,10 @@ lake env lean Math/Rudin/Support/StieltjesIntegrationByParts.lean
 lake env lean Math/Rudin/Support/StieltjesRefinement.lean
 lake env lean Math/Rudin/Support/StieltjesEquivalence.lean
 lake env lean Math/Rudin/Support/StieltjesMeasureBridge.lean
+lake env lean Math/Rudin/Support/UniformIntegralLimits.lean
+lake env lean Math/Rudin/Support/SimplexIntegration.lean
+lake env lean Math/Rudin/Support/TriangleStokes.lean
+lake env lean Math/Rudin/Support/MultivariateRiemann.lean
 ```
 
 The prototype `#print axioms` commands for the main bridge, endpoint, computation, and boundary theorems report only `propext`, `Classical.choice`, and `Quot.sound`. No proof placeholder or custom axiom was added. The project audit now also checks every imported Support declaration, including private proof bodies. Current integrated results are recorded in the plan; theorem-level prototype output alone does not replace that audit.
@@ -331,6 +385,6 @@ The prototype `#print axioms` commands for the main bridge, endpoint, computatio
 P3 remains open:
 
 - The requested high-risk topics have source and compilation evidence; the complete exercise-by-exercise coverage classification remains open.
-- Chapter 6 has literal weak-partition Darboux sums, full Darboux/tagged equivalence, raw monotone continuous-integrand existence, and a continuous-integrand measure bridge for right-continuous Stieltjes functions. Real algebra, absolute values, full interval splitting, continuous composition, products and actual complex tagged integrals are also proved. General raw normalization corrections, discontinuous-integrand measure bridges and vector integrands remain open; no unconditional normalization is claimed.
-- Chapter 10 has nontrivial exterior-derivative computations, genuine segment/rectangle boundary identities, an orientation quotient with fixed degrees and affine faces, and actual parameterized-square/Möbius boundary multiplicities. The path-only integration/source-Darboux bridge is proved. General smooth chains, higher-dimensional integration comparisons, and the remaining geometric exercise requirements remain open.
+- Chapter 6 has literal weak-partition Darboux sums, full Darboux/tagged equivalence, raw monotone continuous-integrand existence, and a continuous-integrand measure bridge for right-continuous Stieltjes functions. Real algebra, absolute values, full interval splitting, continuous composition, products and actual complex tagged integrals are also proved. Raw integration by parts and coordinatewise Euclidean vector uniform limits are now proved. General raw normalization corrections and discontinuous-integrand measure bridges remain open; no unconditional normalization is claimed.
+- Chapter 10 has nontrivial exterior-derivative computations, genuine segment/rectangle boundary identities, an orientation quotient with fixed degrees and affine faces, and actual parameterized-square/Möbius boundary multiplicities. Path and full parameter-triangle source-Darboux comparisons are proved under their stated regularity. Real scalar box/simplex comparisons in arbitrary dimension, Euclidean normalization and neighborhood-only simplex-integrand regularity are now proved and independently reviewed. General oriented smooth-chain integration, higher-dimensional Stokes, neighborhood-only Stokes regularity and the remaining geometric exercise requirements remain open.
 - This investigation alone does not certify the six representative exercises. Subsequent source/type reviews, root integration, registry evidence and project-wide checks are tracked in the current plan and progress report. Full-book completion remains open.

@@ -301,6 +301,12 @@ endpoint derivatives. This exercise is counted as corrected, not as stated.
   `R06E18.second_length`, `R06E18.third_nonrectifiable`. The first two
   length claims do not depend on the endpoint repair, but remain required.
 
+The endpoint obstruction, unique continuous extension and all range/partition-length
+claims now have independently reviewed Lean proofs. The frozen execution
+checkpoint passed the full project gate and isolated-source rebuild. The
+inventory records this explicit definition repair as `refuted_and_corrected`,
+not as proof that the printed reciprocal is defined at zero. See `errata.md`.
+
 ## R09E19 — Solvability is local to a solution branch
 
 - **Evidence:** exercise, book 241 / PDF 250, text and image. The implicit
@@ -489,6 +495,30 @@ endpoint derivatives. This exercise is counted as corrected, not as stated.
   `R10E23.d.generalization`; sphere flux also supplies the obstruction for
   `R10E23.c`. This list fixes the finite implementation scope; it does not
   introduce an external approval gate.
+
+## R11E15 — Ambient closedness and signed extensions
+
+This representation check adds no inventory issue or obligation. Primary
+PDF 343/book 334 gives the interval prescriptions. Definition 11.5 on
+PDF 312/book 303 requires inner sets closed in the ambient real line.
+They are compact because they are bounded; PDF 314/book 305 uses this fact.
+Relative closedness in `(0,1]` is not an equivalent condition. For example,
+`(0,1/2]` is relatively closed but still contains the full right germ at zero.
+Use `(0,1/2)` for the nonregularity witness, so endpoint 1 is not involved.
+A separately named variant may relax outer openness at 1, but must retain
+ambient closedness of the inner sets.
+
+Definition 11.2 on PDF 310/book 301 permits signed extended-real values and
+ordered countable sums. A theorem about only nonnegative extensions does
+not cover that source scope. The delivery therefore retains the nonnegative
+encoding of the constructed finite charge and separately excludes every
+signed `EReal` extension on any family containing the elementary ring. The
+actual disjoint dyadic intervals have sum 1, whereas their union has charge 2.
+The four finite interval types and their real-valued prescriptions are also
+compared explicitly with the set-based implementation. A separate reviewer
+checked the adopted additions, including negative signed-extension models.
+Fresh isolated compilation, actual proof-body audits and the main project
+gate passed at the matching hashes. The obligations are now verified.
 
 ## R11E11 — Use almost-everywhere equivalence classes
 
