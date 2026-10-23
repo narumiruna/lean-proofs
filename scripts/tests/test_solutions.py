@@ -52,6 +52,17 @@ class SolutionArticleTests(unittest.TestCase):
     def test_complete_article_passes(self):
         self.assertEqual(checks.validate(self.root), [])
 
+    def test_one_pending_entry_uses_singular(self):
+        self.record["obligations"][0]["status"] = "in_progress"
+        self.save_inventory()
+        self.article.write_text(self.index_text.replace("**1 verified resolutions**",
+            "**0 verified resolutions**").replace("1 proved as stated", "0 proved as stated")
+            .replace("**0 entries**", "**1 entry**"))
+        self.chapter.write_text(self.text.replace("Verified as stated.", "Pending verification."))
+        self.assertEqual(checks.validate(self.root), [])
+        self.article.write_text(self.article.read_text().replace("**1 entry**", "**1 entries**"))
+        self.assertIn("Stale pending-entry count", checks.validate(self.root))
+
     def test_new_exercise_requires_article_entry(self):
         self.source.with_name("Exercise02.lean").write_text("theorem exercise02 : True := by trivial\n")
         self.assertTrue(any("missing=['r01e02']" in e for e in checks.validate(self.root)))

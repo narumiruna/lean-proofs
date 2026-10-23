@@ -80,6 +80,21 @@ Unresolved source issues must remain visible; a corrected result must not be
 reported as proof of the original claim. Main-exercise completion requires all
 its obligations to be verified.
 
+The second full-book review is retained in `semantic-review.json`, with a
+source-to-type decision for every reviewed obligation. Each review group has
+its own source-closure and environment fingerprints, exact theorem mapping,
+reviewer, report hash, and successful build, trust-audit and control results.
+Development checks validate the recorded groups. Final mode also rejects any
+missing second-review obligation. Source or mapping changes require a new
+review; updating hashes alone is not acceptance.
+
+Source fingerprints follow the actual import header, not lines in comments or
+command bodies. The checker supports Lean 4.35 import flags and ordinary nested
+or line comments. Module names must use ASCII dotted identifiers, as in the
+current project. Unsupported names or header whitespace cause a check failure;
+they are not silently omitted. Tests compare supported headers with the pinned
+Lean parser and check that shared-source changes invalidate both reviews.
+
 Automated checks detect structural omissions and undeclared evidence. They
 cannot infer whether an omitted natural-language subquestion exists. Source
 inventory review and independent semantic review remain required.

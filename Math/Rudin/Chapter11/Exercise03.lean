@@ -2,11 +2,15 @@ module
 
 public import Mathlib.MeasureTheory.Constructions.Polish.Basic
 public import Mathlib.MeasureTheory.Constructions.BorelSpace.Complex
+public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLogExp
 
 /-!
 # Exercise 11.3
-The convergence set is measurable. Limits here are finite real or complex
-numbers, not extended real values. Source: book page 332, PDF page 341.
+The convergence set of measurable extended-real-valued functions is measurable,
+for extended limits and, separately, for finite real limits. The finite-limit
+result does not require finite-valued terms. The real and complex specializations
+are retained. Source: book page 332, PDF page 341; Definition 11.13 on book
+page 310, PDF page 319.
 -/
 
 @[expose] public section
@@ -14,6 +18,42 @@ namespace Rudin.Chapter11
 open MeasureTheory Filter
 open scoped Topology
 variable {α : Type*} [MeasurableSpace α]
+
+/-- Extended convergence includes limits at either infinity. -/
+theorem exercise03_ereal (f : ℕ → α → EReal) (hf : ∀ n, Measurable (f n)) :
+    MeasurableSet {x | ∃ y : EReal, Tendsto (fun n => f n x) atTop (𝓝 y)} :=
+  measurableSet_exists_tendsto hf
+
+/-- A finite limit is an extended limit other than either infinity. -/
+theorem exercise03_ereal_finite_iff (u : ℕ → EReal) :
+    (∃ y : ℝ, Tendsto u atTop (𝓝 (y : EReal))) ↔
+      (∃ y : EReal, Tendsto u atTop (𝓝 y)) ∧
+        ¬ Tendsto u atTop (𝓝 ⊤) ∧ ¬ Tendsto u atTop (𝓝 ⊥) := by
+  constructor
+  · rintro ⟨y, hy⟩
+    exact ⟨⟨y, hy⟩,
+      fun ht => EReal.coe_ne_top y (tendsto_nhds_unique hy ht),
+      fun hb => EReal.coe_ne_bot y (tendsto_nhds_unique hy hb)⟩
+  · rintro ⟨⟨y, hy⟩, ht, hb⟩
+    have htop : y ≠ ⊤ := fun h => ht (h ▸ hy)
+    have hbot : y ≠ ⊥ := fun h => hb (h ▸ hy)
+    exact ⟨y.toReal, by simpa only [EReal.coe_toReal htop hbot] using hy⟩
+
+/-- The finite-real-limit set is measurable even when terms can be infinite. -/
+theorem exercise03_ereal_finite (f : ℕ → α → EReal)
+    (hf : ∀ n, Measurable (f n)) :
+    MeasurableSet {x | ∃ y : ℝ, Tendsto (fun n => f n x) atTop (𝓝 (y : EReal))} := by
+  have hs : {x | ∃ y : ℝ, Tendsto (fun n => f n x) atTop (𝓝 (y : EReal))} =
+      {x | ∃ y : EReal, Tendsto (fun n => f n x) atTop (𝓝 y)} \
+        ({x | Tendsto (fun n => f n x) atTop (𝓝 ⊤)} ∪
+          {x | Tendsto (fun n => f n x) atTop (𝓝 ⊥)}) := by
+    ext x
+    simpa only [Set.mem_ofPred_eq, Set.mem_sdiff, Set.mem_union, not_or] using
+      exercise03_ereal_finite_iff (fun n => f n x)
+  rw [hs]
+  exact (exercise03_ereal f hf).diff
+    ((measurableSet_tendsto_fun hf measurable_const).union
+      (measurableSet_tendsto_fun hf measurable_const))
 
 theorem exercise03_real (f : ℕ → α → ℝ) (hf : ∀ n, Measurable (f n)) :
     MeasurableSet {x | ∃ y : ℝ, Tendsto (fun n => f n x) atTop (𝓝 y)} :=

@@ -60,7 +60,7 @@ review, compilation, and the project axiom checks.
 - Status: verified refutation and correction of the intermediate estimate.
   The final Tauberian converse is valid and proved by the required outline.
   All ten original obligations remain; the new obstruction is an eleventh
-  obligation. The inventory denominator is 848.
+  obligation. The current inventory denominator is 849.
 
 ## R05E13: real powers on negative inputs
 
@@ -149,6 +149,72 @@ review, compilation, and the project axiom checks.
 - Status: **verified refutation and correction**, not proof of the printed
   nonzero-Hessian classification. All four obligations passed independent
   page/type/body review and the Chapter 8–9 project gate.
+
+## R10E09: polar bounds and the angular seam
+
+- Source: book page 290, PDF page 299; primary and comparison images checked.
+- Under the usual nested binding, the printed bounds and differentials give
+  $2\pi^2$ for the unit-disk constant example, rather than its source area
+  $\pi$. `Exercise09.literal_order_obstruction` and
+  `Exercise09.literal_disk_obstruction` prove this discrepancy.
+- The correction states the radial-outer, angular-inner order explicitly.
+  Its real and complex versions have literal repeated source witnesses on
+  both the closed disk and the polar rectangle. Independent disk and polar
+  dominated-convergence limits prove the required approximation argument.
+- The stated angular interior omits the positive $x$-axis, not the positive
+  $y$-axis from the hint. `Exercise09.printed_y_seam_obstruction` proves the
+  mismatch; `Exercise09.image_slit` identifies the corrected image.
+- Status: **verified refutation and correction** of these printed choices.
+  All names have prefix `Rudin.Chapter10`.
+
+## R10E10: improper polar binding
+
+- Source: book page 290, PDF page 299.
+- For the Gaussian, the literal printed binding gives
+  $A(1-\exp(-(2\pi)^2))/2$, which tends to positive infinity.
+  `Exercise10.literal_order_obstruction` and
+  `Exercise10.literal_no_finite_value` prove that it has no finite value.
+- The corrected angular-inner formula has ordinary and absolute improper
+  source limits. The selected sufficient decay condition has a nonnegative
+  bound and exponent greater than two. No necessity claim is made.
+- The Gaussian value is derived through the finite source polar approximation
+  and exhaustion, followed by Cartesian product integration.
+- Status: **verified refutation and correction**, not proof of the printed
+  binding. All names have prefix `Rudin.Chapter10`.
+
+## R10E22(c): a radial curtain can pass through the origin
+
+- Source: book pages 294–295, PDF pages 303–304.
+- The printed positivity condition on the radial scale does not make the
+  direction nonzero. The allowed smooth data `g=1`, `h=0` map the whole
+  curtain to the origin, outside the domain of the radial form.
+- `Exercise22.origin_obstruction` proves this domain defect. The corrected
+  curtain explicitly requires nonvanishing direction. Its zero pullback is
+  proved for a scale depending on both parameters, not just separable scales.
+- The radial-homotopy and primitive/pole-limit invariance arguments remain
+  separate proofs. Neither uses the uncorrected assertion.
+- Status: **verified refutation and correction**, not proof of the printed
+  domain claim. See the full declarations for `R10E22.origin_obstruction`
+  and `R10E22.corrected_radial_surface` in the inventory.
+
+## R10E23: extension scope and degree zero
+
+- Source: book pages 295–296, PDF pages 304–305.
+- The open-ended extension is explicitly fixed to whole-sphere flux and
+  positive radial invariance, including literal cell/simplex source witnesses.
+  Actual sphere coverage, signed face cancellation and strictly positive
+  independently defined Gram area are proved.
+- Positive-degree nonexactness covers every ambient dimension at least two.
+  In degree zero, exactness is explicitly added as vanishing, or image
+  contained in $\{0\}$. The punctured-line form is closed but not exact under
+  that convention. No negative-degree primitive is attributed to the book.
+- The $S^0$ extension has counting area and signed flux two, with ordinary
+  boundary zero rather than augmentation.
+- Status: **verified scope and convention**, counted as stated under the
+  documented contract, not as a refuted source claim. The prescribed
+  positive-degree primitive is also proved with its exact lower endpoint,
+  exponent and sign. See `Exercise23.Primitive.prescribed_primitive`,
+  `Exercise23.Sphere.wholeSphere_flux` and the full inventory mapping.
 
 ## R11E18: equality case with a zero first function
 

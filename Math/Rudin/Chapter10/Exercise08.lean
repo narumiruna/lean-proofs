@@ -3,7 +3,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.PolarCoord
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 public import Mathlib.MeasureTheory.Integral.Prod
-public import Math.Rudin.Support.MultivariateRiemann
+public import Math.Rudin.Chapter10.Exercise01
 
 /-! # Exercise 10.8: an affine parallelogram -/
 @[expose] public section
@@ -127,5 +127,37 @@ theorem transformed_source :
     simp [integral_exp]
     ring
   rwa [hv] at h
+
+/-- The closed affine image is compact and convex, including its edges. -/
+theorem parallelogram_compact_convex : IsCompact parallelogram ∧ Convex ℝ parallelogram := by
+  have hc : Continuous transform := continuous_iff_continuousAt.mpr
+    (fun p => (hasFDerivAt_transform p).continuousAt)
+  let A : (ℝ × ℝ) →ᵃ[ℝ] (ℝ × ℝ) :=
+    AffineMap.const ℝ (ℝ × ℝ) (1,1) + linearPart.toLinearMap.toAffineMap
+  have he : (A : (ℝ × ℝ) → (ℝ × ℝ)) = transform := by
+    funext p
+    exact (affine_formula p).symm
+  rw [← image_square]
+  refine ⟨(isCompact_Icc.prod isCompact_Icc).image hc, ?_⟩
+  rw [← he]
+  exact Convex.affine_image A ((convex_Icc (0 : ℝ) 1).prod (convex_Icc (0 : ℝ) 1))
+
+/-- The original integral is the literal closed-set zero extension, in every
+Cartesian order. In particular, no nonzero edge value is deleted. -/
+theorem original_source_value :
+    Exercise01.HasPlaneSource parallelogram (fun p => Real.exp (p.1-p.2))
+      (5 / 2 * (Real.exp 1 - 1) * (1 - Real.exp (-2))) := by
+  have h := Exercise01.plane_source_real parallelogram_compact_convex.1
+    parallelogram_compact_convex.2
+    (by fun_prop : ContinuousOn (fun p : ℝ × ℝ => Real.exp (p.1-p.2)) parallelogram)
+  rwa [integral_value] at h
+
+/-- Source-to-source substitution with the common exact value. -/
+theorem source_change_of_variables :
+    Exercise01.HasPlaneSource parallelogram (fun p => Real.exp (p.1-p.2))
+      (5 / 2 * (Real.exp 1 - 1) * (1 - Real.exp (-2))) ∧
+    HasSourceIntegral 2 0 1 (fun u => 5 * Real.exp (u 0 - 2*u 1))
+      (5 / 2 * (Real.exp 1 - 1) * (1 - Real.exp (-2))) :=
+  ⟨original_source_value, transformed_source⟩
 
 end Rudin.Chapter10.Exercise08

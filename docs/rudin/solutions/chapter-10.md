@@ -4,14 +4,14 @@
 
 [All chapters](../solutions.md) · [Previous chapter](chapter-09.md) · [Next chapter](chapter-11.md)
 
-**Exercises:** [1](#r10e01) · [2](#r10e02) · [3](#r10e03) · [4](#r10e04) · [5](#r10e05) · [6](#r10e06) · [7](#r10e07) · [8](#r10e08) · [9](#r10e09) · [10](#r10e10) · [11](#r10e11) · [12](#r10e12) · [13](#r10e13) · [14](#r10e14) · [15](#r10e15) · [16](#r10e16) · [17](#r10e17) · [18](#r10e18) · [19](#r10e19) · [20](#r10e20) · [21](#r10e21) · [23](#r10e23) · [28](#r10e28) · [29](#r10e29) · [30](#r10e30) · [32](#r10e32)
+**Exercises:** [1](#r10e01) · [2](#r10e02) · [3](#r10e03) · [4](#r10e04) · [5](#r10e05) · [6](#r10e06) · [7](#r10e07) · [8](#r10e08) · [9](#r10e09) · [10](#r10e10) · [11](#r10e11) · [12](#r10e12) · [13](#r10e13) · [14](#r10e14) · [15](#r10e15) · [16](#r10e16) · [17](#r10e17) · [18](#r10e18) · [19](#r10e19) · [20](#r10e20) · [21](#r10e21) · [22](#r10e22) · [23](#r10e23) · [24](#r10e24) · [25](#r10e25) · [26](#r10e26) · [27](#r10e27) · [28](#r10e28) · [29](#r10e29) · [30](#r10e30) · [31](#r10e31) · [32](#r10e32)
 
 <a id="r10e01"></a>
 ### 10.1 — Integration order for a convex zero extension
 
 **Lean source:** [Exercise01.lean](../../../Math/Rudin/Chapter10/Exercise01.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $H\subset\mathbb R^n$ be compact and convex, and let $f:H\to\mathbb R$ or $\mathbb C$ be continuous. Retain the values of $f$ on the boundary and extend it by zero outside $H$. There is an enclosing coordinate cell on which every repeated integral exists, at every remaining parameter, in every coordinate order. Each order has value $\int_H f$. Order independence also holds on any coordinate cell with ordered bounds, whether or not it contains $H$.
 
@@ -24,8 +24,6 @@ This regularity is preserved by integration in one coordinate. Indeed, apply Fub
 For the approximation argument, extend $f$ continuously to an ambient function $g$. Choose continuous cutoffs $c_j$ with $0\le c_j\le1$, zero outside $H$ and on its frontier, tending to $1$ in its interior. The source uses distance-based thickened indicators with width $1/(j+1)$. The functions $c_jg$ are continuous, have topological support in $H$, and have a common bound. They converge to the literal zero extension outside the null convex frontier. No uniform convergence at nonzero boundary values is asserted. Dominated convergence transfers this approximation to each repeated value. The continuous-cell theorem gives the same value for all orders at each $j$; uniqueness of limits gives order independence for the zero extension.
 
 For complex values, apply the real argument to the real and imaginary parts. The component equivalence for complex tagged sums supplies actual complex one-dimensional source integrals at each stage. Compactness supplies strictly ordered enclosing bounds, and the volume-preserving Euclidean coordinate map identifies the common enclosing-cell value with $\int_H f$. The plane-coordinate conclusions give the same witnesses in $\mathbb R\times\mathbb R$.
-
-Inventory obligations `R10E01.existence` and `R10E01.order_independence` remain marked in progress; the current source contains the results above.
 
 **Lean declarations:** `Rudin.Chapter10.Exercise01.existence_real`, `Rudin.Chapter10.Exercise01.existence_complex`, `Rudin.Chapter10.Exercise01.plane_source_real`, `Rudin.Chapter10.Exercise01.plane_source_complex`, `Rudin.Chapter10.Exercise01.order_independence_real`, `Rudin.Chapter10.Exercise01.order_independence_complex`, `Rudin.Chapter10.Exercise01.real_existence`, `Rudin.Chapter10.Exercise01.complex_existence`, `Rudin.Chapter10.Exercise01.continuous_approximations`, `Rudin.Chapter10.Exercise01.continuous_approximations_complex`, `Rudin.Chapter10.Exercise01.approximation_source_limit`, `Rudin.Chapter10.Exercise01.real_order_independence`, `Rudin.Chapter10.Exercise01.complex_order_independence`.
 
@@ -172,7 +170,7 @@ Every function is continuous, lies in $[0,1]$, and has support contained in that
 
 **Lean source:** [Exercise06.lean](../../../Math/Rudin/Chapter10/Exercise06.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For compact $K\subset\mathbb R^n$ and any open cover $(U_i)$ of $K$, the finite subordinate partition in Exercise 10.5 can be chosen globally $C^\infty$. Each function also has compact support, is differentiable, takes values in $[0,1]$, and the functions sum to one on $K$. Empty $K$ and dimension zero are included.
 
@@ -191,8 +189,6 @@ h(y)=\eta\left(\frac{(r/2)^2-\|y-x\|^2}{(r/2)^2-(r/4)^2}\right).
 $$
 
 The denominator is positive. The squared norm is smooth, so $h$ is globally smooth. It equals one on $B(x,r/4)$ and vanishes when $\|y-x\|\ge r/2$. Its support is a closed subset of the compact ball $\overline B(x,r/2)$, which is contained in $U_i$. Finite extraction gives bumps covering $K$. Apply the same ordered-product formula as in Exercise 10.5. Finite products preserve smoothness; support containment preserves compact support and subordination. The telescoping product proves the sum condition. Smoothness implies differentiability.
-
-The source contains this construction, but `R10E06.smooth_partition` remains marked in progress in the inventory.
 
 **Lean declarations:** `Rudin.Chapter10.exercise06_source_glue`, `Rudin.Chapter10.exercise06_transition_eq`, `Rudin.Chapter10.exercise06_auxiliary_smooth`, `Rudin.Chapter10.exercise06_bump`, `Rudin.Chapter10.exercise06_product_smooth`, `Rudin.Chapter10.exercise06_smooth_partition`.
 
@@ -226,7 +222,7 @@ These weights are nonnegative and sum to one. Every convex set containing the ve
 
 **Lean source:** [Exercise08.lean](../../../Math/Rudin/Chapter10/Exercise08.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $H$ have vertices $(1,1),(3,2),(4,5),(2,4)$. The affine map
 
@@ -242,7 +238,7 @@ $$
 =\frac52(e-1)(1-e^{-2}).
 $$
 
-The original integrand is integrable on $H$. The transformed square integrand also has an explicit repeated Darboux source integral with this value.
+The original integrand is integrable on $H$. Both its literal closed-region zero extension and the transformed square integrand have repeated Darboux source integrals with this value, in every coordinate order.
 
 **Proof.** Write $T(u,v)=(1,1)+u(2,1)+v(1,3)$. This gives all four vertices and identifies its square image with the stated parallelogram, including its boundary. The actual derivative is the constant matrix
 
@@ -259,16 +255,16 @@ $$
 
 Continuity on the square gives every stage of the transformed repeated Darboux integral, and the same one-dimensional calculation gives its value.
 
-All four `R10E08` obligations remain todo with no mapped declarations, although the current file proves these results. The explicit source-integral witness is for the transformed square; the file expresses the original-region substitution as a measure-integral theorem, not as a separate source witness for the zero extension on $H$.
+The parallelogram is compact and convex. Exercise 1 therefore supplies the actual source integral of its closed zero extension, retaining the nonzero boundary values. The proved source/measure comparisons identify both source values with the same computed integral.
 
-**Lean declarations:** `Rudin.Chapter10.Exercise08.vertices`, `Rudin.Chapter10.Exercise08.image_square`, `Rudin.Chapter10.Exercise08.affine_formula`, `Rudin.Chapter10.Exercise08.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise08.jacobian`, `Rudin.Chapter10.Exercise08.injective`, `Rudin.Chapter10.Exercise08.integrand_transform`, `Rudin.Chapter10.Exercise08.transformed_integral`, `Rudin.Chapter10.Exercise08.integrable_integrand`, `Rudin.Chapter10.Exercise08.square_integral_value`, `Rudin.Chapter10.Exercise08.integral_value`, `Rudin.Chapter10.Exercise08.transformed_source`.
+**Lean declarations:** `Rudin.Chapter10.Exercise08.vertices`, `Rudin.Chapter10.Exercise08.image_square`, `Rudin.Chapter10.Exercise08.affine_formula`, `Rudin.Chapter10.Exercise08.injective`, `Rudin.Chapter10.Exercise08.parallelogram_compact_convex`, `Rudin.Chapter10.Exercise08.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise08.jacobian`, `Rudin.Chapter10.Exercise08.transformed_integral`, `Rudin.Chapter10.Exercise08.integrable_integrand`, `Rudin.Chapter10.Exercise08.transformed_source`, `Rudin.Chapter10.Exercise08.source_change_of_variables`, `Rudin.Chapter10.Exercise08.original_source_value`, `Rudin.Chapter10.Exercise08.square_integral_value`, `Rudin.Chapter10.Exercise08.integral_value`.
 
 <a id="r10e09"></a>
 ### 10.9 — Polar integration and the correct slit
 
 **Lean source:** [Exercise09.lean](../../../Math/Rudin/Chapter10/Exercise09.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified refutation and correction.
 
 **Statement.** For $a\ge0$, let $D_a=\{(x,y):x^2+y^2\le a^2\}$ and $T(r,\theta)=(r\cos\theta,r\sin\theta)$. The image of $[0,a]\times[0,2\pi]$ is $D_a$. The map is injective on $(0,a)\times(0,2\pi)$, and its Jacobian is $r$. If $f$ is continuous on $D_a$, with real or complex values, then
 
@@ -277,30 +273,28 @@ $$
 =\int_0^a\left(\int_0^{2\pi}r f(r\cos\theta,r\sin\theta)\,d\theta\right)dr.
 $$
 
-The finite-disk measure identity also holds for real Banach-valued coefficients. For real $f$, the right side has explicit repeated Darboux witnesses; for complex $f$, such witnesses are supplied for both components. Continuous cutoffs with compact support in the open slit disk remove a compact-interior-support restriction. All assertions about integration include $a=0$.
+The finite-disk measure identity also holds for real Banach-valued coefficients. For real $f$, both sides have literal repeated Darboux witnesses; for complex $f$, both have actual recursive complex tagged-sum witnesses. All remaining-parameter values and coordinate orders are included. Continuous compact-interior cutoffs give the required approximation proof. All integration assertions include $a=0$.
 
 The printed differential/bound assignment is not this formula. With its literal usual nested binding, $f=1$ and $a=1$ give $2\pi^2$ instead of $\pi$. The angular interval $(0,2\pi)$ requires a positive-$x$-axis slit, not the positive-$y$-axis slit in the hint.
 
 **Proof.** The identity $\|T(r,\theta)\|_2^2=r^2$ proves containment. Conversely, represent $x+iy$ by its modulus and argument, adding $2\pi$ to negative arguments. Its modulus lies in $[0,a]$, and the adjusted angle lies in $[0,2\pi]$. This includes the origin. Shifting the angle by $-\pi$ and negating the target reduces injectivity on the open parameter rectangle to the standard polar chart. Differentiation gives columns $(\cos\theta,\sin\theta)$ and $(-r\sin\theta,r\cos\theta)$, with determinant $r$.
 
-The map is also injective on $(0,a]\times(0,2\pi)$, whose image is the closed disk with the positive-$x$-axis radius removed. The omitted set is null; the proof bounds it by the horizontal coordinate line. Change of variables gives the disk integral as the integral of $r f(T(r,\theta))$ over this parameter set. Continuity on the compact closed disk proves integrability. The transformed integrand is continuous on the closed parameter rectangle and hence integrable there. Fubini and the irrelevance of interval endpoints give the displayed angular-inner, radial-outer formula.
+The map is also injective on $(0,a]\times(0,2\pi)$, whose image is the closed disk with the positive-$x$-axis radius removed. The omitted set is null because it lies on the horizontal coordinate line. Injective change of variables gives a finite substitution lemma. Apply it to each compact-interior cutoff coefficient below. Continuity on the compact disk and parameter rectangle proves the required integrability independently; Fubini gives the angular-inner, radial-outer finite formula.
 
-For the approximation assertion, the open slit disk is the disk interior with that same radius removed. Its difference from the closed disk is null, since both the convex frontier and the slit are null. Exhaust the open slit by compact subsets and choose continuous cutoffs $0\le\chi_n\le1$, equal to one on each selected compact set and supported compactly inside the open slit. Every point of the open slit eventually has cutoff one. Although $f$ is assumed continuous only on the disk, each $\chi_nf$ is globally continuous: its support lies in the disk interior. Domination by $|f|$ proves convergence of the cutoff integrals to the full disk integral. Thus no boundary-vanishing hypothesis on $f$ is needed. At radius zero the disk is a null singleton and the radial integral is zero.
+The open slit disk differs from the closed disk by a null set. Exhaust it by compact subsets and construct continuous cutoffs $0\le\chi_n\le1$, equal to one on those subsets and supported compactly inside the slit. Each $\chi_nf$ is globally continuous, although $f$ need only be continuous on the disk. Dominated convergence proves the disk-side limit using $|f|$. A separate dominated-convergence argument proves the polar-side limit using the integrable polar norm. That argument does not use the desired substitution identity. The finite cutoff identities and uniqueness of limits now give the full formula. No boundary-vanishing hypothesis is added. At radius zero the disk is a null singleton and the radial integral is zero.
 
-For the source witnesses, use coordinates $(\theta,r)$ on $[0,2\pi]\times[0,a]$ so that coordinate zero is integrated first. Continuity gives all real Darboux stages. Applying this to the real and imaginary parts and commuting those projections with integration gives the complex component statements.
+For the polar source witnesses, use coordinates $(\theta,r)$ on $[0,2\pi]\times[0,a]$ so that coordinate zero is integrated first. Continuity gives every real Darboux stage. The proved component/tagged equivalence gives actual complex source convergence, not just two assigned component values. Exercise 1 gives the disk's closed-zero-extension witnesses in every Cartesian order. Source comparisons identify their values with the approximation-derived equality. Circle, origin, slit and angular-endpoint values are retained.
 
 Finally, the literal printed reading integrates $r$ from $0$ to $2\pi$ and the angle from $0$ to $1$, giving $2\pi^2$. The corrected unit-disk formula gives $\pi$. These values are unequal.
 
-All five `R10E09` obligations remain todo and unmapped in the inventory. The file proves the geometry, correction, approximation, and measure identity above. Its explicit source witnesses concern the polar side, with component witnesses rather than a direct recursive complex tagged-sum predicate; no separate source witness for the disk zero extension is stated here.
-
-**Lean declarations:** `Rudin.Chapter10.Exercise09.range`, `Rudin.Chapter10.Exercise09.interior_injective`, `Rudin.Chapter10.Exercise09.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise09.jacobian`, `Rudin.Chapter10.Exercise09.image_slit`, `Rudin.Chapter10.Exercise09.slit_ae_disk`, `Rudin.Chapter10.Exercise09.disk_integral`, `Rudin.Chapter10.Exercise09.polar_integrable`, `Rudin.Chapter10.Exercise09.polar_integral`, `Rudin.Chapter10.Exercise09.slit_approximation`, `Rudin.Chapter10.Exercise09.polar_source_real`, `Rudin.Chapter10.Exercise09.polar_source_complex`, `Rudin.Chapter10.Exercise09.corrected_constant_value`, `Rudin.Chapter10.Exercise09.disk_area_one`, `Rudin.Chapter10.Exercise09.literal_value`, `Rudin.Chapter10.Exercise09.literal_order_obstruction`, `Rudin.Chapter10.Exercise09.literal_disk_obstruction`.
+**Lean declarations:** `Rudin.Chapter10.Exercise09.mapsTo`, `Rudin.Chapter10.Exercise09.range`, `Rudin.Chapter10.Exercise09.shifted`, `Rudin.Chapter10.Exercise09.interior_injective`, `Rudin.Chapter10.Exercise09.slit_injective`, `Rudin.Chapter10.Exercise09.image_slit`, `Rudin.Chapter10.Exercise09.transform_mem_openSlit`, `Rudin.Chapter10.Exercise09.printed_y_seam_obstruction`, `Rudin.Chapter10.Exercise09.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise09.jacobian`, `Rudin.Chapter10.Exercise09.polar_integrable`, `Rudin.Chapter10.Exercise09.polar_integral`, `Rudin.Chapter10.Exercise09.slit_ae_disk`, `Rudin.Chapter10.Exercise09.openSlit_ae_disk`, `Rudin.Chapter10.Exercise09.slit_approximation`, `Rudin.Chapter10.Exercise09.polar_source_real`, `Rudin.Chapter10.Exercise09.polar_source_complex`, `Rudin.Chapter10.Exercise09.disk_source_real`, `Rudin.Chapter10.Exercise09.disk_source_complex`, `Rudin.Chapter10.Exercise09.polar_source_complex_tagged`, `Rudin.Chapter10.Exercise09.complex_source_of_continuousOn`, `Rudin.Chapter10.Exercise09.polar_approximation_limit`, `Rudin.Chapter10.Exercise09.polar_integral_by_approximation`, `Rudin.Chapter10.Exercise09.source_polar_real`, `Rudin.Chapter10.Exercise09.source_polar_complex`, `Rudin.Chapter10.Exercise09.literal_value`, `Rudin.Chapter10.Exercise09.corrected_constant_value`, `Rudin.Chapter10.Exercise09.disk_area_one`, `Rudin.Chapter10.Exercise09.literal_disk_obstruction`, `Rudin.Chapter10.Exercise09.disk_source_area_one`.
 
 <a id="r10e10"></a>
 ### 10.10 — Decay, improper polar integration, and the Gaussian
 
 **Lean source:** [Exercise10.lean](../../../Math/Rudin/Chapter10/Exercise10.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified refutation and correction.
 
 **Statement.** A sufficient decay condition for a continuous real or complex function on the Euclidean plane is
 
@@ -346,16 +340,16 @@ $$
 
 Its coefficient is positive. Hence $L(A)\to+\infty$ and it has no finite limit, unlike the corrected plane integral.
 
-All four `R10E10` obligations remain todo and unmapped. The general improper integrals here are explicitly defined as limits of finite measure integrals, with their convergence proved. The file does not supply a separate literal repeated-Riemann comparison for every general decay function and every Cartesian cutoff; its direct finite source witnesses are for the one-dimensional Gaussian. This distinguishes the established improper-measure formulation from a broader source-integral certification.
+For every function satisfying the stated decay condition, the finite Euclidean disks and Cartesian rectangles have literal real or complex source witnesses in every order. The polar boxes also have actual repeated source witnesses. Their source/measure comparisons and the proved exhaustion limits give ordinary and absolute improper source values. The finite disk identity and Gaussian calculation use Exercise 9's approximation-derived formula. The decay condition is sufficient, not a claimed necessary condition.
 
-**Lean declarations:** `Rudin.Chapter10.Exercise10.integrable_of_decay`, `Rudin.Chapter10.Exercise10.disk_exhaustion`, `Rudin.Chapter10.Exercise10.rectangle_exhaustion`, `Rudin.Chapter10.Exercise10.decay_convergence`, `Rudin.Chapter10.Exercise10.disk_polar`, `Rudin.Chapter10.Exercise10.whole_plane_polar`, `Rudin.Chapter10.Exercise10.absolute_polar_convergence`, `Rudin.Chapter10.Exercise10.gaussian_decay`, `Rudin.Chapter10.Exercise10.gaussian_polar`, `Rudin.Chapter10.Exercise10.radial_gaussian_integral`, `Rudin.Chapter10.Exercise10.gaussian_cutoff`, `Rudin.Chapter10.Exercise10.gaussian_plane_integral`, `Rudin.Chapter10.Exercise10.gaussian_integral`, `Rudin.Chapter10.Exercise10.gaussian_finite_source`, `Rudin.Chapter10.Exercise10.gaussian_improper`, `Rudin.Chapter10.Exercise10.literal_cutoff_value`, `Rudin.Chapter10.Exercise10.literal_order_obstruction`, `Rudin.Chapter10.Exercise10.literal_no_finite_value`.
+**Lean declarations:** `Rudin.Chapter10.Exercise10.integrable_of_decay`, `Rudin.Chapter10.Exercise10.disk_exhaustion`, `Rudin.Chapter10.Exercise10.rectangle_exhaustion`, `Rudin.Chapter10.Exercise10.decay_convergence`, `Rudin.Chapter10.Exercise10.rectangle_compact_convex`, `Rudin.Chapter10.Exercise10.finite_source_real`, `Rudin.Chapter10.Exercise10.finite_source_complex`, `Rudin.Chapter10.Exercise10.whole_plane_source_real`, `Rudin.Chapter10.Exercise10.whole_plane_source_complex`, `Rudin.Chapter10.Exercise10.norm_coordinates`, `Rudin.Chapter10.Exercise10.disk_preimage`, `Rudin.Chapter10.Exercise10.disk_polar`, `Rudin.Chapter10.Exercise10.whole_plane_polar`, `Rudin.Chapter10.Exercise10.absolute_polar_convergence`, `Rudin.Chapter10.Exercise10.gaussian_decay`, `Rudin.Chapter10.Exercise10.gaussian_polar`, `Rudin.Chapter10.Exercise10.radial_gaussian_integral`, `Rudin.Chapter10.Exercise10.gaussian_cutoff`, `Rudin.Chapter10.Exercise10.gaussian_plane_integral`, `Rudin.Chapter10.Exercise10.gaussian_integral`, `Rudin.Chapter10.Exercise10.gaussian_finite_source`, `Rudin.Chapter10.Exercise10.gaussian_improper`, `Rudin.Chapter10.Exercise10.literal_cutoff_value`, `Rudin.Chapter10.Exercise10.literal_order_obstruction`, `Rudin.Chapter10.Exercise10.literal_no_finite_value`.
 
 <a id="r10e11"></a>
 ### 10.11 — The beta–gamma substitution
 
 **Lean source:** [Exercise11.lean](../../../Math/Rudin/Chapter10/Exercise11.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** The map $T(s,t)=(s-st,st)$ is a bijection from $S=(0,\infty)\times(0,1)$ onto $Q=(0,\infty)^2$, with inverse $(u,v)\mapsto(u+v,v/(u+v))$ and Jacobian $s$. For an integrable coefficient on $Q$, substitution is valid on the full strip and along every increasing compact exhaustion of it. For $x,y>0$,
 
@@ -364,7 +358,7 @@ $$
 =\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}.
 $$
 
-The beta integrand is absolutely integrable on $(0,1)$, including when it is unbounded near an endpoint. Each compact interior interval has a Darboux source integral. Those finite source values converge to the displayed value along any increasing compact-interval exhaustion of $(0,1)$.
+The beta integrand is absolutely integrable on $(0,1)$, including when it is unbounded near an endpoint. Each compact interior interval has a Darboux source integral, and its values converge along increasing compact-interval exhaustions. For continuous, absolutely integrable real or complex quadrant coefficients, the two-dimensional extension also has literal finite source witnesses and ordinary and absolute improper limits.
 
 **Proof.** For $s>0$ and $0<t<1$, both $s(1-t)$ and $st$ are positive. Conversely, $u,v>0$ give $s=u+v>0$ and $0<v/(u+v)<1$. Direct substitution verifies both inverse identities. Differentiation gives
 
@@ -380,7 +374,7 @@ $$
 
 The convergence assertion assumes $f\in L^1(Q)$ and compact sets $K_n$ with $K_n\subset K_{n+1}$ and $\bigcup_nK_n=S$. Finite substitution holds on each $K_n$, and integrability makes both the transformed cut integrals and their image integrals tend to $\int_Q f$. Such compact exhaustions exist because the strip is open in the plane. Equality of totalized integrals alone is not used to infer convergence.
 
-Put $g_z(u)=e^{-u}u^{z-1}$. To obtain the displayed beta integrand with this choice of $T$, the source uses the quadrant kernel $g_y(u)g_x(v)$. Its integral is $\Gamma(y)\Gamma(x)$ and it is integrable by the gamma-integral convergence theorem. The transformed kernel factors as
+Put $g_z(u)=e^{-u}u^{z-1}$. The printed quadrant kernel $g_x(u)g_y(v)$ is treated directly and gives the correspondingly swapped beta exponents. To obtain the displayed ordering, apply the same proved substitution to $g_y(u)g_x(v)$. Its integral is $\Gamma(y)\Gamma(x)$ by product integration and gamma-integral convergence. The transformed kernel factors as
 
 $$
 s\,g_y(s-st)g_x(st)
@@ -397,16 +391,20 @@ Divide by $\Gamma(x+y)>0$. This derives the beta value from the substitution rat
 
 On $[a,b]\subset(0,1)$, the integrand is continuous for arbitrary real exponents, and hence has the literal Darboux integral. For $x,y>0$, integrability and increasing exhaustion by such intervals prove convergence of these source values, including all singular endpoint cases allowed by the strict positivity assumptions.
 
-All four `R10E11` obligations remain todo and unmapped. The full-strip change of variables and compact-exhaustion extension are measure-integral statements with explicit integrability hypotheses. The file additionally proves the one-dimensional improper beta source bridge; it does not state a general multidimensional source-Riemann theorem for arbitrary integrable coefficients on arbitrary compact exhaustion sets.
+For the source derivation, use the explicit cuts
+$$
+K_j=[1/(j+3),j+3]\times[1/(j+3),1-1/(j+3)].
+$$
+Their images are actual compact convex trapezoids in the quadrant. On each cut, continuity, Exercise 1 and finite change of variables give literal source witnesses on both sides, including all retained boundary values and coordinate orders. These increasing cuts exhaust the strip and their images exhaust the quadrant. Integrability gives ordinary and absolute limits. Applying this finite source route to the gamma kernels, then using Fubini and product limits, proves the beta value without an imported beta evaluation. Reversed or degenerate finite cuts and the excluded strip edges are treated separately. No claim is made that an arbitrary measurable coefficient has a proper source integral on every compact set.
 
-**Lean declarations:** `Rudin.Chapter10.Exercise11.bijection`, `Rudin.Chapter10.Exercise11.left_inverse`, `Rudin.Chapter10.Exercise11.right_inverse`, `Rudin.Chapter10.Exercise11.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise11.jacobian`, `Rudin.Chapter10.Exercise11.integral_transform`, `Rudin.Chapter10.Exercise11.integrable_transform_iff`, `Rudin.Chapter10.Exercise11.improper_extension`, `Rudin.Chapter10.Exercise11.exists_strip_exhaustion`, `Rudin.Chapter10.Exercise11.kernel_transform`, `Rudin.Chapter10.Exercise11.quadrant_integrable`, `Rudin.Chapter10.Exercise11.quadrant_integral`, `Rudin.Chapter10.Exercise11.beta_gamma_Ioo`, `Rudin.Chapter10.Exercise11.beta_gamma`, `Rudin.Chapter10.Exercise11.strip_kernel_integrable`, `Rudin.Chapter10.Exercise11.beta_integrable`, `Rudin.Chapter10.Exercise11.beta_source_cut`, `Rudin.Chapter10.Exercise11.beta_source_improper`.
+**Lean declarations:** `Rudin.Chapter10.Exercise11.mapsTo`, `Rudin.Chapter10.Exercise11.inverse_mapsTo`, `Rudin.Chapter10.Exercise11.left_inverse`, `Rudin.Chapter10.Exercise11.right_inverse`, `Rudin.Chapter10.Exercise11.bijection`, `Rudin.Chapter10.Exercise11.image_cut`, `Rudin.Chapter10.Exercise11.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise11.jacobian`, `Rudin.Chapter10.Exercise11.finite_cov`, `Rudin.Chapter10.Exercise11.finite_integrable`, `Rudin.Chapter10.Exercise11.convex_trapezoid`, `Rudin.Chapter10.Exercise11.finite_source_real`, `Rudin.Chapter10.Exercise11.finite_source_complex`, `Rudin.Chapter10.Exercise11.stripCut_compact`, `Rudin.Chapter10.Exercise11.stripCut_subset`, `Rudin.Chapter10.Exercise11.stripCut_monotone`, `Rudin.Chapter10.Exercise11.stripCut_union`, `Rudin.Chapter10.Exercise11.image_stripCut_compact`, `Rudin.Chapter10.Exercise11.image_stripCut_convex`, `Rudin.Chapter10.Exercise11.image_stripCut_monotone`, `Rudin.Chapter10.Exercise11.image_stripCut_union`, `Rudin.Chapter10.Exercise11.integrable_transform_iff`, `Rudin.Chapter10.Exercise11.source_improper_real`, `Rudin.Chapter10.Exercise11.source_improper_complex`, `Rudin.Chapter10.Exercise11.reversed_cut_first`, `Rudin.Chapter10.Exercise11.reversed_cut_second`, `Rudin.Chapter10.Exercise11.quadrant_integrable`, `Rudin.Chapter10.Exercise11.quadrant_integral`, `Rudin.Chapter10.Exercise11.kernel_transform`, `Rudin.Chapter10.Exercise11.strip_kernel_integrable`, `Rudin.Chapter10.Exercise11.beta_integrable`, `Rudin.Chapter10.Exercise11.gamma_source_cut`, `Rudin.Chapter10.Exercise11.gamma_source_improper`, `Rudin.Chapter10.Exercise11.beta_source_cut`, `Rudin.Chapter10.Exercise11.gamma_cut_union`, `Rudin.Chapter10.Exercise11.beta_cut_union`, `Rudin.Chapter10.Exercise11.gamma_cut_limit`, `Rudin.Chapter10.Exercise11.beta_cut_limit_integral`, `Rudin.Chapter10.Exercise11.kernel_finite_cov`, `Rudin.Chapter10.Exercise11.kernel_finite_source`, `Rudin.Chapter10.Exercise11.kernel_source_product_limit`, `Rudin.Chapter10.Exercise11.beta_gamma_from_source_cuts`, `Rudin.Chapter10.Exercise11.beta_source_derivation`, `Rudin.Chapter10.Exercise11.printedKernel_eq`, `Rudin.Chapter10.Exercise11.printed_source_derivation`, `Rudin.Chapter10.Exercise11.beta_left_threshold`, `Rudin.Chapter10.Exercise11.beta_right_threshold`.
 
 <a id="r10e12"></a>
 ### 10.12 — A triangular map from the cube to the simplex
 
 **Lean source:** [Exercise12.lean](../../../Math/Rudin/Chapter10/Exercise12.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Define, in source coordinate order,
 
@@ -443,8 +441,6 @@ On the open cube, every prefix product is positive, so the same identity permits
 
 The product and reciprocal differentiation rules give genuine Fréchet derivatives. Their matrices are lower triangular. The forward diagonal entry in row $i$ is $\prod_{j<i}(1-u_j)$, so multiplication of diagonal entries counts each factor $1-u_j$ exactly $n-j$ times. The inverse diagonal entry is $R_i^{-1}$. Its first denominator is one, leaving precisely the displayed product through $n-1$. Positivity of the denominators justifies differentiation of $S$ on the interior.
 
-All six `R10E12` obligations remain marked in progress, although the current source includes the closed boundary and interior results above.
-
 **Lean declarations:** `Rudin.Chapter10.Exercise12.coordinate_sum`, `Rudin.Chapter10.Exercise12.surjectivity`, `Rudin.Chapter10.Exercise12.S_mem_cube`, `Rudin.Chapter10.Exercise12.T_S`, `Rudin.Chapter10.Exercise12.S_T`, `Rudin.Chapter10.Exercise12.interior_injectivity`, `Rudin.Chapter10.Exercise12.injective_on_interior`, `Rudin.Chapter10.Exercise12.openCube_eq_interior`, `Rudin.Chapter10.Exercise12.interior_inverse`, `Rudin.Chapter10.Exercise12.openSimplex_eq_interior`, `Rudin.Chapter10.Exercise12.T_mem_openSimplex`, `Rudin.Chapter10.Exercise12.S_mem_openCube`, `Rudin.Chapter10.Exercise12.forward_jacobian`, `Rudin.Chapter10.Exercise12.hasFDerivAt_T`, `Rudin.Chapter10.Exercise12.inverse_jacobian`, `Rudin.Chapter10.Exercise12.hasFDerivAt_S`.
 
 <a id="r10e13"></a>
@@ -452,7 +448,7 @@ All six `R10E12` obligations remain marked in progress, although the current sou
 
 **Lean source:** [Exercise13.lean](../../../Math/Rudin/Chapter10/Exercise13.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For nonnegative integers $r_1,\ldots,r_n$ and $q$, the current source proves the stronger barycentric moment formula
 
@@ -498,8 +494,6 @@ Apply the induction hypothesis with final barycentric exponent $r_1+q+1$. The fa
 
 Taking $q=0$ gives the monomial formula; taking every $r_i=0$ gives volume. Continuity on the compact simplex proves integrability independently of the evaluated total integral. The local support results for the simplex zero extension supply every source Darboux stage, preserve the actual boundary values, and identify every permuted order with the set integral. The tagged-box comparison gives the multidimensional Riemann witness with the same value.
 
-Both `R10E13` obligations remain marked in progress in the inventory.
-
 **Lean declarations:** `Rudin.Chapter10.Exercise13.beta_natural`, `Rudin.Chapter10.Exercise13.beta_scaled`, `Rudin.Chapter10.Exercise13.mixed_moment`, `Rudin.Chapter10.Exercise13.monomial_integral`, `Rudin.Chapter10.Exercise13.monomial_integrable`, `Rudin.Chapter10.Exercise13.monomial_source`, `Rudin.Chapter10.Exercise13.monomial_riemann`, `Rudin.Chapter10.Exercise13.simplex_volume`.
 
 <a id="r10e14"></a>
@@ -507,7 +501,7 @@ Both `R10E13` obligations remain marked in progress in the inventory.
 
 **Lean source:** [Exercise14.lean](../../../Math/Rudin/Chapter10/Exercise14.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $j=(j_1,\ldots,j_k)$ be coordinate indices and $\sigma$ a permutation of their positions. Define $s(\sigma)$ as the determinant of the corresponding permutation matrix. Then
 
@@ -521,8 +515,6 @@ Thus the sign obtained by sorting distinct coordinate differentials is the deter
 
 **Proof.** Regard each $dx_i$ as the coordinate covector and their wedge as the canonical alternating multilinear product in the exterior algebra of the dual space. The alternating-map permutation law multiplies this product by the permutation sign. The determinant permutation law gives exactly the same sign for the row-permuted identity matrix, since the identity determinant is one. This identifies the two definitions of sign. The alternating-map interchange law gives the transposition assertion directly. Alternation also makes a tuple with equal covectors in distinct positions vanish, so repeated indices introduce no exception.
 
-`R10E14.permutation_sign` remains marked in progress in the inventory.
-
 **Lean declarations:** `Rudin.Chapter10.Exercise14.permutation_sign`, `Rudin.Chapter10.Exercise14.determinantSign_eq`, `Rudin.Chapter10.Exercise14.interchange`.
 
 <a id="r10e15"></a>
@@ -530,7 +522,7 @@ Thus the sign obtained by sorting distinct coordinate differentials is the deter
 
 **Lean source:** [Exercise15.lean](../../../Math/Rudin/Chapter10/Exercise15.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** If $\omega$ is a real $k$-form and $\lambda$ a real $m$-form on a common domain, then
 
@@ -544,8 +536,6 @@ The wedge has degree $k+m$. Products of coordinate wedges with a repeated index 
 
 Apply that identity to $\omega(x)$ and $\lambda(x)$ at every point $x$. The source first states the sign using integer units, then converts it to the literal real scalar $(-1)^{km}$. Multiplication of the degree-$k$ and degree-$m$ submodules lies in the degree-$(k+m)$ submodule. If one factor in the first block equals one factor in the second, their concatenated tuple has two equal entries in distinct positions. Its alternating product is zero, proving the repeated-index assertion without a distinctness restriction on the original tuples.
 
-`R10E15.graded_commutation` remains marked in progress in the inventory.
-
 **Lean declarations:** `Rudin.Chapter10.Exercise15.homogeneous_commutation`, `Rudin.Chapter10.Exercise15.graded_commutation`, `Rudin.Chapter10.Exercise15.graded_commutation_real`, `Rudin.Chapter10.Exercise15.wedge_mem`, `Rudin.Chapter10.Exercise15.wedge_repeated_index`.
 
 <a id="r10e16"></a>
@@ -553,7 +543,7 @@ Apply that identity to $\omega(x)$ and $\lambda(x)$ at every point $x$. The sour
 
 **Lean source:** [Exercise16.lean](../../../Math/Rudin/Chapter10/Exercise16.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For an oriented affine simplex $\sigma=[p_0,\ldots,p_k]$ of dimension $k\geq2$, the alternating face boundary satisfies $\partial^2\sigma=0$. The same identity holds for every finite integer chain. In the ordinary, unaugmented convention, a zero-chain has zero boundary, so the identity also includes dimensions zero and one. These statements also hold for chains of full parameter maps, not only affine vertex lists. The algebraic result requires no differentiability assumption.
 
@@ -576,7 +566,7 @@ The comparison with the source simplex is exact on the closed domain. If $u_i\ge
 
 **Lean source:** [Exercise17.lean](../../../Math/Rudin/Chapter10/Exercise17.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Set $q_0=(0,0)$, $q_1=(1,0)$, $q_2=(1,1)$, $q_3=(0,1)$, and let $\tau_1=[q_0,q_1,q_2]$, $\tau_2=-[q_0,q_3,q_2]$. Their sum $J^2$ is the positively oriented unit square: their closed ranges cover the square and have disjoint interiors. Its boundary is
 
@@ -601,7 +591,7 @@ The two vertex-difference matrices have determinants $1$ and $-1$. The coefficie
 
 **Lean source:** [Exercise18.lean](../../../Math/Rudin/Chapter10/Exercise18.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For each permutation $p=(i,j,k)$ of $(1,2,3)$, take
 
@@ -640,7 +630,7 @@ The twelve internal face occurrences cancel in pairs, leaving two triangles on e
 
 **Lean source:** [Exercise19.lean](../../../Math/Rudin/Chapter10/Exercise19.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Define the affine coordinate insertions $B_{r1}(u,v)=(r,u,v)$, $B_{r2}(u,v)=(u,r,v)$, $B_{r3}(u,v)=(u,v,r)$, and let $\beta_{ri}=B_{ri}(J^2)$ as an oriented affine two-chain. Then
 
@@ -692,7 +682,7 @@ This holds for either endpoint order. For $a\leq b$, including $a=b$, both terms
 
 **Lean source:** [Exercise21.lean](../../../Math/Rudin/Chapter10/Exercise21.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** On $\mathbb R^2\setminus\{0\}$, identify $z=x+iy$ and define
 
@@ -736,12 +726,74 @@ For the general $C^1$ loop, the logarithmic derivative $v/\Gamma$ is continuous 
 
 **Lean declarations:** `Rudin.Chapter10.Exercise21.eta_eq_im_div`, `Rudin.Chapter10.Exercise21.circle_integral`, `Rudin.Chapter10.Exercise21.circle_derivative`, `Rudin.Chapter10.Exercise21.circle_coefficient`, `Rudin.Chapter10.Exercise21.circle_source_integral`, `Rudin.Chapter10.Exercise21.eta_closed`, `Rudin.Chapter10.Exercise21.eta_smooth`, `Rudin.Chapter10.Exercise21.closed_triangle_boundary`, `Rudin.Chapter10.Exercise21.closed_square_boundary`, `Rudin.Chapter10.Exercise21.straight_homotopy_stokes`, `Rudin.Chapter10.Exercise21.straight_homotopy_source`, `Rudin.Chapter10.Exercise21.ellipse_integral`, `Rudin.Chapter10.Exercise21.ellipse_source_integral`, `Rudin.Chapter10.Exercise21.xAngle_exterior`, `Rudin.Chapter10.Exercise21.xAngle_derivative`, `Rudin.Chapter10.Exercise21.yAngle_exterior`, `Rudin.Chapter10.Exercise21.yAngle_derivative`, `Rudin.Chapter10.Exercise21.local_angles_not_global`, `Rudin.Chapter10.Exercise21.not_globally_exact`, `Rudin.Chapter10.Exercise21.straight_homotopy_local_primitives`, `Rudin.Chapter10.Exercise21.cutAngle_curve_derivative`, `Rudin.Chapter10.Exercise21.winding_index`, `Rudin.Chapter10.Exercise21.angularIntegral_source`, `Rudin.Chapter10.Exercise21.pathIntegral_bridge`, `Rudin.Chapter10.Exercise21.angularIntegral_eq_im`, `Rudin.Chapter10.Exercise21.integral_rescale`.
 
+<a id="r10e22"></a>
+### 10.22 — Radial flux and two independent invariance proofs
+
+**Lean source:** [Exercise22.lean](../../../Math/Rudin/Chapter10/Exercise22.lean).
+
+**Inventory status:** Verified refutation and correction.
+
+**Statement.** On punctured three-space, put $r=(x^2+y^2+z^2)^{1/2}$ and
+$$
+\zeta=\frac{x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy}{r^3}.
+$$
+This form is smooth and closed. For the spherical parameterization
+$\sigma(u,v)=(\sin u\cos v,\sin u\sin v,\cos u)$, its pullback is
+$\sin u\,du\wedge dv$ on $0\le u\le\pi$, $0\le v\le2\pi$.
+This coefficient is the independently defined Gram area density, including
+the poles. Positive radial rescaling by a locally $C^2$ function preserves
+the integral over every closed parameter rectangle in this domain.
+
+A radial curtain $\Phi(s,t)=g(s,t)h(s)$ has zero pullback of $\zeta$ provided
+$g>0$ and $h(s)\ne0$. The latter condition is a correction: the printed
+condition $g>0$ permits $h=0$, whose image is outside the domain of $\zeta$.
+Off the $z$-axis, the actual one-form
+$$
+\lambda=-\frac{z}{r}\frac{x\,dy-y\,dx}{x^2+y^2}
+$$
+satisfies $d\lambda=\zeta$. The form is also exact off any line through zero.
+
+**Proof.** Differentiate the coordinate coefficients of $\zeta$. Their
+divergence is zero, so $d\zeta=0$. Differentiate $\sigma$ and take the cross
+product of its two derivative columns. This gives both its flux coefficient
+and its geometric area density. A curtain has derivative columns
+$g_s h+g h'$ and $g_t h$. Their cross product has zero scalar product with
+$gh$, proving its zero flux even when $g$ does not separate into two factors.
+Nonvanishing ensures that this is an integral of the source form, not a
+totalized expression at zero.
+
+For the required Stokes proof, use the literal homotopy
+$$
+H(t,u,v)=(1-t+t f(u,v))\sigma(u,v).
+$$
+Its radius is positive. Divide its parameter cube into the six actual
+oriented tetrahedra from Exercise 18 and apply local simplex Stokes.
+Closedness makes their interior integrals zero. Full parameter-face
+cancellation leaves six square faces. A proved analytic subdivision of each
+square into two triangles identifies those chain integrals with the actual
+square integrals. All four side faces are radial curtains, so only the top
+and bottom remain. Affine substitution gives the result on arbitrary closed
+rectangles; zero-width rectangles have zero integral. This proof does not
+use $\lambda$ or the separate exactness argument.
+
+For the second proof, differentiate the displayed $\lambda$ off the axis.
+Its pullback under positive radial rescaling equals its pullback under
+$\sigma$. Exterior differentiation gives equality of the flux coefficients
+away from the poles. Genuine one-sided limits extend that equality to the
+poles, where $\zeta$ remains smooth although $\lambda$ is undefined. This
+proof does not use the curtain or Stokes argument. Finally, an explicit
+orthogonal map takes any prescribed line to the $z$-axis. Its determinant
+sign corrects the transported primitive. Coefficient continuity on compact
+parameter cells supplies literal source Riemann witnesses in every order.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise22.radius_formula`, `Rudin.Chapter10.Exercise22.zeta_smooth`, `Rudin.Chapter10.Exercise22.zeta_closed`, `Rudin.Chapter10.Exercise22.sigma_hasFDerivAt`, `Rudin.Chapter10.Exercise22.sigma_cross`, `Rudin.Chapter10.Exercise22.sigma_normal`, `Rudin.Chapter10.Exercise22.sigma_area_density`, `Rudin.Chapter10.Exercise22.sigma_pullback`, `Rudin.Chapter10.Exercise22.sphere_area`, `Rudin.Chapter10.Exercise22.sphere_rectangle_source`, `Rudin.Chapter10.Exercise22.sphere_simplex_source`, `Rudin.Chapter10.Exercise22.origin_obstruction`, `Rudin.Chapter10.Exercise22.corrected_radial_surface`, `Rudin.Chapter10.Exercise22.radialHomotopy_nonzero`, `Rudin.Chapter10.Exercise22.radialHomotopy_ends`, `Rudin.Chapter10.Exercise22.rectangleHomotopy_formula`, `Rudin.Chapter10.Exercise22.cubeTetra_realize`, `Rudin.Chapter10.Exercise22.cubeTetra_mem`, `Rudin.Chapter10.Exercise22.cube_eq_six`, `Rudin.Chapter10.Exercise22.local_cube_closed`, `Rudin.Chapter10.Exercise22.Subdivision.lower_image`, `Rudin.Chapter10.Exercise22.Subdivision.upper_image`, `Rudin.Chapter10.Exercise22.Subdivision.regions_union`, `Rudin.Chapter10.Exercise22.Subdivision.regions_aedisjoint`, `Rudin.Chapter10.Exercise22.Subdivision.lower_integral`, `Rudin.Chapter10.Exercise22.Subdivision.upper_integral`, `Rudin.Chapter10.Exercise22.Subdivision.square_integral`, `Rudin.Chapter10.Exercise22.parameterTriangle_coefficient`, `Rudin.Chapter10.Exercise22.square_integral_coefficients`, `Rudin.Chapter10.Exercise22.square_form_integral`, `Rudin.Chapter10.Exercise22.cube_boundary_faces`, `Rudin.Chapter10.Exercise22.homotopy_side_formula`, `Rudin.Chapter10.Exercise22.homotopy_side_zero`, `Rudin.Chapter10.Exercise22.cube_face_integral`, `Rudin.Chapter10.Exercise22.radial_unit_from_stokes`, `Rudin.Chapter10.Exercise22.rectangle_surface_substitution`, `Rudin.Chapter10.Exercise22.rectangle_degenerate`, `Rudin.Chapter10.Exercise22.radial_area_from_stokes`, `Rudin.Chapter10.Exercise22.radial_stokes_rectangle_source`, `Rudin.Chapter10.Exercise22.nonseparable_radial_stokes_models`, `Rudin.Chapter10.Exercise22.nonseparable_homotopy_model`, `Rudin.Chapter10.Exercise22.lambda_smooth`, `Rudin.Chapter10.Exercise22.lambda_eval_hasFDerivAt`, `Rudin.Chapter10.Exercise22.lambda_exterior`, `Rudin.Chapter10.Exercise22.lambda_radial`, `Rudin.Chapter10.Exercise22.lambda_radial_pullback`, `Rudin.Chapter10.Exercise22.radial_pullback_from_exactness`, `Rudin.Chapter10.Exercise22.poleApproach_inside`, `Rudin.Chapter10.Exercise22.poleApproach_limit`, `Rudin.Chapter10.Exercise22.radial_exactness_pole_limit`, `Rudin.Chapter10.Exercise22.radial_area_from_exactness`, `Rudin.Chapter10.Exercise22.radial_rectangle_source`, `Rudin.Chapter10.Exercise22.zeta_det`, `Rudin.Chapter10.Exercise22.zeta_orthogonal_pullback`, `Rudin.Chapter10.Exercise22.axisTransport_direction`, `Rudin.Chapter10.Exercise22.transport_domain`, `Rudin.Chapter10.Exercise22.line_exact`, `Rudin.Chapter10.Exercise22.curtain_nonzero`, `Rudin.Chapter10.Exercise22.curtain_derivatives`, `Rudin.Chapter10.Exercise22.curtain_pullback`, `Rudin.Chapter10.Exercise22.corrected_general_curtain`.
+
 <a id="r10e23"></a>
-### 10.23 — Radial forms: closedness and partial exactness coverage
+### 10.23 — Radial forms, prescribed primitives and sphere flux
 
 **Lean source:** [Exercise23.lean](../../../Math/Rudin/Chapter10/Exercise23.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $1\leq k\leq N$, set $r_k=(\sum_{i=1}^k x_i^2)^{1/2}$ and $E_k=\{r_k>0\}$. The source radial form is
 
@@ -767,7 +819,11 @@ $$
 
 For a $C^2$ map from a neighborhood of a compact set of positive Lebesgue measure, this area is strictly positive if its parameter derivative columns are linearly independent at every point of that set.
 
-This file has **partial source coverage**, not a complete solution. For `R10E23.b`, only the scalar integral facts above are proved; with the prescribed $f_k(x)=(-1)^k g_k(x_k/r_k)$, the identity $\omega_k=d(f_k\omega_{k-1})=df_k\wedge\omega_{k-1}$ on $E_{k-1}$ is not proved. For `R10E23.c`, nonexactness in dimensions at least two is not proved. For `R10E23.d.formulation` and `R10E23.d.generalization`, the results prove radial invariance and the sphere-patch flux/area comparison, but do not construct a whole-sphere chain, prove its face cancellation, or establish the global positive sphere integral required by the selected contract. The zero-degree convention is an explicit addition, not a source-defined negative-degree primitive.
+For $k\ge2$, the prescribed $f_k(x)=(-1)^k g_k(x_k/r_k)$ gives a genuine $C^1$ primitive on $E_{k-1}$:
+$$
+\omega_k=d(f_k\omega_{k-1})=df_k\wedge\omega_{k-1}.
+$$
+In ambient dimension $N\ge2$, the top radial form is not exact on punctured space. The full sphere extension constructs a closed, positively oriented sphere chain whose flux equals its strictly positive geometric Gram area. Coverage, chart injectivity, boundary cancellation and null chart overlaps are proved, not assumed. Radial invariance includes literal source Riemann witnesses on compact cells and simplexes in every coordinate order. Dimension zero of the sphere has counting area and flux two. The zero-degree exactness convention is an explicit addition, not a negative-degree primitive.
 
 **Proof.** In its own $k$ coordinates, write $\omega_k(x)=\|x\|^{-k}\iota_x\mathrm{vol}$; the ambient form is its pullback by projection to the first $k$ coordinates. Expanding the determinant in its first row proves the coordinate formula and the Euclidean norm formula proves the radius identity.
 
@@ -780,22 +836,134 @@ $$
 
 The denominator scales by the same positive power. This proves radial pullback invariance, including nonconstant scales and rank-deficient maps. Apply it to normalization $x\mapsto x/\|x\|$, which preserves the form away from zero. Its derivative is tangent to the unit sphere: differentiation of the squared norm gives orthogonality to the unit radial vector. Any $k$ such tangent vectors in $\mathbb R^k$ are linearly dependent, since they lie in the proper kernel of a nonzero inner-product functional. Thus every top-degree alternating form vanishes on them. Naturality of exterior differentiation under the smooth normalization map now proves closedness, and pullback by the coordinate projection proves ambient closedness. For $k=1$, the sign function is constant on a neighborhood of each point of $E_1$, which also supplies derivative existence directly.
 
-For $g_k$, the exponent $\alpha=(k-3)/2$ is greater than $-1$, including $\alpha=-1/2$ when $k=2$. Factor $(1-s^2)^\alpha=(1+s)^\alpha(1-s)^\alpha$. The first factor is integrable at $-1$; the second is continuous and bounded on $[-1,t]$. This proves endpoint integrability. The integrand is continuous at every interior $t$, so the fundamental theorem gives $g_k'(t)=(1-t^2)^\alpha$. Continuity of the interval primitive gives the limit of $\int_a^t$ as $a\downarrow-1$. No form-primitive identity follows in the current file.
+For $g_k$, the exponent $\alpha=(k-3)/2$ is greater than $-1$, including $\alpha=-1/2$ when $k=2$. Factor $(1-s^2)^\alpha=(1+s)^\alpha(1-s)^\alpha$. The first factor is integrable at $-1$; the second is continuous and bounded on $[-1,t]$. This proves endpoint integrability. The integrand is continuous at every interior $t$, so the fundamental theorem gives $g_k'(t)=(1-t^2)^\alpha$. Continuity of the interval primitive gives the limit of $\int_a^t$ as $a\downarrow-1$. On $E_{k-1}$, the ratio $x_k/r_k$ lies strictly between $-1$ and $1$. Differentiate that ratio and $g_k$, retaining every active and unused coordinate. The cofactor expansion gives $df_k\wedge\omega_{k-1}=\omega_k$. Since $\omega_{k-1}$ is closed, the exterior product rule proves the prescribed primitive identity. Continuity of these derivatives supplies its actual $C^1$ regularity.
 
 For the degree-zero convention, evaluate the form at the first positive coordinate unit vector: its value is one. It therefore cannot be the zero form on $E_1$. At top index the radial domain is exactly punctured Euclidean space, so this also proves the stated punctured-line result. No negative-degree form is introduced.
 
 For the area comparison, the square of the normal-first determinant is the Gram determinant of the normal and tangents. A unit normal orthogonal to the tangents makes this determinant equal to the tangent Gram determinant. Outward nonnegative orientation selects its nonnegative square root. Tangency on the compact domain, including boundary points, follows from the unit-norm identity and unique differentiation. This proves the pointwise flux-density identity. The $C^2$ neighborhood extensions give continuous area and flux densities; compactness gives their integrability and hence the integral identities. Linear independence makes the tangent Gram determinant positive, and positive measure then gives strictly positive area.
 
-The file also checks normalization on the standard frame: the coordinate volume and the radial form on an outward orthonormal frame are one. A concrete radial-invariance example uses a constant unit direction and radius $1+\|u\|^2$ on any compact parameter set. These are normalization and rescaling checks, not a replacement for a whole-sphere integral.
+For the whole sphere $S^m$, take the boundary of the positively oriented affine simplex $u\mapsto(-1,\ldots,-1)+(m+2)u$, which contains zero in its interior. Normalize each full face map radially. Every unit ray meets the boundary, so these charts cover the sphere. Their interiors do not overlap; overlaps lie on parameter frontiers of measure zero. Actual face restrictions cancel before normalization and still cancel after nonlinear postcomposition.
 
-**Lean declarations:** `Rudin.Chapter10.Exercise23.omega_source_formula`, `Rudin.Chapter10.Exercise23.radius_source_formula`, `Rudin.Chapter10.Exercise23.omega_closed`, `Rudin.Chapter10.Exercise23.topRadial_closed`, `Rudin.Chapter10.Exercise23.omega_one_apply`, `Rudin.Chapter10.Exercise23.omega_one_locally_constant`, `Rudin.Chapter10.Exercise23.omega_one_closed`, `Rudin.Chapter10.Exercise23.omega_one_not_exact`, `Rudin.Chapter10.Exercise23.g_integrable`, `Rudin.Chapter10.Exercise23.g_hasDerivAt`, `Rudin.Chapter10.Exercise23.g_improper_limit`, `Rudin.Chapter10.Exercise23.exactOn_zero_iff`, `Rudin.Chapter10.Exercise23.exactOn_zero_image`, `Rudin.Chapter10.Exercise23.exactOn_succ_iff`, `Rudin.Chapter10.Exercise23.dimension_one_closed_not_exact`, `Rudin.Chapter10.Exercise23.radialDomain_top`, `Rudin.Chapter10.Exercise23.radial_pullback_at`, `Rudin.Chapter10.Exercise23.normalize_pullback`, `Rudin.Chapter10.Exercise23.top_alternating_tangent_zero`, `Rudin.Chapter10.Exercise23.compact_radial_invariance`, `Rudin.Chapter10.Exercise23.normal_flux_eq_gram_area`, `Rudin.Chapter10.Exercise23.sphere_flux_density`, `Rudin.Chapter10.Exercise23.compact_sphere_flux_area`, `Rudin.Chapter10.Exercise23.parametricArea_pos`, `Rudin.Chapter10.Exercise23.coordinateVolume_standard`, `Rudin.Chapter10.Exercise23.topRadial_standard`, `Rudin.Chapter10.Exercise23.compact_radial_model`.
+The signed face flux has coefficient $(m+2)^m/\|\mathrm{face}(u)\|^{m+1}>0$. Tangency and the Gram determinant identity identify it with the independently defined area density. Sum over the charts to obtain the positive whole-sphere flux. An exact form would have zero integral on this closed chain by Stokes, which proves nonexactness. The $S^0$ calculation gives two signed endpoint contributions of one and uses ordinary degree-zero boundary, not augmentation. The compact-cell and simplex Riemann comparisons preserve all boundary values and all coordinate orders.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise23.radius_source_formula`, `Rudin.Chapter10.Exercise23.omega_source_formula`, `Rudin.Chapter10.Exercise23.topRadial_contDiffAt`, `Rudin.Chapter10.Exercise23.Primitive.omega_contDiffAt`, `Rudin.Chapter10.Exercise23.topRadial_closed`, `Rudin.Chapter10.Exercise23.omega_closed`, `Rudin.Chapter10.Exercise23.omega_one_apply`, `Rudin.Chapter10.Exercise23.omega_one_locally_constant`, `Rudin.Chapter10.Exercise23.omega_one_closed`, `Rudin.Chapter10.Exercise23.g_integrable`, `Rudin.Chapter10.Exercise23.g_eq_intervalIntegral`, `Rudin.Chapter10.Exercise23.g_hasDerivAt`, `Rudin.Chapter10.Exercise23.g_improper_limit`, `Rudin.Chapter10.Exercise23.Primitive.ratio_mem_Ioo`, `Rudin.Chapter10.Exercise23.Primitive.radius_hasFDerivAt`, `Rudin.Chapter10.Exercise23.Primitive.ratio_hasFDerivAt`, `Rudin.Chapter10.Exercise23.Primitive.primitiveFactor_hasFDerivAt`, `Rudin.Chapter10.Exercise23.Primitive.power_coefficient`, `Rudin.Chapter10.Exercise23.Primitive.cofactor_radial`, `Rudin.Chapter10.Exercise23.Primitive.factorCoefficients_apply`, `Rudin.Chapter10.Exercise23.Primitive.primitiveFactor_radial`, `Rudin.Chapter10.Exercise23.Primitive.primitiveFactor_last`, `Rudin.Chapter10.Exercise23.Primitive.differentialWedge_eq_omega`, `Rudin.Chapter10.Exercise23.Primitive.exterior_primitive`, `Rudin.Chapter10.Exercise23.Primitive.primitive_contDiffOn`, `Rudin.Chapter10.Exercise23.Primitive.prescribed_primitive`, `Rudin.Chapter10.Exercise23.Primitive.omega_exactOn`, `Rudin.Chapter10.Exercise23.radialDomain_top`, `Rudin.Chapter10.Exercise23.Sphere.omega_top`, `Rudin.Chapter10.Exercise23.Sphere.sphere_exact_integral_zero`, `Rudin.Chapter10.Exercise23.Sphere.wholeSphere_flux_pos`, `Rudin.Chapter10.Exercise23.Sphere.topRadial_not_exact`, `Rudin.Chapter10.Exercise23.Sphere.dimension_ge_two_closed_not_exact`, `Rudin.Chapter10.Exercise23.dimension_one_closed_not_exact`, `Rudin.Chapter10.Exercise23.Sphere.origin_mem_interior_solid`, `Rudin.Chapter10.Exercise23.Sphere.solid_positive_orientation`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_apply`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_norm`, `Rudin.Chapter10.Exercise23.Sphere.sphereChain_faces`, `Rudin.Chapter10.Exercise23.Sphere.sphere_coverage`, `Rudin.Chapter10.Exercise23.Sphere.wholeSphere`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_outward`, `Rudin.Chapter10.Exercise23.Sphere.wholeSphere_flux`, `Rudin.Chapter10.Exercise23.Sphere.wholeSphereArea_pos`, `Rudin.Chapter10.Exercise23.compact_radial_invariance`, `Rudin.Chapter10.Exercise23.Sphere.compact_radial_source`, `Rudin.Chapter10.Exercise23.Sphere.simplex_radial_source`, `Rudin.Chapter10.Exercise23.Sphere.cell_radial_source`, `Rudin.Chapter10.Exercise23.Sphere.sphere_zero_area_and_flux`, `Rudin.Chapter10.Exercise23.alternating_radial_shear`, `Rudin.Chapter10.Exercise23.alternating_radial_scale`, `Rudin.Chapter10.Exercise23.radial_pullback_at`, `Rudin.Chapter10.Exercise23.radial_nonzero`, `Rudin.Chapter10.Exercise23.normalize_pullback`, `Rudin.Chapter10.Exercise23.sphere_tangent`, `Rudin.Chapter10.Exercise23.coordinateVolume_sq`, `Rudin.Chapter10.Exercise23.gram_cons_unit_normal`, `Rudin.Chapter10.Exercise23.normal_flux_eq_gram_area`, `Rudin.Chapter10.Exercise23.areaDensity_continuousOn`, `Rudin.Chapter10.Exercise23.parametricArea_pos`, `Rudin.Chapter10.Exercise23.Sphere.face_ne_zero`, `Rudin.Chapter10.Exercise23.Sphere.polyhedronBoundary_closed`, `Rudin.Chapter10.Exercise23.Sphere.sphereChain_closed`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_injective`, `Rudin.Chapter10.Exercise23.Sphere.strictSimplex_eq_interior`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_interior_disjoint`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_interior_avoids_other`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_overlap_frontier`, `Rudin.Chapter10.Exercise23.Sphere.simplex_frontier_volume`, `Rudin.Chapter10.Exercise23.Sphere.simplex_uniqueDiffOn`, `Rudin.Chapter10.Exercise23.Sphere.simplex_volume_pos`, `Rudin.Chapter10.Exercise23.Sphere.signed_face_determinant`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_flux`, `Rudin.Chapter10.Exercise23.Sphere.signed_sphereFace_flux`, `Rudin.Chapter10.Exercise23.Sphere.signed_sphereFace_flux_pos`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_gram`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_regular`, `Rudin.Chapter10.Exercise23.Sphere.signed_sphereFace_area`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_area_pos`, `Rudin.Chapter10.Exercise23.Sphere.orientedSphere_closed`, `Rudin.Chapter10.Exercise23.Sphere.orientedSphere_flux`, `Rudin.Chapter10.Exercise23.Sphere.orientedSphere_ne_zero`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_source`, `Rudin.Chapter10.Exercise23.Sphere.sphereFace_area_source`, `Rudin.Chapter10.Exercise23.Sphere.compact_flux_source`, `Rudin.Chapter10.Exercise23.Sphere.compactCell_isCompact`, `Rudin.Chapter10.Exercise23.Sphere.compactCell_convex`, `Rudin.Chapter10.Exercise23.Sphere.sphere_zero_ordinaryBoundary`, `Rudin.Chapter10.Exercise23.exactOn_zero_iff`, `Rudin.Chapter10.Exercise23.exactOn_zero_image`, `Rudin.Chapter10.Exercise23.exactOn_succ_iff`, `Rudin.Chapter10.Exercise23.omega_one_not_exact`, `Rudin.Chapter10.Exercise23.Sphere.sphere_zero_face_area`.
+
+<a id="r10e24"></a>
+### 10.24 — A potential on a convex open set
+
+**Lean source:** [Exercise24.lean](../../../Math/Rudin/Chapter10/Exercise24.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $U\subset\mathbb R^n$ be open and convex. Let $\omega=\sum_i g_i\,dx_i$ be a closed $C^1$ one-form. For $a\in U$, define $F(x)$ as the integral of $\omega$ on the segment from $a$ to $x$. Then $F$ is $C^1$, $dF=\omega$, and
+$$
+F(y)-F(x)=\sum_i(y_i-x_i)\int_0^1g_i((1-t)x+ty)\,dt.
+$$
+The coordinate derivatives are $\partial_iF=g_i$. Exactness also holds on the empty domain and in dimension zero.
+
+**Proof.** The affine triangle with vertices $a,x,y$ lies in $U$. Stokes and $d\omega=0$ give the segment-increment identity. This uses the actual triangle and its three signed edges, including repeated vertices. Expand the one-form in the coordinate basis and integrate the finite sum to obtain the displayed formula. Continuity of the field controls the remainder after subtracting $\omega_x(y-x)$ by $o(\|y-x\|)$. Thus the genuine Fréchet derivative is $\omega_x$; its continuity gives $C^1$ regularity. Evaluation on each coordinate direction gives the coordinate derivatives. Each segment coefficient is continuous, so its ordinary source Riemann integral exists. On an empty domain choose the zero potential.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise24.potential_eq_segmentIntegral`, `Rudin.Chapter10.Exercise24.segmentIntegral_source`, `Rudin.Chapter10.Exercise24.affine_integral`, `Rudin.Chapter10.Exercise24.exactness`, `Rudin.Chapter10.Exercise24.increment`, `Rudin.Chapter10.Exercise24.increment_formula`, `Rudin.Chapter10.Exercise24.potential_derivative`, `Rudin.Chapter10.Exercise24.coordinate_derivative`.
+
+<a id="r10e25"></a>
+### 10.25 — Vanishing periods and exactness
+
+**Lean source:** [Exercise25.lean](../../../Math/Rudin/Chapter10/Exercise25.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $\omega$ be a continuous one-form on an arbitrary open set $U\subset\mathbb R^n$. If its integral on every closed $C^1$ curve in $U$ is zero, then $\omega=dF$ for a $C^1$ function $F$ on $U$. No connectedness assumption is required. Integrals along arbitrary $C^1$ curves equal the difference of potential values and are independent of the path with fixed endpoints.
+
+**Proof.** Use globally $C^2$ paths with constant extensions for $t\le0$ and $t\ge1$. A smooth reparameterization constructs such a path from each short segment without changing its integral. The actual concatenation of two such paths is $C^2$, and its integral is the sum of the two integrals. Their path classes are open in $U$ and are exactly the connected components: short segments give local reachability, and connectedness prevents a component from splitting into distinct open classes.
+
+Choose one base point in each nonempty component. Define $F(x)$ by integrating along a chosen path from its component's base point to $x$. Vanishing closed-curve integrals makes this value independent of that choice. Near $x$, append a short segment to a chosen path. The resulting local increment formula is the formula from Exercise 24, so $DF=\omega$ and $F$ is $C^1$. Finally, the chain rule and the fundamental theorem give the endpoint formula for every $C^1$ curve, including curves with only one-sided endpoint derivatives. Source Riemann witnesses are proved for the path coefficients. The empty open set needs no base point.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise25.FlatPath.integral_segment`, `Rudin.Chapter10.Exercise25.FlatPath.integral_join`, `Rudin.Chapter10.Exercise25.FlatPath.join_left`, `Rudin.Chapter10.Exercise25.FlatPath.join_right`, `Rudin.Chapter10.Exercise25.ClosedIntegralsVanish.flat`, `Rudin.Chapter10.Exercise25.potential_increment`, `Rudin.Chapter10.Exercise25.path_on_component`, `Rudin.Chapter10.Exercise25.base_eq_on_component`, `Rudin.Chapter10.Exercise25.FlatPath.in_component`, `Rudin.Chapter10.Exercise25.FlatPath.source`, `Rudin.Chapter10.Exercise25.path_independence_of_closed`, `Rudin.Chapter10.Exercise25.c1_path_independence`, `Rudin.Chapter10.Exercise25.exactness`, `Rudin.Chapter10.Exercise25.exactness_of_flat_closed`, `Rudin.Chapter10.Exercise25.curve_integral`, `Rudin.Chapter10.Exercise25.curve_integral_of_flat_closed`, `Rudin.Chapter10.Exercise25.C1Curve.source`.
+
+<a id="r10e26"></a>
+### 10.26 — Closed one-forms on punctured three-space
+
+**Lean source:** [Exercise26.lean](../../../Math/Rudin/Chapter10/Exercise26.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Every closed $C^1$ one-form on $\mathbb R^3\setminus\{0\}$ is exact there. Consequently, every closed $C^1$ curve has integral zero.
+
+**Proof.** First consider the $C^2$ endpoint-flat loops used in Exercise 25. For such a loop $\gamma$, the forbidden cone points lie in the image of the two-parameter map $(s,t)\mapsto-s\gamma(t)$. This differentiable image has three-dimensional measure zero. Choose an apex outside it. Every segment from that apex to $\gamma(t)$ avoids the origin; the apex is chosen for this loop, not as a star center for the punctured space.
+
+The actual cone square is $C^2$ and lies in the form domain. Divide it into two affine parameter triangles and apply Stokes to each. Closedness makes the interior integrals zero. The constant edge has zero integral, and the two equal radial sides cancel with their signs. Hence the loop integral is zero. Exercise 25's constructed-potential argument needs only these endpoint-flat loop periods, so it gives a global $C^1$ potential. Its endpoint formula then proves the result for every $C^1$ loop. No $C^1$ cone is passed to a theorem that requires $C^2$ parameter maps.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise26.exists_cone_avoiding_point`, `Rudin.Chapter10.Exercise26.coneSquare_avoids_zero`, `Rudin.Chapter10.Exercise26.coneSquare_smooth`, `Rudin.Chapter10.Exercise26.closed_triangle_boundary`, `Rudin.Chapter10.Exercise26.closed_square_boundary`, `Rudin.Chapter10.Exercise26.flat_periods`, `Rudin.Chapter10.Exercise26.exactness`, `Rudin.Chapter10.Exercise26.closed_c1_periods`.
+
+<a id="r10e27"></a>
+### 10.27 — An explicit primitive on an open cell
+
+**Lean source:** [Exercise27.lean](../../../Math/Rudin/Chapter10/Exercise27.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let
+$\omega=f_1\,dy\wedge dz+f_2\,dz\wedge dx+f_3\,dx\wedge dy$
+be a closed $C^1$ two-form on an open coordinate cell in $\mathbb R^3$.
+Choose $(a,b,c)$ in that cell and define
+$$
+g_1(x,y,z)=\int_c^z f_2(x,y,t)\,dt-\int_b^y f_3(x,t,c)\,dt,
+\qquad
+g_2(x,y,z)=-\int_c^z f_1(x,y,t)\,dt.
+$$
+Then $\lambda=g_1\,dx+g_2\,dy$ is $C^1$ and $d\lambda=\omega$.
+The formulas retain both base coordinates $b,c$ and allow reversed or equal
+integration endpoints. The unused base coordinate $a$ imposes no formula
+dependence.
+
+For the radial form $\zeta$ from Exercise 22, let
+$A=x^2+y^2$, $B=x^2+c^2$, and define
+$$
+K_A(t)=
+\begin{cases}
+t/(A\sqrt{A+t^2}),&A>0,\\
+0,&A=0.
+\end{cases}
+$$
+On any punctured coordinate cell the evaluated coefficients are
+$$
+g_1=y\bigl(K_A(z)-K_A(c)\bigr)
+-c\bigl(K_B(y)-K_B(b)\bigr),\qquad
+g_2=-x\bigl(K_A(z)-K_A(c)\bigr).
+$$
+At every off-axis point one can choose a compatible cell and $c=0$.
+There the resulting form equals Exercise 22's literal $\lambda$.
+Height zero is not assigned to an arbitrary cell that meets the axis.
+
+**Proof.** Rescale each variable interval to $[0,1]$ and use the proved local
+parameter-integral theorem from Exercise 29. The chain rule and FTC give all
+six partial derivatives and their continuity. Closedness is the actual
+coordinate equation
+$\partial_x f_1+\partial_y f_2+\partial_z f_3=0$.
+Integrating it from $c$ to $z$ gives
+$\partial_xg_2-\partial_yg_1=f_3$; the other two required coefficients are
+$\partial_zg_1=f_2$ and $\partial_zg_2=-f_1$. Thus the genuine exterior
+derivative is $\omega$. No derivative formula is an input assumption.
+
+For $A>0$, differentiating $K_A$ gives $(A+t^2)^{-3/2}$.
+If $A=0$, the corresponding numerator $x$ or $y$ is zero, so the weighted
+integral is zero. The same argument treats $B=0$. Every source integration
+segment stays in the supplied punctured cell. These branches therefore
+include nonzero axis points without using a formula across the origin.
+At an off-axis point, choose one transverse coordinate interval that avoids
+zero and a height interval containing both zero and the point's height.
+This constructs the compatible cell. Substitution of $c=0$ gives
+$g_1=yz/(Ar)$ and $g_2=-xz/(Ar)$. Every literal interval integral also has a
+source Darboux witness with the correct endpoint sign.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise27.primitive_identity`, `Rudin.Chapter10.Exercise27.coefficients_c1`, `Rudin.Chapter10.Exercise27.coefficients_partials`, `Rudin.Chapter10.Exercise27.remaining_transverse_partials`, `Rudin.Chapter10.Exercise27.source_integrals`, `Rudin.Chapter10.Exercise27.radial_cell_primitive`, `Rudin.Chapter10.Exercise27.radialAntiderivative_deriv`, `Rudin.Chapter10.Exercise27.radial_integral`, `Rudin.Chapter10.Exercise27.radial_evaluation`, `Rudin.Chapter10.Exercise27.radial_source_integrals`, `Rudin.Chapter10.Exercise27.radial_primitive_zero_height`, `Rudin.Chapter10.Exercise27.compatible_local_cell`, `Rudin.Chapter10.Exercise27.radial_local_primitive`.
 
 <a id="r10e28"></a>
 ### 10.28 — Stokes on a parametrized annulus
 
 **Lean source:** [Exercise28.lean](../../../Math/Rudin/Chapter10/Exercise28.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $0<a<b$, let $\Phi(r,\theta)=(r\cos\theta,r\sin\theta)$ on the closed rectangle $[a,b]\times[0,2\pi]$, with parameter order $(r,\theta)$, and put $\omega=x^3\,dy$. Then
 
@@ -803,7 +971,7 @@ $$
 \int_\Phi d\omega=\int_{\partial\Phi}\omega=\frac{3\pi}{4}(b^4-a^4).
 $$
 
-The four induced parameter edges have integrals $0$, $3\pi b^4/4$, $0$, $-3\pi a^4/4$, respectively. The repeated surface integral with $r$ outermost, every angular slice, and all signed boundary integrals have source Riemann witnesses. The current source completes these results although the inventory declaration lists are still empty.
+The four induced parameter edges have integrals $0$, $3\pi b^4/4$, $0$, $-3\pi a^4/4$, respectively. The repeated surface integral with $r$ outermost, every angular slice, and all signed boundary integrals have source Riemann witnesses.
 
 **Proof.** Differentiation gives $d\omega=3x^2\,dx\wedge dy$. The polar derivative has determinant $r$, so the pulled-back surface coefficient is $3r^3\cos^2\theta$. Also
 
@@ -822,7 +990,7 @@ Independently of this numerical comparison, the proof applies rectangle Stokes t
 
 **Lean source:** [Exercise29.lean](../../../Math/Rudin/Chapter10/Exercise29.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $X$ be a finite-dimensional real normed space and $V\subset X\times\mathbb R$ be open and convex. Its projection $U$ onto $X$ is open, and there is a $C^1$ function $\alpha:U\to\mathbb R$ with $(x,\alpha(x))\in V$. For $\varphi\in C^1(V)$,
 
@@ -832,7 +1000,7 @@ $$
 
 is $C^1$ on $V$, and each oriented fiber integral exists. The section is constructed, not assumed.
 
-For the setting of Theorem 10.38, let $E\subset (X\times\mathbb R)\times Y$ be open and convex, where $Y$ is a real normed space, and let $f\in C^1(E)$ factor as $f((x,z),y)=\varphi(x,z)$. The constructed section on the projection of $E$ gives a $C^1$ primitive $F((x,z),y)$ on $E$ with all unused coordinates retained. For $p=1$, nonempty $E\subset\mathbb R\times Y$ supplies a fixed endpoint $c$ in its projection and the primitive $\int_c^x\varphi(t)\,dt$. On an empty domain regularity is vacuous; no endpoint in an empty projection is asserted. These completed results are not yet mapped in the inventory.
+For the setting of Theorem 10.38, let $E\subset (X\times\mathbb R)\times Y$ be open and convex, where $Y$ is a real normed space, and let $f\in C^1(E)$ factor as $f((x,z),y)=\varphi(x,z)$. The constructed section on the projection of $E$ gives a $C^1$ primitive $F((x,z),y)$ on $E$ with all unused coordinates retained. For $p=1$, nonempty $E\subset\mathbb R\times Y$ supplies a fixed endpoint $c$ in its projection and the primitive $\int_c^x\varphi(t)\,dt$. On an empty domain regularity is vacuous; no endpoint in an empty projection is asserted.
 
 **Proof.** Each fiber of $V$ is a nonempty convex interval over its projection. For every $x\in U$, choose one fiber value $c_x$. Openness makes the same constant $c_x$ valid for all base points in a neighborhood of $x$. The smooth partition-of-unity selection theorem combines these locally constant choices into a locally finite smooth weighted sum. The weights sum to one, so convexity of each fiber keeps that sum in the fiber. This produces the $C^1$ section, also when $U$ is empty; an extension outside $U$ is used only to give a total function, without asserting smoothness outside $U$.
 
@@ -875,12 +1043,84 @@ The cross product is perpendicular to each factor, so $N\cdot\alpha=N\cdot\beta=
 
 **Lean declarations:** `Rudin.Chapter10.exercise30_normal_coordinates`, `Rudin.Chapter10.exercise30_determinant`, `Rudin.Chapter10.exercise30_basis`, `Rudin.Chapter10.exercise30_normal_perpendicular`, `Rudin.Chapter10.exercise30_orthogonality`.
 
+<a id="r10e31"></a>
+### 10.31 — Green identities and harmonic uniqueness
+
+**Lean source:** [Exercise31.lean](../../../Math/Rudin/Chapter10/Exercise31.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $V$ be a finite union of positively oriented, injectively
+parameterized $C^2$ simplex images in $\mathbb R^N$, with disjoint interiors,
+as in Section 10.31. The Jacobian need be positive only in the source
+interior. Let $g,h$ be $C^2$ on a neighborhood of $V$. For every $N\ge1$,
+$$
+\operatorname{div}(g\nabla h)=g\Delta h+\nabla g\cdot\nabla h,
+$$
+$$
+\int_V(g\Delta h+\nabla g\cdot\nabla h)\,dV
+=\int_{\partial V}g\,\frac{\partial h}{\partial n}\,dA,
+$$
+and
+$$
+\int_V(g\Delta h-h\Delta g)\,dV
+=\int_{\partial V}\left(g\frac{\partial h}{\partial n}
+-h\frac{\partial g}{\partial n}\right)\,dA.
+$$
+Here $dV$ is geometric volume, $dA$ is nonnegative Gram area, and $n$ has the
+canonical positive-boundary orientation. If $h$ is harmonic, its total
+normal flux is zero. If also $h=0$ on the actual frontier of $V$, then
+$h=0$ throughout $V$. Empty, disconnected and non-box regions are included.
+
+**Proof.** The Fréchet product rule gives the divergence identity. Contraction
+of Cartesian volume with a vector field gives its flux form; exterior
+differentiation gives actual divergence times volume. Local simplex Stokes,
+nonlinear change of variables and null interfaces prove the divergence
+theorem for the finite region. Neither cell-volume additivity nor boundary
+cancellation is assumed. Substituting $g\nabla h$ proves the first Green
+identity. Interchange $g,h$ and subtract to obtain the second. All volume and
+face integrands are proved integrable before these operations.
+
+The actual cofactor normal is perpendicular to the face tangents, and its
+norm equals the independently defined Gram density. A determinant identity
+fixes its boundary sign. Where the full Jacobian is positive, a local inverse
+and compact injectivity show that its positive normal ray leaves the
+nonlinear cell image. At a singular full boundary Jacobian with positive
+face area, explicitly contracted interior parallel faces have positive
+closed Jacobians and actual outward normals converging to the canonical
+normal. This is the continuous positive-boundary orientation, not an
+unproved exterior-ray claim at every singular point. A zero-area face
+contributes zero because the cofactor itself vanishes. Internal cell normals
+are not asserted to point outside the entire union.
+
+Set $g=1$ to obtain zero normal flux for harmonic $h$. For uniqueness, use the
+required choice $g=h$:
+$$
+\int_V\|\nabla h\|^2\,dV
+=\int_{\partial V}h\,\frac{\partial h}{\partial n}\,dA.
+$$
+The right side is zero from the frontier condition alone. To justify this
+for arbitrary finite cells, localize $h\nabla h$ by smooth interior cutoffs.
+Compact-support integration by parts and the already proved divergence
+theorem give zero localized flux. Dominated convergence on the finite
+faces then gives zero flux of the original field. No zero value is required
+on an internal cell face.
+
+Nonnegativity and continuity force $\nabla h=0$ on the interior. A
+first-derivative compact-set argument, with zero frontier values, gives
+$h=0$ on the whole region without connectedness. The separately available
+maximum-principle proof is not used by this energy argument. Literal
+repeated source integrals and the ordinary oriented quotient-boundary
+integral are compared with the same geometric values.
+
+**Lean declarations:** `Rudin.Chapter10.exercise31_a`, `Rudin.Chapter10.exercise31_laplacian_coordinates`, `Rudin.Chapter10.exercise31_b_first`, `Rudin.Chapter10.exercise31_first_green`, `Rudin.Chapter10.exercise31_first_integrable`, `Rudin.Chapter10.exercise31_boundary_integrable`, `Rudin.Chapter10.exercise31_normal_derivative`, `Rudin.Chapter10.exercise31_b_second`, `Rudin.Chapter10.exercise31_second_green`, `Rudin.Chapter10.exercise31_second_integrable`, `Rudin.Chapter10.exercise31_harmonic_zero_flux`, `Rudin.Chapter10.exercise31_harmonic_energy`, `Rudin.Chapter10.exercise31_energy_zero`, `Rudin.Chapter10.exercise31_gradient_zero_of_energy`, `Rudin.Chapter10.zero_of_fderiv_zero_of_frontier`, `Rudin.Chapter10.exercise31_harmonic_zero_boundary`, `Rudin.Chapter10.exercise31_d`.
+
 <a id="r10e32"></a>
 ### 10.32 — The Möbius band and its two boundary notions
 
 **Lean source:** [Exercise32.lean](../../../Math/Rudin/Chapter10/Exercise32.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $0<\delta<1$, $D=[0,\pi]\times[-\delta,\delta]$, and
 

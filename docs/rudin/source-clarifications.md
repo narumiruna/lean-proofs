@@ -4,10 +4,9 @@
 
 This note records 19 source issues in 16 exercises. The initial discovery
 covered 18 issues in 15 exercises; execution added R03E14's zero-bound check.
-It follows P1 of `docs/plans/2026-10-22_rudin-lean4-plan.md`. The contracts below
-are selected for implementation under the authorized plan. The inventory
-records their obligation mappings; no proof is complete merely because its
-contract has been selected.
+The contracts below were fixed before the corresponding proofs were accepted.
+The inventory records their obligation mappings and verified resolutions.
+Contract selection alone does not establish proof completion.
 
 References use the primary Third Edition PDF identified in
 `docs/rudin/source.md`. PDF page numbers are one-based; book page numbers are
@@ -30,12 +29,11 @@ The classifications are:
 
 Some issues have more than one classification under different readings.
 The arguments below first established source contracts, not proof completion.
-R02E28, R02E29, R03E06, R03E14, R03E18 and R04E09 now have independently
-reviewed Lean proofs and pass project and isolated-source checks; their inventory
-issues are resolved. R05E13 and R05E25 also have independently reviewed
-proofs and pass project and isolated-source checks; their issues are resolved. Other entries
-still require their counterexamples, corrected results, bridges, compilation,
-semantic review and axiom audit. Contract selection alone is not completion.
+All related inventory issues now have verified resolutions, with independently
+reviewed counterexamples, corrections, constructions or convention comparisons
+as applicable. Full-book second review and isolated final acceptance are
+separate gates. The inventory and retained second-review records identify the
+accepted declarations and exact source fingerprints.
 
 ## Inventory follow-up: R06E02 comparison
 
@@ -46,8 +44,8 @@ function at `1/2` on `[0,1]`: it is nonnegative, has literal ordinary integral
 zero, has value one at `1/2`, and is not continuous. Thus continuity in
 Exercise 2 cannot be removed. The source theorem remains valid and is counted
 as stated. The denominator is now 849; this addition is not a twentieth source
-issue or a new erratum. Independent follow-up review and integration gates
-remain required before this new obligation is verified.
+issue or a new erratum. Its independent follow-up review and integrated proof
+checks passed; the inventory records their evidence.
 
 ## R02E28 — Countable does not include finite
 
@@ -138,7 +136,8 @@ remain required before this new obligation is verified.
   Retain the strict result under explicit `M>0` and prove the zero-bound
   obstruction at the source's floor index.
 - **Affected ID:** added `R03E14.e.zero_bound_obstruction`; all ten original
-  obligations remain. The book denominator is now 848, not 847.
+  obligations remain. This addition changed the denominator from 847 to 848;
+  the later R06E02 comparison brought it to 849.
 - **Verified:** `exercise14_e_zero_bound_obstruction`,
   `exercise14_e_index_estimate`, and `exercise14_e_index_estimate_strict`.
   Independent review checked all eleven obligations and the full prescribed
@@ -496,6 +495,20 @@ not as proof that the printed reciprocal is defined at zero. See `errata.md`.
   `R10E23.c`. This list fixes the finite implementation scope; it does not
   introduce an external approval gate.
 
+## R11E03 — Extended-real inputs and finite limits
+
+- **Evidence:** Exercise 3, book 332/PDF 341, and Definition 11.13,
+  book 310/PDF 319, were rechecked as page images. The definition permits
+  extended-real values; the exercise adds no finite-valued restriction.
+- **Required contract:** For measurable functions with extended-real values,
+  prove measurability of the exact convergence set. State extended-limit and
+  finite-real-limit versions separately. Retain the real and complex results.
+- **Scope correction:** A finite limit does not imply that every term is finite.
+  For example, the sequence with first term positive infinity and every later
+  term 7 has finite limit 7. The earlier implementation excluded this input.
+  This is an implementation gap, not a false source statement. R11E03 remains
+  `in_progress` until the repair has new independent review and project checks.
+
 ## R11E15 — Ambient closedness and signed extensions
 
 This representation check adds no inventory issue or obligation. Primary
@@ -543,7 +556,7 @@ gate passed at the matching hashes. The obligations are now verified.
 - **Affected IDs:** `R11E11.distance`, `R11E11.completeness`,
   `R11E11.raw_function_degeneracy`.
 
-## Implementation contracts and remaining proof gates
+## Implementation contracts and proof requirements
 
 1. Apply the explicitly selected extensions and scope choices: unbounded interval
    components in R02E29; empty/extended diameter in R04E09; the corrected
@@ -558,7 +571,8 @@ gate passed at the matching hashes. The obligations are now verified.
    termination, endpoint, literal-order, diameter and degree-zero checks.
    Exercise count remains 287. The second batch changed the obligation count
    from 839 to 847. The fourth batch added R03E14's strict-estimate obstruction,
-   giving 848. The inventory records the exact IDs and source-page evidence.
+   giving 848. The R06E02 comparison then brought it to 849. The inventory
+   records the exact IDs and source-page evidence.
 3. Compile and review all required proofs and bridges before closing any
    affected obligation. Definition-based clarification, source images, and
    the arguments in this note do not waive any mandatory proof gate.

@@ -1,36 +1,36 @@
-# Rudin 全部習題的 Lean 4 形式化計畫
+# Lean 4 Formalization Plan for All Rudin Exercises
 
 ## Goal
 
-使用 Lean 4 與 Mathlib，完成 `data/` 中 Walter Rudin 的 *Principles of Mathematical Analysis*, Third Edition 的全部章末習題，包含所有子題、反例、條件分類與題目指定的構造。
+Use Lean 4 and Mathlib to complete all end-of-chapter exercises in Walter Rudin's *Principles of Mathematical Analysis*, Third Edition, in `data/`. Include all subparts, counterexamples, classifications of conditions, and constructions required by the exercises.
 
-「完成」表示題意已覆核、答案完整、證明經 Lean kernel 檢查，且可從鎖定版本的乾淨環境重建。原敘述若不成立，交付原敘述的形式化反例及明確標示的修正版，而不是加入隱藏條件或嘗試證明錯誤命題。
+"Complete" means that the exercise interpretation has been reviewed, the answer is complete, the Lean kernel has checked the proof, and the result can be rebuilt in a clean environment with pinned versions. If the original statement is false, deliver a formal counterexample and a clearly labelled corrected version. Do not add hidden conditions or try to prove a false proposition.
 
-使用者已授權執行本計畫。依題目相依關係分批實作，使用 subagent 平行盤點、解題及獨立覆核；未取得有效完成證據的任務保持開啟。
+The user has authorized execution of this plan. Implement batches in exercise dependency order. Use subagents for parallel inventory, solutions, and independent review. Keep tasks open until valid completion evidence is available.
 
 ## Context
 
-### 規劃時確認的教材與專案基線
+### Source Materials and Project Baseline Confirmed During Planning
 
-- 主要來源：`data/Rudin - 1976 - Principles of Mathematical Analysis (International Series in Pure & Applied Mathematics).pdf`。
-  - 351 個 PDF 頁面，標題頁註明 Third Edition，版權頁包含 1976。
-  - SHA-256：`c0d8530ad52ff06bb3b949b4b27245c446cde045e70b3efcad0cd51804e938e7`。
-  - 有 OCR 文字層，但題號、上下標、不等號與積分符號有辨識錯誤。
-- 對照來源：`data/Walter Rudin - Principles of Mathematical Analysis.pdf`。
-  - 同為 351 頁，已由頁面影像確認標題為 Third Edition；沒有可用的文字層。
-  - 尚未逐頁核對兩份掃描；不假設所有頁面完全相同。
-- `lean-toolchain` 鎖定 `leanprover/lean4:v4.35.0`。
-- `lakefile.toml` 只有 `Math` library 與 `math` executable，沒有 Mathlib dependency。
-- `Math/Basic.lean`、`Math.lean`、`Main.lean` 是 Hello World 範本，沒有現成習題證明。
-- `.github/workflows/lean_action_ci.yml` 使用 `leanprover/lean-action@v1`，尚無題目覆蓋率及公理檢查。
-- 規劃時已執行 `lake build`，範本建置成功；此結果不表示分析學基礎設施已可用。
-- `.gitignore` 已忽略 `data/` 與 `.lake/`。不提交教材 PDF、整本 OCR 文字或頁面影像。
+- Primary source: `data/Rudin - 1976 - Principles of Mathematical Analysis (International Series in Pure & Applied Mathematics).pdf`.
+  - 351 PDF pages. The title page states Third Edition, and the copyright page includes 1976.
+  - SHA-256: `c0d8530ad52ff06bb3b949b4b27245c446cde045e70b3efcad0cd51804e938e7`.
+  - An OCR text layer is available, but it has recognition errors in exercise numbers, superscripts, subscripts, inequality signs, and integral symbols.
+- Comparison source: `data/Walter Rudin - Principles of Mathematical Analysis.pdf`.
+  - Also 351 pages. Page images confirm Third Edition on the title page. No usable text layer is available.
+  - The two scans have not been compared page by page. Do not assume that all pages are identical.
+- `lean-toolchain` pins `leanprover/lean4:v4.35.0`.
+- `lakefile.toml` has only the `Math` library and `math` executable, with no Mathlib dependency.
+- `Math/Basic.lean`, `Math.lean`, and `Main.lean` are Hello World templates, with no existing exercise proofs.
+- `.github/workflows/lean_action_ci.yml` uses `leanprover/lean-action@v1`, with no exercise coverage or axiom checks yet.
+- `lake build` succeeded for the template during planning. This does not show that analysis infrastructure is available.
+- `.gitignore` already excludes `data/` and `.lake/`. Do not commit textbook PDFs, full-book OCR text, or page images.
 
-### 已盤點範圍
+### Inventoried Scope
 
-三個 subagent 分別核對第 1–4、5–8、9–11 章的完整習題段落與頁面影像；主代理補核 PDF 頁 30。`exercises.json` currently records 287 exercises and 849 obligations, including follow-up questions and source-issue dispositions. The initial 839 obligations gained eight explicit checks in the second batch, R03E14's zero-bound strict-estimate obstruction in the fourth batch, and the printed R06E02 comparison in the seventh batch. Evidence is in `docs/rudin/source-clarifications.md`.這是來源盤點分母，不是完成解答數；後續若發現漏列義務，須附來源證據修正分母。
+Three subagents checked the complete exercise sections and page images for Chapters 1–4, 5–8, and 9–11, respectively. The main agent also checked PDF page 30. `exercises.json` currently records 287 exercises and 849 obligations, including follow-up questions and source-issue dispositions. The initial 839 obligations gained eight explicit checks in the second batch, R03E14's zero-bound strict-estimate obstruction in the fourth batch, and the printed R06E02 comparison in the seventh batch. Evidence is in `docs/rudin/source-clarifications.md`. This is the source-inventory denominator, not the number of completed solutions. If omitted obligations are found later, update the denominator with source evidence.
 
-| 章 | 主題 | 題號範圍 | 書頁 | PDF 頁，從 1 起算 |
+| Chapter | Topic | Exercise Range | Book Pages | PDF Pages, 1-Based |
 | --- | --- | --- | --- | --- |
 | 1 | The Real and Complex Number Systems | 1–20 | 21–23 | 30–32 |
 | 2 | Basic Topology | 1–30 | 43–46 | 52–55 |
@@ -44,28 +44,28 @@
 | 10 | Integration of Differential Forms | 1–32 | 288–299 | 297–308 |
 | 11 | The Lebesgue Theory | 1–18 | 332–334 | 341–343 |
 
-### 已發現的題意風險
+### Identified Interpretation Risks
 
-- `R01E19`：書頁 23 要求球面半徑 `r > 0`，但沒有排除 `a = b`。退化情況須獨立處理，不能默默增加 `a ≠ b`。
-- `R11E18`：書頁 334 將 Schwarz equality 寫成存在常數 `c` 使 `g = c f` almost everywhere；當 `f = 0` 而 `g ≠ 0` 時需要另行處理。
-- 上述兩題現已完成 Lean 反例、修正版及獨立題意覆核，並在清單分別標為 `refuted_and_corrected`；不是原命題已證明。
-- 其餘來源疑點仍在 `exercises.json` 與 `progress.md` 保留為 pending，不以這兩題的完成推論其他敘述正確。
+- `R01E19`: Book page 23 requires a sphere radius `r > 0` but does not exclude `a = b`. Handle the degenerate case separately. Do not silently add `a ≠ b`.
+- `R11E18`: Book page 334 states Schwarz equality as the existence of a constant `c` such that `g = c f` almost everywhere. The case `f = 0` and `g ≠ 0` needs separate treatment.
+- Both exercises now have Lean counterexamples, corrected versions, and independent interpretation reviews. Each is marked `refuted_and_corrected` in the inventory. This does not mean that the original propositions were proved.
+- Other source questions remain pending in `exercises.json` and `progress.md`. Completion of these two exercises does not establish that other statements are correct.
 
-### 第一批執行結果（2026-10-22）
+### First Execution Batch (2026-10-22)
 
-- 已驗證 8／287 題的解答處置、23／839 個義務：6 題按原敘述證明，2 題以反例與修正版完成；尚餘 279 題、816 個義務。
-- `./scripts/check.sh` 通過：清單／import／declaration 檢查、預設建置、211 個 declaration 的公理檢查，以及 23 個回歸測試。
-- 已在隔離的專案來源副本重建首批程式，使用新的 project build outputs，僅重用鎖定的 dependency cache。這不是全書 `--final` 驗收。
-- `./scripts/check.sh --final` 仍正確失敗於未完成義務；不豁免全書完成門檻。遠端 CI 尚未執行。
-- 目前的驗證狀態、來源／相依環境指紋與逐題覆核依據存於 `exercises.json`；摘要存於 `docs/rudin/progress.md`。本計畫尚未完成，須保留。
+- Verified 8/287 exercise resolutions and 23/839 obligations: 6 exercises proved as stated and 2 completed with counterexamples and corrected versions. There are 279 exercises and 816 obligations remaining.
+- `./scripts/check.sh` passed: inventory/import/declaration checks, default build, axiom checks for 211 declarations, and 23 regression tests.
+- Rebuilt the first batch in an isolated project source copy with fresh project build outputs, reusing only the pinned dependency cache. This is not full-book `--final` acceptance.
+- `./scripts/check.sh --final` still fails correctly on incomplete obligations. The full-book completion gate is not waived. Remote CI has not run.
+- Current verification status, source/dependency-environment fingerprints, and per-exercise review evidence are in `exercises.json`. The summary is in `docs/rudin/progress.md`. This plan is incomplete and must be retained.
 
-### 第二批執行結果（2026-10-22）
+### Second Execution Batch (2026-10-22)
 
-- 新增完成第 1 章剩餘 18 題；該章 20／20 題、55／55 個義務均已驗證。全書目前 26／287 題、72／847 個義務；24 題按原敘述證明，2 題以反例及修正版處置。尚餘 261 題、775 個義務。
-- 完成來源問題的 discovery：15 題／18 個問題有明確契約，新增 8 個原先未獨立追蹤的 domain／convention／obstruction 義務，沒有移除原義務。相關數學證明仍為 todo／pending，不把契約選定當作解題完成。
-- 新增 Stieltjes common refinement、sum bounds、完整 Darboux／tagged equivalence、raw monotone continuous-integrand existence，以及 explicit right-continuous measure bridge；另有受限 raw ordered-chain boundary 基礎。所有適用範圍及未完成比較見 `mathlib-coverage.md`。
-- `./scripts/check.sh` 與使用 fresh project build outputs 的隔離來源副本檢查均通過：538 個 declaration、104 個交付參照及 23 個回歸測試；只重用鎖定的 dependency cache。
-- `./scripts/check.sh --final` 仍失敗於 `R02E01.empty_subset`，這是尚未完成的全書義務，不豁免最終門檻。遠端 CI 未執行。本計畫尚未完成並繼續保留。
+- Completed the remaining 18 exercises in Chapter 1. All 20/20 exercises and 55/55 obligations in the chapter are verified. The book total is 26/287 exercises and 72/847 obligations: 24 proved as stated and 2 resolved with counterexamples and corrections. There are 261 exercises and 775 obligations remaining.
+- Completed source-issue discovery: 15 exercises with 18 issues have explicit contracts. Added 8 domain/convention/obstruction obligations that were not previously tracked separately. No original obligations were removed. The related mathematical proofs remain todo/pending. Selection of a contract does not count as a completed solution.
+- Added Stieltjes common refinement, sum bounds, full Darboux/tagged equivalence, continuous-integrand existence for raw monotone integrators, and an explicit right-continuous measure bridge. Also added restricted raw ordered-chain boundary infrastructure. See `mathlib-coverage.md` for all scopes and incomplete comparisons.
+- `./scripts/check.sh` and checks in an isolated source copy with fresh project build outputs passed: 538 declarations, 104 delivery references, and 23 regression tests. Only the pinned dependency cache was reused.
+- `./scripts/check.sh --final` still fails at `R02E01.empty_subset`, an incomplete full-book obligation. The final gate is not waived. Remote CI has not run. This plan is incomplete and remains retained.
 
 ### Third execution batch (2026-10-22)
 
@@ -129,150 +129,174 @@
 - Independent review found that R11E15's first extension obstruction covered only nonnegative functions. The source permits signed extended-real extensions. Main added the signed `EReal` obstruction, literal four-interval classification and real-charge comparisons. A new independent reviewer checked the adopted additions and all remaining Chapter 11 obligations: five fresh modules, 144 local declarations, 42417 transitive declarations, exact origins and independent signed/boundary models passed. Their frozen hashes match the passing project gate.
 - Chapter 10 affine/coordinate/exterior-algebra deliveries remain in progress pending independent review. Convex-body source integration, polar/improper comparisons, radial forms, exactness and the remaining geometric obligations are active work. All P6 gates remain open; the plan is retained. No commit or remote CI was run.
 
+### Resumed execution checkpoint
+
+- The inventory now verifies 279/287 resolutions and 808/849 obligations: 271 as stated and 8 refuted/corrected. Chapter 10 has 24/32 verified resolutions and 76/117 verified obligations. Its remaining eight resolutions are not counted complete.
+- Accepted the independent reviews of Chapter 10 Exercises 1, 6, 12–19, 21, 24–26, 28–29 and 32 at matching source-closure and configuration hashes. The corrected Exercise 6 uses the prescribed Chapter 8 function in the actual bump construction. Convex source integration retains boundary values, and the Möbius results distinguish the geometric rim from the parameter boundary.
+- The current default gate passed: 18,702 build jobs, 7,134 audited local declarations, 1,526 mapped references and 37 regression tests. It includes solution-article coverage checks. Metadata and article checks passed again after recording the 55 newly verified obligations. This is not final-book acceptance.
+- The full Exercise 23 primitive and sphere construction are merged and compile. Exercises 8–10 now include source comparisons and the limit-derived polar argument. Their independent reviews remain separate acceptance gates. The completed private Exercise 22, 27 and 31 candidates still require production integration and independent review.
+- The second full-book review has started with Chapters 1–4. No second-review group is yet counted complete. The isolated final rebuild, final documentation and plan removal remain open. No commit or remote CI was run by this execution.
+
+### Complete-candidate integration checkpoint
+
+- All 287 exercise modules are now present and root-imported. The full default gate passes: 18,710 build jobs, 7,793 actual local declarations, 1,838 mapped references and 37 regression tests. A legacy-mode Exercise 27 header initially failed root import; its header-only module conversion compiles and is being independently rechecked at the new hash. No trust exception was added.
+- The inventory verifies 284/287 resolutions and 831/849 obligations: 274 as stated and 10 explicitly refuted/corrected. Only Exercises 22, 27 and 31 remain pending first-review acceptance. The proper-original-module Exercise 23 review supersedes the preliminary renamed-module build. Actual artifact checks establish its complete six-obligation result despite the provider's later overload error.
+- The second review of Chapters 1–2 passes all 126 obligations, with a fresh 50-module rebuild, 34,916 transitive declarations and 44 independent controls. Its evidence verifier passes. Per-obligation decisions are retained in `docs/rudin/semantic-review.json`; all other second-review scopes remain open.
+- Final mode now also checks complete second-review coverage and matching source, environment, declaration and disposition records. Thirteen new regression tests pass for this evidence gate. The full strict gate, isolated rebuild and final documentation still remain open.
+
+### Final acceptance work in progress
+
+- The second review found a genuine R11E03 input-scope defect: Definition 11.13 allows extended-real terms, even in sequences with finite limits. Its first acceptance is reopened; current totals are 286 resolutions and 848 obligations verified (275 as stated, 11 corrected). The repair must cover extended-real inputs and separately distinguish finite and extended limits. All final Chapter 10 sources remain frozen.
+- The retained second-review registry verifies 733/849 obligations: Chapters 1–7, 9 and all of Chapter 10. Source/configuration/artifact hashes and exact mappings were checked at integration. The E01–11 packet is complete and passes its checks despite a provider overload after its final report.
+- The broad Chapters 8/11 attempts explicitly withheld semantic acceptance after truncated reads. None is counted. Smaller disjoint groups now review every remaining obligation using single bounded outputs and durable per-exercise read/verdict records. Chapter 8 has groups E01–10, E11–20 and E21–31. Chapter 11 has E01–07 excluding E03, E08–13 and E14–18; E03 is repaired and reviewed separately. The overall scope remains all 849 obligations.
+- A tooling review found a real inherited import-parser defect: a valid local import with a trailing comment could omit a shared file from both evidence fingerprints. The complete synthetic final-gate bypass is retained under `.lake/independent-second-gate-eM0qHz4v`. The exact independently prepared parser correction is now applied. All 315 current source headers match the pinned Lean parser; all 287 old/new exercise fingerprints and the root closure are identical. The original complete-CLI bypass now rejects at both evidence gates. All 56 production regression tests pass, including actual Lean header-oracle cases, shared-change rejection and fake-comment orphan detection. No source evidence was refreshed. The corrected checker still needs the strict final gate.
+- The isolated candidate `.lake/rudin-final-isolated-20261023-phase1-t2SbDcVZ` copied every intended local file and all nine pinned package trees without shared inodes. With the original project masked, cache retrieval and the fresh 18,710-job build pass. Development checks are running. This is preparation, not final acceptance. The later E03 repair is the only changed Lean/config baseline entry; its full replacement matches the compiled author proposal at SHA-256 `e1f319bf78ebb269de58e529900e11c41f94400bd53aaa207cc82c45386e03b3`. Two independent E03 reviews and a new root development gate are running. The candidate must retain the old baseline, copy this explicitly approved proof change plus corrected checker/tests and complete metadata/docs, delete only its own root build outputs, and perform a new fresh build and strict final gate. The article checker also has a tested singular pending-entry count correction; 57 regressions pass.
+- Historical Chapter 5 citation/status wording was corrected explicitly, without changing mathematical contracts. CI now selects the same `--final` entry point. Remote CI has not run; no commit, push or remote workflow was triggered.
+
 ## Architecture
 
-### 檔案與責任
+### Files and Responsibilities
 
-沿用現有 `Math` library，不先改專案名稱，也不建立網站或資料庫。
+Keep the existing `Math` library. Do not rename the project first or create a website or database.
 
 ```text
 Math/Rudin/Chapter01/Exercise01.lean
 ...
 Math/Rudin/Chapter11/Exercise18.lean
-Math/Rudin/Support/<必要的共用主題>.lean
-Math/Rudin.lean                         # 匯入全部交付模組
-Math.lean                               # 匯入 Math.Rudin
-exercises.json                          # 題目與子題清單、狀態、declaration 對照
-scripts/check_exercises.py              # 覆蓋率、來源參照與 import 檢查
-scripts/check_axioms.lean                # 檢查交付 declaration 的公理相依性
-scripts/check.sh                         # 本機與 CI 的統一檢查入口
-docs/rudin/source.md                     # 版本、頁碼、來源 hash
-docs/rudin/formalization.md              # 題意轉換規則與共用表示法
-docs/rudin/errata.md                     # 原敘述問題、反例與修正
-docs/rudin/progress.md                   # 由清單產生的進度與阻塞摘要
+Math/Rudin/Support/<required-shared-topic>.lean
+Math/Rudin.lean                         # Import all delivery modules
+Math.lean                               # Import Math.Rudin
+exercises.json                          # Exercise/subpart inventory, status, declaration mapping
+scripts/check_exercises.py              # Coverage, source-reference and import checks
+scripts/check_axioms.lean                # Check axiom dependencies of delivery declarations
+scripts/check.sh                         # Shared local and CI check entry point
+docs/rudin/source.md                     # Edition, page numbers, source hash
+docs/rudin/formalization.md              # Interpretation rules and shared representations
+docs/rudin/errata.md                     # Source-statement issues, counterexamples and corrections
+docs/rudin/progress.md                   # Inventory-generated progress and blocker summary
 ```
 
-- 每題一個主要檔案；同題子題共用必要的定義與局部 lemma。
-- 只有確實跨題重用或需獨立驗證的基礎設施才放入 `Support/`。
-- Lean namespace 使用 `Rudin.Chapter01` 等章別；declaration 使用 `exercise01`、`exercise01_a` 等可預測名稱。
-- `exercises.json` 是覆蓋率與狀態的唯一資料來源。每題記錄 ID、章／題號、書頁／PDF 頁、簡短自述題意、子義務、模組、交付 declaration、相依項、狀態與驗證依據。
-  - 有字母子題時沿用原標記；沒有標記的追問另給穩定 ID，例如 `R01E11.uniqueness`。
-  - 不保存整本題目轉錄。正式數學敘述放在 Lean，差異與來源位置放在文件。
-  - 狀態限於 `todo`、`in_progress`、`blocked`、`verified`；不能用「已寫敘述」或「已寫非形式解答」冒充 `verified`。
-  - 已反駁的題目另記 disposition；不得把修正版標示為原命題已證明。
+- Use one main file per exercise. Subparts of the same exercise share necessary definitions and local lemmas.
+- Put infrastructure in `Support/` only if it is reused across exercises or needs independent verification.
+- Use chapter-specific Lean namespaces such as `Rudin.Chapter01`. Use predictable declaration names such as `exercise01` and `exercise01_a`.
+- `exercises.json` is the single source of truth for coverage and status. For each exercise, record its ID, chapter/exercise number, book/PDF pages, short original summary, sub-obligations, module, delivery declarations, dependencies, status, and verification evidence.
+  - Keep original letter labels for subparts. Give unlabelled follow-up questions stable IDs, such as `R01E11.uniqueness`.
+  - Do not store a full transcription of the book's exercises. Put formal mathematical statements in Lean, and differences and source locations in documentation.
+  - Limit status values to `todo`, `in_progress`, `blocked`, and `verified`. A written statement or informal solution does not qualify as `verified`.
+  - Record a separate disposition for refuted exercises. Do not label a corrected version as proof of the original proposition.
 
-### 數學敘述契約
+### Mathematical Statement Contracts
 
-- 預設允許使用任何已在鎖定 Mathlib 中證明的定理，包括比書中當章更後面的結果。不要求重建整本課文，也不限制為初等證法。
-  - 若題目明確要求構造、指定方法或驗證某個結構，仍須交付該構造及其性質，不能只引用存在性結果取代。
-- 預設使用 Mathlib 的 `ℝ`、`ℂ`、metric spaces、filters、derivatives、measures 與 `Lp`；Rudin 的歐氏範數使用適當的 `EuclideanSpace` 表示，不把任意函數空間的預設範數當作歐氏範數。
-- 每題先核對量詞、定義域、空集合、零維／低維、零向量、端點、索引起點、有限／可數、點態／almost everywhere 等條件，再寫證明。
-- 開放式問句必須轉成完整義務：正向敘述、逆命題的判定、必要反例、等號成立條件及維度分類均不能省略。
-- 題目若要求 quotient construction、Dedekind cuts 或特殊積分，使用 Mathlib 的成品前先核對是否保留了題目要求；必要時建立最小模型與比較定理。
-- 原題有問題時，保留來源與差異，證明反例，並證明明確修正後的版本；不能修改來源敘述後假裝沒有變更。
-- 禁止 `sorry`、`admit`、`sorryAx`、自訂公理，以及把待證結論藏進 hypothesis、typeclass 或定義。
-- 最終交付與共用定理的傳遞公理相依性只允許標準 `propext`、`Classical.choice`、`Quot.sound`；使用其他信任機制須改寫證明，不自動放寬清單。
-- 編譯成功只證明所寫敘述成立，不證明題意翻譯正確。逐題語義覆核是獨立完成條件。
+- By default, any theorem proved in the pinned Mathlib is permitted, including results from later chapters of the book. Rebuilding the full textbook and using only elementary proofs are not required.
+  - If an exercise explicitly requires a construction, a specified method, or verification of a structure, deliver that construction and its properties. An existence result alone is not a substitute.
+- By default, use Mathlib's `ℝ`, `ℂ`, metric spaces, filters, derivatives, measures, and `Lp`. Represent Rudin's Euclidean norm with an appropriate `EuclideanSpace`. Do not treat the default norm on an arbitrary function space as the Euclidean norm.
+- Before writing each proof, check quantifiers, domains, empty sets, zero/low dimensions, zero vectors, endpoints, starting indices, finite/countable conditions, and pointwise/almost-everywhere conditions.
+- Convert open-ended questions into complete obligations. Include forward statements, decisions on converses, necessary counterexamples, equality conditions, and dimension classifications.
+- If an exercise requires a quotient construction, Dedekind cuts, or a special integral, check that Mathlib's implementation preserves the exercise requirements before using it. Build minimal models and comparison theorems if needed.
+- If the original exercise has a problem, retain the source and differences, prove a counterexample, and prove an explicitly corrected version. Do not change the source statement and present it as unchanged.
+- Prohibit `sorry`, `admit`, `sorryAx`, custom axioms, and hiding the target conclusion in a hypothesis, typeclass, or definition.
+- The transitive axiom dependencies of final deliveries and shared theorems may contain only the standard `propext`, `Classical.choice`, and `Quot.sound`. Rewrite proofs that use other trust mechanisms. Do not automatically expand the allowlist.
+- Successful compilation proves only that the written statement holds, not that it correctly represents the exercise. Per-exercise semantic review is a separate completion condition.
 
-### 平行執行規則
+### Parallel Execution Rules
 
-- 主代理獨占工具鏈、根 imports、`exercises.json`、驗證工具、CI 與本計畫的整合。
-- Subagent 只修改分配的互斥檔案；需要共用定義時先回報，不自行更改其他工作者的接口。
-- 來源盤點可與工具鏈準備平行；代表題及原題反例可在所需表示法穩定後平行處理。
-- 第 6、10 章的探索先交付受限但真實的 prototype，明列缺口；缺少橋接的相依題目不展開批量解題。
-- 解題者回報精確 declaration、編譯結果與未完成義務；獨立 subagent 覆核題意後，主代理才記錄驗證狀態。
+- The main agent exclusively manages integration of the toolchain, root imports, `exercises.json`, verification tools, CI, and this plan.
+- Subagents modify only their assigned, non-overlapping files. Report the need for shared definitions first. Do not independently change another worker's interfaces.
+- Source inventory and toolchain preparation can run in parallel. Representative exercises and source counterexamples can run in parallel once the required representations are stable.
+- Exploration for Chapters 6 and 10 must first deliver restricted but genuine prototypes with explicit gaps. Do not start batch solutions for dependent exercises while required bridges are missing.
+- Solvers report exact declarations, compilation results, and incomplete obligations. The main agent records verification status only after an independent subagent reviews the exercise interpretation.
 
 ## Plan
 
-### P1 — 鎖定完整範圍與題意
+### P1 — Fix the Full Scope and Exercise Interpretations
 
-- [x] 建立 `docs/rudin/source.md` 與 `exercises.json`，逐頁核對 11 章全部題號及所有追問；驗收：每一來源題目恰有一個主 ID，子義務可回溯到頁碼，章別總數與總分母一致。證據：三份來源盤點合併為 287 題／839 個義務；`scripts/check_exercises.py` 核對題號、子義務分母與書頁／PDF 頁偏移。來源覆核不代表 Lean 語義覆核完成。
-- [x] 逐題建立簡短語義契約、題型與相依項，並登記 OCR 疑點、缺漏條件及所需構造；驗收：全部題目均有可執行的形式化目標，高風險題有具體發現任務，不以未確認的定理名稱作前提。證據：287 題均有來源契約與子義務；15 題的明確修正／慣例／有限延伸契約已記錄於清單與 `source-clarifications.md`，並通過獨立 discovery 覆核。
-- [x] 釐清清單中的全部 pending 來源問題，將定義慣例、開放式範圍與真正錯誤分開處置；驗收：每項有來源／上下文依據、明確的待證契約與相依義務，需反例的問題在完成 Lean 證明前不得標為已解決。證據：18 個問題均有書頁／PDF 頁、影像／上下文依據及明確待證契約；新增 8 個漏列義務且未移除原義務。數學反例與修正版尚未證明的問題仍保持 pending；不新增外部接受或人工審批門檻。
+- [x] Create `docs/rudin/source.md` and `exercises.json`. Check every exercise number and follow-up question in all 11 chapters page by page. Acceptance: each source exercise has exactly one main ID, sub-obligations trace to page numbers, and chapter totals match the overall denominator. Evidence: three source inventories were merged into 287 exercises and 839 obligations. `scripts/check_exercises.py` checks exercise numbers, sub-obligation denominators, and book/PDF page offsets. Source review does not mean that Lean semantic review is complete.
+- [x] Create a short semantic contract, exercise type, and dependencies for each exercise. Record OCR questions, missing conditions, and required constructions. Acceptance: every exercise has an actionable formalization target, and high-risk exercises have concrete discovery tasks without assuming unconfirmed theorem names. Evidence: all 287 exercises have source contracts and sub-obligations. Explicit correction/convention/finite-extension contracts for 15 exercises are recorded in the inventory and `source-clarifications.md` and passed independent discovery review.
+- [x] Clarify all pending source issues in the inventory. Treat definition conventions, open-ended scope, and actual errors separately. Acceptance: each issue has source/context evidence, an explicit contract to prove, and dependent obligations. Issues that need counterexamples cannot be marked resolved before Lean proofs are complete. Evidence: all 18 issues have book/PDF pages, image/context evidence, and explicit contracts to prove. Added 8 omitted obligations without removing original obligations. Issues whose mathematical counterexamples and corrections are unproved remain pending. No external acceptance or manual approval gate is added.
 
-### P2 — 建立可重現的 Lean 與檢查基礎
+### P2 — Establish Reproducible Lean and Check Infrastructure
 
-- [x] 選定並鎖定實際相容的 Mathlib commit 與 Lean toolchain；驗收：提交 `lean-toolchain`、dependency 設定與 `lake-manifest.json`，執行 `lake update`、`lake exe cache get`、`lake build` 成功並保留版本證據。證據：維持 Lean 4.35.0，Mathlib v4.35.0 commit `56a005855ea17e0b0958f73ec801ae140b0a1679`；更新、下載 9031 個快取項目與預設 executable／library 建置均成功。
-- [x] 建立 `Math/Rudin.lean`、最小範例與 `scripts/check.sh`；驗收：專案仍能從預設 build target 建置 library，`lake env lean <範例檔>` 成功，所有已交付模組都由 root import 納入。證據：首批 8 題與 3 個 Support 模組均由 root 公開匯入；單檔及預設 executable／library 建置成功。原範本同步改用 Lean module system，保留原 executable。
-- [x] 實作清單、import、declaration 與公理檢查，接到現有 CI；驗收：正常範例通過，臨時負向 fixture 中的漏列子題、遺漏 import、不存在 declaration、`sorry` 及自訂公理均會失敗，fixture 不進入交付 library。證據：`./scripts/check.sh` 通過；23 個回歸測試包含實際 Lean environment 負向測試、失敗 evidence 與來源／共用定義／依賴變動失效測試；私有證明本體檢查涵蓋 211 個 declaration 與 31 個交付參照。CI 已設定相同入口，遠端 CI 未執行。
-  - 檢查須使用 Lean environment／型別檢查，不只搜尋文字；公理檢查涵蓋交付與 Support declarations 的傳遞相依性。
-  - 使用 Python 的檢查工具一律透過 `uv run python` 執行；有第三方依賴時須鎖定版本。
-  - 開發期允許清單中有未完成題目；最終模式必須因任何非 `verified` 項目而失敗。
-  - `verified` evidence 必須明確記錄成功結果、語義覆核者、局部來源 import closure 指紋與工具鏈／設定／manifest 指紋；失敗的非空資料不能算成功，共用定義或環境變動須使舊 evidence 失效。
+- [x] Select and pin a compatible Mathlib commit and Lean toolchain. Acceptance: commit `lean-toolchain`, dependency configuration, and `lake-manifest.json`; successfully run `lake update`, `lake exe cache get`, and `lake build`; retain version evidence. Evidence: retained Lean 4.35.0 and Mathlib v4.35.0 commit `56a005855ea17e0b0958f73ec801ae140b0a1679`. Updates, retrieval of 9031 cache entries, and default executable/library builds all succeeded.
+- [x] Create `Math/Rudin.lean`, minimal examples, and `scripts/check.sh`. Acceptance: the default build target still builds the library, `lake env lean <example-file>` succeeds, and root imports include all delivery modules. Evidence: the first 8 exercises and 3 Support modules are publicly imported from the root. Single-file and default executable/library builds succeed. The original template was also moved to Lean's module system, retaining the original executable.
+- [x] Implement inventory, import, declaration, and axiom checks, and connect them to existing CI. Acceptance: valid examples pass. Temporary negative fixtures with omitted subparts, missing imports, nonexistent declarations, `sorry`, or custom axioms fail. Fixtures are not included in the delivery library. Evidence: `./scripts/check.sh` passes. The 23 regression tests include actual Lean environment negative tests, failed evidence, and evidence invalidation after source/shared-definition/dependency changes. The private proof-body audit covers 211 declarations and 31 delivery references. CI uses the same entry point. Remote CI has not run.
+  - Checks must use the Lean environment/type checker, not only text searches. Axiom checks cover transitive dependencies of delivery and Support declarations.
+  - Run all Python check tools through `uv run python`. Pin versions of third-party dependencies if used.
+  - Incomplete exercises are permitted in the inventory during development. Final mode must fail on any item that is not `verified`.
+  - `verified` evidence must explicitly record success, the semantic reviewer, local source import-closure fingerprints, and toolchain/configuration/manifest fingerprints. Nonempty failure data does not count as success. Shared-definition or environment changes must invalidate old evidence.
 
-### P3 — 先做高風險探索與代表題試作
+### P3 — Explore High-Risk Areas and Prototype Representative Exercises First
 
-本階段在展開依賴高風險基礎設施的全書題組前完成，避免做到第 10 章才發現需要大量新基礎設施。探索期間可平行完成定義已確定、且不依賴缺口的基礎題組；第二批已完成第 1 章。後續仍按相依關係選題，不豁免第 6／10 章所需的橋接與方向條件。
+Complete this phase before starting full-book exercise groups that depend on high-risk infrastructure. Do not wait until Chapter 10 to discover that substantial new infrastructure is needed. During exploration, basic exercise groups with stable definitions and no dependency on gaps can be completed in parallel. Chapter 1 was completed in the second batch. Continue selecting exercises by dependency. Required bridges and orientation conditions for Chapters 6 and 10 are not waived.
 
-- [x] 調查鎖定 Mathlib 的章別支援，建立「可直接用／需橋接／需新增」對照；驗收：每項引用有實際 source path 與可編譯使用例，特別涵蓋 Dedekind cuts、metric completion、Riemann–Stieltjes integral、ODE、Fourier／Gamma、differential forms／Stokes 及 `Lp`。證據：`docs/rudin/mathlib-coverage.md` 的來源對照與 `Support/ApiExamples.lean` 已編譯、納入根 imports 及全專案公理檢查；不宣稱已逐題完成 API 選型。
-- [x] 建立第 6 章積分表示法的可編譯 prototype；驗收：明確說明表示法如何涵蓋 Rudin 的 monotone integrator、discontinuities 與 endpoint conventions，完成一個等價性或適用條件下的橋接結果。證據：literal weak-partition Darboux sums、完整 Darboux／tagged equivalence、raw interval-monotone integrator 的 continuous-integrand existence，以及 `StieltjesFunction ℝ` 下的 continuous real-integrand measure bridge 均已編譯並獨立覆核，涵蓋 singleton、zero mass、repeated nodes 與左右端點 atom 慣例。一般 raw normalization／endpoint correction 與 discontinuous integrand bridge 仍未完成，既有反例繼續禁止無條件替換。
-- [x] 建立第 10 章所需基礎設施的可編譯 prototype；驗收：按實際習題需求檢查 differential forms、pullback、exterior derivative、chains、orientation 與 integration 的表示法，完成一個非平凡運算及一個實際所需的 integration／boundary identity，列出尚缺定理與相依順序。不預設 Mathlib 已具備整套 Stokes theory。Evidence: actual forms, pullbacks, derivatives, signed chains and smooth simplex coefficients are compiled and independently reviewed. `SimplexIntegration` and `TriangleStokes` prove genuine nonlinear and nonhorizontal boundary identities, literal source zero-extension and all three edge-integral witnesses. The frozen full-project and isolated gates pass. The prototype criterion is complete; the separate general-chain/source-comparison tasks below remain open, with their precise gaps and dependency order in `mathlib-coverage.md`.
-- [x] 補齊第 6 章 partitions 的 common refinement、sum bounds 與 Darboux／tagged equivalence；驗收：有不依賴待證結論的 Lean 定理，並以定值及點支撐 integrand 檢查表示法。證據：`StieltjesRefinement.lean` 的 exact node-union refinement、sum／refinement bounds 與 `StieltjesEquivalence.lean` 的 actual predicate iff 通過獨立覆核及全專案檢查；regression 包含定值、pointSpike、singleton、zero increment、repeated nodes 及 extrema 不取得的例子。
-- [x] 建立第 6 章非定值 integrand 的積分橋接及必要 jump／endpoint 條件；驗收：至少覆蓋 continuous integrands 並形式化比較，既有端點反例仍成立，不放寬信任條件。證據：`StieltjesMeasureBridge.continuous_bridge` 在 explicit right-continuous `StieltjesFunction ℝ`、`a ≤ b`、`ContinuousOn f (Icc a b)` 下證明 actual Darboux integral 與 `(a,b]` measure integral 相同；非定值、terminal jump、initial atom 排除、singleton／zero mass 測試通過。獨立覆核 final SHA256 `2e59487e32734474713a6d4e7f8f43e1b62d0e84010c5134d6a18271a1f6f37a`；不宣稱任意 raw integrator 的 measure comparison。
-- [ ] 建立第 10 章所需的 signed affine／parameterized chains 與 face maps；驗收：證明 `∂² = 0`、面抵消與 multiplicity，並對照第 16–19、32 題的義務。Progress: `OrderedChains.lean` retains the raw augmented model. `OrientedChains.lean` adds a proved boundary-stable orientation quotient, fixed degrees, affine realization and face maps, square/cube signs and actual parameterized-square/Möbius multiplicities. `OrientedChainChecks.lean` proves nontriviality and coordinate-insertion signs. General smooth simplex chains, geometric coverage/orientation, square-triangulation comparison and integration remain open. Raw reversed edges are not identified without the quotient.
-- [ ] 建立第 10 章 forms 的 pullback／simplex integration 與 Rudin 積分的比較；驗收：在所需規則性與方向條件下證明比較和 boundary identities，不用已假設的 Stokes identity 證明自身。 Progress: `PathIntegration.lean` proves the path-only coefficient, quotient integral, actual exterior-derivative boundary identity and continuous-coefficient Darboux bridge. Higher-dimensional simplexes and general reparameterization remain open.
-- [x] 完成代表題 `R01E01`、`R02E02`、`R03E24`、`R06E01`、`R09E01`、`R11E01` 的全部義務；驗收：每題語義覆核、編譯、公理檢查及清單對照均通過。證據：六題共 15 個義務均為 `verified`；獨立覆核確認實際 Cauchy-sequence quotient 與完備化橋接，以及實際 Darboux 積分。R06E01 首輪發現嚴格 partition／零長區間漏列，已修正成 weak partition 與 `a ≤ b`，第二輪獨立覆核、singleton／endpoint 測試及整合檢查均通過。
-- [x] 根據 prototype 與代表題更新此計畫、共用表示法及章別工作量；驗收：重大缺口拆成可執行任務，未解決的正確性問題明確阻塞受影響題目，時程估計只依實測分類，不宣稱各題成本相同。證據：更新 `formalization.md`、`mathlib-coverage.md` 與 P3 相依任務，並完成來源契約分類。工作量分為現成 lemma 題組、需明確構造／比較定理的題組、Darboux／measure 基礎設施、oriented parameterized chain／integration 基礎設施；依第 1 章與兩類 prototype 的實作證據分類，不給未量測的全書工期。
+- [x] Survey chapter support in the pinned Mathlib and classify it as directly usable, requiring a bridge, or requiring new implementation. Acceptance: every reference has an actual source path and a compilable usage example. Specifically cover Dedekind cuts, metric completion, Riemann–Stieltjes integrals, ODEs, Fourier/Gamma, differential forms/Stokes, and `Lp`. Evidence: the source mapping in `docs/rudin/mathlib-coverage.md` and `Support/ApiExamples.lean` compile and are included in root imports and the full-project axiom audit. This does not claim completed API selection for every exercise.
+- [x] Build a compilable prototype of the Chapter 6 integral representation. Acceptance: explain how it covers Rudin's monotone integrators, discontinuities, and endpoint conventions. Complete an equivalence or a bridge under applicable conditions. Evidence: literal weak-partition Darboux sums, full Darboux/tagged equivalence, continuous-integrand existence for raw interval-monotone integrators, and the continuous real-integrand measure bridge for `StieltjesFunction ℝ` compile and have independent review. They cover singleton intervals, zero mass, repeated nodes, and left/right endpoint atom conventions. General raw normalization/endpoint correction and the discontinuous-integrand bridge remain incomplete. Existing counterexamples still prohibit unconditional substitution.
+- [x] Build a compilable prototype of the infrastructure required for Chapter 10. Acceptance: check representations of differential forms, pullback, exterior derivative, chains, orientation, and integration against actual exercise requirements. Complete one nontrivial operation and one required integration/boundary identity. List missing theorems and dependency order. Do not assume that Mathlib has a complete Stokes theory. Evidence: actual forms, pullbacks, derivatives, signed chains and smooth simplex coefficients are compiled and independently reviewed. `SimplexIntegration` and `TriangleStokes` prove genuine nonlinear and nonhorizontal boundary identities, literal source zero-extension and all three edge-integral witnesses. The frozen full-project and isolated gates pass. The prototype criterion is complete; the separate general-chain/source-comparison tasks below remain open, with their precise gaps and dependency order in `mathlib-coverage.md`.
+- [x] Complete common refinement, sum bounds, and Darboux/tagged equivalence for Chapter 6 partitions. Acceptance: Lean theorems do not assume their target conclusions. Check the representation with constant and point-supported integrands. Evidence: exact node-union refinement and sum/refinement bounds in `StieltjesRefinement.lean`, and the actual predicate iff in `StieltjesEquivalence.lean`, passed independent review and full-project checks. Regressions include constants, pointSpike, singleton intervals, zero increments, repeated nodes, and examples with unattained extrema.
+- [x] Build the Chapter 6 integral bridge for nonconstant integrands, with necessary jump/endpoint conditions. Acceptance: cover at least continuous integrands with a formal comparison. Existing endpoint counterexamples remain valid, and trust conditions are not relaxed. Evidence: `StieltjesMeasureBridge.continuous_bridge` proves equality of the actual Darboux integral and the `(a,b]` measure integral for an explicit right-continuous `StieltjesFunction ℝ`, `a ≤ b`, and `ContinuousOn f (Icc a b)`. Tests for nonconstant integrands, terminal jumps, exclusion of the initial atom, singleton intervals, and zero mass pass. Independently reviewed final SHA256: `2e59487e32734474713a6d4e7f8f43e1b62d0e84010c5134d6a18271a1f6f37a`. This does not claim measure comparison for arbitrary raw integrators.
+- [x] Build signed affine/parameterized chains and face maps required for Chapter 10. Acceptance: prove `∂² = 0`, face cancellation and multiplicity, and compare them with Exercises 16–19 and 32. Evidence: all of those exercises passed independent primary-source/type/body review and the 7,134-declaration root gate. Actual full parameter maps, ordinary degree-zero boundaries, affine square/cube coverage and orientation, signed face cancellation and Möbius seam multiplicity are proved. The raw augmented, affine orientation and smooth permutation-quotient models remain explicitly distinct; no equality of vertex data is used as equality of nonlinear maps.
+- [x] Compare Chapter 10 form pullbacks/simplex integration with Rudin's integral. Acceptance: prove comparisons and boundary identities under the required regularity and orientation conditions; do not assume Stokes to prove itself. Evidence: independently reviewed `MultivariateRiemann`, `SimplexStokes` and `SmoothChainIntegration` prove literal closed-simplex source witnesses in every coordinate order, actual local C²/C¹ Stokes, integer-chain linearity and permutation-quotient descent in every required degree. Exercise 20 verifies the resulting integration-by-parts API, including oriented and singleton segments. Matching closures passed the root gate. This does not identify the permutation quotient with a full quotient by equality of integration functionals.
+- [x] Complete all obligations for representative exercises `R01E01`, `R02E02`, `R03E24`, `R06E01`, `R09E01`, and `R11E01`. Acceptance: every exercise passes semantic review, compilation, axiom checks, and inventory comparison. Evidence: all 15 obligations across the six exercises are `verified`. Independent review confirms the actual Cauchy-sequence quotient and completion bridge, and the actual Darboux integral. The first R06E01 review found a strict-partition/zero-length-interval omission. It was corrected to weak partitions and `a ≤ b`. The second independent review, singleton/endpoint tests, and integration checks all pass.
+- [x] Update this plan, shared representations, and chapter workload from the prototypes and representative exercises. Acceptance: split major gaps into actionable tasks. Unresolved correctness issues explicitly block affected exercises. Use only measured categories for schedule estimates; do not claim equal cost per exercise. Evidence: updated `formalization.md`, `mathlib-coverage.md`, and P3 dependency tasks, and completed source-contract classification. Work is classified into groups using existing lemmas, groups needing explicit constructions/comparison theorems, Darboux/measure infrastructure, and oriented parameterized-chain/integration infrastructure. Classification uses implementation evidence from Chapter 1 and both prototype types. No unmeasured full-book schedule is given.
 
-### P4 — 驗證已知原題問題
+### P4 — Verify Known Source-Exercise Issues
 
-- [x] 完成 `R01E19` 的退化情況反例、非退化版本及完整分類；驗收：Lean 驗證來源問題與修正後結果，`errata.md` 記錄原條件、修正及對應 declaration。證據：4 個義務通過獨立覆核與整合檢查；反例排除所有可能的正半徑球面，不只檢查原公式。
-- [x] 完成 `R11E18` 的零函數反例與完整 Schwarz equality 條件；驗收：Lean 驗證反例與包含退化情況的正確版本，不以額外非零假設掩蓋來源問題。證據：4 個義務通過獨立覆核與整合檢查；已證明 complex L2／原積分橋接、完整零函數分支與有限 Dirac measure 反例。
+- [x] Complete the degenerate-case counterexample, nondegenerate version, and full classification for `R01E19`. Acceptance: Lean verifies the source issue and corrected results. `errata.md` records the original conditions, correction, and corresponding declarations. Evidence: 4 obligations passed independent review and integration checks. The counterexample excludes all possible positive-radius spheres, not only the original formula.
+- [x] Complete the zero-function counterexample and full Schwarz equality conditions for `R11E18`. Acceptance: Lean verifies the counterexample and the correct version including degenerate cases. Do not hide the source issue behind additional nonzero assumptions. Evidence: 4 obligations passed independent review and integration checks. The complex L2/source-integral bridge, full zero-function branch, and finite Dirac measure counterexample are proved.
 
-### P5 — 依章完成全部題目
+### P5 — Complete All Exercises by Chapter
 
-以下每項均只處理尚未完成的題目；P3、P4 的成果不重複計數。章順序是預設順序，實際以清單中的題目相依關係為準。每批以 3–5 題為起點，大型構造題單獨處理。
+Each item below covers only incomplete exercises. Do not count P3 or P4 results twice. Chapter order is the default; actual order follows exercise dependencies in the inventory. Start with batches of 3–5 exercises. Handle large construction exercises separately.
 
-- [x] 完成第 1 章 1–20 題；驗收：全部子義務通過本節的逐批門檻，包含複數根、等號條件、維度分類與修改 cuts 定義的構造。證據：20／20 題、55／55 個義務已完成單檔編譯、獨立來源／型別覆核與第二批整合公理檢查；19 題按原敘述證明，R01E19 以反例與修正版完成。根 imports 已涵蓋所有 20 題。
-- [x] 完成第 2 章 1–30 題；驗收：全部子義務通過逐批門檻，並明確區分有限、至多可數與可數無限。 Evidence: 30/30 exercises and 71/71 obligations passed independent source/type review, compilation, project and isolated-source checks. R02E29 retains the bounded-segment obstruction and explicit extended-interval correction; R02E28 keeps the source countably-infinite convention. Actual decimal4/7 expansions, irrational perfect-set construction and the required nested-ball Baire proof are included.
-- [x] 完成第 3 章 1–25 題；驗收：全部子義務通過逐批門檻，包含完備化構造、稠密嵌入與相關識別結果。 Evidence: 25/25 resolutions and 89/89 obligations pass independent source/type review, compilation, full project and isolated-source checks. Includes ordinary conditional series, full Tauberian outline, vector-series extensions, Newton classifications, literal Cantor digits and the actual quotient completion of the rationals. R03E14's added source obstruction is retained.
-- [x] 完成第 4 章 1–26 題；驗收：全部子義務通過逐批門檻，逆命題及移除假設的問題均有判定與所需反例。 Evidence: all 26 resolutions and 74 obligations pass independent source/type review, full project checks and isolated-source rebuild. R04E05 also covers the arbitrary metric domain stated in the source; R04E26's optional forward helpers add no source obligations.
-- [x] 完成第 5 章 1–29 題；驗收：全部子義務通過逐批門檻，端點導數、ODE uniqueness 與指定初始條件語義一致。 Evidence: all 29 resolutions and 84 obligations pass independent source/type/body reviews, default project checks and isolated-source rebuilding. Actual one-sided derivative chains, every initial datum, complete ODE waiting-time classification, sharp threshold equality cases, and both explicit source corrections are retained.
-- [x] 完成第 6 章 1–19 題；驗收：全部子義務通過逐批門檻，積分存在性、積分值及 rectifiable curves 的要求均有對應結果。 Evidence:19/19 resolutions and54/54 obligations pass independent source/type/body review, frozen full-project checks and isolated-source rebuilding. Raw complex integrals, both improper endpoints, required approximation constructions, partition lengths and R06E18's explicit endpoint correction are retained.
-- [x] 完成第 7 章 1–26 題；驗收：全部子義務通過逐批門檻，uniform convergence、equicontinuity 與 ODE existence 的型別及定義域一致。 Evidence:26/26 resolutions and79/79 obligations pass independent page/type/private-body reviews, the frozen project gate and isolated rebuilding. Includes literal series and Cantor constructions, all12 metric/vector extensions, actual polynomial approximation and the full Euler-polygon/vector ODE construction with genuine within endpoint derivatives.
-- [x] 完成第 8 章 1–31 題；驗收：全部子義務通過逐批門檻，涵蓋 Fourier、Gamma、winding number、fixed point 與 asymptotics，不只完成初等函數題。 Evidence: all 31 exercises and 79 obligations passed independent primary-page/type/private-body review, root checks and isolated completed-source rebuilding. Actual Riemann kernels, ordered Fourier limits, prescribed winding/fixed-point constructions and Gamma asymptotics are retained.
-- [x] 完成第 9 章 1–31 題；驗收：全部子義務通過逐批門檻，linear maps、Fréchet derivatives、Jacobian 與 Taylor polynomial 的表示法有明確對照。 Evidence: all 31 resolutions and 110 obligations passed independent source/type/body reviews, the root gate and isolated completed-source rebuild. Every derivative has the required existence evidence; Euclidean norms, actual local inverse graphs and Taylor counting are explicit. R09E31 is refuted/corrected, not proved as printed.
-- [ ] 完成第 10 章 1–32 題；驗收：全部子義務通過逐批門檻，包含參數方向、boundary multiplicity、orientation 及非 orientable 情況，不用幾何直覺代替證明。
-- [x] 完成第 11 章 1–18 題；驗收：全部子義務通過逐批門檻，明確區分函數與 almost-everywhere equivalence classes，涵蓋 measure construction 與 completeness 的指定要求。 Evidence: all 18 resolutions and 37 obligations passed independent primary-source/type/private-body review and the default project gate at matching source hashes. Includes the literal Riemann criterion, AE quotient metric and completeness, actual elementary charge with signed-extension obstruction, exact sine convergence set and Bessel proofs. R11E18 remains explicitly refuted/corrected. The full-book second review and isolated final rebuild remain open.
+- [x] Complete Chapter 1 Exercises 1–20. Acceptance: all sub-obligations pass this section's batch gates, including complex roots, equality conditions, dimension classifications, and constructions with modified cut definitions. Evidence: 20/20 exercises and 55/55 obligations passed single-file compilation, independent source/type review, and the second-batch integrated axiom audit. There are 19 exercises proved as stated; R01E19 is completed with a counterexample and corrected version. Root imports cover all 20 exercises.
+- [x] Complete Chapter 2 Exercises 1–30. Acceptance: all sub-obligations pass the batch gates. Explicitly distinguish finite, at most countable, and countably infinite. Evidence: 30/30 exercises and 71/71 obligations passed independent source/type review, compilation, project and isolated-source checks. R02E29 retains the bounded-segment obstruction and explicit extended-interval correction; R02E28 keeps the source countably-infinite convention. Actual decimal4/7 expansions, irrational perfect-set construction and the required nested-ball Baire proof are included.
+- [x] Complete Chapter 3 Exercises 1–25. Acceptance: all sub-obligations pass the batch gates, including the completion construction, dense embedding, and related identification results. Evidence: 25/25 resolutions and 89/89 obligations pass independent source/type review, compilation, full project and isolated-source checks. Includes ordinary conditional series, full Tauberian outline, vector-series extensions, Newton classifications, literal Cantor digits and the actual quotient completion of the rationals. R03E14's added source obstruction is retained.
+- [x] Complete Chapter 4 Exercises 1–26. Acceptance: all sub-obligations pass the batch gates. Questions about converses and removal of assumptions have decisions and required counterexamples. Evidence: all 26 resolutions and 74 obligations pass independent source/type review, full project checks and isolated-source rebuild. R04E05 also covers the arbitrary metric domain stated in the source; R04E26's optional forward helpers add no source obligations.
+- [x] Complete Chapter 5 Exercises 1–29. Acceptance: all sub-obligations pass the batch gates. Endpoint derivatives, ODE uniqueness, and specified initial conditions have consistent semantics. Evidence: all 29 resolutions and 84 obligations pass independent source/type/body reviews, default project checks and isolated-source rebuilding. Actual one-sided derivative chains, every initial datum, complete ODE waiting-time classification, sharp threshold equality cases, and both explicit source corrections are retained.
+- [x] Complete Chapter 6 Exercises 1–19. Acceptance: all sub-obligations pass the batch gates. Integral existence, integral values, and rectifiable-curve requirements have corresponding results. Evidence:19/19 resolutions and54/54 obligations pass independent source/type/body review, frozen full-project checks and isolated-source rebuilding. Raw complex integrals, both improper endpoints, required approximation constructions, partition lengths and R06E18's explicit endpoint correction are retained.
+- [x] Complete Chapter 7 Exercises 1–26. Acceptance: all sub-obligations pass the batch gates. Types and domains for uniform convergence, equicontinuity, and ODE existence are consistent. Evidence:26/26 resolutions and79/79 obligations pass independent page/type/private-body reviews, the frozen project gate and isolated rebuilding. Includes literal series and Cantor constructions, all12 metric/vector extensions, actual polynomial approximation and the full Euler-polygon/vector ODE construction with genuine within endpoint derivatives.
+- [x] Complete Chapter 8 Exercises 1–31. Acceptance: all sub-obligations pass the batch gates. Cover Fourier, Gamma, winding number, fixed points, and asymptotics, not only elementary-function exercises. Evidence: all 31 exercises and 79 obligations passed independent primary-page/type/private-body review, root checks and isolated completed-source rebuilding. Actual Riemann kernels, ordered Fourier limits, prescribed winding/fixed-point constructions and Gamma asymptotics are retained.
+- [x] Complete Chapter 9 Exercises 1–31. Acceptance: all sub-obligations pass the batch gates. Representations of linear maps, Fréchet derivatives, Jacobians, and Taylor polynomials have explicit comparisons. Evidence: all 31 resolutions and 110 obligations passed independent source/type/body reviews, the root gate and isolated completed-source rebuild. Every derivative has the required existence evidence; Euclidean norms, actual local inverse graphs and Taylor counting are explicit. R09E31 is refuted/corrected, not proved as printed.
+- [x] Complete Chapter 10 Exercises 1–32. Acceptance: all sub-obligations pass the batch gates, including parameter direction, boundary multiplicity, orientation, and nonorientable cases. Evidence: all 32 resolutions and 117 obligations pass independent primary-source/type/actual-private-body review and the 7,793-declaration root gate. The final 18 obligations have fresh original-name 22-module and 18-module rebuilds, exact theorem-origin checks, independent nonzero/negative controls and required-method dependency checks. Exercises 9, 10 and 22 retain explicit refutations/corrections. No scope or trust waiver was used. The second review and isolated strict gate remain separate.
+- [ ] Complete Chapter 11 Exercises 1–18. Acceptance: all sub-obligations pass the batch gates. Explicitly distinguish functions from almost-everywhere equivalence classes. Cover the specified measure-construction and completeness requirements. Evidence: the initial 18/37 acceptance is superseded for R11E03 by the extended-real input omission. The remaining first-review count is 17/18 resolutions and 36/37 obligations. Repair E03, obtain new independent reviews, and rerun the project gates before closing this item. Includes the literal Riemann criterion, AE quotient metric and completeness, actual elementary charge with signed-extension obstruction, exact sine convergence set and Bessel proofs. R11E18 remains explicitly refuted/corrected. The full-book second review and isolated final rebuild remain open.
 
-每批完成前依序執行：
+Before completing each batch, perform these steps in order:
 
-1. 對照 PDF 頁面覆核所有子義務；先完成必要的非形式推導，再確認 Lean 型別。
-2. 搜尋已鎖定 Mathlib；先使用現有結果，只新增確實缺少的 lemma 或構造。
-3. 執行單檔 `lake env lean <檔案>`、全專案 `lake build` 與 `./scripts/check.sh`。
-4. 覆核實際 elaborated declaration type，確認沒有錯誤預設實例、未使用假設、弱化結論或真空成立的前提；保留逐題覆核依據。
-5. 僅在以上檢查通過後更新為 `verified`，重建 `progress.md`，並更新本計畫的有效完成證據。發現新 erratum 時依 P4 的同一標準處理。
+1. Review all sub-obligations against the PDF pages. Complete necessary informal derivations before confirming Lean types.
+2. Search the pinned Mathlib. Use existing results first. Add only missing lemmas or constructions.
+3. Run single-file `lake env lean <file>`, full-project `lake build`, and `./scripts/check.sh`.
+4. Review the actual elaborated declaration types. Check for incorrect default instances, unused assumptions, weakened conclusions, or vacuous premises. Retain per-exercise review evidence.
+5. Only after these checks pass, set status to `verified`, regenerate `progress.md`, and update valid completion evidence in this plan. Handle new errata to the same standard as P4.
 
-### P6 — 全書整合驗收
+### P6 — Full-Book Integration Acceptance
 
-- [ ] 對全部題目進行第二輪語義覆核，重新對照頁面、量詞與子題完整性；驗收：每個子義務有實際 declaration 或明確形式化答案，所有原題問題均有反例及修正證據，未解決問題維持阻塞。
-- [ ] 在隔離工作副本或乾淨 checkout 重建全部成果；驗收：僅由鎖定依賴執行 `lake exe cache get`、`lake build`、`./scripts/check.sh --final` 成功，沒有依靠原工作目錄的未追蹤檔案或本機自訂套件。
-- [ ] 更新 `README.md`、來源文件及最終進度，寫明重建命令、題目索引、依賴版本與 errata 的計數方式；驗收：總題數與總子義務數均由清單計算，證明原題與反駁／修正原題分開報告。
+- [ ] Perform a second semantic review of all exercises. Recheck pages, quantifiers, and subpart completeness. Acceptance: each sub-obligation has an actual declaration or explicit formal answer. All source-exercise issues have counterexample and correction evidence. Unresolved issues remain blocking.
+- [ ] Rebuild all results in an isolated working copy or clean checkout. Acceptance: `lake exe cache get`, `lake build`, and `./scripts/check.sh --final` succeed using only pinned dependencies, without relying on untracked files in the original working directory or custom local packages.
+- [ ] Update `README.md`, source documentation, and final progress. State rebuild commands, the exercise index, dependency versions, and errata counting rules. Acceptance: total exercise and sub-obligation counts are calculated from the inventory. Report proofs of original exercises separately from refutations/corrections.
 
 ## Completion Checklist
 
-- [x] 11 章所有來源題目與子義務均完成核對，正式總數有來源依據。Evidence: `exercises.json` and `source.md` record 287 exercises and 849 obligations: the initial 839, eight source-clarification checks, R03E14's zero-bound obstruction, and R06E02's explicit comparison. Changes are justified in `source-clarifications.md`.這項來源盤點不表示題意問題全部解決或 Lean 證明全部完成。
-- [ ] 全部義務均為 `verified`，沒有 `todo`、`in_progress`、`blocked` 或未完成的構造／追問。
-- [ ] 原題不成立的情況有 Lean 反例與標示清楚的正確替代結果；沒有將錯誤原命題計為已證明。
-- [ ] 全部目前交付模組納入預設建置；不存在以未匯入檔案隱藏未完成證明的情況。 The frozen Chapter6–8 checkpoint passes. Kept open while later Chapter8/9 proof files are actively developed and integrated; every present delivery must remain root-imported.
-- [ ] 全部目前交付與 Support declarations 通過公理檢查，無佔位證明、自訂公理或未授權的信任擴充。 The frozen checkpoint and isolated-copy audits pass for3479 local declarations and final763 references. Kept open for later files; no unsafe, partial or nonstandard-axiom exception is permitted.
-- [ ] 逐題語義覆核與第二輪全書覆核均有記錄，所有重大正確性疑問已解決。
-- [ ] 乾淨環境的全專案建置與最終檢查通過；本機與 CI 使用相同檢查入口，遠端 CI 執行結果若尚未取得則明確記錄，不宣稱已通過。
-- [ ] 文件足以重建、定位題目及理解敘述差異，未提交教材 PDF、整本 OCR 或其他非必要二進位檔。
+- [x] All source exercises and sub-obligations in all 11 chapters have been checked. Official totals have source evidence. Evidence: `exercises.json` and `source.md` record 287 exercises and 849 obligations: the initial 839, eight source-clarification checks, R03E14's zero-bound obstruction, and R06E02's explicit comparison. Changes are justified in `source-clarifications.md`. This source inventory does not mean that all interpretation issues are resolved or all Lean proofs are complete.
+- [ ] All 849 obligations are `verified`, with no `todo`, `in_progress`, `blocked`, or unresolved source issues. Current evidence: R11E03 is reopened; 848/849 obligations are verified. Full second-review coverage and strict final gates also remain required.
+- [x] False source statements have Lean counterexamples and clearly labelled correct alternatives. Evidence: 276 exercises are as stated and 11 are explicitly refuted/corrected, with resolved issue records and independent semantic acceptance. The final E22 origin obstruction and nonvanishing correction are included. No false original proposition is counted as proved.
+- [x] All current delivery modules are included in the default build. No incomplete proofs are hidden in unimported files. Evidence: all 287 exercise modules and every present Support module are reachable from `Math`; the 18,710-job default build and all 1,838 mapped theorem-kind/origin checks pass. Independent semantic acceptance remains separate.
+- [x] All current delivery and Support declarations pass axiom checks, with no placeholder proofs, custom axioms, or unauthorized trust extensions. Evidence: the current root audit checks all 7,793 local declarations and 1,838 references using actual private bodies. Only the standard three axioms are allowed; no unsafe, partial or nonstandard-axiom exception was added. The isolated final audit remains a separate gate.
+- [ ] Per-exercise semantic reviews and the second full-book review are recorded. All major correctness questions are resolved.
+- [ ] The full-project build and final checks pass in a clean environment. Local and CI checks use the same entry point. If remote CI results are unavailable, state this explicitly and do not claim success.
+- [ ] Documentation is sufficient to rebuild results, locate exercises, and understand statement differences. No textbook PDFs, full-book OCR, or other unnecessary binary files are committed.
 
 ## Non-Goals
 
-- 不重做 Mathlib 已有的整套實數、拓樸、微積分或 measure theory；題目明確要求的構造除外。
-- 不把教科書每個定理都列為獨立交付目標；只補足習題所需結果。
-- 不提供只有自然語言或只有 theorem skeleton 的「完成解答」。
-- 不自行建立 Git commit、推送分支或觸發遠端操作；本地實作與依賴準備已由執行授權涵蓋。
-- 不承諾未經代表題量測的固定總工期，也不把第 6、10 章的基礎設施成本當成已知小量。
+- Do not rebuild the full real-number, topology, calculus, or measure theory already in Mathlib, except for constructions explicitly required by exercises.
+- Do not make every textbook theorem a separate delivery target. Add only results needed by the exercises.
+- Do not present natural-language-only answers or theorem skeletons as completed solutions.
+- Do not independently create Git commits, push branches, or trigger remote operations. Execution authorization already covers local implementation and dependency preparation.
+- Do not promise a fixed total schedule without measurements from representative exercises. Do not treat the infrastructure costs of Chapters 6 and 10 as known small quantities.
 
 ## Risks
 
-- **Mathlib 相容性與 API 支援未知**：P2 鎖定實際可用版本，P3 以編譯例證明支援情況；不依賴猜測的 API。
-- **第 6、10 章可能需要大量新增基礎設施**：P3 提前驗證表示法與必要結果。未解決的橋接或定理缺口阻塞相依題目，不以 `axiom` 暫代。
-- **原書敘述及 OCR 可能有誤**：題意以頁面影像為準；已知與新增問題均須形式化處置。
-- **編譯成功但證明錯題**：每題保留語義契約與覆核依據，最終再做全書覆核；coverage 工具不能取代數學語義檢查。
-- **規模與進度失真**：同時報告主題目完成數與子義務完成數，另列反駁／修正的原題；不以檔案數、行數或已宣告 theorem 數代替完成率。
-- **長期 dependency drift**：全程使用鎖定版本；需要升級時另行驗證全部既有證明，不與新題目混做未驗證的大幅變動。
+- **Unknown Mathlib compatibility and API support**: P2 pins a usable version. P3 demonstrates support with compiled examples. Do not rely on guessed APIs.
+- **Chapters 6 and 10 may need substantial new infrastructure**: P3 validates representations and required results early. Unresolved bridges or missing theorems block dependent exercises. Do not use `axiom` as a temporary substitute.
+- **Source statements and OCR may be incorrect**: page images determine the exercise interpretation. Both known and new issues require formal treatment.
+- **Successful compilation of the wrong exercise**: retain semantic contracts and review evidence for each exercise, then perform a final full-book review. Coverage tools do not replace mathematical semantic checks.
+- **Misleading scope and progress**: report both completed main exercises and completed sub-obligations. Separately list refuted/corrected source exercises. Do not use file counts, line counts, or declared theorem counts as completion rates.
+- **Long-term dependency drift**: use pinned versions throughout. If an upgrade is needed, separately verify all existing proofs. Do not combine unverified major changes with new exercise work.

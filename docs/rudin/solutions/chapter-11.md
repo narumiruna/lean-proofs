@@ -57,11 +57,15 @@ The criterion gives $f=0$ almost everywhere for $\mu|_E$. Since $E$ is measurabl
 <a id="r11e03"></a>
 ### 11.3 — Measurability of the convergence set
 **Lean source:** [Exercise03.lean](../../../Math/Rudin/Chapter11/Exercise03.lean).
-**Inventory status:** Verified as stated.
+**Inventory status:** Pending verification.
 
-**Statement.** For measurable real functions $f_n$ on a measurable space $X$, the set of $x$ for which $f_n(x)$ has a finite real limit is measurable. The same assertion holds for complex functions and finite complex limits.
+The extended-real repair is implemented and awaits independent reviews and project checks.
 
-**Proof.** The standard measurable convergence-set theorem applies to real-valued measurable functions. Its countable Cauchy criterion can be written as
+**Statement.** Let $f_n:X\to\overline{\mathbb R}$ be measurable on an arbitrary measurable space. The set where $f_n(x)$ converges to an extended-real limit is measurable. The subset where the limit is a finite real number is also measurable, without requiring finite-valued terms. Real-valued and complex-valued sequences have measurable finite-limit sets as well.
+
+**Proof.** The extended real line with its order topology is compact and metrizable, hence Polish. The measurable convergence-set theorem therefore applies to the full extended-real input space. The sets $C_+$ and $C_-$ where the sequence tends to positive and negative infinity are measurable by the fixed-limit theorem. Uniqueness of limits gives $C_{\mathrm{finite}}=C_{\mathrm{extended}}\setminus(C_+\cup C_-)$. A remaining extended-real limit is neither endpoint, so it is the image of its real value. This proves both implications and measurability. An initial infinite term followed by the constant 7 is included in the finite-limit result.
+
+For real-valued inputs, the standard measurable convergence-set theorem applies directly. Its countable Cauchy criterion can be written as
 
 $$
 \bigcap_{j\ge1}\ \bigcup_{N\ge0}\ \bigcap_{m,n\ge N}
@@ -72,7 +76,7 @@ Each set in this expression is measurable, and completeness of $\mathbb R$ ident
 
 A complex sequence converges if and only if its real and imaginary parts both converge to finite real limits. Necessity follows from continuity of the coordinate maps. Conversely, limits $a,b$ of the coordinates give the limit $a+ib$ by addition and multiplication by $i$. The complex convergence set is therefore the intersection of the two measurable real convergence sets.
 
-**Lean declarations:** `Rudin.Chapter11.exercise03_real`, `Rudin.Chapter11.exercise03_complex_iff`, `Rudin.Chapter11.exercise03_complex`.
+**Lean declarations:** `Rudin.Chapter11.exercise03_ereal`, `Rudin.Chapter11.exercise03_ereal_finite_iff`, `Rudin.Chapter11.exercise03_ereal_finite`, `Rudin.Chapter11.exercise03_real`, `Rudin.Chapter11.exercise03_complex_iff`, `Rudin.Chapter11.exercise03_complex`.
 
 <a id="r11e04"></a>
 ### 11.4 — A bounded measurable multiplier

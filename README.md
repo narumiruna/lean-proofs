@@ -1,69 +1,78 @@
 # Rudin exercises in Lean 4
 
-This project formalizes the exercises in Walter Rudin's *Principles of
-Mathematical Analysis*, Third Edition. It is in progress, not a complete solution
-set. The source inventory contains 287 exercises and 849 obligations. Verified
-counts are generated in [the progress report](docs/rudin/progress.md).
+This project formalizes all end-of-chapter exercises in Walter Rudin's
+*Principles of Mathematical Analysis*, Third Edition.
 
-## Read the solutions
+The inventory records **286 verified exercise resolutions and 848 verified
+obligations**: **275 proved as stated** and **11 refuted and explicitly
+corrected**. Exercise 11.3 is reopened for extended-real input coverage.
+The second full-book review and isolated final checks are still in progress. Counts are generated in [the progress report](docs/rudin/progress.md).
 
-The [solution index](docs/rudin/solutions.md) links to one Markdown article per
-chapter in `docs/rudin/solutions/`. Each article gives mathematical statements
-and proofs, distinguishes verified solutions from newer or partial
-formalizations, and keeps source corrections explicit. The standard check also
-compares article entries with the current exercise files, inventory status, and
-declaration references.
+## Read the results
 
-```sh
-# Check article coverage and links without rebuilding Lean.
-uv run --no-project python scripts/check_solutions.py
-```
+- [Solution index](docs/rudin/solutions.md): mathematical statements, proofs,
+  source links and declaration references for every exercise.
+- [Inventory](exercises.json): stable subquestion IDs, source pages, exact
+  theorem mappings, dispositions and first-review evidence.
+- [Second review](docs/rudin/semantic-review.json): retained individual
+  decisions, source fingerprints and environment fingerprints.
+- [Source](docs/rudin/source.md), [formalization rules](docs/rudin/formalization.md),
+  [errata](docs/rudin/errata.md), [source contracts](docs/rudin/source-clarifications.md),
+  and [Mathlib comparisons](docs/rudin/mathlib-coverage.md).
 
-## Toolchain
+The articles explain the formal results; they do not replace Lean statements
+or semantic review. False source claims are not counted as proved originals.
+Source PDFs, whole-book OCR and review page images are not committed.
+
+## Pinned environment
 
 - Lean: `leanprover/lean4:v4.35.0`.
 - Mathlib: `56a005855ea17e0b0958f73ec801ae140b0a1679` (v4.35.0).
-- Elan, Git, and uv must be available. The Python checks use only the standard
-  library. PDF tooling is not needed to build or check proofs.
+- Transitive dependency revisions: `lake-manifest.json`.
+- Required tools: Elan, Git and uv. Python checks use only the standard library.
+  PDF tools and the source scans are not needed to rebuild the proofs.
 
-## Build and check
+## Rebuild and verify
+
+From the repository root:
 
 ```sh
-lake update
 lake exe cache get
-./scripts/check.sh
-```
-
-`lake-manifest.json` locks transitive dependencies. Do not update the manifest
-when only rebuilding an existing checkout; after dependencies are materialized,
-use `lake exe cache get` and `./scripts/check.sh`.
-
-The check entry point validates the inventory and imports, builds the default
-Lake target, checks theorem references and transitive axiom dependencies in Lean,
-and runs positive and negative regression fixtures. Development checks allow
-unfinished exercises. They do not establish full-book completion.
-
-```sh
-# Rebuild the progress report after an authorized inventory change.
-uv run --no-project python scripts/check_exercises.py --update-progress
-
-# Full-book gate: fails if any obligation is unfinished.
+lake build
 ./scripts/check.sh --final
 ```
 
-## Layout
+Keep the committed manifest. Do not run `lake update` for an ordinary rebuild.
+The final command currently rejects incomplete second-review coverage.
 
-- `Math/Rudin/ChapterNN/ExerciseNN.lean`: exercise proofs.
-- `Math/Rudin/Support/`: shared definitions and restricted prototypes.
-- `Math/Rudin.lean`: imports every delivered exercise and support module.
-- `exercises.json`: original summaries, subquestion IDs, source pages, issues,
-  theorem references, status, and review evidence.
-- [Source](docs/rudin/source.md), [formalization rules](docs/rudin/formalization.md),
-  [source issues](docs/rudin/errata.md),
-  [source contracts](docs/rudin/source-clarifications.md), and
-  [Mathlib coverage](docs/rudin/mathlib-coverage.md).
-- [Current implementation plan](docs/plans/2026-10-22_rudin-lean4-plan.md).
+The shared local/CI entry point checks inventory coverage and imports, builds
+all delivery modules, checks actual theorem kinds and origins, audits private
+proof bodies and transitive axioms, checks article coverage and links, and runs
+positive and negative regression tests. Only `propext`, `Classical.choice` and
+`Quot.sound` are permitted axioms. Final mode also requires every obligation
+and second-review decision to be complete and current.
 
-False source claims require a Lean counterexample and an explicitly corrected
-result. They are not reported as proved original statements. Source PDFs and
-whole-book OCR are not part of the repository.
+```sh
+# Development gate; permits explicitly unfinished inventory entries.
+./scripts/check.sh
+
+# Regenerate counts after an authorized inventory change.
+uv run python scripts/check_exercises.py --update-progress
+
+# Check the articles without rebuilding Lean.
+uv run python scripts/check_solutions.py
+```
+
+Remote CI has not been run. Its workflow uses `./scripts/check.sh --final`;
+local success is not a claim of remote CI success. No commit or push is part
+of this implementation.
+
+## Source layout
+
+- `Math/Rudin/ChapterNN/ExerciseNN.lean`: one main file per exercise.
+- `Math/Rudin/Support/`: required shared constructions and comparisons.
+- `Math/Rudin.lean`: public imports of all exercise and Support modules.
+- `docs/rudin/solutions/`: one mathematical article per chapter.
+
+The [active implementation plan](docs/plans/2026-10-22_rudin-lean4-plan.md)
+remains until every final gate passes.

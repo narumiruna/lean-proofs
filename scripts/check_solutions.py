@@ -52,7 +52,9 @@ def validate(root=ROOT):
     verified = [e for e in records.values() if all(o["status"] == "verified" for o in e["obligations"])]
     corrected = sum(e["disposition"] == "refuted_and_corrected" for e in verified)
     require(f"**{len(verified)} verified resolutions**" in index_text, "Stale verified-resolution count")
-    require(f"**{len(sources) - len(verified)} entries**" in index_text, "Stale pending-entry count")
+    pending = len(sources) - len(verified)
+    pending_label = "entry" if pending == 1 else "entries"
+    require(f"**{pending} {pending_label}**" in index_text, "Stale pending-entry count")
     require(f"{len(verified) - corrected} proved as stated" in index_text, "Stale as-stated count")
     require("docs/rudin/solutions.md" in (root / "README.md").read_text(), "README link missing")
 

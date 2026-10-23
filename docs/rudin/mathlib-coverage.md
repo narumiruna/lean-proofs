@@ -1,390 +1,171 @@
-# Mathlib coverage and P3 risks
+# Mathlib and source representations
 
-## Result and scope
+## Scope
 
-The pinned Mathlib supplies many required objects, but no single API identifies Rudin's integrals, oriented chains and Stokes theory. The current Stieltjes modules prove the actual Darboux/tagged equivalence and a continuous real-integrand measure bridge with explicit right-continuity hypotheses. Oriented parameterized chains and general Stokes integration remain incomplete.
+Lean 4.35.0 and Mathlib commit
+`56a005855ea17e0b0958f73ec801ae140b0a1679` supply the underlying analysis.
+The repository adds the constructions and comparisons required by the exercise
+contracts. It does not replace a source integral or prescribed construction
+with an unrelated library object.
 
-Evidence uses Lean `v4.35.0` and Mathlib commit `56a005855ea17e0b0958f73ec801ae140b0a1679`. All Mathlib paths below are relative to `.lake/packages/mathlib/Mathlib/`. `Math/Rudin/Support/ApiExamples.lean` contains compiled `#check` probes and usage proofs for the listed topics. This is a topic survey, not a verified classification of every exercise.
+`Math/Rudin/Support/ApiExamples.lean` contains compiled probes and usage proofs
+for the APIs below. Every path is relative to
+`.lake/packages/mathlib/Mathlib/`. Exercise acceptance is recorded in
+`exercises.json`; compiled API probes alone are not semantic acceptance.
 
-## Coverage map
+## Library map
 
-| Chapters/topic | Available declarations and source | Classification and remaining work |
+| Topic | Pinned source and API | Use and required comparison |
 | --- | --- | --- |
-| 1: cuts and real numbers | `Order/Completion.lean`: `DedekindCut.principal`, `principalEmbedding`, `factorEmbedding`. `Basic/Real/Basic.lean`: `Real.equivCauchy`, `Real.mk_eq`. | **Bridge/new construction.** `DedekindCut` is the Dedekind–MacNeille completion. A principal left set is `Iic q`, with a greatest element. It is not Rudin's nonempty proper rational lower cut without a greatest element. Mathlib's real numbers use a Cauchy construction. `R01E20` now has a literal modified-cut model in `Chapter01/Exercise20.lean`, including the new closed zero and inverse failure. It is not identified with `ℝ`; source cuts with no greatest element require a separate comparison when needed. |
-| 2–3: metric completion | `Topology/UniformSpace/Completion.lean`: `UniformSpace.Completion`, `denseRange_coe`, `extension_coe`. `Topology/MetricSpace/Completion.lean`: `UniformSpace.Completion.coe_isometry`. | **Direct use, with a construction bridge when required.** The completion is a separation quotient of Cauchy filters. Isometry, density, extension, and completeness are available. `R03E24` supplies the actual Cauchy-sequence quotient and a proved isometric identification with this completion, including its limit-distance metric and the empty-space case. |
-| 5, 7: ODE | `Analysis/ODE/ExistUnique.lean`: `IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt`, `ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt₀`, `ODE_solution_unique`. | **Direct use under checked hypotheses.** Existence requires completeness and local regularity/bounds. The checked uniqueness theorem uses Lipschitz control, continuity on `Icc`, and right-sided derivatives on `Ico`. Do not change a problem's endpoint or initial-value conditions to fit it. |
-| 6: Stieltjes measures | `MeasureTheory/Measure/Stieltjes.lean`: `StieltjesFunction`, `measure_Ioc`, `measure_Icc`, `measure_singleton`, `Monotone.stieltjesFunction_eq`. | **Bridge required.** A Stieltjes function is monotone and right-continuous. Its measure is not a definition of Rudin's Riemann–Stieltjes integral. See the endpoint test below. |
-| 6, 10: tagged integrals | `Analysis/BoxIntegral/Basic.lean`: `BoxIntegral.HasIntegral`, `Integrable.hasIntegral`. `Analysis/BoxIntegral/Partition/Filter.lean`: `IntegrationParams.Riemann`. `Analysis/BoxIntegral/Partition/Additive.lean`: `BoxAdditiveMap.upperSubLower`. `Analysis/BoxIntegral/Integrability.lean`: `MeasureTheory.IntegrableOn.hasBoxIntegral`, `MeasureTheory.ContinuousOn.hasBoxIntegral`, `MeasureTheory.AEContinuous.hasBoxIntegral`. | **Existing bridge components.** Box integrals accept box-additive increments, not just Lebesgue volume. The continuous-function bridge works for the Riemann parameter and any locally finite measure; a compiled one-dimensional-box example verifies this. The general `IntegrableOn` bridge requires `bRiemann = false`. Neither result alone identifies arbitrary Rudin Darboux sums with these filters. |
-| 8: Fourier | `Analysis/Fourier/AddCircle.lean`: `fourierCoeff`, `fourierCoeff_eq_intervalIntegral`, `hasSum_fourier_series_L2`, `tsum_sq_fourierCoeff`. `Analysis/Fourier/FourierTransform.lean`: `Real.fourier_real_eq_integral_exp_smul`. | **Direct use plus normalization checks.** Periodic coefficients use normalized Haar measure and a `1/T` interval formula. The real-line transform uses the exponential with `-2πivw`. L² convergence does not imply pointwise or uniform convergence. |
-| 8: Gamma | `Analysis/SpecialFunctions/Gamma/Basic.lean`: `Real.Gamma_eq_integral`, `Real.Gamma_add_one`, `Real.Gamma_nat_eq_factorial`, `Complex.Gamma_eq_integral`. | **Direct use under domain checks.** The real integral formula requires a positive argument; the complex formula requires positive real part. The total function's values at poles are not improper-integral convergence claims. |
-| 9–10: forms and pullback | `Analysis/Calculus/DifferentialForm/Basic.lean`: `extDeriv`, `extDeriv_apply`, `extDeriv_extDeriv`, `extDeriv_pullback`. `Topology/Algebra/Module/Alternating/Basic.lean`: `ContinuousAlternatingMap.compContinuousLinearMap` supplies pointwise pullback. | **Direct local calculus; integration bridge required.** An unbundled form is `E → E [⋀^Fin n]→L[ℝ] F`. The file proves `d² = 0` with smoothness assumptions and compatibility of `d` with pullback. It explicitly lists bundled smooth forms and manifold forms as future work. |
-| 10: exterior product and orientation | `LinearAlgebra/Alternating/DomCoprod.lean`: `AlternatingMap.domCoprod`. `LinearAlgebra/Orientation.lean`: `Orientation`, `Orientation.map_eq_iff_det_pos`. | **Components, not a complete forms API.** The checked exterior product is algebraic and tensor-valued. Its connection to scalar-valued continuous forms, signs, and the Leibniz rule needs work. Vector-space orientation does not supply oriented smooth chains or their boundary multiplicities. |
-| 10: boundary integration | `MeasureTheory/Integral/DivergenceTheorem.lean`: `integral_divergence_of_hasFDerivAt_off_countable`, `integral_divergence_prod_Icc_of_hasFDerivAt_of_le`. | **Direct on coordinate boxes; bridge elsewhere.** These are genuine volume/face identities, not general Stokes for differential forms. `FormsPrototype.lean` connects the rectangle result to the actual exterior derivative. |
-| 11: Lp | `MeasureTheory/Function/LpSpace/Basic.lean`: `MemLp.toLp`, `coeFn_toLp`, `toLp_eq_toLp_iff`, `Lp.ext`. `MeasureTheory/Function/LpSpace/Complete.lean`: `Lp.instCompleteSpace`. | **Direct use.** Lp elements are almost-everywhere classes. Completeness requires a complete target and `1 ≤ p`. Pointwise exercise statements require representatives or an explicit almost-everywhere translation. |
-
-## Chapter 6 prototype
-
-`Math/Rudin/Support/StieltjesPrototype.lean` defines finite weakly increasing partitions on `a ≤ b`, closed-subinterval tags, refinement, and sums with the original increments `α(xᵢ₊₁) - α(xᵢ)`. The integrator only needs to be monotone on the interval; its values at discontinuities are retained. This matches the weak inequalities in Rudin Definition 6.1. Repeated nodes are allowed, and their integrator increments are zero. `degenerate` gives a real one-cell partition of `[a,a]`; `lowerSum_self`, `upperSum_self`, and `hasDarbouxRSIntegral_self` prove the zero-interval case using nonempty partition families, not default extrema of empty sets.
-
-It provides two separate predicates:
-
-- `HasRSIntegral`: boundedness, monotonicity, and convergence of all tagged refinements of a suitable partition.
-- `HasDarbouxRSIntegral`: boundedness, monotonicity, and equality of the supremum of lower sums and infimum of upper sums with the stated value. The lower/upper sums use infima/suprema on closed subintervals, as in Rudin §6.1–6.2.
-
-No general equivalence of these predicates is claimed. For constants, `taggedSum_const`, `lowerSum_const`, and `upperSum_const` prove that every sum is `c * (α b - α a)`. `constant_value_unique` also rules out a vacuous tagged-sum value. `darboux_constant_bridge` proves that the actual Darboux criterion has value `∫ _ in a..b, c ∂α.measure` when `α` is a `StieltjesFunction`. Thus this restricted bridge is proved, not assumed.
-
-### Endpoint and jump checks
-
-For a right-continuous `α`, Mathlib gives:
-
-- `α.measure (Ioc a b) = ENNReal.ofReal (α b - α a)`.
-- `α.measure {a} = ENNReal.ofReal (α a - leftLim α a)`.
-- `α.measure (Icc a b) = ENNReal.ofReal (α b - leftLim α a)`.
-
-For `a ≤ b`, `intervalIntegral.integral_of_le` uses `(a,b]`, not `[a,b]`. Therefore replacing it by a closed-set integral can add an atom at `a`.
-
-Right normalization is also unsafe without a bridge. `Monotone.stieltjesFunction` replaces `α x` by `rightLim α x`. The compiled theorem `normalization_changes_endpoint` uses `α(x) = 0` for `x ≤ 0` and `α(x) = 1` for `x > 0`. The Darboux integral of `1` on `[-1,0]` is `0`. The interval integral against the right-normalized Stieltjes measure is `1`.
-
-### Partition and refinement foundation
-
-`Support/StieltjesRefinement.lean` uses the unchanged prototype definitions.
-It constructs a partition whose node set is exactly the union of two node
-sets. Sorted finite vertices and a repeated final node preserve `n>0`, including
-for a singleton interval. It proves reflexivity and transitivity of refinement,
-`lowerSum <= taggedSum <= upperSum`, global bounds, lower/upper monotonicity
-under refinement, cross-partition bounds, and boundedness of both Darboux sum
-ranges. Zero-weight cells and repeated nodes are included.
-
-`hasRSIntegral_of_hasDarbouxRSIntegral` proves the forward implication with
-interval-only monotonicity and boundedness. Tagged values are unique, and
-singleton tagged integrals are zero.
-
-`Support/StieltjesEquivalence.lean` proves the converse and the exact iff for
-`a ≤ b`. It approximates cell infima and suprema by finitely many tags; it
-does not assume extrema are attained. The error scale uses `Δα+1`, not a
-possibly zero total increment. Repeated nodes, zero mass and singleton
-intervals are included. This equivalence needs no right continuity of `α`.
-
-### Continuous integrands and measures
-
-`Support/StieltjesMeasureBridge.lean` proves:
-
-- For any raw `α` monotone on `[a,b]`, a real continuous integrand has an
-  actual Darboux integral. This is existence, not a measure comparison.
-- For `α : StieltjesFunction ℝ`, `a ≤ b`, and `ContinuousOn f (Icc a b)`,
-  `continuous_bridge` identifies that Darboux integral with
-  `∫ x in a..b, f x ∂α.measure`. `continuous_tagged_bridge` gives the
-  matching tagged criterion.
-- The proof establishes finite cell-integral additivity and lower/upper sum
-  bounds, then uses uniform continuity and an explicit uniform grid to make
-  the Darboux gap arbitrarily small. No desired equality is assumed.
-- Singleton intervals, repeated cells and zero mass are proved separately.
-  Endpoint regressions include a terminal jump and exclude an initial atom,
-  consistently with `(a,b]`. No regularity of `f` outside `[a,b]` is required.
-
-The measure bridge explicitly uses the integrator's right continuity. It
-does not normalize an arbitrary raw integrator without correction. The
-existing endpoint counterexample still refutes that shortcut.
-
-### Algebra and interval splitting
-
-`Support/StieltjesIntegralLaws.lean` proves real-integrand algebra for both
-literal predicates: addition, arbitrary real scaling, negation, subtraction,
-interval-wise congruence, order and bounds. Integrator addition and nonnegative
-scaling preserve raw integrator values. Absolute-value integrability is proved
-by a cell-gap contraction and a genuine small-gap existence criterion; the
-absolute integral bound does not assume the missing integral exists.
-
-Partition concatenation proves joining. Filtered vertices and inserted cut
-points give genuine weak partitions for restriction. Cut/rejoin refinement
-bounds each restricted gap by the original gap, so full splitting constructs
-both restricted integrals and proves value additivity. Endpoint cuts, singleton
-intervals, repeated nodes and jumps at the cut are included. Bounded integrands
-with zero raw mass need no continuity assumption.
-
-Independent review passed at SHA256
-`7e0de819804fcb97aed6ce7f520657775322e6822803dd2868ce380d7cee2d24`.
-The reviewer compiled 30 independent model checks, including a discontinuous
-endpoint-integrand counterexample that forbids an unconditional measure bridge.
-These are real foundations for Theorem 6.12(a–e) and 6.13(b), not completion of
-any remaining exercise. The composition and complex results below extend
-this foundation. Vector integrands, integration by parts and improper arguments
-remain open.
-
-### Continuous composition, products and complex values
-
-`Support/StieltjesComposition.lean` proves an affine cell-oscillation gap
-estimate. Compact-range uniform continuity then proves actual integrability
-of `phi ∘ f` without continuity of `f`. Squares, products by polarization,
-natural powers including zero, and tagged versions follow from proved laws.
-This supplies Rudin 6.11 and 6.13(a), not a measure substitution.
-Independent review passed 35 model checks, including square root on a range
-where it is not Lipschitz. Final SHA256:
-`92e56ea46a1f7927d5778178096f6531ed888c9511097d33475c6c20089732e1`.
-
-`Support/StieltjesComplex.lean` defines actual complex tagged sums and norm
-convergence over the same weak partitions. The real/imaginary component iff
-is proved. It gives uniqueness, complex algebra, conjugation, product and norm
-integrability, the integral norm inequality, integrator laws and full interval
-splitting. The norm construction uses real squares and square-root composition;
-it does not assume that the norm is integrable. Independent review passed
-33 boundary checks. Final SHA256:
-`f42959dd681c290793461d59de971570431c26e3c74dda32ee4a3ebdc65d6dfe`.
-
-Both modules retain raw integrator values, repeated nodes, singleton intervals
-and zero mass. Neither supplies a general discontinuous-integrand measure
-bridge, improper integration, or a general vector-valued predicate.
-
-### Ordinary Riemann criterion and value comparison
-
-`Support/RiemannIntegrability.lean` proves ordinary results for the identity
-integrator. Bounded functions that are relatively continuous almost everywhere
-have arbitrarily small literal Darboux gaps and an actual Riemann integral.
-Conversely, an arbitrary actual Darboux integral gives `IntervalIntegrable` and
-the same interval-integral value. No measurability or continuity hypothesis is
-added in that converse: measurable step envelopes and an almost-everywhere
-subsequence supply the required measurability.
-
-The step coefficients use closed cells; half-open supports are used only for
-Lebesgue integration. Repeated nodes and singleton intervals are included.
-Monotone and antitone functions have actual ordinary Riemann integrals,
-including jumps. Independent review passed at SHA256
-`5abd6040ef2b9476c70822e8579a8135eea47101e15ec235257992c6b659f614`.
-The rational indicator is an explicit boundary check: it is Lebesgue integrable
-with value zero but is not Riemann integrable. Neither an unconditional converse
-nor invariance under almost-everywhere changes is claimed.
-
-### Raw integration by parts and improper limits
-
-`Support/StieltjesIntegrationByParts.lean` constructs both integrals in
-Exercise 6.17. Actual finite summation by parts and uniform within derivatives
-control the remainder. Refinement preserves the mesh bound, including repeated
-nodes. The integrator is only monotone on the closed interval; it need not be
-continuous. The complex case is reduced to actual real and imaginary derivative
-witnesses, as required by the source hint. The real proof and complex reduction passed independent source/type and
-private-body review at SHA256
-`1c9c24e845ea2236ec3bebbab583fc453fe8f3ba08ad7e47f88ccfb9d0e5f1ac`.
-This is the source monotone-integrator theorem, not a general signed/BV theorem.
-
-`Chapter06/Exercise07.lean` defines improper integrals by finite limits and
-actual proper Darboux witnesses at every cut. These predicates do not assign a
-value to a divergent integral. Exercises 7–16 now contain the conditional,
-Holder, approximation and oscillatory results; their independent reviews passed.
-The frozen execution checkpoint and its isolated-source rebuild pass. The registry, not this API note,
-determines verified exercise counts.
-
-Limits of the current integral comparisons:
-
-1. General compact-interval raw measure normalization and endpoint corrections
-   are not claimed. A new use must prove its own required comparison.
-2. General discontinuous-integrand identification still requires proved
-   jump-compatibility conditions.
-3. `Chapter07/Exercise17.lean` now proves uniform-limit integration for actual
-   raw Stieltjes coordinate integrals in EuclideanSpace. This does not define
-   a general Banach-valued raw Stieltjes calculus.
-
-All Chapter6 exercise obligations are verified. `Chapter06/Exercise01.lean`
-proves the point-supported result directly from Darboux sums, including
-endpoints and `a=b`.
-
-Completion status is recorded only in the registry and progress report.
-
-## Chapter 10 prototype
-
-`Math/Rudin/Support/FormsPrototype.lean` uses Mathlib's continuous alternating maps and actual `extDeriv`, not an unrelated symbolic derivative.
-
-- `exterior_square` computes the derivative of the 0-form `x ↦ x²` on the unit tangent as `2x`.
-- `segment_stokes` proves the integral of that exterior derivative equals evaluation on the oriented boundary `[b] - [a]`, under ordinary differentiability and integrability assumptions. `square_segment` discharges these assumptions for the polynomial. `segmentIntegral_reverse` checks the orientation sign.
-- `exterior_plane` identifies a plane 1-form's exterior derivative on the ordered coordinate frame with `∂Q/∂x - ∂P/∂y`.
-- `rectangle_stokes` proves that the area integral of this actual exterior derivative equals four oriented edge integrals. It specializes the existing divergence theorem to the rotated coefficient field. Its hypotheses are global differentiability, ordered rectangle endpoints, and integrability of the exterior-derivative coefficient. They do not assume the boundary identity.
-
-The rectangle theorem uses Bochner area integration. It does not identify this integral with Rudin's iterated or parameterized surface integral. The example uses the product norm only for calculus; it makes no Euclidean length or area-norm assertion.
-
-Targeted source-text review of PDF pages 300–308 identifies the following needs. This review is not a full page-image or exercise-semantic acceptance check:
-
-- R10E15 needs exterior-product signs.
-- R10E16–19 need affine simplex chains, `∂² = 0`, and signed square/cube face cancellation.
-- R10E20 needs integration by parts for forms.
-- R10E21–28 need pullback integration, punctured-domain exactness, homotopy arguments, and explicit curve/surface computations.
-- R10E31 needs Green identities beyond coordinate boxes.
-- R10E32 needs the parameter-chain boundary with multiplicity, not just the geometric edge of a Möbius band.
-
-The source search found algebraic/topological simplex and singular-homology infrastructure, but no complete interface connecting smooth parameterized chains, continuous differential forms, oriented boundary, and integration. Do not interpret the separate orientation or homology APIs as that interface.
-
-### Ordered-chain foundation
-
-`Support/OrderedChains.lean` represents formal signed sums of ordered vertex
-lists by `FreeAbelianGroup (List E)`. It proves the boundary is the alternating
-sum of vertex deletions, its square is zero on every formal chain, the edge and
-triangle formulas, and preservation of integer multiplicity. Vertex maps
-commute with that combinatorial boundary.
-
-This is an augmented, ungraded presentation: `boundary [] = 0` while
-`boundary [a]` is the nonzero empty-list generator. It does not impose the
-orientation-permutation relation. Reversed raw edges therefore do not cancel
-as they do after Rudin's orientation/integration comparison. Mapping vertices
-is not nonlinear postcomposition of affine surfaces. Fixed-degree chains,
-affine and smooth parameterization, orientation relations, and integration
-comparisons are not part of this raw model. The separate oriented model below
-adds some of these structures. Neither model alone completes a Chapter 10
-exercise or supplies a general Stokes theorem.
-
-The compiler-generated unsafe recursion helper reported during review was
-removed by expressing the recursion through `List.rec`. The unchanged project
-audit then passed; no unsafe-declaration exception was added.
-
-### Oriented chains and parameterized squares
-
-`Support/OrientedChains.lean` quotients raw vertex chains by adjacent swaps
-and repeated-vertex relations. It proves that the boundary preserves these
-relations before defining the quotient boundary. Homogeneous subgroups give
-fixed vertex counts and dimensions, with typed boundaries and `∂² = 0`.
-The ordinary boundary of a zero-dimensional chain is zero; the augmented
-boundary is kept separate. Square and six-tetrahedron cube identities retain
-signs and integer multiplicity.
-
-Barycentric realization and zero-coordinate face inclusions give an actual
-affine comparison. Cartesian parameters recover Rudin's formula (76).
-Nonlinear postcomposition acts on the full parameterized maps, not merely
-their vertices.
-
-The separate `Parametric` API uses actual paths and maps from the parameter
-plane. Path reversal and constant paths define a quotient; square boundaries
-are sums of four restricted paths. Boundary-square-zero and postcomposition
-naturality are proved. The actual Möbius parameterization has a proved seam
-identity and the boundary `Γ₁ + Γ₃ + 2Γ₂`. This is not a claim about its
-geometric edge or its integrals.
-
-`Support/OrientedChainChecks.lean` retains independently developed model
-checks. Exterior-algebra evaluation proves infinite order for simplex
-generators in every vertex degree, so the quotient equations are not vacuous.
-It also checks the six coordinate-insertion cube-face signs, a nonadjacent
-repeated vertex, a nonzero segment, and `2Γ₂ ≠ Γ₂` for a nonzero band width.
-
-Independent source/type review and the project proof-body audit passed.
-The reviewed `OrientedChains.lean` SHA256 is
-`6ea0aab7581897268da9356dd4bea40d705e19a30ac661a7fdd2fd2f52910a1a`.
-The model still has these limits:
-
-- Homogeneous subgroups are not proved to form an internal direct sum.
-- Arbitrary permutation signs are not packaged as a general theorem.
-- Paths are full real-domain maps, identified by reversal and constants, not
-  by equality restricted to `[0,1]` or by integration functionals.
-- No regularity is bundled. General smooth parameterized simplex chains and
-  the comparison of square parameterizations with affine triangulations are
-  not implemented.
-- Determinants, geometric coverage, positive orientation, the remaining
-  Möbius geometry, and all form-integration comparisons remain open.
-
-### Path integration and a source-integral comparison
-
-`Support/PathIntegration.lean` uses the actual coefficient
-`ω(p(t))(deriv p t)`. Reversal and constant-path identities prove descent to the
-existing signed path quotient. The alternating-map representation is connected
-to continuous linear 1-forms; the exterior derivative of an actual scalar
-0-form is compared with `fderiv`.
-
-The differentiable-potential theorem identifies the integral with evaluation
-on the actual endpoint boundary. With a continuous coefficient, the identity
-integrator bridge proves the literal Darboux integral. A quadratic affine-path
-example proves both the chain value and the Darboux result `b²-a²`, including
-reversal and constant paths, without remaining regularity hypotheses.
-
-The total integral and derivative defaults are explicit: nonintegrable
-coefficients and missing derivatives can produce zero. The scalar-coefficient
-bridge alone does not certify a differentiable source path. The actual
-exterior-boundary comparison includes the required derivative hypotheses.
-
-Independent review passed at SHA256
-`62191f3c70fbea6d116aadf3603cb914e6ee2cd48bd664daa3b2603c4ab17c24`,
-with a fresh local import closure and 22 independent checks. This is a
-path-only bridge, not general simplex integration, arbitrary
-reparameterization or higher-dimensional Stokes.
-
-### Smooth simplex and triangle integration
-
-`Support/SimplexIntegration.lean` adds actual C² parameter maps on open
-neighborhoods of Euclidean standard simplexes, alternating-form pullbacks,
-continuous coefficients, and proved integrability. It proves parameter-triangle
-boundary cancellation and nonlinear postcomposition. The horizontal-form
-boundary identity follows from slice FTC and genuine derivatives.
-
-For `S(x,y)=(x,y²)` and `ω=-y dx`, the computed pullback coefficient is `2y`;
-both the surface and parameter-boundary integrals are `1/3`. The source bridge
-uses the literal closed-triangle zero extension inside the unit square, with
-Darboux witnesses for every row and the outer integral. A separate Fubini
-result proves two-dimensional order independence for ambient continuous
-coefficients. Independent source/type/private-body review,20 model checks,
-the frozen project gate and isolated-source rebuilding pass. Its source SHA256
-is `31edd64463e237f83f6f6369e47c9dbf3a1653eb96c82e79a7b6044dc9e975c2`.
-
-`Support/TriangleStokes.lean` removes the horizontal-form restriction. It proves
-the full `P dx+Q dy` identity by FTC and order exchange, decomposes every plane
-1-form into those coordinates, and derives C1 pullback regularity from a global
-C1 form and global C2 map. It gives literal source witnesses for the exterior
-zero extension and all three actual parameter edges. The nonhorizontal form
-`-y dx+x dy` has value1. Independent review and10 additional model checks pass
-at SHA256 `35206f3ff8b5db6bf1235b5d5371ea7b8825114625d378395a457d7f5c0a94d3`;
-the frozen project and isolated gates include it.
-
-`Support/MultivariateRiemann.lean` now proves the real scalar comparison in
-arbitrary dimension for closed coordinate boxes and standard simplexes. It
-constructs every literal Darboux stage, including closed-cut singleton fibers,
-and proves all-coordinate-order equality, Euclidean volume normalization and
-standard-simplex volume `1/n!`. Its smooth-simplex comparison requires only
-C2 regularity on an open neighborhood and a continuous form on the image.
-Independent review passed a fresh 13-module build, 743 local declarations,
-51,378 transitive constants and 34 model checks at source SHA-256
-`154e9e5959e242dba2f9dd454826ae35fb3552221be537c48cc052d179b34ca7`.
-The Chapter 8–9 root and isolated checkpoint gates include this source.
-
-This does not complete P3 or a Chapter 10 exercise. General compact convex
-domains, complex/vector source witnesses, mixed monomial formulas, orientation
-integral descent, change of variables and higher-dimensional Stokes remain
-separate requirements. Neighborhood-only regularity is established for the
-scalar simplex comparison, not for the existing triangle Stokes theorem.
-`SmoothChains.lean` is integrated and builds, but its independent review and
-higher-degree integration comparisons remain open.
-
-Remaining Chapter 10 work, in dependency order:
-
-1. Fix continuous scalar-valued exterior product, normalization, and Leibniz lemmas.
-2. Extend the fixed-degree model to the required smooth parameterized simplexes. Prove general permutation signs, square-triangulation comparison, and exercise-specific orientation and coverage results.
-3. Define form integration by pullback on segments, rectangles, and simplexes. Prove change-of-variables and comparison with Rudin's integral conventions.
-4. Extend the proved coordinate-rectangle identity to pullbacks and chains, then to the required exactness and homotopy results.
-5. Treat general domains, outward normals, Green identities, and nonorientable examples separately. No general manifold Stokes theorem is claimed.
-
-## Verification and open P3 criteria
-
-The following commands succeeded with exit code `0`:
-
-```sh
-lake env lean Math/Rudin/Support/ApiExamples.lean
-lake env lean Math/Rudin/Support/StieltjesPrototype.lean
-lake env lean Math/Rudin/Support/FormsPrototype.lean
-lake env lean Math/Rudin/Support/OrderedChains.lean
-lake env lean Math/Rudin/Support/OrientedChains.lean
-lake env lean Math/Rudin/Support/OrientedChainChecks.lean
-lake env lean Math/Rudin/Support/PathIntegration.lean
-lake env lean Math/Rudin/Support/StieltjesIntegralLaws.lean
-lake env lean Math/Rudin/Support/StieltjesComposition.lean
-lake env lean Math/Rudin/Support/StieltjesComplex.lean
-lake env lean Math/Rudin/Support/RiemannIntegrability.lean
-lake env lean Math/Rudin/Support/StieltjesIntegrationByParts.lean
-lake env lean Math/Rudin/Support/StieltjesRefinement.lean
-lake env lean Math/Rudin/Support/StieltjesEquivalence.lean
-lake env lean Math/Rudin/Support/StieltjesMeasureBridge.lean
-lake env lean Math/Rudin/Support/UniformIntegralLimits.lean
-lake env lean Math/Rudin/Support/SimplexIntegration.lean
-lake env lean Math/Rudin/Support/TriangleStokes.lean
-lake env lean Math/Rudin/Support/MultivariateRiemann.lean
-```
-
-The prototype `#print axioms` commands for the main bridge, endpoint, computation, and boundary theorems report only `propext`, `Classical.choice`, and `Quot.sound`. No proof placeholder or custom axiom was added. The project audit now also checks every imported Support declaration, including private proof bodies. Current integrated results are recorded in the plan; theorem-level prototype output alone does not replace that audit.
-
-P3 remains open:
-
-- The requested high-risk topics have source and compilation evidence; the complete exercise-by-exercise coverage classification remains open.
-- Chapter 6 has literal weak-partition Darboux sums, full Darboux/tagged equivalence, raw monotone continuous-integrand existence, and a continuous-integrand measure bridge for right-continuous Stieltjes functions. Real algebra, absolute values, full interval splitting, continuous composition, products and actual complex tagged integrals are also proved. Raw integration by parts and coordinatewise Euclidean vector uniform limits are now proved. General raw normalization corrections and discontinuous-integrand measure bridges remain open; no unconditional normalization is claimed.
-- Chapter 10 has nontrivial exterior-derivative computations, genuine segment/rectangle boundary identities, an orientation quotient with fixed degrees and affine faces, and actual parameterized-square/Möbius boundary multiplicities. Path and full parameter-triangle source-Darboux comparisons are proved under their stated regularity. Real scalar box/simplex comparisons in arbitrary dimension, Euclidean normalization and neighborhood-only simplex-integrand regularity are now proved and independently reviewed. General oriented smooth-chain integration, higher-dimensional Stokes, neighborhood-only Stokes regularity and the remaining geometric exercise requirements remain open.
-- This investigation alone does not certify the six representative exercises. Subsequent source/type reviews, root integration, registry evidence and project-wide checks are tracked in the current plan and progress report. Full-book completion remains open.
+| Cuts and real numbers | `Order/Completion.lean`: `DedekindCut.principal`. `Basic/Real/Basic.lean`: `Real.equivCauchy`, `Real.mk_eq`. | Mathlib's order completion is not Rudin's rational lower-cut construction. Exercise 1.20 defines the literal modified cuts, their union supremum, pairwise-sum addition, closed zero and inverse obstruction. |
+| Metric completion | `Topology/UniformSpace/Completion.lean` and `Topology/MetricSpace/Completion.lean`: `UniformSpace.Completion`, `coe_isometry`, `denseRange_coe`, `extension_coe`. | Exercise 3.24 constructs the actual Cauchy-sequence quotient and its limit-distance metric, then proves its isometric comparison, completeness and dense embedding. |
+| ODEs | `Analysis/ODE/ExistUnique.lean`: `IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt`, `ODE_solution_unique`. | Library results are used only with matching regularity, initial values and endpoint derivatives. Chapter 7 also constructs the required Euler polygons and their limiting solution. |
+| Stieltjes measures | `MeasureTheory/Measure/Stieltjes.lean`: `StieltjesFunction`, `measure_Ioc`, `measure_Icc`, `measure_singleton`. | The source Darboux/tagged predicates retain raw integrator values. Measure comparisons state their right-continuity and endpoint hypotheses explicitly. |
+| Tagged box integrals | `Analysis/BoxIntegral/Basic.lean`, `Analysis/BoxIntegral/Partition/Filter.lean`, `Analysis/BoxIntegral/Integrability.lean`: `BoxIntegral.HasIntegral`, `IntegrationParams.Riemann`, `ContinuousOn.hasBoxIntegral`. | These are comparison components, not definitions of repeated source Darboux integrals. The repository constructs the latter at every remaining parameter. |
+| Fourier analysis | `Analysis/Fourier/AddCircle.lean`: `fourierCoeff_eq_intervalIntegral`, `hasSum_fourier_series_L2`, `tsum_sq_fourierCoeff`. `Analysis/Fourier/FourierTransform.lean`: `Real.fourier_real_eq_integral_exp_smul`. | Periodic Haar normalization, ordinary ordered sums, source Riemann kernels and the required pointwise/uniform limits are checked separately. L2 convergence is not substituted for them. |
+| Gamma | `Analysis/SpecialFunctions/Gamma/Basic.lean`: `Real.Gamma_eq_integral`, `Complex.Gamma_eq_integral`, `Real.Gamma_nat_eq_factorial`. | Integral formulas require positive arguments or positive real parts. Values of the total Gamma function at poles are not convergence claims. Exercise 10.11 derives its beta value through finite source substitution and product limits. |
+| Differential forms | `Analysis/Calculus/DifferentialForm/Basic.lean`: `extDeriv`, `extDeriv_apply`, `extDeriv_pullback`. | Forms are actual continuous alternating maps; pullbacks use genuine Fréchet derivatives. Local regularity is proved before using total derivative operations. |
+| Exterior algebra and orientation | `LinearAlgebra/Alternating/DomCoprod.lean`, `LinearAlgebra/Orientation.lean`: `AlternatingMap.domCoprod`, `Orientation.map_eq_iff_det_pos`. | Exercises 10.14–15 use cotangent exterior algebra for the required sign laws. Exercise 10.20 proves the scalar-product/one-form-wedge rule needed by its form-integration API. These representations are kept distinct. |
+| Coordinate divergence | `MeasureTheory/Integral/DivergenceTheorem.lean`: `integral_divergence_of_hasFDerivAt_off_countable`, `integral_divergence_prod_Icc_of_hasFDerivAt_of_le`. | The prototype uses a genuine rectangle identity. General positive simplex-image regions use the separately proved local simplex Stokes and geometric comparisons. |
+| Lp | `MeasureTheory/Function/LpSpace/Basic.lean` and `Complete.lean`: `MemLp.toLp`, `Lp.ext`, `Lp.instCompleteSpace`. | Lp elements are almost-everywhere classes. Chapter 11 proves the required representative, quotient-metric, source-integral and complex-conjugation comparisons. |
+
+## Raw Riemann–Stieltjes integrals
+
+The following files are under `Math/Rudin/Support/`.
+
+- `StieltjesPrototype.lean` defines weakly increasing finite partitions,
+  closed-subinterval tags and the original increments
+  `α(xᵢ₊₁) - α(xᵢ)`. Repeated nodes and singleton intervals are included.
+  It defines separate literal tagged and lower/upper Darboux predicates.
+- `StieltjesRefinement.lean` constructs common refinements from the exact
+  node union. It proves sum bounds, refinement inequalities and the forward
+  Darboux/tagged implication.
+- `StieltjesEquivalence.lean` proves the converse and exact equivalence.
+  Finite approximate extrema suffice; attained extrema and positive total
+  integrator mass are not assumed.
+- `StieltjesMeasureBridge.lean` proves continuous-integrand existence for
+  interval-monotone raw integrators. For a right-continuous
+  `StieltjesFunction`, it proves equality with the measure integral on
+  `(a,b]`, including singleton intervals and terminal atoms.
+- `StieltjesIntegralLaws.lean` proves real algebra, absolute-value existence,
+  bounds, interval joining and restriction. `StieltjesComposition.lean`
+  proves continuous composition, squares and products.
+- `StieltjesComplex.lean` uses actual complex tagged sums. Its component
+  equivalence, norm integrability, algebra and interval splitting are proved.
+- `StieltjesIntegrationByParts.lean` proves the real and complex source
+  integration-by-parts result by finite summation by parts and genuine within
+  derivatives. It does not assume continuous integrators.
+- `RiemannIntegrability.lean` proves the ordinary Riemann criterion and the
+  value comparison with interval integration. Existence is not inferred from
+  a default zero Bochner value.
+- `UniformIntegralLimits.lean` and Chapter 7's coordinatewise results retain
+  actual source integrals. Chapter 6's improper predicates use finite cuts
+  and limits, including the required conditional cases.
+
+Endpoint tests remain necessary. A closed measure interval can add the atom
+at its initial endpoint. Right normalization can also change the value:
+for `α(x)=0` when `x≤0` and `α(x)=1` when `x>0`, the raw integral of `1` on
+`[-1,0]` is zero, while the right-normalized measure integral is one. The
+compiled counterexample rules out an unconditional normalization shortcut.
+The rational indicator separately rules out an unconditional converse from
+Lebesgue integrability to proper Riemann integrability.
+
+## Forms, chains and source integration
+
+### Distinct chain models
+
+- `OrderedChains.lean` uses free integer sums of vertex lists and the literal
+  alternating deletion boundary. This is augmented; a singleton has the
+  nonzero empty-list boundary.
+- `OrientedChains.lean` proves boundary stability of adjacent-swap and
+  repeated-vertex relations before taking its quotient. Fixed degrees,
+  ordinary degree-zero boundary, affine realization, square/cube signs and
+  full-map path/square postcomposition are proved.
+- `OrientedChainChecks.lean` proves nontriviality, retained integer
+  multiplicities and coordinate-face signs. These checks prevent a collapsed
+  quotient from making the identities vacuous.
+- `SmoothChains.lean` uses locally C2 simplex parameter maps and a signed
+  permutation quotient. Its boundary and nonlinear postcomposition act on
+  entire maps, not only vertices. Exercise 10.16 also proves cancellation
+  directly for chains of full parameter maps.
+
+The augmented, affine-orientation and smooth-permutation quotients are not
+identified with each other. No equality of ranges or vertex data is treated
+as equality of nonlinear parameter maps. Equality of flux functionals is not
+asserted to imply equality in an abstract chain quotient.
+
+### Calculus and integration
+
+`FormsPrototype.lean` proves nontrivial exterior-derivative and genuine
+segment/rectangle identities. `PathIntegration.lean` integrates the actual
+coefficient `ω(p(t))(deriv p t)`, proves signed-path descent and gives the
+continuous-coefficient source Darboux comparison.
+
+`SimplexIntegration.lean` defines actual pullback coefficients on locally C2
+Euclidean simplexes. `TriangleStokes.lean` proves the complete plane-form
+identity, including nonhorizontal examples and all three source edge integrals.
+`MultivariateRiemann.lean` constructs every repeated real Darboux stage on
+closed cells and simplexes, retaining singleton boundary fibers. It proves
+all-coordinate-order equality, Euclidean volume comparison and volume `1/n!`.
+
+`SimplexStokes.lean` proves the general local simplex theorem by actual
+calculus, with the required C2 map and C1 form hypotheses on neighborhoods.
+`SmoothChainIntegration.lean` gives integer-chain integration, naturality and
+signed-permutation quotient descent. It compares these values with the literal
+source integrals. Stokes is a proved result, not an input field of a chain.
+
+Exercise 10.1 extends the repeated source construction to compact convex
+closed domains, including lower-dimensional and empty sets. It derives
+regularity for every affine section and actual marginal, rather than assuming
+almost-everywhere row existence. Real Darboux and complex tagged witnesses
+preserve every closed-boundary value and every coordinate order.
+
+### Exercise-specific comparisons
+
+- Exercises 10.8–11 prove finite source changes of variables and their actual
+  improper limits. Polar substitution uses independent disk and polar cutoff
+  limits; Gaussian and beta derivations retain their prescribed routes.
+- Exercises 10.12–19 prove the actual cube/simplex maps, Jacobians, moments,
+  exterior signs, geometric coverage and complete signed face formulas.
+- Exercise 10.20 proves the required Leibniz rule and form integration by
+  parts, including source integral and oriented segment comparisons.
+- Exercise 10.22 proves analytic square subdivision and the six-tetrahedron
+  radial homotopy argument. Its exactness/pole-limit proof is separate.
+- Exercise 10.23 constructs the prescribed primitive and a complete sphere
+  chain. Coverage, null chart overlaps, outward orientation, boundary
+  cancellation and strictly positive independent Gram area are conclusions.
+  The zero-sphere case uses counting area and ordinary boundary.
+- Exercises 10.24–29 construct actual potentials, compatible cells, curves,
+  parameter-integral derivatives and source witnesses under local hypotheses.
+- `EuclideanFlux.lean` and Exercise 10.31 compare actual geometric volume,
+  cofactor normals and Gram area with local simplex Stokes on arbitrary finite
+  positive simplex-image regions. Jacobians need only be positive in source
+  interiors. Singular boundary normals are limits of actual interior
+  parallel-face outward normals. Frontier-only cancellation and the literal
+  `g=h` energy argument give harmonic uniqueness without connectedness.
+- Exercise 10.32 distinguishes the parameter boundary, with its seam
+  multiplicity, from the geometric Möbius rim. Rank, point identifications,
+  nonorientability and the requested integral obstruction are proved.
+
+## Limits outside the selected exercise contracts
+
+1. No unconditional raw-integrator normalization or general discontinuous
+   Stieltjes/measure identification is claimed. Each use needs its actual
+   jump and endpoint hypotheses.
+2. The coordinatewise Euclidean results are not a general Banach-valued raw
+   Stieltjes calculus.
+3. The smooth permutation quotient is not a quotient by equality of all
+   integration functionals. No general manifold Stokes package or unrestricted
+   reparameterization theorem is claimed.
+4. The selected improper change-of-variables contracts are sufficient absolute
+   convergence statements. They do not claim every conditionally convergent
+   substitution or proper source integrability on arbitrary measurable sets.
+5. Sphere area is geometric parametric Gram area. No additional Hausdorff
+   normalization or closed numerical formula for every positive dimension is
+   needed or claimed.
+
+These limits do not replace an exercise requirement. The source contracts,
+per-obligation evidence and second review determine acceptance. All delivery
+and Support files are included in the default build and actual-private-body
+trust audit. Use `./scripts/check.sh --final` for the complete verification
+entry point; an individual prototype or file build is not the final gate.

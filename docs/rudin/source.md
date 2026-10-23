@@ -33,7 +33,13 @@ from the initial inventory; it is not a source erratum.
 The number of source exercises did not change. All exercise-section page
 images were checked across three inventory workers; the main agent checked PDF
 page 30 separately. This review does not establish that every formal theorem
-matches its source. Proof-specific semantic review is recorded separately.
+matches its source. Proof-specific semantic review is recorded separately
+in `exercises.json`; the second full-book decisions are retained in
+`semantic-review.json`. The inventory currently records 848 obligations as
+verified, with 275 as-stated exercise resolutions and 11 explicit
+refutations/corrections. The second review reopened Exercise 11.3 for the
+extended-real inputs permitted by Definition 11.13. These counts do not by themselves establish the
+separate full-book review and isolated final gate.
 
 Rudin Definition 6.1 (book page 120, PDF page 129) permits weakly increasing
 partition nodes. Definitions 6.1–6.2 and Exercise 6.1 do not exclude a singleton

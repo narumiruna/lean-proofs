@@ -1,6 +1,6 @@
 module
 
-public import Math.Rudin.Support.MultivariateRiemann
+public import Math.Rudin.Chapter10.Exercise01
 public import Mathlib.Analysis.SpecialFunctions.PolarCoord
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 public import Mathlib.Analysis.Real.Pi.Bounds
@@ -290,6 +290,87 @@ theorem slit_approximation {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E
     have hu : p ∈ openSlit a := hp.mpr hd
     simpa using (ht p hu).smul (tendsto_const_nhds (x := f p))
 
+/-- Every interior parameter lies in the corrected open slit disk. -/
+theorem transform_mem_openSlit {a : ℝ} {p : ℝ × ℝ}
+    (hp : p ∈ Ioo 0 a ×ˢ Ioo 0 (2*π)) : transform p ∈ openSlit a := by
+  refine ⟨?_,?_⟩
+  · have hlt : (transform p).1^2 + (transform p).2^2 < a^2 := by
+      rw [sum_sq]
+      nlinarith [hp.1.1,hp.1.2]
+    apply mem_interior_iff_mem_nhds.mpr
+    exact Filter.mem_of_superset
+      ((isOpen_lt (by fun_prop : Continuous (fun q : ℝ × ℝ => q.1^2+q.2^2))
+        continuous_const).mem_nhds hlt) (fun q hq => hq.le)
+  · have h := polarCoord.map_target
+      (show (p.1,p.2-π) ∈ polarCoord.target from
+        ⟨hp.1.1,by constructor <;> linarith [hp.2.1,hp.2.2]⟩)
+    rwa [shifted] at h
+
+/-- The open parameter rectangle has the same repeated value as the closed
+polar box, with finite integrability proved independently of substitution. -/
+theorem polar_open_integral {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → E} (hf : ContinuousOn f (disk a)) :
+    (∫ p in Ioo 0 a ×ˢ Ioo 0 (2*π), p.1 • f (transform p)) =
+      ∫ r in (0:ℝ)..a, ∫ θ in (0:ℝ)..(2*π), r • f (transform (r,θ)) := by
+  have hi := (polar_integrable ha hf).2.mono_set
+    (show Ioo 0 a ×ˢ Ioo 0 (2*π) ⊆ slitRectangle a from
+      fun p hp => ⟨⟨hp.1.1,hp.1.2.le⟩,hp.2⟩)
+  rw [Measure.volume_eq_prod] at hi ⊢
+  rw [setIntegral_prod _ hi, intervalIntegral.integral_of_le ha, integral_Ioc_eq_integral_Ioo]
+  apply setIntegral_congr_fun measurableSet_Ioo
+  intro r _
+  dsimp only
+  rw [intervalIntegral.integral_of_le (by positivity : (0:ℝ) ≤ 2*π), integral_Ioc_eq_integral_Ioo]
+
+/-- Passage to the limit on the polar side of the actual compact-slit
+approximation. Domination is by the integrable nonnegative polar norm. -/
+theorem polar_approximation_limit {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → E} (hf : ContinuousOn f (disk a))
+    (χ : ℕ → C(ℝ × ℝ, ℝ)) (hb : ∀ n p, χ n p ∈ Icc (0:ℝ) 1)
+    (hc : ∀ n, Continuous (fun p => χ n p • f p))
+    (ht : ∀ p ∈ openSlit a, Tendsto (fun n => χ n p) atTop (nhds 1)) :
+    Tendsto (fun n => ∫ r in (0:ℝ)..a, ∫ θ in (0:ℝ)..(2*π),
+      r • (χ n (transform (r,θ)) • f (transform (r,θ)))) atTop
+      (nhds (∫ r in (0:ℝ)..a, ∫ θ in (0:ℝ)..(2*π), r • f (transform (r,θ)))) := by
+  have hm := (measurableSet_Ioo (a := (0:ℝ)) (b := a)).prod
+    (measurableSet_Ioo (a := (0:ℝ)) (b := 2*π))
+  have hsub : Ioo 0 a ×ˢ Ioo 0 (2*π) ⊆ slitRectangle a :=
+    fun p hp => ⟨⟨hp.1.1,hp.1.2.le⟩,hp.2⟩
+  have hcont : Continuous transform := continuous_iff_continuousAt.mpr
+    (fun p => (hasFDerivAt_transform p).continuousAt)
+  have hlim : Tendsto
+      (fun n => ∫ p in Ioo 0 a ×ˢ Ioo 0 (2*π), p.1 • (χ n (transform p) • f (transform p)))
+      atTop (nhds (∫ p in Ioo 0 a ×ˢ Ioo 0 (2*π), p.1 • f (transform p))) := by
+    apply tendsto_integral_of_dominated_convergence
+      (fun p : ℝ × ℝ => p.1 * ‖f (transform p)‖)
+      (fun n => (continuous_fst.smul ((hc n).comp hcont)).aestronglyMeasurable)
+      ((polar_integrable ha hf.norm).2.mono_set hsub)
+    · intro n
+      filter_upwards [ae_restrict_mem hm] with p hp
+      change ‖p.1 • (χ n (transform p) • f (transform p))‖ ≤ _
+      rw [norm_smul, norm_smul, Real.norm_eq_abs, Real.norm_eq_abs,
+        abs_of_pos hp.1.1, abs_of_nonneg (hb n (transform p)).1]
+      exact mul_le_mul_of_nonneg_left
+        (mul_le_of_le_one_left (norm_nonneg _) (hb n (transform p)).2) hp.1.1.le
+    · filter_upwards [ae_restrict_mem hm] with p hp
+      simpa using (tendsto_const_nhds (x := p.1)).smul
+        ((ht (transform p) (transform_mem_openSlit hp)).smul
+          (tendsto_const_nhds (x := f (transform p))))
+  simpa only [polar_open_integral ha hf,
+    polar_open_integral ha (hc _).continuousOn] using hlim
+
+/-- The general formula follows from the actual compact-slit approximants.
+Substitution is used only for those approximants; uniqueness of their two
+proved limits removes the support restriction. -/
+theorem polar_integral_by_approximation {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → E} (hf : ContinuousOn f (disk a)) :
+    (∫ p in disk a, f p) = ∫ r in (0:ℝ)..a, ∫ θ in (0:ℝ)..(2*π),
+      r • f (transform (r,θ)) := by
+  obtain ⟨χ,hs,hc,ht,hd⟩ := slit_approximation ha hf
+  have hp := polar_approximation_limit ha hf χ (fun n => (hs n).2.2) hc ht
+  have he := hd.congr (fun n => polar_integral ha (hc n).continuousOn)
+  exact tendsto_nhds_unique he hp
+
 open Rudin.Support.MultivariateRiemann
 
 /-- The corrected polar side consists of literal repeated Darboux integrals.
@@ -312,7 +393,7 @@ theorem polar_source_real {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℝ}
       apply mapsTo a
       exact ⟨⟨hu.1 1,hu.2 1⟩,⟨hu.1 0,hu.2 0⟩⟩
   have h := source_of_continuousOn hab hc
-  rw [polar_integral ha hf]
+  rw [polar_integral_by_approximation ha hf]
   simpa [iterated, smul_eq_mul] using h
 
 /-- Literal source witnesses for both components of a complex coefficient.
@@ -331,5 +412,153 @@ theorem polar_source_complex {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℂ}
   · have h := polar_source_real ha (Complex.continuous_im.comp_continuousOn hf)
     have hr : (∫ p in disk a, (f p).im) = (∫ p in disk a, f p).im := integral_im hi
     simpa only [Function.comp_apply, hr] using h
+
+open Exercise01
+
+/-- Congruence retains every complex tagged stage on the closed box. -/
+theorem complex_source_congr {n : ℕ} {a b : Fin n → ℝ} (hab : a ≤ b)
+    {f g : (Fin n → ℝ) → ℂ} {v : ℂ} (h : EqOn f g (Icc a b))
+    (hf : HasComplexSourceIntegral n a b f v) : HasComplexSourceIntegral n a b g v := by
+  induction n with
+  | zero => exact (h ⟨fun i => Fin.elim0 i, fun i => Fin.elim0 i⟩).symm.trans hf
+  | succ n ih =>
+    have he (x) (hx : x ∈ Icc (fun i => a i.succ) (fun i => b i.succ)) :
+        (∫ t in a 0..b 0, f (Fin.cons t x)) = ∫ t in a 0..b 0, g (Fin.cons t x) := by
+      apply intervalIntegral.integral_congr
+      intro t ht
+      exact h (cons_mem_Icc.mpr ⟨by simpa [uIcc_of_le (hab 0)] using ht, hx⟩)
+    constructor
+    · intro x hx
+      rw [← he x hx]
+      exact Rudin.Support.StieltjesComplex.hasComplexRSIntegral_congr (hf.1 x hx)
+        (fun t ht => h (cons_mem_Icc.mpr ⟨ht,hx⟩))
+    · exact ih (fun i => hab i.succ) he hf.2
+
+theorem complex_iterated_congr {n : ℕ} {a b : Fin n → ℝ} (hab : a ≤ b)
+    {f g : (Fin n → ℝ) → ℂ} (h : EqOn f g (Icc a b)) :
+    complexIterated n a b f = complexIterated n a b g := by
+  induction n with
+  | zero => exact h ⟨fun i => Fin.elim0 i, fun i => Fin.elim0 i⟩
+  | succ n ih =>
+    apply ih (fun i => hab i.succ)
+    intro x hx
+    apply intervalIntegral.integral_congr
+    intro t ht
+    exact h (cons_mem_Icc.mpr ⟨by simpa [uIcc_of_le (hab 0)] using ht, hx⟩)
+
+/-- Closed-box continuity supplies actual complex tagged witnesses, including
+boundary rows and degenerate sides. No almost-everywhere section claim is used. -/
+theorem complex_source_of_continuousOn {n : ℕ} {a b : Fin n → ℝ} (hab : a ≤ b)
+    {f : (Fin n → ℝ) → ℂ} (hf : ContinuousOn f (Icc a b)) :
+    HasComplexSourceIntegral n a b f (complexIterated n a b f) := by
+  have hr := convex_indicator_affineRegular isCompact_Icc (convex_Icc a b) hf
+  have he : EqOn ((Icc a b).indicator f) f (Icc a b) := fun _ hx => indicator_of_mem hx f
+  rw [← complex_iterated_congr hab he]
+  exact complex_source_congr hab he (hr.complex_source hab)
+
+/-- The original disk retains its literal boundary values in every Cartesian order. -/
+theorem disk_source_real {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℝ}
+    (hf : ContinuousOn f (disk a)) : HasPlaneSource (disk a) f (∫ p in disk a, f p) :=
+  plane_source_real (disk_isCompact a ha) (disk_convex a ha) hf
+
+theorem disk_source_complex {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℂ}
+    (hf : ContinuousOn f (disk a)) : HasPlaneComplexSource (disk a) f (∫ p in disk a, f p) :=
+  plane_source_complex (disk_isCompact a ha) (disk_convex a ha) hf
+
+/-- The corrected polar side has genuine repeated complex tagged sums, not
+only two component assertions. Coordinate zero is the angular variable. -/
+theorem polar_source_complex_tagged {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℂ}
+    (hf : ContinuousOn f (disk a)) :
+    HasComplexSourceIntegral 2 ![0,0] ![2*π,a]
+      (fun u => u 1 • f (transform (u 1,u 0))) (∫ p in disk a, f p) := by
+  have hab : (![0,0] : Fin 2 → ℝ) ≤ ![2*π,a] := by
+    intro i
+    fin_cases i <;> simp [ha, Real.pi_pos.le]
+  have hc : ContinuousOn (fun u : Fin 2 → ℝ => u 1 • f (transform (u 1,u 0)))
+      (Icc ![0,0] ![2*π,a]) := by
+    apply (continuous_apply 1).continuousOn.smul
+    apply hf.comp
+    · exact (continuous_iff_continuousAt.mpr
+        (fun p => (hasFDerivAt_transform p).continuousAt)).continuousOn.comp (by fun_prop)
+        (fun _ _ => mem_univ _)
+    · intro u hu
+      apply mapsTo a
+      exact ⟨⟨hu.1 1,hu.2 1⟩,⟨hu.1 0,hu.2 0⟩⟩
+  have h := complex_source_of_continuousOn hab hc
+  rw [polar_integral_by_approximation ha hf]
+  simpa [complexIterated] using h
+
+/-- Source substitution and its prescribed compact-interior approximation.
+Every cutoff has both finite source values before passage to their common
+limit. The original coefficient need not vanish on any boundary or radius. -/
+theorem source_polar_real {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℝ}
+    (hf : ContinuousOn f (disk a)) :
+    HasPlaneSource (disk a) f (∫ p in disk a, f p) ∧
+    HasSourceIntegral 2 ![0,0] ![2*π,a]
+      (fun u => u 1 * f (transform (u 1,u 0))) (∫ p in disk a, f p) ∧
+    ∃ χ : ℕ → C(ℝ × ℝ, ℝ),
+      (∀ n, IsCompact (tsupport (χ n)) ∧ tsupport (χ n) ⊆ openSlit a ∧
+        ∀ p, χ n p ∈ Icc (0:ℝ) 1) ∧
+      (∀ n, Continuous (fun p => χ n p * f p)) ∧
+      (∀ n, IntegrableOn (fun p => χ n p * f p) (disk a) ∧
+        HasPlaneSource (disk a) (fun p => χ n p * f p) (∫ p in disk a, χ n p * f p) ∧
+        HasSourceIntegral 2 ![0,0] ![2*π,a]
+          (fun u => u 1 * (χ n (transform (u 1,u 0)) * f (transform (u 1,u 0))))
+          (∫ p in disk a, χ n p * f p)) ∧
+      Tendsto (fun n => ∫ p in disk a, χ n p * f p) atTop (nhds (∫ p in disk a, f p)) ∧
+      Tendsto (fun n => ∫ r in (0:ℝ)..a, ∫ θ in (0:ℝ)..(2*π),
+        r * (χ n (transform (r,θ)) * f (transform (r,θ)))) atTop
+        (nhds (∫ p in disk a, f p)) := by
+  obtain ⟨χ,hs,hc,_,ht⟩ := slit_approximation ha hf
+  simp only [smul_eq_mul] at hc ht
+  refine ⟨disk_source_real ha hf, polar_source_real ha hf, χ,hs,hc,?_,ht,?_⟩
+  · intro n
+    exact ⟨(polar_integrable ha (hc n).continuousOn).1,
+      disk_source_real ha (hc n).continuousOn, polar_source_real ha (hc n).continuousOn⟩
+  · apply ht.congr
+    intro n
+    simpa only [smul_eq_mul] using polar_integral ha (hc n).continuousOn
+
+/-- The same approximation supplies actual complex finite source witnesses
+and convergent source values for the full corrected polar formula. -/
+theorem source_polar_complex {a : ℝ} (ha : 0 ≤ a) {f : (ℝ × ℝ) → ℂ}
+    (hf : ContinuousOn f (disk a)) :
+    HasPlaneComplexSource (disk a) f (∫ p in disk a, f p) ∧
+    HasComplexSourceIntegral 2 ![0,0] ![2*π,a]
+      (fun u => u 1 • f (transform (u 1,u 0))) (∫ p in disk a, f p) ∧
+    ∃ χ : ℕ → C(ℝ × ℝ, ℝ),
+      (∀ n, IsCompact (tsupport (χ n)) ∧ tsupport (χ n) ⊆ openSlit a ∧
+        ∀ p, χ n p ∈ Icc (0:ℝ) 1) ∧
+      (∀ n, Continuous (fun p => χ n p • f p)) ∧
+      (∀ n, IntegrableOn (fun p => χ n p • f p) (disk a) ∧
+        HasPlaneComplexSource (disk a) (fun p => χ n p • f p) (∫ p in disk a, χ n p • f p) ∧
+        HasComplexSourceIntegral 2 ![0,0] ![2*π,a]
+          (fun u => u 1 • (χ n (transform (u 1,u 0)) • f (transform (u 1,u 0))))
+          (∫ p in disk a, χ n p • f p)) ∧
+      Tendsto (fun n => ∫ p in disk a, χ n p • f p) atTop (nhds (∫ p in disk a, f p)) ∧
+      Tendsto (fun n => ∫ r in (0:ℝ)..a, ∫ θ in (0:ℝ)..(2*π),
+        r • (χ n (transform (r,θ)) • f (transform (r,θ)))) atTop
+        (nhds (∫ p in disk a, f p)) := by
+  obtain ⟨χ,hs,hc,_,ht⟩ := slit_approximation ha hf
+  refine ⟨disk_source_complex ha hf, polar_source_complex_tagged ha hf, χ,hs,hc,?_,ht,?_⟩
+  · intro n
+    exact ⟨(polar_integrable ha (hc n).continuousOn).1,
+      disk_source_complex ha (hc n).continuousOn, polar_source_complex_tagged ha (hc n).continuousOn⟩
+  · exact ht.congr (fun n => polar_integral ha (hc n).continuousOn)
+
+/-- The literal obstruction compares against the actual source disk area. -/
+theorem disk_source_area_one : HasPlaneSource (disk 1) (fun _ => (1:ℝ)) π := by
+  have h := disk_source_real (by norm_num : (0:ℝ) ≤ 1) (f := fun _ => (1:ℝ)) continuousOn_const
+  rwa [disk_area_one] at h
+
+/-- The printed positive-y slit is not the seam for the stated angular branch. -/
+theorem printed_y_seam_obstruction :
+    ((0,1/2) : ℝ × ℝ) ∈ openSlit 1 ∧ ((1/2,0) : ℝ × ℝ) ∉ openSlit 1 := by
+  constructor
+  · have h := transform_mem_openSlit
+      (show ((1/2,π/2) : ℝ × ℝ) ∈ Ioo 0 1 ×ˢ Ioo 0 (2*π) from
+        ⟨by constructor <;> norm_num, by constructor <;> linarith [Real.pi_pos]⟩)
+    simpa [transform] using h
+  · simp [openSlit, polarCoord]
 
 end Rudin.Chapter10.Exercise09

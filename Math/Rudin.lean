@@ -259,10 +259,16 @@ public import Math.Rudin.Chapter10.Exercise18
 public import Math.Rudin.Chapter10.Exercise19
 public import Math.Rudin.Chapter10.Exercise20
 public import Math.Rudin.Chapter10.Exercise21
+public import Math.Rudin.Chapter10.Exercise22
 public import Math.Rudin.Chapter10.Exercise23
+public import Math.Rudin.Chapter10.Exercise24
+public import Math.Rudin.Chapter10.Exercise25
+public import Math.Rudin.Chapter10.Exercise26
+public import Math.Rudin.Chapter10.Exercise27
 public import Math.Rudin.Chapter10.Exercise28
 public import Math.Rudin.Chapter10.Exercise29
 public import Math.Rudin.Chapter10.Exercise30
+public import Math.Rudin.Chapter10.Exercise31
 public import Math.Rudin.Chapter10.Exercise32
 public import Math.Rudin.Chapter11.Exercise01
 public import Math.Rudin.Chapter11.Exercise02

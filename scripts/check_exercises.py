@@ -12,7 +12,6 @@ COUNTS = (20, 30, 25, 26, 29, 19, 26, 31, 31, 32, 18)
 STATUSES = {"todo", "in_progress", "blocked", "verified"}
 KINDS = {"proof", "counterexample", "construction", "classification"}
 NAME = re.compile(r"[A-Za-z_][A-Za-z_0-9]*(?:\.[A-Za-z_][A-Za-z_0-9]*)*\Z")
-IMPORT = re.compile(r"^\s*(?:public\s+)?import\s+(?:all\s+)?([\w.]+)\s*$", re.M)
 
 
 class InventoryError(ValueError):
@@ -28,6 +27,70 @@ def module_path(root, module):
     return root.joinpath(*module.split(".")).with_suffix(".lean")
 
 
+def header_imports(source):
+    """Read the Lean 4.35 header; reject non-ASCII/escaped module names."""
+    pos = 0
+
+    def token():
+        nonlocal pos
+        while pos < len(source):
+            if source[pos] in " \n":
+                pos += 1
+            elif source.startswith("--", pos):
+                end = source.find("\n", pos)
+                pos = len(source) if end < 0 else end + 1
+            elif source.startswith("/-", pos) and not source.startswith(("/--", "/-!"), pos):
+                pos += 2
+                depth = 1
+                while depth and pos < len(source):
+                    if source.startswith("/-", pos):
+                        depth += 1
+                        pos += 2
+                    elif source.startswith("-/", pos):
+                        depth -= 1
+                        pos += 2
+                    else:
+                        pos += 1
+                require(not depth, "Unterminated import-header comment")
+            else:
+                break
+        if pos == len(source):
+            return ""
+        require(not source[pos].isspace(), "Unsupported import-header whitespace")
+        match = re.match(r"[A-Za-z_][A-Za-z_0-9'.!?]*|[\s\S]", source[pos:])
+        pos += len(match[0])
+        return match[0]
+
+    current = token()
+    has_module = current == "module"
+    if has_module:
+        current = token()
+    if current == "prelude":
+        current = token()
+    imports = []
+    while True:
+        public = current == "public"
+        if public:
+            current = token()
+        meta = current == "meta"
+        if meta:
+            current = token()
+        if current != "import":
+            return imports  # First body command; never scan its strings or comments.
+        current = token()
+        all_ = current == "all"
+        if all_:
+            current = token()
+        require(has_module or not (public or meta or all_), "Import flags require module")
+        require(not (public and all_), "Public import cannot use all")
+        require(NAME.fullmatch(current) is not None
+                and (pos == len(source) or source[pos] in " \n"
+                     or source.startswith(("--", "/-"), pos)),
+                "Unsupported import module name; use ASCII dotted identifiers")
+        imports.append(current)
+        current = token()
+
+
 def local_imports(root, module, seen=None):
     seen = set() if seen is None else seen
     if module in seen:
@@ -36,7 +99,7 @@ def local_imports(root, module, seen=None):
     if not path.is_file():
         return seen
     seen.add(module)
-    for imported in IMPORT.findall(path.read_text()):
+    for imported in header_imports(path.read_text()):
         if imported == "Math" or imported.startswith("Math."):
             local_imports(root, imported, seen)
     return seen
@@ -163,6 +226,65 @@ def validate(data, root=ROOT, final=False):
     return {"modules": sorted(delivered), "targets": targets}, chapter_stats, status_counts
 
 
+def validate_second_reviews(data, review, root=ROOT, final=False):
+    """Check retained second-review coverage and bind it to current proofs."""
+    require(isinstance(review, dict) and review.get("schema_version") == 1,
+            "Invalid second-review schema")
+    require(review.get("stage") == "second_full_book",
+            "Wrong semantic-review stage")
+    require(review.get("source_sha256") == data["source"]["sha256"],
+            "Second review uses a different primary source")
+    groups = review.get("groups")
+    require(isinstance(groups, list), "Invalid second-review groups")
+    expected = {o["id"]: (e, o) for e in data["exercises"] for o in e["obligations"]}
+    covered, group_ids = set(), set()
+    environment = environment_fingerprint(root)
+    for group in groups:
+        require(isinstance(group, dict), "Invalid second-review group")
+        gid = group.get("id")
+        require(isinstance(gid, str) and bool(gid.strip()) and gid not in group_ids,
+                "Missing or duplicate second-review group")
+        group_ids.add(gid)
+        require(isinstance(group.get("reviewer"), str) and bool(group["reviewer"].strip()),
+                f"Missing second reviewer: {gid}")
+        report_hash = group.get("report_sha256")
+        require(isinstance(report_hash, str) and re.fullmatch(r"[a-f0-9]{64}", report_hash),
+                f"Missing second-review report hash: {gid}")
+        results = group.get("checks")
+        require(isinstance(results, dict) and all(results.get(key) == "passed" for key in
+                ("source_review", "fresh_build", "actual_body_audit", "theorem_origins", "independent_controls")),
+                f"Failed or missing second-review checks: {gid}")
+        require(group.get("environment_sha256") == environment,
+                f"Stale second-review environment: {gid}")
+        decisions = group.get("decisions")
+        require(isinstance(decisions, list) and bool(decisions),
+                f"Missing second-review decisions: {gid}")
+        sources = {}
+        for decision in decisions:
+            require(isinstance(decision, dict), f"Invalid second-review decision: {gid}")
+            oid = decision.get("id")
+            require(isinstance(oid, str) and oid in expected and oid not in covered,
+                    f"Unknown or duplicate second-review obligation: {oid}")
+            exercise, obligation = expected[oid]
+            require(decision.get("result") == "passed"
+                    and isinstance(decision.get("notes"), str) and bool(decision["notes"].strip()),
+                    f"Missing successful second semantic review: {oid}")
+            names = decision.get("declarations")
+            require(isinstance(names, list) and bool(names) and all(isinstance(n, str) for n in names)
+                    and len(names) == len(set(names))
+                    and set(names) == set(obligation["declarations"]),
+                    f"Stale second-review declarations: {oid}")
+            require(decision.get("disposition") == exercise["disposition"],
+                    f"Stale second-review source disposition: {oid}")
+            sources.update(proof_fingerprint(root, exercise["module"]))
+            covered.add(oid)
+        require(group.get("source_hashes") == sources,
+                f"Stale second-review source closure: {gid}")
+    require(not final or covered == set(expected),
+            f"Incomplete second semantic review: {len(covered)}/{len(expected)} obligations")
+    return len(covered)
+
+
 def progress_text(data, stats, statuses):
     lines = ["# Rudin progress", "", "Generated from `exercises.json`. Do not edit counts by hand.", "", "| Chapter | Verified resolutions | As stated | Refuted/corrected | Verified obligations |", "| --- | --- | --- | --- | --- |"]
     for chapter, row in stats.items():
@@ -178,18 +300,24 @@ def progress_text(data, stats, statuses):
         for obligation in exercise["obligations"]:
             if obligation["status"] == "blocked":
                 lines.append(f"- `{obligation['id']}`: blocked; {obligation.get('blocker', 'see obligation evidence')}")
-    lines.extend(["", "## Validation limits", "", "Source inventory is not proof completion. A verified count requires source-to-type review, compilation, and the axiom audit. Full-plan completion and clean-checkout validation have not been established by this table.", "", "See `mathlib-coverage.md` for representation gaps and `errata.md` for source corrections.", ""])
+    lines.extend(["", "## Validation limits", "", "Source inventory is not proof completion. A verified count requires source-to-type review, compilation, and the axiom audit. This table alone does not establish full-book acceptance; the second semantic review and isolated final rebuild are separate gates.", "", "See `mathlib-coverage.md` for representation gaps and `errata.md` for source corrections.", ""])
     return "\n".join(lines)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--final", action="store_true", help="Reject every unfinished obligation")
+    parser.add_argument("--final", action="store_true", help="Require complete proofs and second semantic reviews")
     parser.add_argument("--update-progress", action="store_true", help="Regenerate the retained progress table")
     args = parser.parse_args()
     try:
         data = json.loads((ROOT / "exercises.json").read_text())
         request, stats, statuses = validate(data, final=args.final)
+        review_path = ROOT / "docs/rudin/semantic-review.json"
+        if review_path.is_file():
+            reviewed = validate_second_reviews(data, json.loads(review_path.read_text()), final=args.final)
+            print(f"Second semantic review: {reviewed}/{sum(statuses.values())} obligations.")
+        else:
+            require(not args.final, "Missing retained second semantic review")
         progress = progress_text(data, stats, statuses)
         path = ROOT / "docs/rudin/progress.md"
         if args.update_progress:

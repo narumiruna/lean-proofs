@@ -6,8 +6,8 @@ public import Mathlib.Analysis.SpecialFunctions.JapaneseBracket
 
 /-! # Exercise 10.10: decay and convergence of expanding regions
 
-The norm is Euclidean. The convergence results below are measure-integral
-comparisons; a literal repeated-Riemann comparison is a separate requirement.
+The norm is Euclidean. Finite disk, rectangle, and polar cuts have literal
+source values. Their improper and absolute limits use the stated decay bound.
 -/
 @[expose] public section
 noncomputable section
@@ -109,7 +109,7 @@ theorem disk_polar {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     pairCoordinates.symm.toHomeomorph.measurableEmbedding f (Metric.closedBall (0:Plane) a)
   rw [disk_preimage ha] at h
   rw [← h]
-  exact Exercise09.polar_integral ha (hf.comp pairCoordinates.symm.continuous).continuousOn
+  exact Exercise09.polar_integral_by_approximation ha (hf.comp pairCoordinates.symm.continuous).continuousOn
 
 /-- The radial improper integral keeps the full angular interval at every cutoff. -/
 def HasPolarIntegral {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
@@ -250,5 +250,116 @@ theorem gaussian_improper :
 integral π proved above. -/
 theorem literal_no_finite_value (v : ℝ) : ¬ Tendsto literalCutoff atTop (𝓝 v) :=
   not_tendsto_nhds_of_tendsto_atTop literal_order_obstruction v
+
+open Exercise01
+
+/-- Literal Euclidean zero-extension source integrals in every Cartesian order. -/
+def HasFiniteRealSource (H : Set Plane) (f : Plane → ℝ) (v : ℝ) : Prop :=
+  ∃ a b : Fin 2 → ℝ, (∀ i, a i < b i) ∧
+    H ⊆ (EuclideanSpace.equiv (Fin 2) ℝ) ⁻¹' Icc a b ∧
+    IntegrableOn f H ∧ ∀ σ : Equiv.Perm (Fin 2),
+    HasSourceIntegral 2 (a ∘ σ) (b ∘ σ)
+      (H.indicator f ∘ (EuclideanSpace.equiv (Fin 2) ℝ).symm ∘ coordinatePermutation σ) v
+
+def HasFiniteComplexSource (H : Set Plane) (f : Plane → ℂ) (v : ℂ) : Prop :=
+  ∃ a b : Fin 2 → ℝ, (∀ i, a i < b i) ∧
+    H ⊆ (EuclideanSpace.equiv (Fin 2) ℝ) ⁻¹' Icc a b ∧
+    IntegrableOn f H ∧ ∀ σ : Equiv.Perm (Fin 2),
+    HasComplexSourceIntegral 2 (a ∘ σ) (b ∘ σ)
+      (H.indicator f ∘ (EuclideanSpace.equiv (Fin 2) ℝ).symm ∘ coordinatePermutation σ) v
+
+/-- These are compact convex Euclidean coordinate rectangles, not disks for
+the product norm. The assertion also covers the empty negative cutoffs. -/
+theorem rectangle_compact_convex (R : ℝ) : IsCompact (rectangle R) ∧ Convex ℝ (rectangle R) := by
+  have he : rectangle R = (EuclideanSpace.equiv (Fin 2) ℝ) ⁻¹'
+      Icc (fun _ => -R) (fun _ => R) := by
+    ext x
+    simp only [rectangle, mem_ofPred_eq, mem_preimage, mem_Icc, Pi.le_def,
+      EuclideanSpace.equiv]
+    simp only [abs_le, forall_and]
+    rfl
+  rw [he]
+  exact ⟨(EuclideanSpace.equiv (Fin 2) ℝ).toHomeomorph.isCompact_preimage.mpr isCompact_Icc,
+    (convex_Icc _ _).affine_preimage (EuclideanSpace.equiv (Fin 2) ℝ).toAffineEquiv.toAffineMap⟩
+
+/-- Finite source witnesses are established before any improper limit. -/
+theorem finite_source_real {f : Plane → ℝ} (hf : Continuous f) {R : ℝ} (hR : 0 ≤ R) :
+    HasFiniteRealSource (Metric.closedBall (0:Plane) R) f
+      (∫ x in Metric.closedBall (0:Plane) R, f x) ∧
+    HasFiniteRealSource (rectangle R) f (∫ x in rectangle R, f x) ∧
+    HasSourceIntegral 2 ![0,0] ![2*π,R]
+      (fun u => u 1 * f (polar (u 1) (u 0)))
+      (∫ x in Metric.closedBall (0:Plane) R, f x) := by
+  refine ⟨existence_real (isCompact_closedBall _ _) (convex_closedBall _ _) hf.continuousOn,
+    existence_real (rectangle_compact_convex R).1 (rectangle_compact_convex R).2 hf.continuousOn, ?_⟩
+  have h := Exercise09.polar_source_real hR (hf.comp pairCoordinates.symm.continuous).continuousOn
+  have he := pairCoordinates_symm_volume.setIntegral_preimage_emb
+    pairCoordinates.symm.toHomeomorph.measurableEmbedding f (Metric.closedBall (0:Plane) R)
+  rw [disk_preimage hR] at he
+  simpa only [Function.comp_apply, he, polar] using h
+
+theorem finite_source_complex {f : Plane → ℂ} (hf : Continuous f) {R : ℝ} (hR : 0 ≤ R) :
+    HasFiniteComplexSource (Metric.closedBall (0:Plane) R) f
+      (∫ x in Metric.closedBall (0:Plane) R, f x) ∧
+    HasFiniteComplexSource (rectangle R) f (∫ x in rectangle R, f x) ∧
+    HasComplexSourceIntegral 2 ![0,0] ![2*π,R]
+      (fun u => u 1 • f (polar (u 1) (u 0)))
+      (∫ x in Metric.closedBall (0:Plane) R, f x) := by
+  refine ⟨existence_complex (isCompact_closedBall _ _) (convex_closedBall _ _) hf.continuousOn,
+    existence_complex (rectangle_compact_convex R).1 (rectangle_compact_convex R).2 hf.continuousOn, ?_⟩
+  have h := Exercise09.polar_source_complex_tagged hR (hf.comp pairCoordinates.symm.continuous).continuousOn
+  have he := pairCoordinates_symm_volume.setIntegral_preimage_emb
+    pairCoordinates.symm.toHomeomorph.measurableEmbedding f (Metric.closedBall (0:Plane) R)
+  rw [disk_preimage hR] at he
+  simpa only [Function.comp_apply, he, polar] using h
+
+/-- All finite real source values, their absolute counterparts, and their
+improper limits under exactly `Decay`, including a zero bound. -/
+theorem whole_plane_source_real {f : Plane → ℝ} (hf : Decay f) :
+    (∀ R : ℝ, 0 ≤ R →
+      HasFiniteRealSource (Metric.closedBall (0:Plane) R) f
+        (∫ x in Metric.closedBall (0:Plane) R, f x) ∧
+      HasFiniteRealSource (rectangle R) f (∫ x in rectangle R, f x) ∧
+      HasSourceIntegral 2 ![0,0] ![2*π,R]
+        (fun u => u 1 * f (polar (u 1) (u 0))) (∫ x in Metric.closedBall (0:Plane) R, f x)) ∧
+    (∀ R : ℝ, 0 ≤ R →
+      HasFiniteRealSource (Metric.closedBall (0:Plane) R) (fun x => ‖f x‖)
+        (∫ x in Metric.closedBall (0:Plane) R, ‖f x‖) ∧
+      HasFiniteRealSource (rectangle R) (fun x => ‖f x‖) (∫ x in rectangle R, ‖f x‖) ∧
+      HasSourceIntegral 2 ![0,0] ![2*π,R]
+        (fun u => u 1 * ‖f (polar (u 1) (u 0))‖) (∫ x in Metric.closedBall (0:Plane) R, ‖f x‖)) ∧
+    Integrable f ∧ Integrable (fun x => ‖f x‖) ∧
+    HasDiskIntegral f (∫ x, f x) ∧ HasRectangleIntegral f (∫ x, f x) ∧
+    HasDiskIntegral (fun x => ‖f x‖) (∫ x, ‖f x‖) ∧
+    HasRectangleIntegral (fun x => ‖f x‖) (∫ x, ‖f x‖) ∧
+    HasPolarIntegral f (∫ x, f x) ∧ HasPolarIntegral (fun x => ‖f x‖) (∫ x, ‖f x‖) := by
+  obtain ⟨hi,hn,hd,hr,hdn,hrn⟩ := decay_convergence hf
+  exact ⟨fun _ hR => finite_source_real hf.1 hR,
+    fun _ hR => finite_source_real hf.1.norm hR, hi,hn,hd,hr,hdn,hrn,
+    whole_plane_polar hf, absolute_polar_convergence hf⟩
+
+/-- Complex source convergence uses actual complex tagged finite cuts. -/
+theorem whole_plane_source_complex {f : Plane → ℂ} (hf : Decay f) :
+    (∀ R : ℝ, 0 ≤ R →
+      HasFiniteComplexSource (Metric.closedBall (0:Plane) R) f
+        (∫ x in Metric.closedBall (0:Plane) R, f x) ∧
+      HasFiniteComplexSource (rectangle R) f (∫ x in rectangle R, f x) ∧
+      HasComplexSourceIntegral 2 ![0,0] ![2*π,R]
+        (fun u => u 1 • f (polar (u 1) (u 0))) (∫ x in Metric.closedBall (0:Plane) R, f x)) ∧
+    (∀ R : ℝ, 0 ≤ R →
+      HasFiniteRealSource (Metric.closedBall (0:Plane) R) (fun x => ‖f x‖)
+        (∫ x in Metric.closedBall (0:Plane) R, ‖f x‖) ∧
+      HasFiniteRealSource (rectangle R) (fun x => ‖f x‖) (∫ x in rectangle R, ‖f x‖) ∧
+      HasSourceIntegral 2 ![0,0] ![2*π,R]
+        (fun u => u 1 * ‖f (polar (u 1) (u 0))‖) (∫ x in Metric.closedBall (0:Plane) R, ‖f x‖)) ∧
+    Integrable f ∧ Integrable (fun x => ‖f x‖) ∧
+    HasDiskIntegral f (∫ x, f x) ∧ HasRectangleIntegral f (∫ x, f x) ∧
+    HasDiskIntegral (fun x => ‖f x‖) (∫ x, ‖f x‖) ∧
+    HasRectangleIntegral (fun x => ‖f x‖) (∫ x, ‖f x‖) ∧
+    HasPolarIntegral f (∫ x, f x) ∧ HasPolarIntegral (fun x => ‖f x‖) (∫ x, ‖f x‖) := by
+  obtain ⟨hi,hn,hd,hr,hdn,hrn⟩ := decay_convergence hf
+  exact ⟨fun _ hR => finite_source_complex hf.1 hR,
+    fun _ hR => finite_source_real hf.1.norm hR, hi,hn,hd,hr,hdn,hrn,
+    whole_plane_polar hf, absolute_polar_convergence hf⟩
 
 end Rudin.Chapter10.Exercise10
