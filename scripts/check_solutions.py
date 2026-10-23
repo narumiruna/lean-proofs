@@ -1,6 +1,7 @@
 """Check that the solution article covers current exercise files and inventory."""
 
 import json
+import os
 import re
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -12,15 +13,23 @@ ENTRY = re.compile(r'<a id="(r\d{2}e\d{2})"></a>')
 def validate(root=ROOT):
     """Return structural errors; mathematical accuracy needs source review."""
     article = root / "docs/rudin/solutions.md"
-    text = article.read_text()
+    index_text = article.read_text()
+    chapters = sorted((article.parent / "solutions").glob("chapter-*.md"))
+    documents = {article: index_text, **{path: path.read_text() for path in chapters}}
+    entries = []
+    for path in chapters:
+        content = documents[path]
+        matches = list(ENTRY.finditer(content))
+        for i, match in enumerate(matches):
+            end = matches[i + 1].start() if i + 1 < len(matches) else len(content)
+            entries.append((match[1], content[match.end():end], path))
     data = json.loads((root / "exercises.json").read_text())
     records = {e["id"].lower(): e for e in data["exercises"]}
     sources = {
         f"r{int(p.parent.name[7:]):02}e{int(p.stem[8:]):02}": p
         for p in (root / "Math/Rudin").glob("Chapter*/Exercise*.lean")
     }
-    matches = list(ENTRY.finditer(text))
-    ids = [m[1] for m in matches]
+    ids = [eid for eid, _, _ in entries]
     errors = []
 
     def require(condition, message):
@@ -32,21 +41,27 @@ def validate(root=ROOT):
     require(set(ids) == set(sources),
             f"Exercise coverage differs: missing={sorted(sources.keys() - set(ids))}, "
             f"extra={sorted(set(ids) - sources.keys())}")
-    require(f"**{len(sources)} exercise files**" in text, "Stale exercise-file count")
+    expected_chapters = {eid[1:3] for eid in sources}
+    require({path.stem.removeprefix("chapter-") for path in chapters} == expected_chapters,
+            "Chapter files differ from exercise sources")
+    require(not ENTRY.search(index_text), "Exercise content belongs in chapter files, not the index")
+    for number in sorted(expected_chapters):
+        require(f"solutions/chapter-{number}.md#chapter-{number}" in index_text,
+                f"Chapter {number}: index link missing")
+    require(f"**{len(sources)} exercise files**" in index_text, "Stale exercise-file count")
     verified = [e for e in records.values() if all(o["status"] == "verified" for o in e["obligations"])]
     corrected = sum(e["disposition"] == "refuted_and_corrected" for e in verified)
-    require(f"**{len(verified)} verified resolutions**" in text, "Stale verified-resolution count")
-    require(f"**{len(sources) - len(verified)} entries**" in text, "Stale pending-entry count")
-    require(f"{len(verified) - corrected} proved as stated" in text, "Stale as-stated count")
+    require(f"**{len(verified)} verified resolutions**" in index_text, "Stale verified-resolution count")
+    require(f"**{len(sources) - len(verified)} entries**" in index_text, "Stale pending-entry count")
+    require(f"{len(verified) - corrected} proved as stated" in index_text, "Stale as-stated count")
     require("docs/rudin/solutions.md" in (root / "README.md").read_text(), "README link missing")
 
-    for i, match in enumerate(matches):
-        eid = match[1]
+    for eid, body, owner in entries:
+        require(owner.name == f"chapter-{eid[1:3]}.md", f"{eid}: wrong chapter file")
         if eid not in records or eid not in sources:
             continue
-        body = text[match.end():matches[i + 1].start() if i + 1 < len(matches) else len(text)]
         record, source = records[eid], sources[eid]
-        require(f"../../{source.relative_to(root).as_posix()}" in body, f"{eid}: source link missing")
+        require(os.path.relpath(source, owner.parent) in body, f"{eid}: source link missing")
         require(re.search(rf'^### {record["chapter"]}\.{record["number"]}\s', body, re.M),
                 f"{eid}: incorrect exercise heading")
         for label in ("**Statement.**", "**Proof.**", "**Lean declarations:**"):
@@ -67,19 +82,21 @@ def validate(root=ROOT):
             require(name in source_names or any(n.endswith("." + name) for n in source_names),
                     f"{eid}: unknown source declaration {name}")
 
-    anchors = re.findall(r'<a id="([^"]+)"></a>', text)
-    require(len(anchors) == len(set(anchors)), "Duplicate article anchors")
-    for href in re.findall(r"\]\(([^\s)]+)\)", text):
-        url = urlsplit(href)
-        if url.scheme or url.netloc:
-            continue
-        if url.path:
-            require((article.parent / unquote(url.path)).is_file(), f"Broken file link: {href}")
-        elif url.fragment:
-            require(unquote(url.fragment) in anchors, f"Broken article anchor: {href}")
-    require(not re.search(r"\b(?:TODO|TBD|FIXME)\b", text), "Editorial placeholder")
-    require("[Showing lines " not in text and "more lines in file. Use offset=" not in text,
-            "Truncated tool output in article")
+    for path, content in documents.items():
+        anchors = re.findall(r'<a id="([^"]+)"></a>', content)
+        require(len(anchors) == len(set(anchors)), f"{path.name}: duplicate article anchors")
+        for href in re.findall(r"\]\(([^\s)]+)\)", content):
+            url = urlsplit(href)
+            if url.scheme or url.netloc:
+                continue
+            target = (path.parent / unquote(url.path)).resolve() if url.path else path.resolve()
+            require(target.is_file(), f"Broken file link: {href}")
+            if url.fragment and target.is_file():
+                target_anchors = re.findall(r'<a id="([^"]+)"></a>', target.read_text())
+                require(unquote(url.fragment) in target_anchors, f"Broken article anchor: {href}")
+        require(not re.search(r"\b(?:TODO|TBD|FIXME)\b", content), "Editorial placeholder")
+        require("[Showing lines " not in content and "more lines in file. Use offset=" not in content,
+                "Truncated tool output in article")
     return errors
 
 
