@@ -10,7 +10,13 @@ counts are generated in [the progress report](docs/rudin/progress.md).
 The [Markdown solution article](docs/rudin/solutions.md) gives mathematical
 statements and proofs for the exercise files in this checkout. It distinguishes
 verified solutions from newer or partial formalizations and keeps source
-corrections explicit.
+corrections explicit. The standard check also compares article entries with the
+current exercise files, inventory status, and declaration references.
+
+```sh
+# Check article coverage and links without rebuilding Lean.
+uv run --no-project python scripts/check_solutions.py
+```
 
 ## Toolchain
 

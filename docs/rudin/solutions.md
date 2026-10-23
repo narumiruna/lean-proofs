@@ -2,45 +2,42 @@
 
 This article converts the exercise proofs in this repository from Lean into
 mathematical prose. The source is Walter Rudin's *Principles of Mathematical
-Analysis*, Third Edition. Statements below are summaries of the formal results,
-not transcriptions of the book.
+Analysis*, Third Edition. Statements below summarize the formal results,
+not the complete text of the book.
 
 ## Scope and reading guide
 
-There is one entry for each of the **192 exercise files** currently present.
-The [inventory](../../exercises.json) records **134 verified resolutions**:
-128 proved as stated and six resolved by a counterexample and an explicit
-correction. The remaining **58 entries** describe newer formalizations whose
-inventory verification is pending. Some of those entries cover only part of
-the source exercise; their limits are stated explicitly. This article does not
-claim that all 287 exercises in the book are solved.
+There is one entry for each of the **281 exercise files** currently present.
+The [inventory](../../exercises.json) records **262 verified resolutions**:
+254 proved as stated and 8 resolved by counterexamples and explicit
+corrections. The remaining **19 entries** describe formalizations whose
+inventory verification is pending. Their stated limits distinguish completed
+results from partial constructions and unresolved source obligations.
+This article does not claim that all 287 exercises in the book are solved.
 
 Each entry gives the mathematical statement, proof, Lean source, relevant
-declarations, and inventory status. “Verified” refers to the repository's
-recorded source review and proof checks, not to a new formal verification of
-this prose. Short Lean declaration names refer to the namespaces in their
-linked source files. “Pending verification” does not mean that an unproved source
-claim has become a theorem. The Lean file fixes the exact formal scope.
+declarations, and current inventory status. “Verified” refers to the repository's
+recorded source review and proof checks, not a new formal verification of this
+prose. Short Lean declaration names refer to the namespaces in their linked
+source files. A pending entry is not a claim of full exercise completion.
 
 Source corrections remain separate from the original claims. See the
 [source record](source.md), [source issues](errata.md),
 [clarification contracts](source-clarifications.md), and
-[progress report](progress.md) for their context. This conversion does not
-change the Lean files or their verification records.
+[progress report](progress.md). Shared support lemmas are included through the
+exercise results that use them; they are not additional solved exercises.
+The conversion does not change Lean proofs or verification records.
 
 The article uses standard mathematical notation:
 
 - $\mathbb N$, $\mathbb Q$, $\mathbb R$, and $\mathbb C$ denote the natural,
-  rational, real, and complex numbers. Sequence indices start where each
-  formula specifies; Lean often shifts an index to start at zero.
-- A convergent numerical series means convergence of its ordered partial sums.
+  rational, real, and complex numbers. Lean indices can be shifted to start at zero.
+- A convergent numerical series means convergence of ordered partial sums.
   Absolute or unconditional convergence is stated when needed.
-- Derivatives at a closed interval's endpoints are relative, one-sided
-  derivatives where the statement permits them.
-- Riemann–Stieltjes integrals keep the endpoint and jump conventions of the
-  formal model. A measure integral is used only with the stated integrability
-  hypotheses or comparison result.
-- An almost-everywhere equality is not a pointwise equality.
+- Endpoint derivatives are relative, one-sided derivatives where permitted.
+- Riemann–Stieltjes integrals retain their endpoint and jump conventions.
+  Measure integrals require the stated integrability or comparison results.
+- Almost-everywhere equality does not assert pointwise equality.
 
 ## Contents
 
@@ -51,20 +48,15 @@ The article uses standard mathematical notation:
 | [3. Numerical Sequences and Series](#chapter-03) | 25 | 25 |
 | [4. Continuity](#chapter-04) | 26 | 26 |
 | [5. Differentiation](#chapter-05) | 29 | 29 |
-| [6. The Riemann–Stieltjes Integral](#chapter-06) | 19 | 1 |
-| [7. Sequences and Series of Functions](#chapter-07) | 26 | 0 |
-| [8. Some Special Functions](#chapter-08) | 14 | 0 |
-| [9. Functions of Several Variables](#chapter-09) | 1 | 1 |
-| 10. Integration of Differential Forms | 0 | 0 |
-| [11. The Lebesgue Theory](#chapter-11) | 2 | 2 |
-| **Total** | **192** | **134** |
+| [6. The Riemann–Stieltjes Integral](#chapter-06) | 19 | 19 |
+| [7. Sequences and Series of Functions](#chapter-07) | 26 | 26 |
+| [8. Some Special Functions](#chapter-08) | 31 | 31 |
+| [9. Functions of Several Variables](#chapter-09) | 31 | 31 |
+| [10. Integration of Differential Forms](#chapter-10) | 26 | 7 |
+| [11. The Lebesgue Theory](#chapter-11) | 18 | 18 |
+| **Total** | **281** | **262** |
 
-Chapter 8 contains Exercises 1–13 and 22; Chapter 9 contains Exercise 1;
-Chapter 11 contains Exercises 1 and 18.
-Other exercise numbers have no exercise proof file in this checkout.
-Shared support lemmas and restricted prototypes are not additional solved
-exercises. In particular, the Chapter 10 chain and integration support does
-not establish complete Chapter 10 exercise solutions.
+No exercise proof file is present for `R10E22`, `R10E24`, `R10E25`, `R10E26`, `R10E27`, `R10E31`.
 
 <a id="chapter-01"></a>
 
@@ -2441,8 +2433,6 @@ For both failures without compactness, take $X=Z=[0,1]$ with the usual metric an
 
 **Exercises:** [1](#r05e01) · [2](#r05e02) · [3](#r05e03) · [4](#r05e04) · [5](#r05e05) · [6](#r05e06) · [7](#r05e07) · [8](#r05e08) · [9](#r05e09) · [10](#r05e10) · [11](#r05e11) · [12](#r05e12) · [13](#r05e13) · [14](#r05e14) · [15](#r05e15) · [16](#r05e16) · [17](#r05e17) · [18](#r05e18) · [19](#r05e19) · [20](#r05e20) · [21](#r05e21) · [22](#r05e22) · [23](#r05e23) · [24](#r05e24) · [25](#r05e25) · [26](#r05e26) · [27](#r05e27) · [28](#r05e28) · [29](#r05e29)
 
-On a closed interval, derivatives in this chapter are derivatives within that interval. Thus endpoint derivatives are one-sided. Higher derivatives mean a sequence of genuine derivatives, not assigned values at points where differentiation fails.
-
 <a id="r05e01"></a>
 ### 5.1 — A quadratic difference bound forces constancy
 **Lean source:** [Exercise01.lean](../../Math/Rudin/Chapter05/Exercise01.lean).
@@ -3284,7 +3274,7 @@ This estimate holds for all vectors. Two proposed system solutions are continuou
 
 <a id="chapter-06"></a>
 
-## Chapter 6 — The Riemann-Stieltjes Integral
+## Chapter 6 — The Riemann–Stieltjes Integral
 
 **Exercises:** [1](#r06e01) · [2](#r06e02) · [3](#r06e03) · [4](#r06e04) · [5](#r06e05) · [6](#r06e06) · [7](#r06e07) · [8](#r06e08) · [9](#r06e09) · [10](#r06e10) · [11](#r06e11) · [12](#r06e12) · [13](#r06e13) · [14](#r06e14) · [15](#r06e15) · [16](#r06e16) · [17](#r06e17) · [18](#r06e18) · [19](#r06e19)
 
@@ -3293,8 +3283,6 @@ Throughout this chapter, $\alpha$ is real-valued. The notation $f\in\mathcal R(\
 The support results prove equivalence with convergence of every tagged refinement of a suitable partition; tags may be cell endpoints. For complex functions, the definition uses norm convergence of the complex tagged sums with these same real increments. This is equivalent to integrability of both real components. No right-continuous normalization of a raw integrator is made. Ordinary Riemann integration means $\alpha(x)=x$.
 
 The support bridges used below have specific scopes. Continuous functions have literal integrals for every interval-nondecreasing $\alpha$, by uniform continuity and small Darboux gaps. Identification with a Stieltjes measure integral requires an already right-continuous Stieltjes function. For the identity integrator, every literal proper Riemann integral equals the Lebesgue interval integral, without extra continuity or measurability assumptions. A bounded function continuous almost everywhere is literally Riemann integrable: closed-cell step envelopes have gaps tending to zero almost everywhere, and dominated convergence makes their integral gaps tend to zero. These bridges justify the measure-theoretic steps below; they do not redefine the source integrals.
-
-Only Exercise 6.1 is inventory-verified. The other entries describe the current proofs but retain their pending inventory status.
 
 <a id="r06e01"></a>
 ### 6.1 — A function supported at one point
@@ -3318,7 +3306,7 @@ If $a<b$, relative continuity gives $u\le x_0\le v$ in $[a,b]$, with $u<v$ and $
 <a id="r06e02"></a>
 ### 6.2 — Zero integral and the role of continuity
 **Lean source:** [Exercise02.lean](../../Math/Rudin/Chapter06/Exercise02.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Suppose $a<b$, $f:[a,b]\to\mathbb R$ is continuous and nonnegative, and its ordinary Riemann integral is zero. Then $f(x)=0$ for every $x\in[a,b]$, including the endpoints.
 
@@ -3335,7 +3323,7 @@ Exercise 6.1 with $\alpha(x)=x$ proves the zero integral of $h$. Its value at $1
 <a id="r06e03"></a>
 ### 6.3 — Three values at a jump
 **Lean source:** [Exercise03.lean](../../Math/Rudin/Chapter06/Exercise03.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $f:[-1,1]\to\mathbb R$ be bounded. Each $\beta_j$ is zero for $x<0$ and one for $x>0$, while
 
@@ -3367,7 +3355,7 @@ Conversely, assume continuity on each side whose coefficient is nonzero. Insert 
 <a id="r06e04"></a>
 ### 6.4 — The rational indicator is not Riemann integrable
 **Lean source:** [Exercise04.lean](../../Math/Rudin/Chapter06/Exercise04.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $D(x)=1$ on rational points and $D(x)=0$ on irrational points. For $a\le b$, its lower Darboux integral is $0$ and its upper Darboux integral is $b-a$. Thus it is not Riemann integrable when $a<b$, either in the Darboux or equivalent tagged sense. The same holds for any function with these values on $[a,b]$, regardless of its values outside that interval.
 
@@ -3384,7 +3372,7 @@ Taking the two extrema gives the stated values. They differ precisely when $a<b$
 <a id="r06e05"></a>
 ### 6.5 — Integrable squares and cubes
 **Lean source:** [Exercise05.lean](../../Math/Rudin/Chapter06/Exercise05.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For bounded real functions, integrability of $f^2$ does not imply integrability of $f$ on a nondegenerate interval. In contrast, if $a\le b$ and $f^3\in\mathcal R(\alpha)$, then $f\in\mathcal R(\alpha)$. This includes ordinary Riemann integrals and the equivalent tagged formulation.
 
@@ -3405,7 +3393,7 @@ Both power bases are nonnegative. Splitting into $y\ge0$ and $y\le0$ proves cont
 <a id="r06e06"></a>
 ### 6.6 — Discontinuities confined to the Cantor set
 **Lean source:** [Exercise06.lean](../../Math/Rudin/Chapter06/Exercise06.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $P$ be the middle-thirds Cantor set. Suppose $f:[0,1]\to\mathbb R$ satisfies $|f(x)|\le M$ and is continuous relative to $[0,1]$ at every point outside $P$. Then $f$ is ordinarily Riemann integrable, and its literal integral equals its Lebesgue interval integral. No continuity is required at points of $P$, including $0$ and $1$.
 
@@ -3422,7 +3410,7 @@ Translation invariance and scaling of Lebesgue measure give $m\le m/3+m/3$. Fini
 <a id="r06e07"></a>
 ### 6.7 — Proper and conditionally convergent improper integrals
 **Lean source:** [Exercise07.lean](../../Math/Rudin/Chapter06/Exercise07.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** An improper integral at a finite left endpoint $a<b$ means a finite limit
 
@@ -3480,7 +3468,7 @@ It follows that the first limit exists, with value $\int_0^\infty H_1(t)\,dt$. A
 <a id="r06e08"></a>
 ### 6.8 — The integral test
 **Lean source:** [Exercise08.lean](../../Math/Rudin/Chapter06/Exercise08.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $f:[1,\infty)\to\mathbb R$ be nonnegative and nonincreasing. Then
 
@@ -3511,7 +3499,7 @@ All these partial sums and integral truncations are nondecreasing. A finite impr
 <a id="r06e09"></a>
 ### 6.9 — Integration by parts at improper endpoints
 **Lean source:** [Exercise09.lean](../../Math/Rudin/Chapter06/Exercise09.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** The following sufficient rules use real functions and explicit local $C^1$ data.
 1. Let $a<b$. Suppose $u,v$ have derivatives $u',v'$ relative to $(a,b]$ at every point there, and $u',v'$ are continuous on $(a,b]$. If $u(x)v(x)\to L$ as $x\downarrow a$ and $\int_a^b u'v=I$ exists improperly, then
@@ -3550,7 +3538,7 @@ For the example take $u(x)=(1+x)^{-1}$ and $v(x)=\sin x$. Then $u'v=-\sin x/(1+x
 <a id="r06e10"></a>
 ### 6.10 — Young and Hölder inequalities
 **Lean source:** [Exercise10.lean](../../Math/Rudin/Chapter06/Exercise10.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $p,q>0$ satisfy $1/p+1/q=1$; these conditions imply $p,q>1$.
 1. For $u,v\ge0$,
@@ -3599,7 +3587,7 @@ The assumed finite power limits bound these nonnegative truncations. The ordinar
 <a id="r06e11"></a>
 ### 6.11 — The weighted quadratic seminorm
 **Lean source:** [Exercise11.lean](../../Math/Rudin/Chapter06/Exercise11.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $a\le b$, nondecreasing $\alpha$, and complex $u\in\mathcal R(\alpha)$, define
 
@@ -3630,7 +3618,7 @@ All quantities are nonnegative, so taking square roots proves $\|u+v\|_2\le\|u\|
 <a id="r06e12"></a>
 ### 6.12 — Continuous approximation in the quadratic seminorm
 **Lean source:** [Exercise12.lean](../../Math/Rudin/Chapter06/Exercise12.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $a\le b$, let $\alpha$ be nondecreasing on $[a,b]$, let $f\in\mathcal R(\alpha)$ be complex-valued, and let $\varepsilon>0$. There is a continuous function $g:\mathbb R\to\mathbb C$, itself integrable against $\alpha$, such that its actual squared-error integral $E$ satisfies
 
@@ -3676,7 +3664,7 @@ For complex $f$, apply this construction separately to its real and imaginary pa
 <a id="r06e13"></a>
 ### 6.13 — A quadratic oscillatory phase
 **Lean source:** [Exercise13.lean](../../Math/Rudin/Chapter06/Exercise13.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Define, for real $x$,
 
@@ -3742,7 +3730,7 @@ The asymptotic formula therefore gives $x_nF(x_n)\to1$ for $\delta=0$ and $\to-1
 <a id="r06e14"></a>
 ### 6.14 — An exponential oscillatory phase
 **Lean source:** [Exercise14.lean](../../Math/Rudin/Chapter06/Exercise14.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For real $x$, let
 
@@ -3816,7 +3804,7 @@ With $x_j=\log(\delta+2\pi(n_j+1))$, one has $x_j\to\infty$, $\cos(e^{x_j})=\cos
 <a id="r06e15"></a>
 ### 6.15 — A strict Schwarz-type bound
 **Lean source:** [Exercise15.lean](../../Math/Rudin/Chapter06/Exercise15.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $a\le b$ and let real $f$ have derivative $f'$ relative to $[a,b]$ at every point, including one-sided endpoint derivatives. Assume $f'$ is continuous on $[a,b]$, $f(a)=f(b)=0$, and the actual Riemann integral satisfies $\int_a^bf^2\,dx=1$. Then all the following integrals exist properly, and
 
@@ -3860,7 +3848,7 @@ Since $A\ge0$, this forces $AB>1/4$. This explicitly excludes equality rather th
 <a id="r06e16"></a>
 ### 6.16 — Floor-function integral formulas for zeta
 **Lean source:** [Exercise16.lean](../../Math/Rudin/Chapter06/Exercise16.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $s>1$, the ordered series $\zeta(s)=\sum_{n=1}^\infty n^{-s}$ converges, and
 
@@ -3903,7 +3891,7 @@ and the comparison integral is finite. Together with the proper witnesses this p
 <a id="r06e17"></a>
 ### 6.17 — Integration by parts with a discontinuous monotone factor
 **Lean source:** [Exercise17.lean](../../Math/Rudin/Chapter06/Exercise17.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $a\le b$, let real $\alpha$ be nondecreasing on $[a,b]$, let $g$ be continuous there, and suppose $G'=g$ relative to $[a,b]$ at every point, with one-sided endpoint derivatives. Then both literal integrals exist and
 
@@ -3937,7 +3925,7 @@ for sufficiently close points of $[a,b]$. If $|\alpha|\le C$, replacing the seco
 <a id="r06e18"></a>
 ### 6.18 — The same circle with different lengths
 **Lean source:** [Exercise18.lean](../../Math/Rudin/Chapter06/Exercise18.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified refutation and correction.
 
 **Statement.** On $[0,2\pi]$, define complex curves
 
@@ -3950,7 +3938,7 @@ $$
 
 All three are continuous and have the unit circle as their range. The first two are rectifiable, with lengths $2\pi$ and $4\pi$. The third has infinite length and infinite variation, and is not rectifiable. Length is the supremum of ordered partition chord sums in the usual complex norm, as in Exercise 6.19.
 
-**Correction.** The printed third formula contains $1/t$ but its interval includes zero. There is no real reciprocal of zero: no real $u$ satisfies $0u=1$. The value $\gamma_3(0)=1$ is an explicit endpoint repair and is the **unique** continuous extension of the printed positive-parameter formula. The phase remains $t\sin(1/t)$, not $\sin(1/t)$ alone. The correction and all obligations still have pending inventory status.
+**Correction.** The printed third formula contains $1/t$ but its interval includes zero. There is no real reciprocal of zero: no real $u$ satisfies $0u=1$. The value $\gamma_3(0)=1$ is an explicit endpoint repair and is the **unique** continuous extension of the printed positive-parameter formula. The phase remains $t\sin(1/t)$, not $\sin(1/t)$ alone. The inventory records a verified refutation and explicit correction, not a proof of the unextended printed formula.
 
 **Proof.** The bound $|t\sin(1/t)|\le|t|$ makes the phase tend to zero as $t\to0$. Thus the positive-parameter formula tends to $1$, proving continuity of the repair and uniqueness of its endpoint value. Away from zero continuity follows by composition. The first two curves are continuous directly.
 
@@ -4002,7 +3990,7 @@ For each finite list, reverse the decreasing times and insert the two interval e
 <a id="r06e19"></a>
 ### 6.19 — Invariance under continuous reparameterization
 **Lean source:** [Exercise19.lean](../../Math/Rudin/Chapter06/Exercise19.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $c\le d$, let $\gamma:[a,b]\to\mathbb R^k$ be continuous, and let $\varphi:[c,d]\to[a,b]$ be a continuous bijection with $\varphi(c)=a$. Put $\widetilde\gamma=\gamma\circ\varphi$. Then $\widetilde\gamma$ is continuous, and
 1. $\widetilde\gamma$ is an arc if and only if $\gamma$ is an arc, where an arc is a continuous injective map of the parameter interval.
@@ -4032,12 +4020,12 @@ Composition gives continuity of $\widetilde\gamma$. Injectivity is preserved in 
 
 **Exercises:** [1](#r07e01) · [2](#r07e02) · [3](#r07e03) · [4](#r07e04) · [5](#r07e05) · [6](#r07e06) · [7](#r07e07) · [8](#r07e08) · [9](#r07e09) · [10](#r07e10) · [11](#r07e11) · [12](#r07e12) · [13](#r07e13) · [14](#r07e14) · [15](#r07e15) · [16](#r07e16) · [17](#r07e17) · [18](#r07e18) · [19](#r07e19) · [20](#r07e20) · [21](#r07e21) · [22](#r07e22) · [23](#r07e23) · [24](#r07e24) · [25](#r07e25) · [26](#r07e26)
 
-These entries describe the results currently proved in the Lean files. Their inventory status remains pending. Positive series indices below correspond to Lean indices shifted by one where indicated in the source.
+Positive series indices below correspond to Lean indices shifted by one where indicated in the source.
 
 <a id="r07e01"></a>
 ### 7.1 — A common bound for a uniformly convergent sequence
 **Lean source:** [Exercise01.lean](../../Math/Rudin/Chapter07/Exercise01.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $E$ be any subset of a set $X$, and let $f_n:X\to V$, where $V$ is a normed additive commutative group. Suppose $f_n\to f$ uniformly on $E$ and, for each $n$, there is a real number $M_n$ such that $\|f_n(x)\|\le M_n$ for every $x\in E$. Then there is one real number $M$ such that $\|f_n(x)\|\le M$ for all $n$ and $x\in E$. This includes real and complex functions and the empty domain.
 
@@ -4054,7 +4042,7 @@ works in both cases. If $E$ is empty, all the required inequalities are vacuous.
 <a id="r07e02"></a>
 ### 7.2 — Uniform limits of sums and products
 **Lean source:** [Exercise02.lean](../../Math/Rudin/Chapter07/Exercise02.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** If $f_n\to f$ and $g_n\to g$ uniformly on an arbitrary set $E$, with values in a normed additive commutative group, then $f_n+g_n\to f+g$ uniformly on $E$. If the values lie in a normed ring and each $f_n$ and $g_n$ is bounded on $E$, then $f_ng_n\to fg$ uniformly there. The product result includes real and complex functions; the ring need not be commutative.
 
@@ -4085,7 +4073,7 @@ Make both errors less than $\delta=\varepsilon/(A+B+1)$. The last expression is 
 <a id="r07e03"></a>
 ### 7.3 — Products can fail to converge uniformly
 **Lean source:** [Exercise03.lean](../../Math/Rudin/Chapter07/Exercise03.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** On $\mathbb R$, set $f_n(x)=x$ and $g_n(x)=1/(n+1)$ for $n\ge0$. Both sequences converge uniformly, respectively to $x$ and $0$. Their product converges pointwise to zero but has no uniform limit on $\mathbb R$.
 
@@ -4096,7 +4084,7 @@ Make both errors less than $\delta=\varepsilon/(A+B+1)$. The last expression is 
 <a id="r07e04"></a>
 ### 7.4 — A positive series near a singular parameter
 **Lean source:** [Exercise04.lean](../../Math/Rudin/Chapter07/Exercise04.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For real $x$, consider
 
@@ -4145,7 +4133,7 @@ Choosing $N>2M$ gives a nonzero point with $S(x)>M$, for any prescribed real $M$
 <a id="r07e05"></a>
 ### 7.5 — Shrinking supports and failure of uniform convergence
 **Lean source:** [Exercise05.lean](../../Math/Rudin/Chapter07/Exercise05.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $n\ge1$, define on $\mathbb R$
 
@@ -4176,7 +4164,7 @@ Therefore $f_n$ does not tend uniformly to zero. Pointwise uniqueness excludes a
 <a id="r07e06"></a>
 ### 7.6 — Locally uniform but nowhere absolute convergence
 **Lean source:** [Exercise06.lean](../../Math/Rudin/Chapter07/Exercise06.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** The real series
 
@@ -4209,7 +4197,7 @@ The harmonic series diverges, so the nonnegative absolute partial sums have no f
 <a id="r07e07"></a>
 ### 7.7 — Uniform convergence does not preserve derivative limits
 **Lean source:** [Exercise07.lean](../../Math/Rudin/Chapter07/Exercise07.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $n\ge1$ and $x\in\mathbb R$, let
 
@@ -4244,7 +4232,7 @@ For a fixed nonzero $x$ the right side tends to zero. At $x=0$, direct substitut
 <a id="r07e08"></a>
 ### 7.8 — An absolutely convergent series of step functions
 **Lean source:** [Exercise08.lean](../../Math/Rudin/Chapter07/Exercise08.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Put $I(t)=0$ for $t\le0$ and $I(t)=1$ for $t>0$. Let $p_n$ be distinct points of $(a,b)$, and let $c_n$ be complex coefficients, or vectors in a complete real normed space, such that the ordinary partial sums of $\sum_n\|c_n\|$ have a finite limit. Then
 
@@ -4265,7 +4253,7 @@ Fix $x\ne p_n$ for every $n$. Each individual step function is constant on some 
 <a id="r07e09"></a>
 ### 7.9 — Limits along moving points and a false converse
 **Lean source:** [Exercise09.lean](../../Math/Rudin/Chapter07/Exercise09.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $E$ be a subset of a metric space $X$, and let $f_n:X\to Y$ take values in a metric space $Y$. Suppose each $f_n$ is continuous on $E$ and $f_n\to f$ uniformly on $E$. If $x_n\in E$ and $x_n\to x\in E$, then $f_n(x_n)\to f(x)$. The converse fails even for continuous real functions on $\mathbb R$.
 
@@ -4285,7 +4273,7 @@ For the converse, take $f_n(t)=t/(n+1)$ on $\mathbb R$. Each is continuous. For 
 <a id="r07e10"></a>
 ### 7.10 — A series with exactly the rational discontinuities
 **Lean source:** [Exercise10.lean](../../Math/Rudin/Chapter07/Exercise10.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $\{t\}=t-\lfloor t\rfloor$ and define the real function
 
@@ -4321,7 +4309,7 @@ Countability and density now follow from those properties of $\mathbb Q$. On any
 <a id="r07e11"></a>
 ### 7.11 — The uniform Dirichlet test
 **Lean source:** [Exercise11.lean](../../Math/Rudin/Chapter07/Exercise11.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $E\subseteq X$, let $f_n:X\to V$ take values in a complete real normed space, and let $g_n:X\to\mathbb R$. Assume that there is a real bound $B$ such that
 
@@ -4357,7 +4345,7 @@ For a prescribed $\varepsilon>0$, uniform convergence of $g_m$ makes $g_m(x)<\va
 <a id="r07e12"></a>
 ### 7.12 — Convergence of dominated improper Riemann integrals
 **Lean source:** [Exercise12.lean](../../Math/Rudin/Chapter07/Exercise12.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $g:(0,\infty)\to\mathbb R$ and let $f_n:(0,\infty)\to\mathbb R$, or $f_n:(0,\infty)\to\mathbb C$. Suppose $g$ and every $f_n$ are Riemann integrable on each $[a,b]$ with $0<a<b$, that
 
@@ -4402,7 +4390,7 @@ For complex functions, apply the real argument to the real and imaginary parts. 
 <a id="r07e13"></a>
 ### 7.13 — Selection for bounded monotone functions
 **Lean source:** [Exercise13.lean](../../Math/Rudin/Chapter07/Exercise13.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $f_n:\mathbb R\to\mathbb R$ be nondecreasing in the real argument, with $0\le f_n(x)\le1$ for every $n,x$. There are strictly increasing indices $k_n$ and a nondecreasing function $g:\mathbb R\to[0,1]$ such that $f_{k_n}(x)\to g(x)$ at every real point, including every discontinuity of $g$. If $g$ is continuous, this convergence is uniform on every compact subset of $\mathbb R$.
 
@@ -4433,7 +4421,7 @@ It follows that $|h_n(y)-g(y)|<\varepsilon$ throughout $(l,r)$ for all sufficien
 <a id="r07e14"></a>
 ### 7.14 — A continuous curve onto the square
 **Lean source:** [Exercise14.lean](../../Math/Rudin/Chapter07/Exercise14.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $f:\mathbb R\to\mathbb R$ be continuous and $2$-periodic. Assume $0\le f\le1$ everywhere, $f=0$ on $[0,1/3]$, and $f=1$ on $[2/3,1]$. Define
 
 $$
@@ -4474,7 +4462,7 @@ The tail belongs to $[0,1/3]$ if $a_j=0$, and to $[2/3,1]$ if $a_j=1$. Periodici
 <a id="r07e15"></a>
 ### 7.15 — Equicontinuity of positive dilations
 **Lean source:** [Exercise15.lean](../../Math/Rudin/Chapter07/Exercise15.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** For any $f:\mathbb R\to\mathbb R$, the family $t\mapsto f(nt)$, $n\ge1$, on $[0,1]$ is equicontinuous if and only if
 
 $$
@@ -4489,7 +4477,7 @@ In particular, under the source assumption that $f$ is continuous on $\mathbb R$
 <a id="r07e16"></a>
 ### 7.16 — Pointwise convergence of an equicontinuous sequence
 **Lean source:** [Exercise16.lean](../../Math/Rudin/Chapter07/Exercise16.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $K$ be compact and let $f_n:K\to Y$ be equicontinuous. If $f_n(x)\to g(x)$ at every $x\in K$, then $f_n\to g$ uniformly. The Lean result allows any compact topological domain and any uniform-space target, and also gives the restriction-to-a-compact-set formulation, including the empty set.
 **Proof.** In a metric target, fix $\varepsilon>0$. Equicontinuity gives, for each $x\in K$, a neighborhood $U_x$ such that $d(f_n(y),f_n(x))<\varepsilon/4$ for all $n$ and $y\in U_x$. Taking pointwise limits gives $d(g(y),g(x))\le\varepsilon/4$. Choose finitely many of these neighborhoods covering $K$. Pointwise convergence at their centers supplies one $N$ such that the center errors are less than $\varepsilon/4$ for $n\ge N$. For $y$ in a chosen neighborhood, the triangle inequality now gives $d(f_n(y),g(y))<\varepsilon$. The uniform-space version is the standard compact-domain theorem that pointwise and uniform convergence agree on equicontinuous families; the same finite-cover proof uses entourages in place of metric balls. Apply it to the compact subspace for the set formulation. On an empty domain all convergence conditions are vacuous.
 
@@ -4498,7 +4486,7 @@ In particular, under the source assumption that $f$ is continuous on $\mathbb R$
 <a id="r07e17"></a>
 ### 7.17 — Metric and vector versions of convergence theorems
 **Lean source:** [Exercise17.lean](../../Math/Rudin/Chapter07/Exercise17.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** For maps $F_n:X\to Y$ into a metric space, uniform convergence to $f$ means
 
 $$
@@ -4558,7 +4546,7 @@ For equicontinuity, the sequence together with its uniform limit is compact in t
 <a id="r07e18"></a>
 ### 7.18 — Compactness of bounded primitives
 **Lean source:** [Exercise18.lean](../../Math/Rudin/Chapter07/Exercise18.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $a\le b$. Suppose $f_n$ are real- or complex-valued Riemann-integrable functions on $[a,b]$, and $|f_n(t)|\le M$ for all $n,t$, where $M\ge0$. Define
 
 $$
@@ -4579,7 +4567,7 @@ Thus the primitives are continuous, equicontinuous, and pointwise bounded on a c
 <a id="r07e19"></a>
 ### 7.19 — Compact subsets of a continuous-function space
 **Lean source:** [Exercise19.lean](../../Math/Rudin/Chapter07/Exercise19.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $K$ be a compact metric space. A subset $S\subset C(K)$ is compact in the supremum metric if and only if it is closed in that metric, pointwise bounded, and equicontinuous. Both real and complex functions are included. More generally, the equivalence holds in $C(K,Y)$ for any proper metric target $Y$. Empty domains and empty families are allowed.
 **Proof.** A compact subset of a metric space is closed. For each $x\in K$, evaluation $f\mapsto f(x)$ is continuous, so its image of a compact $S$ is compact and therefore bounded. To obtain equicontinuity, cover compact $S$ by finitely many uniform balls of radius $\varepsilon/3$. At a fixed $x$, continuity of their finitely many centers gives one neighborhood on which each center varies by less than $\varepsilon/3$. Every member of $S$ is within $\varepsilon/3$ of a center at both points, so its variation is less than $\varepsilon$. This proves necessity.
 
@@ -4590,7 +4578,7 @@ Conversely, properness makes the closure of each bounded evaluation image compac
 <a id="r07e20"></a>
 ### 7.20 — A continuous function with zero moments
 **Lean source:** [Exercise20.lean](../../Math/Rudin/Chapter07/Exercise20.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** If $f$ is continuous on $[0,1]$ and
 
 $$
@@ -4613,7 +4601,7 @@ Thus $\int f^2=0$. A continuous nonnegative function on a nondegenerate compact 
 <a id="r07e21"></a>
 ### 7.21 — Complex polynomials are not dense on the circle
 **Lean source:** [Exercise21.lean](../../Math/Rudin/Chapter07/Exercise21.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** On $K=\{z\in\mathbb C:|z|=1\}$, let $A$ be the algebra of restrictions of complex polynomials in $z$ alone. Then $A$ separates points and vanishes at no point, but is not uniformly dense in $C(K,\mathbb C)$. Specifically, the continuous function $h(z)=\overline z$ satisfies
 
 $$
@@ -4634,7 +4622,7 @@ The maximum modulus principle yields $1\le\|p-h\|_\infty$. Since the norm-distan
 <a id="r07e22"></a>
 ### 7.22 — Polynomial approximation in Stieltjes mean square
 **Lean source:** [Exercise22.lean](../../Math/Rudin/Chapter07/Exercise22.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $a\le b$, let $\alpha$ be nondecreasing on $[a,b]$, and let $f\in\mathcal R(\alpha)$ there. There are polynomials $p_n$, real for real $f$ and complex for complex $f$, such that the actual Riemann–Stieltjes integrals
 
 $$
@@ -4675,7 +4663,7 @@ Its error integral is the sum of the two nonnegative errors, hence tends to zero
 <a id="r07e23"></a>
 ### 7.23 — An explicit polynomial approximation to absolute value
 **Lean source:** [Exercise23.lean](../../Math/Rudin/Chapter07/Exercise23.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Define polynomials by
 
 $$
@@ -4716,7 +4704,7 @@ Using $u=2(1-r)$ gives the strict bound $ur^n<2/(n+1)$. This remains strict when
 <a id="r07e24"></a>
 ### 7.24 — Completion by distance-difference functions
 **Lean source:** [Exercise24.lean](../../Math/Rudin/Chapter07/Exercise24.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $X$ be a metric space and fix $a\in X$. For $p\in X$, define the complex-valued function
 
 $$
@@ -4743,7 +4731,7 @@ At $x=p$ equality holds. Hence the supremum norm of the difference is exactly $d
 <a id="r07e25"></a>
 ### 7.25 — Euler polygons and their residuals
 **Lean source:** [Exercise25.lean](../../Math/Rudin/Chapter07/Exercise25.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 **Statement.** Let $\phi:[0,1]\times\mathbb R\to\mathbb R$ be continuous and bounded, let $c\in\mathbb R$, and choose $M\ge0$ such that $|\phi(t,z)|\le M$ throughout the closed strip. The source asks for a solution of $y'=\phi(t,y)$, $y(0)=c$, by the following construction. For each positive integer $N$, put
 
 $$
@@ -4773,7 +4761,7 @@ $$
 
 The derivatives are relative to $[0,1]$, hence one-sided at its endpoints. The composition-limit result itself allows any index map $\sigma$, provided the stated uniform polygon limit exists.
 
-**Scope.** The file includes the subsequence selection and the resulting existence theorem, not only a theorem conditional on a uniform polygon limit. Inventory verification remains pending. The shared construction permits values in a real normed vector space; the integral identity assumes completeness, and the compactness and uniform-limit arguments additionally assume a proper target. These assumptions hold for the real target of this exercise. No continuity or boundedness of the field outside the closed strip is required. No uniqueness of the differential-equation solution is asserted.
+**Scope.** The file includes the subsequence selection and the resulting existence theorem, not only a theorem conditional on a uniform polygon limit. The shared construction permits values in a real normed vector space; the integral identity assumes completeness, and the compactness and uniform-limit arguments additionally assume a proper target. These assumptions hold for the real target of this exercise. No continuity or boundedness of the field outside the closed strip is required. No uniqueness of the differential-equation solution is asserted.
 
 **Proof.** A formula for the polygon, extended constantly outside $[0,1]$, is
 
@@ -4809,12 +4797,12 @@ On the compact interval $[0,1]$, the common Lipschitz estimate gives equicontinu
 
 Each such sum is integrable by the residual identity, and $g$ is integrable by continuity. A uniform integrand error at most $\delta$ bounds every primitive error on $[0,1]$ by $\delta$. Passing to the limit in the residual identities gives $f(x)=c+\int_0^x g(t)\,dt$ for every $x\in[0,1]$. At $x=0$ this gives $f(0)=c$. The fundamental theorem of calculus for continuous integrands gives derivative $g(x)$ in the interval interior and the corresponding one-sided derivatives at both endpoints. Together with the selected subsequence, these steps construct the required solution. The continuous scalar integrand also has an ordinary Riemann integral, equal to its interval integral. Thus its Riemann integral from $0$ to $x$ is $f(x)-c$, as required.
 
-**Lean declarations:** `polygon_continuous`, `polygon_zero`, `polygon_cell`, `polygon_mesh`, `polygon_hasDerivAt`, `polygon_norm_sub_le`, `polygon_bound`, `residual_mesh`, `residual_eq_deriv_sub`, `residual_bound`, `residual_riemann_integrable`, `polygon_lipschitz`, `polygon_deriv_bound`, `polygon_equicontinuous`, `velocity_integral`, `residual_integral_identity`, `residual_riemann_identity`, `field_uniformContinuousOn`, `residual_uniform`, `limit_bound`, `composition_uniform`, `limit_integral_equation`, `limit_solution`, `polygon_subsequence`, `exists_solution`, `exercise25_solution`, `exercise25_riemann_solution`.
+**Lean declarations:** `node_zero`, `node_succ`, `polygon_continuous`, `polygon_zero`, `polygon_cell`, `polygon_mesh`, `polygon_hasDerivAt`, `polygon_norm_sub_le`, `polygon_bound`, `residual_mesh`, `residual_eq_deriv_sub`, `residual_bound`, `residual_riemann_integrable`, `polygon_lipschitz`, `polygon_deriv_bound`, `polygon_equicontinuous`, `velocity_integral`, `residual_integral_identity`, `residual_riemann_identity`, `field_uniformContinuousOn`, `residual_uniform`, `limit_bound`, `composition_uniform`, `limit_integral_equation`, `limit_solution`, `polygon_subsequence`, `exists_solution`, `exercise25_solution`, `exercise25_riemann_solution`.
 
 <a id="r07e26"></a>
 ### 7.26 — Vector-valued solutions from Euler polygons
 **Lean source:** [Exercise26.lean](../../Math/Rudin/Chapter07/Exercise26.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $k\ge0$ and let $\Phi:[0,1]\times\mathbb R^k\to\mathbb R^k$ be continuous and bounded in the Euclidean norm. For every $c\in\mathbb R^k$, the vector Euler polygons from [Exercise 7.25](#r07e25) have a uniformly convergent subsequence on $[0,1]$. Its continuous limit $f$ satisfies
 
@@ -4848,14 +4836,12 @@ Pass to the limit in the polygon residual integral identity. The integral error 
 
 ## Chapter 8 — Some Special Functions
 
-**Exercises:** [1](#r08e01) · [2](#r08e02) · [3](#r08e03) · [4](#r08e04) · [5](#r08e05) · [6](#r08e06) · [7](#r08e07) · [8](#r08e08) · [9](#r08e09) · [10](#r08e10) · [11](#r08e11) · [12](#r08e12) · [13](#r08e13) · [22](#r08e22)
-
-These entries describe the present Lean files for this chapter. All retain pending inventory status; exercises without an exercise proof file are not represented here.
+**Exercises:** [1](#r08e01) · [2](#r08e02) · [3](#r08e03) · [4](#r08e04) · [5](#r08e05) · [6](#r08e06) · [7](#r08e07) · [8](#r08e08) · [9](#r08e09) · [10](#r08e10) · [11](#r08e11) · [12](#r08e12) · [13](#r08e13) · [14](#r08e14) · [15](#r08e15) · [16](#r08e16) · [17](#r08e17) · [18](#r08e18) · [19](#r08e19) · [20](#r08e20) · [21](#r08e21) · [22](#r08e22) · [23](#r08e23) · [24](#r08e24) · [25](#r08e25) · [26](#r08e26) · [27](#r08e27) · [28](#r08e28) · [29](#r08e29) · [30](#r08e30) · [31](#r08e31)
 
 <a id="r08e01"></a>
 ### 8.1 — A smooth function with all derivatives zero at the origin
 **Lean source:** [Exercise01.lean](../../Math/Rudin/Chapter08/Exercise01.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Define the real function
 
@@ -4887,7 +4873,7 @@ Now $f(x)=G(x^2)$, which gives exactly the stated piecewise formula and is smoot
 <a id="r08e02"></a>
 ### 8.2 — Two different iterated sums
 **Lean source:** [Exercise02.lean](../../Math/Rudin/Chapter08/Exercise02.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For positive integers $i,j$, define
 
@@ -4926,7 +4912,7 @@ Column $j$ starts with $j-1$ zeros, followed by $-1$ and the geometric tail $2^{
 <a id="r08e03"></a>
 ### 8.3 — Interchanging nonnegative double sums
 **Lean source:** [Exercise03.lean](../../Math/Rudin/Chapter08/Exercise03.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For an array of nonnegative real numbers $a_{ij}$, indexed by $i,j\ge1$,
 
@@ -4946,7 +4932,7 @@ For each fixed row, the first $N$ terms increase to the supremum of its finite s
 <a id="r08e04"></a>
 ### 8.4 — Four limits involving powers and logarithms
 **Lean source:** [Exercise04.lean](../../Math/Rudin/Chapter08/Exercise04.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** The following real limits hold:
 
@@ -4999,7 +4985,7 @@ Exponentiation gives the result once $1+x/n>0$. This eventual positivity follows
 <a id="r08e05"></a>
 ### 8.5 — Four limits from exponential and trigonometric remainders
 **Lean source:** [Exercise05.lean](../../Math/Rudin/Chapter08/Exercise05.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** With the natural real domains of the expressions,
 
@@ -5047,12 +5033,12 @@ $$
 
 The ratios in (c) and (d) are respectively $T(x)/C(x)$ and $S(x)/T(x)$, giving $2/3$ and $1/2$. These nonzero remainder limits also ensure that the original denominators are nonzero in a sufficiently small deleted neighborhood of zero. Thus no value assigned by totalized division at a singular point enters the argument.
 
-**Lean declarations:** `exercise05_a`, `exercise05_b`, `exercise05_c`, `exercise05_d`.
+**Lean declarations:** `exercise05_a`, `exercise05_b`, `exercise05_c`, `exercise05_d`, `exercise05_domains`.
 
 <a id="r08e06"></a>
 ### 8.6 — Continuous solutions of the exponential equation
 **Lean source:** [Exercise06.lean](../../Math/Rudin/Chapter08/Exercise06.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Suppose $f:\mathbb R\to\mathbb R$ is not identically zero and satisfies
 
@@ -5081,7 +5067,7 @@ Conversely, $e^{cx}$ is differentiable and never zero, and $e^{cx}e^{cy}=e^{c(x+
 <a id="r08e07"></a>
 ### 8.7 — Strict bounds for the sine ratio
 **Lean source:** [Exercise07.lean](../../Math/Rudin/Chapter08/Exercise07.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For every real $x$ with $0<x<\pi/2$,
 
@@ -5096,7 +5082,7 @@ $$
 <a id="r08e08"></a>
 ### 8.8 — A sine bound for integer multiples
 **Lean source:** [Exercise08.lean](../../Math/Rudin/Chapter08/Exercise08.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For every integer $n\ge0$ and every real $x$,
 
@@ -5124,7 +5110,7 @@ Induction proves the assertion for all nonnegative integers. For the stated noni
 <a id="r08e09"></a>
 ### 8.9 — Harmonic sums and the decimal scale for exceeding one hundred
 **Lean source:** [Exercise09.lean](../../Math/Rudin/Chapter08/Exercise09.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $N\ge1$, let $H_N=\sum_{j=1}^N1/j$. Then $H_N-\log N$ has a finite limit, the Euler–Mascheroni constant $\gamma$. For a nonnegative integer $m$, $H_{10^m}>100$ holds exactly when $m\ge44$. In particular, the requested decimal scale is located by
 
@@ -5165,7 +5151,7 @@ Thus the two bounds are strict and use explicit certified logarithm estimates, r
 <a id="r08e10"></a>
 ### 8.10 — Divergence of the prime reciprocal series
 **Lean source:** [Exercise10.lean](../../Math/Rudin/Chapter08/Exercise10.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Define the ordered prime reciprocal partial sums by
 
@@ -5192,7 +5178,7 @@ For a nonnegative sequence, these partial sums are nondecreasing. If they were b
 <a id="r08e11"></a>
 ### 8.11 — An Abelian limit for a Laplace integral
 **Lean source:** [Exercise11.lean](../../Math/Rudin/Chapter08/Exercise11.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** Let $f:[0,\infty)\to\mathbb C$ be Riemann integrable on $[0,A]$ for every finite $A>0$, and suppose $f(x)\to1$ as $x\to\infty$. For every $t>0$, the improper integral
 
@@ -5236,143 +5222,526 @@ The point $y=0$ has measure zero and requires no limit assumption on $f(0)$.
 **Lean declarations:** `complex_riemann_bridge`, `exercise11_truncated_riemann`, `exercise11_measurable`, `exercise11_bounded`, `exercise11_laplace_integrable`, `exercise11_improper_integral`, `exercise11_change_variable`, `exercise11_abelian_limit`.
 
 <a id="r08e12"></a>
-### 8.12 — Fourier normalization and Parseval for the indicator problem
+### 8.12 — The periodic indicator, sine series, and the sinc-square integral
 
 **Lean source:** [Exercise12.lean](../../Math/Rudin/Chapter08/Exercise12.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
-**Statement.** The inventory asks about the $2\pi$-periodic extension of the indicator of $[-\delta,\delta]$ from $[-\pi,\pi]$, where $0<\delta<\pi$. Its five requested parts are: compute the complex Fourier coefficients, with separate cases $n=0$ and $n\ne0$; prove
-
-$$
-\sum_{n=1}^{\infty}\frac{\sin(n\delta)}{n}=\frac{\pi-\delta}{2};
-$$
-
-use Parseval to prove
+**Statement.** Let $0<\delta<\pi$. Let $f_\delta$ be the $2\pi$-periodic function whose values on $[-\pi,\pi]$ are $1$ when $|x|\le\delta$ and $0$ otherwise. In particular, both endpoints have value zero, while $f_\delta(\pm\delta)=1$. With the convention
 
 $$
-\sum_{n=1}^{\infty}\frac{\sin^2(n\delta)}{n^2\delta}=\frac{\pi-\delta}{2};
+c_n=\frac{1}{2\pi}\int_{-\pi}^{\pi}e^{-inx}f_\delta(x)\,dx,
 $$
 
-pass to the limit $\delta\to0^+$ to prove
+all its complex Fourier coefficients are
 
 $$
-\int_0^{\infty}\left(\frac{\sin x}{x}\right)^2\,dx=\frac{\pi}{2},
+c_0=\frac{\delta}{\pi},\qquad c_n=\frac{\sin(n\delta)}{n\pi}\quad(n\in\mathbb Z\setminus\{0\}).
 $$
 
-with the integrand defined at zero by continuity; and evaluate the square-series identity at $\delta=\pi/2$, including the resulting sum over odd positive integers.
-
-**Partial coverage.** None of these five parts is proved in this file. The file defines the nonperiodic indicator and proves the following normalization results and general Parseval identity. All five inventory obligations remain `todo`.
-
-For every $n\in\mathbb Z$ and $x\in\mathbb R$, define the Fourier monomial $e_n(x)=\exp(inx)$. For every $a\in\mathbb R$ and function $f:\mathbb R\to\mathbb C$, define
+The following series converge in their usual order:
 
 $$
-c_n(a,f)=\frac{1}{2\pi}\int_a^{a+2\pi}e^{-inx}f(x)\,dx.
+\sum_{n=1}^{\infty}\frac{\sin(n\delta)}{n}=\frac{\pi-\delta}{2},\qquad
+\sum_{n=1}^{\infty}\frac{\sin^2(n\delta)}{n^2\delta}=\frac{\pi-\delta}{2}.
 $$
 
-These definitions use the source period, negative sign in the coefficient, and normalized mass. The standard Fourier character on $\mathbb R/(2\pi\mathbb Z)$, evaluated at the class of $x$, equals $e_n(x)$. The library interval coefficient on $[a,a+2\pi]$ equals $c_n(a,f)$. Neither equality requires continuity, periodicity, or an integrability hypothesis on $f$; the coefficient equality is an equality of the defined integrals.
-
-If $f$ belongs to $L^2$ for Lebesgue measure restricted to $(a,a+2\pi]$, then
+The second assertion also includes summability as a nonnegative family. Define $\operatorname{sinc}(x)=\sin x/x$ for $x\ne0$ and $\operatorname{sinc}(0)=1$. Its square is integrable on $[0,\infty)$, and
 
 $$
-\sum_{n\in\mathbb Z}|c_n(a,f)|^2
-=\frac{1}{2\pi}\int_a^{a+2\pi}|f(x)|^2\,dx.
+\int_0^\infty\operatorname{sinc}^2(x)\,dx=\frac{\pi}{2},\qquad
+\lim_{A\to\infty}\int_0^A\operatorname{sinc}^2(x)\,dx=\frac{\pi}{2}.
 $$
 
-The assertion includes summability of this family indexed by $\mathbb Z$, not only equality of a formal series with an integral. The $L^2$ hypothesis is on the actual function, including the measurability requirement in `MemLp`, rather than on an unspecified equivalence class. No periodicity hypothesis is needed for this interval statement.
-
-Finally, for every real $\delta$, the file defines
+For each $A\ge0$, the tagged Riemann integral on $[0,A]$ exists and equals the corresponding finite interval integral above. This includes the zero-length interval. The continuous value of the integrand at zero is $1$. Finally,
 
 $$
-g_\delta(x)=\begin{cases}1,&-\delta\le x\le\delta,\\0,&\text{otherwise},\end{cases}
-\qquad x\in\mathbb R,
+\sum_{n=0}^{\infty}\frac{1}{(2n+1)^2}=\frac{\pi^2}{8},
 $$
 
-with values in $\mathbb C$. This definition itself has no restriction $0<\delta<\pi$ and does not take a periodic extension.
+both as a summable family and as a limit of the ordered partial sums.
 
-**Proof.** For a circle of period $T$, the standard character at the class of $x$ is $\exp(2\pi i n x/T)$. Substitution of $T=2\pi$ gives $\exp(inx)$, since $\pi>0$. This proves the character bridge for every integer frequency, including zero and negative frequencies.
+**Proof.** First put $g_\delta=\mathbf1_{[-\delta,\delta]}$ on the real line. The periodic function is constructed by choosing the representative in $(-\pi,\pi]$ modulo $2\pi$. Periodicity holds for every real $\delta$. If $\delta<\pi$, this construction agrees with $g_\delta$ on the entire closed interval $[-\pi,\pi]$: at $-\pi$ the chosen representative is $\pi$, and both indicator values are zero. Thus its Fourier coefficients equal those of the indicator on this interval.
 
-For the coefficient bridge, expand the library coefficient into its interval integral. The interval has length $(a+2\pi)-a=2\pi>0$, so its normalization is $1/(2\pi)$. Its integrand is the character of frequency $-n$ multiplied by $f(x)$. The character calculation gives $\exp(-inx)f(x)$ pointwise. Thus both the scalar normalization and the actual interval integrands agree with the definition of $c_n(a,f)$.
+The source also checks ordinary Riemann integrability, not only measurable integrability. For every $\delta\ge0$, write
 
-For Parseval, apply the library's interval Parseval theorem to the assumed $L^2$ function on $(a,a+2\pi]$. It gives a summable family of squared coefficient norms with sum equal to the squared-norm integral divided by the interval length. Replace every interval coefficient using the coefficient bridge, and replace the interval length by $2\pi$. Complex norms are absolute values, which gives the displayed identity. The indicator is only defined; this proof does not apply Parseval to it or evaluate any of its coefficients or series.
+$$
+g_\delta(x)=\mathbf1_{\{x\le\delta\}}-\mathbf1_{\{x<-\delta\}}.
+$$
 
-**Lean declarations:** Theorems: `Rudin.Chapter08.fourierMonomial_bridge`, `Rudin.Chapter08.fourierCoefficient_bridge`, `Rudin.Chapter08.source_parseval`. Definitions: `Rudin.Chapter08.fourierMonomial`, `Rudin.Chapter08.fourierCoefficient`, `Rudin.Chapter08.exercise12Indicator`.
+Both real functions on the right are decreasing, so each has a tagged Riemann integral on $[-\pi,\pi]$. Their difference is the real part of $g_\delta$, and its imaginary part is zero. This proves complex Riemann integrability, including $\delta=0$ and $\delta\ge\pi$. Agreement on the closed interval then proves Riemann integrability of the periodic function for $0\le\delta<\pi$. The identities claimed above retain the strict assumptions $0<\delta<\pi$.
+
+For these strict assumptions, the coefficient integral restricts to $[-\delta,\delta]$. At $n=0$ it is $2\delta/(2\pi)$. For every nonzero integer $n$, integration of the exponential gives
+
+$$
+c_n=\frac{1}{2\pi}\left[\frac{e^{-inx}}{-in}\right]_{-\delta}^{\delta}
+=\frac{\sin(n\delta)}{n\pi}.
+$$
+
+This includes negative frequencies; in particular, $c_{-n}=c_n$. The indicator is measurable and bounded in norm by $1$, so it belongs to $L^2$ on the finite fundamental interval for every real $\delta$. Under $0<\delta<\pi$, its normalized squared norm is
+
+$$
+\frac{1}{2\pi}\int_{-\pi}^{\pi}|g_\delta(x)|^2\,dx=\frac{\delta}{\pi}.
+$$
+
+Parseval, with this normalization, therefore gives a summable family indexed by $\mathbb Z$ and the equality
+
+$$
+\frac{\delta}{\pi}=\frac{\delta^2}{\pi^2}
++\frac{2}{\pi^2}\sum_{n=1}^{\infty}\frac{\sin^2(n\delta)}{n^2}.
+$$
+
+Separate the zero coefficient, pair positive and negative frequencies, and multiply by $\pi^2/(2\delta)$. This proves the sine-square identity and hence its ordered partial-sum limit. No reciprocal-square evaluation is used in this argument.
+
+To prove the unsquared sine identity, let $s_N$ be the symmetric Fourier partial sum of $f_\delta$ at zero. The coefficient formulas give, also for $N=0$,
+
+$$
+s_N=\frac{\delta}{\pi}+\frac{2}{\pi}\sum_{n=1}^{N}\frac{\sin(n\delta)}{n}.
+$$
+
+The periodic function equals $1$ in a neighborhood of zero. Its two one-sided limits there are thus $1$. Pointwise Fejer convergence for periodic Riemann-integrable functions, as proved in Exercise 8.16, shows that the arithmetic means of $s_0,\ldots,s_N$ tend to $1$. Moreover, for each $k\ge1$,
+
+$$
+|k(s_k-s_{k-1})|=\frac{2}{\pi}|\sin(k\delta)|\le\frac{2}{\pi}.
+$$
+
+The Tauberian converse proved in Exercise 3.14(e) applies to this bounded sequence of weighted differences and the convergent arithmetic means. It yields $s_N\to1$. Solving the displayed formula for the sine partial sum gives the claimed ordered limit. This argument does not assert absolute summability of the unsquared sine series.
+
+For the improper integral, the proof makes the passage from the sine-square sum to an integral explicit. For any mesh $\delta>0$ and $x\ge0$, define the right-endpoint sample
+
+$$
+q_\delta(x)=\delta\bigl(\lfloor x/\delta\rfloor+1\bigr).
+$$
+
+It is measurable and satisfies $x<q_\delta(x)\le x+\delta$. The intervals $[n\delta,(n+1)\delta)$, $n\ge0$, are pairwise disjoint and cover $[0,\infty)$. On the $n$th interval the sample equals $(n+1)\delta$, so
+
+$$
+\int_0^\infty\operatorname{sinc}^2(q_\delta(x))\,dx
+=\sum_{n=0}^{\infty}\delta\operatorname{sinc}^2((n+1)\delta).
+$$
+
+Here both integrability and summability are proved. The common integrable bound is
+
+$$
+0\le\operatorname{sinc}^2(y)\le\frac{4}{(x+1)^2}
+\quad(0\le x\le y,\ y>0).
+$$
+
+For $x\le1$, use $|\operatorname{sinc}(y)|\le1$ and $(x+1)^2\le4$. For $x>1$, use $(x+1)^2\le4y^2$ and $y^2\operatorname{sinc}^2(y)=\sin^2 y\le1$. The bound is integrable on $[0,\infty)$ by the standard power-integrability criterion. It controls every sampled function and, away from the single point zero, $\operatorname{sinc}^2(x)$ itself. Continuity supplies the value at zero.
+
+When $0<\delta<\pi$, the terms in the sample sum satisfy
+
+$$
+\delta\operatorname{sinc}^2((n+1)\delta)
+=\frac{\sin^2((n+1)\delta)}{(n+1)^2\delta}.
+$$
+
+The sine-square identity therefore evaluates the sampled integral as $(\pi-\delta)/2$. Now take $\delta_j=1/(j+1)$. Each mesh is less than $\pi$, and the sample bounds show $q_{\delta_j}(x)\to x$ for every $x\ge0$, including $x=0$. Continuity of sinc and dominated convergence give convergence of the sampled integrals to the integral of $\operatorname{sinc}^2$. Their known values tend to $\pi/2$. This evaluates the half-line integral. Integrability then gives convergence of the finite interval integrals to the same value as $A\to\infty$. On every $[0,A]$ with $A\ge0$, continuity and the tagged-integral bridge identify the finite integral with the ordinary Riemann integral.
+
+Finally, set $\delta=\pi/2$ in the sine-square identity and multiply by $\pi/2$. The resulting series $\sum_{n\ge1}\sin^2(n\pi/2)/n^2$ has sum $\pi^2/8$. Its even terms vanish, and its odd terms are $1/(2n+1)^2$, since $\sin^2((2n+1)\pi/2)=1$. Splitting the summable family into even and odd indices proves the last identity and its ordered version.
+
+**Lean declarations:** Definitions: `Rudin.Chapter08.exercise12Indicator`, `Rudin.Chapter08.exercise12Periodic`, `Rudin.Chapter08.exercise12Sample`. Coefficients and integrability: `Rudin.Chapter08.exercise12_integral_restrict`, `Rudin.Chapter08.exercise12_coefficient_zero`, `Rudin.Chapter08.exercise12_coefficient`, `Rudin.Chapter08.exercise12_memLp`, `Rudin.Chapter08.exercise12_energy`, `Rudin.Chapter08.exercise12_coeff_norm`, `Rudin.Chapter08.exercise12_riemann`, `Rudin.Chapter08.exercise12_periodic`, `Rudin.Chapter08.exercise12_periodic_eq`, `Rudin.Chapter08.exercise12_periodic_riemann`, `Rudin.Chapter08.exercise12_periodic_coefficient`. Series: `Rudin.Chapter08.exercise12_parseval`, `Rudin.Chapter08.exercise12_sine_square_sum`, `Rudin.Chapter08.exercise12_ordered_sine_square_sum`, `Rudin.Chapter08.exercise12_limit_at_zero`, `Rudin.Chapter08.exercise12_partial_zero`, `Rudin.Chapter08.exercise12_sine_series`, `Rudin.Chapter08.exercise12_odd_square_sum`, `Rudin.Chapter08.exercise12_ordered_odd_square_sum`. Integral: `Rudin.Chapter08.exercise12_sample_bounds`, `Rudin.Chapter08.exercise12_sample_measurable`, `Rudin.Chapter08.exercise12_sinc_dominant`, `Rudin.Chapter08.exercise12_dominant_integrable`, `Rudin.Chapter08.exercise12_steps_integrable`, `Rudin.Chapter08.exercise12_cells_cover`, `Rudin.Chapter08.exercise12_cells_disjoint`, `Rudin.Chapter08.exercise12_cell_integral`, `Rudin.Chapter08.exercise12_riemann_sum_hasSum`, `Rudin.Chapter08.exercise12_sinc_sq_integrable`, `Rudin.Chapter08.exercise12_sample_limit`, `Rudin.Chapter08.exercise12_step_integrals_limit`, `Rudin.Chapter08.exercise12_step_integral`, `Rudin.Chapter08.exercise12_sinc_square_integral`, `Rudin.Chapter08.exercise12_sinc_square_improper`, `Rudin.Chapter08.exercise12_sinc_square_at_zero`, `Rudin.Chapter08.exercise12_sinc_square_riemann`.
 
 <a id="r08e13"></a>
-### 8.13 — Fourier coefficients and Parseval for the sawtooth
+### 8.13 — Parseval for the sawtooth and the reciprocal-square sum
 
 **Lean source:** [Exercise13.lean](../../Math/Rudin/Chapter08/Exercise13.lean).
 
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
-**Statement.** The inventory asks to apply Parseval to the periodic extension of $f(x)=x$ on $[0,2\pi)$ and derive
-
-$$
-\sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6}.
-$$
-
-**Partial coverage.** The file proves the Fourier data, the $L^2$ hypothesis, the energy integral, and Parseval's identity below. It does not state or prove the final reciprocal-square identity. The single inventory obligation remains `todo`.
-
-The sawtooth is defined as a function $s:\mathbb R/(2\pi\mathbb Z)\to\mathbb C$ by choosing the representative $x\in[0,2\pi)$ and setting $s([x])=x$. The coefficient theorems are stated directly for the representative function $f:\mathbb R\to\mathbb C$, $f(x)=x$, integrated over $[0,2\pi]$. Using the coefficient convention from Exercise 8.12, put $c_n=c_n(0,f)$. Then
+**Statement.** Define the sawtooth on $\mathbb R/(2\pi\mathbb Z)$ by taking the representative $x\in[0,2\pi)$ and assigning it the complex value $x$. Its periodic real-line representative has value zero at every multiple of $2\pi$, including $2\pi$ itself. Its Fourier coefficients, with the normalization
 
 $$
-c_0=\pi,\qquad c_n=\frac{i}{n}\quad(n\in\mathbb Z,\ n\ne0).
+c_n=\frac{1}{2\pi}\int_0^{2\pi}x e^{-inx}\,dx,
 $$
 
-The representative belongs to $L^2$ for Lebesgue measure restricted to $(0,2\pi]$, and its normalized energy is
+are
 
 $$
-\frac{1}{2\pi}\int_0^{2\pi}|f(x)|^2\,dx=\frac{4\pi^2}{3}.
+c_0=\pi,\qquad c_n=\frac{i}{n}\quad(n\in\mathbb Z\setminus\{0\}).
 $$
 
-Consequently the family of squared coefficient norms is summable over $\mathbb Z$, with
+The representative $x\mapsto x$ belongs to $L^2$ on $(0,2\pi]$, its normalized energy is $4\pi^2/3$, and Parseval gives
 
 $$
 \sum_{n\in\mathbb Z}|c_n|^2=\frac{4\pi^2}{3}.
 $$
 
-**Proof.** At frequency zero, the exponential in the coefficient integral is $1$. Integration of the real identity function, followed by its inclusion in $\mathbb C$, gives
+Consequently,
 
 $$
-c_0=\frac{1}{2\pi}\int_0^{2\pi}x\,dx
-=\frac{1}{2\pi}\left[\frac{x^2}{2}\right]_0^{2\pi}
-=\pi.
+\sum_{n=1}^{\infty}\frac{1}{n^2}=\frac{\pi^2}{6}.
 $$
 
-Let $n\in\mathbb Z\setminus\{0\}$. First, the constant function $1$ has coefficient zero at frequency $n$: it is the zeroth Fourier character, and distinct characters are orthogonal. The file uses this fact in the interval Fourier differentiation formula for $f(x)=x$, whose derivative is the integrable constant function $1$. In ordinary integration-by-parts notation, the same calculation is
+Both summability and convergence of the ordered partial sums to this value are proved.
+
+**Proof.** The circle construction agrees with $x\mapsto x$ for every $0\le x<2\pi$. The standard coefficient formula for a lifted half-open representative identifies its circle coefficients with the displayed interval integrals. The different assigned value at $2\pi$ does not change any integral.
+
+For the zero coefficient, integration gives
+
+$$
+c_0=\frac{1}{2\pi}\left[\frac{x^2}{2}\right]_0^{2\pi}=\pi.
+$$
+
+For a nonzero integer $n$, the constant function $1$ has coefficient zero at frequency $n$ by orthogonality of Fourier characters. Apply the interval Fourier differentiation formula to $x\mapsto x$, whose derivative is the integrable constant $1$. Equivalently, integration by parts gives
 
 $$
 \int_0^{2\pi}x e^{-inx}\,dx
 =\left[\frac{x e^{-inx}}{-in}\right]_0^{2\pi}
--\frac{1}{-in}\int_0^{2\pi}e^{-inx}\,dx.
++\frac{1}{in}\int_0^{2\pi}e^{-inx}\,dx
+=\frac{2\pi i}{n},
 $$
 
-The last integral vanishes by the constant-function coefficient calculation. Since $n$ is an integer, $e^{-2\pi in}=1$, so the boundary term is $2\pi/(-in)=2\pi i/n$. Division by $2\pi$ gives $c_n=i/n$. The condition $n\ne0$ permits the divisions. This argument applies to both positive and negative integers.
+because $e^{-2\pi in}=1$ and the last integral is zero. Division by $2\pi$ yields $c_n=i/n$, including negative $n$.
 
-To verify the $L^2$ hypothesis for this actual representative, observe that $x\mapsto(x:\mathbb C)$ is continuous and hence measurable. Almost every point for the restricted measure lies in $(0,2\pi]$. At each such point,
-
-$$
-|f(x)|=|x|=x\le2\pi.
-$$
-
-Thus the representative is essentially bounded on this interval. Its restricted Lebesgue measure is finite, so the $L^\infty$ bound implies membership in $L^2$. This proves the precise hypothesis needed by the interval Parseval theorem.
-
-For the energy, $|(x:\mathbb C)|^2=|x|^2=x^2$ for every real $x$. Therefore
+On $(0,2\pi]$, the representative is measurable and its norm is at most $2\pi$. This proves the actual $L^2$ hypothesis needed for interval Parseval. Since $|x|^2=x^2$,
 
 $$
-\frac{1}{2\pi}\int_0^{2\pi}|f(x)|^2\,dx
+\frac{1}{2\pi}\int_0^{2\pi}x^2\,dx
 =\frac{1}{2\pi}\left[\frac{x^3}{3}\right]_0^{2\pi}
 =\frac{4\pi^2}{3}.
 $$
 
-Apply the general Parseval identity from Exercise 8.12 with $a=0$ and the verified $L^2$ hypothesis. Substitution of the energy value proves the asserted summability and sum. This is the last theorem in the file. The remaining step for the inventory target is to substitute the coefficient values, separate the zero frequency, pair positive and negative frequencies, and solve for the positive-integer reciprocal-square sum. That step is not formalized here.
+Apply Parseval with this energy. The zero mode contributes $\pi^2$, and each nonzero mode has squared norm $1/n^2$. Splitting off zero and pairing positive with negative frequencies gives
 
-**Lean declarations:** Theorems: `Rudin.Chapter08.exercise13_coefficient_zero`, `Rudin.Chapter08.exercise13_coefficient`, `Rudin.Chapter08.exercise13_memLp`, `Rudin.Chapter08.exercise13_energy`, `Rudin.Chapter08.exercise13_parseval`. Definition: `Rudin.Chapter08.exercise13Sawtooth`.
+$$
+\frac{4\pi^2}{3}=\pi^2+2\sum_{n=1}^{\infty}\frac{1}{n^2}.
+$$
+
+Subtract $\pi^2$ and divide by $2$. Parseval supplies summability before this regrouping, so it proves the reciprocal-square identity without a precomputed zeta value. The ordered partial-sum limit follows from summability.
+
+**Lean declarations:** Definition: `Rudin.Chapter08.exercise13Sawtooth`. Results: `Rudin.Chapter08.exercise13_periodic_value`, `Rudin.Chapter08.exercise13_periodic_coefficient`, `Rudin.Chapter08.exercise13_coefficient_zero`, `Rudin.Chapter08.exercise13_coefficient`, `Rudin.Chapter08.exercise13_memLp`, `Rudin.Chapter08.exercise13_energy`, `Rudin.Chapter08.exercise13_parseval`, `Rudin.Chapter08.exercise13_coeff_norm`, `Rudin.Chapter08.exercise13_square_sum`, `Rudin.Chapter08.exercise13_ordered_square_sum`.
+
+<a id="r08e14"></a>
+### 8.14 — A quadratic cosine expansion and two power sums
+
+**Lean source:** [Exercise14.lean](../../Math/Rudin/Chapter08/Exercise14.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For every $x\in[-\pi,\pi]$, including both endpoints,
+
+$$
+(\pi-|x|)^2=\frac{\pi^2}{3}+4\sum_{n=1}^{\infty}\frac{\cos(nx)}{n^2}.
+$$
+
+The series is absolutely convergent. Moreover,
+
+$$
+\sum_{n=1}^{\infty}\frac1{n^2}=\frac{\pi^2}{6},\qquad
+\sum_{n=1}^{\infty}\frac1{n^4}=\frac{\pi^4}{90}.
+$$
+
+All three identities also hold as limits of the indicated finite sums.
+
+**Proof.** Apply the library's Bernoulli-polynomial cosine-series identity with index $1$ and coordinate $y=|x|/(2\pi)$. Here $0\le y\le1/2$, and evenness of cosine gives $\cos(2\pi ny)=\cos(nx)$. Substitution of $B_2(y)=y^2-y+1/6$ gives the displayed expansion. The zero-frequency term of the totalized natural-index series is zero; removing it gives exactly the positive-frequency series above. Absolute convergence also follows from $|\cos(nx)|\le1$ and convergence of the reciprocal-square series. Setting $x=0$ and dividing by $4$ gives its sum.
+
+For the fourth powers, represent the same periodic function by $q(t)=(t-\pi)^2$ on $[0,2\pi]$. On negative inputs in $[-\pi,0)$, adding $2\pi$ gives $q(x+2\pi)=(\pi-|x|)^2$; the nonnegative half and both endpoints agree as well. Its complex Fourier coefficients, with normalization $c_n=(2\pi)^{-1}\int_0^{2\pi}q(t)e^{-int}\,dt$, are
+
+$$
+c_0=\frac{\pi^2}{3},\qquad c_n=\frac{2}{n^2}\quad(n\ne0).
+$$
+
+Integration by parts first gives coefficient $i/n$ for $t-\pi$ and then the stated coefficient for $q$; the endpoint values of $q$ agree. Direct integration gives $(2\pi)^{-1}\int_0^{2\pi}|q|^2=\pi^4/5$. The bounded continuous function $q$ is square integrable, so Parseval yields
+
+$$
+\frac{\pi^4}{5}=\frac{\pi^4}{9}+8\sum_{n=1}^{\infty}\frac1{n^4}.
+$$
+
+Solving gives $\pi^4/90$. Convergence of the ordered finite sums follows from the proved series sums.
+
+**Lean declarations:** `Rudin.Chapter08.exercise14_frequency`, `Rudin.Chapter08.exercise14_cosine_hasSum`, `Rudin.Chapter08.exercise14_fourier_expansion`, `Rudin.Chapter08.exercise14_ordered_fourier`, `Rudin.Chapter08.exercise14_square_sum`, `Rudin.Chapter08.exercise14_ordered_square_sum`, `Rudin.Chapter08.exercise14_periodic_value`, `Rudin.Chapter08.exercise14_periodic_coefficient`, `Rudin.Chapter08.exercise14_coefficient_zero`, `Rudin.Chapter08.exercise14_coefficient`, `Rudin.Chapter08.exercise14_energy`, `Rudin.Chapter08.exercise14_parseval`, `Rudin.Chapter08.exercise14_fourth_power_sum`, `Rudin.Chapter08.exercise14_ordered_fourth_power_sum`.
+
+<a id="r08e15"></a>
+### 8.15 — Fejer kernels and uniform convergence
+
+**Lean source:** [Exercise15.lean](../../Math/Rudin/Chapter08/Exercise15.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Use the Fourier conventions
+
+$$
+c_n(f)=\frac1{2\pi}\int_{-\pi}^{\pi}e^{-int}f(t)\,dt,\qquad
+s_N(f;x)=\sum_{n=-N}^{N}c_n(f)e^{inx}.
+$$
+
+For $N\ge0$, put $D_N(t)=\sum_{n=-N}^{N}e^{int}=1+2\sum_{k=1}^{N}\cos(kt)$ and $K_N=(N+1)^{-1}\sum_{n=0}^{N}D_n$. Then $K_N$ is continuous, even, and nonnegative, and
+
+$$
+K_N(t)=\frac{1-\cos((N+1)t)}{(N+1)(1-\cos t)}\quad(t\notin2\pi\mathbb Z),\qquad
+K_N(2\pi k)=N+1.
+$$
+
+It satisfies $(2\pi)^{-1}\int_{-\pi}^{\pi}K_N(t)\,dt=1$. If $0<\delta\le|t|\le\pi$, then
+
+$$
+K_N(t)\le\frac{2}{(N+1)(1-\cos\delta)}.
+$$
+
+For every complex-valued, $2\pi$-periodic function $f$ that is Riemann integrable on $[-\pi,\pi]$, its arithmetic Fourier mean satisfies
+
+$$
+\sigma_N(f;x)=\frac1{N+1}\sum_{n=0}^{N}s_n(f;x)
+=\frac1{2\pi}\int_{-\pi}^{\pi}K_N(t)f(x-t)\,dt.
+$$
+
+The coefficient integrals and the Dirichlet and Fejer convolution integrals are genuine tagged Riemann integrals, with the same values as the interval integrals. If $f$ is continuous on $\mathbb R$, these means converge uniformly to $f$ on $[-\pi,\pi]$.
+
+**Proof.** Pair positive and negative exponentials to obtain the cosine formula for $D_N$. The cosine addition identities give
+
+$$
+(1-\cos t)D_n(t)=\cos(nt)-\cos((n+1)t).
+$$
+
+Summing this identity gives the quotient formula away from $2\pi\mathbb Z$. At a multiple of $2\pi$, $D_n=2n+1$, whose arithmetic mean is $N+1$. Continuity and evenness follow from the finite cosine sums, so these are the continuous values at the removable singularities. The quotient has nonnegative numerator and denominator; the values at the singularities are positive. Each nonconstant cosine has integral zero on $[-\pi,\pi]$, hence $\int D_n=2\pi$ and $\int K_N=2\pi$. Finally, cosine decreases on $[0,\pi]$, so $1-\cos t\ge1-\cos\delta>0$ in the stated region, while the numerator is at most $2$. This proves the off-zero bound, including $\delta=\pi$ when the region is nonempty.
+
+For each Fourier mode, change variables $u=x-t$ and use periodicity to move the resulting interval back to $[-\pi,\pi]$. This gives
+
+$$
+\frac1{2\pi}\int_{-\pi}^{\pi}e^{int}f(x-t)\,dt=c_n(f)e^{inx}.
+$$
+
+Sum over the finite symmetric set of modes to obtain the Dirichlet convolution, then average over $n=0,\ldots,N$. Periodic Riemann integrability extends to every finite interval, and affine reflection preserves it. Multiplication by a continuous kernel preserves the tagged Riemann integral. These facts construct the source integrals before identifying their values with the interval integrals. The same Fourier normalization also gives Parseval for any square-integrable function on an interval of length $2\pi$.
+
+Evenness and total mass give $\int_0^\pi K_N=\pi$. The off-zero estimate implies that $K_N/\pi$ tends uniformly to zero outside every neighborhood of zero in $[-\pi,\pi]$. Thus the half-interval approximate-identity theorem applies: for any real Banach space $E$, integrable $g:(0,\pi]\to E$, and right limit $g(t)\to a$ at zero,
+
+$$
+\int_0^\pi\frac{K_N(t)}\pi g(t)\,dt\longrightarrow a.
+$$
+
+Indeed, near zero the difference $g-a$ is small and the kernel has mass at most one; away from zero its integral tends to zero by uniform kernel decay and integrability. Reflecting the negative half of the convolution gives
+
+$$
+\sigma_N(f;x)=\int_0^\pi\frac{K_N(t)}\pi\frac{f(x-t)+f(x+t)}2\,dt.
+$$
+
+For continuous $f$, apply the Banach-valued result with $E=C([-\pi,\pi],\mathbb C)$ and $g(t)(x)=(f(x-t)+f(x+t))/2$. Joint continuity and compactness make this a continuous map into the supremum norm, with $g(0)=f$. Convergence in that norm is the required uniform convergence.
+
+**Lean declarations:** `Rudin.Chapter08.dirichletKernel_eq_int_sum`, `Rudin.Chapter08.exercise15_kernel_formula`, `Rudin.Chapter08.exercise15_kernel_at_multiple`, `Rudin.Chapter08.exercise15_continuous`, `Rudin.Chapter08.exercise15_nonnegative`, `Rudin.Chapter08.dirichletKernel_integral`, `Rudin.Chapter08.exercise15_mass`, `Rudin.Chapter08.exercise15_off_zero_bound`, `Rudin.Chapter08.fourierCoefficient_riemann`, `Rudin.Chapter08.fourierPartialSum_eq_int_sum`, `Rudin.Chapter08.fourier_mode_convolution`, `Rudin.Chapter08.fourierPartialSum_convolution`, `Rudin.Chapter08.exercise15_convolution`, `Rudin.Chapter08.periodic_riemann_reflected_source`, `Rudin.Chapter08.exercise15_convolution_riemann`, `Rudin.Chapter08.fourierPartialSum_convolution_riemann`, `Rudin.Chapter08.fejerKernel_even`, `Rudin.Chapter08.fejerKernel_half_mass`, `Rudin.Chapter08.fejerKernel_uniform_off_zero`, `Rudin.Chapter08.fejerKernel_half_limit`, `Rudin.Chapter08.fejerMean_half_convolution`, `Rudin.Chapter08.exercise15_uniform_fejer`, `Rudin.Chapter08.fourierMonomial_bridge`, `Rudin.Chapter08.fourierCoefficient_bridge`, `Rudin.Chapter08.source_parseval`.
+
+<a id="r08e16"></a>
+### 8.16 — Fejer convergence at a jump
+
+**Lean source:** [Exercise16.lean](../../Math/Rudin/Chapter08/Exercise16.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f:\mathbb R\to\mathbb C$ be $2\pi$-periodic and Riemann integrable on $[-\pi,\pi]$. At any real $x$ where the finite one-sided limits $L=f(x-)$ and $R=f(x+)$ exist,
+
+$$
+\sigma_N(f;x)\longrightarrow\frac{L+R}{2}.
+$$
+
+This is a pointwise assertion at every such $x$, not an almost-everywhere assertion. At joins of periods the limits are those of the periodic function; its assigned value at $x$ need not equal either limit.
+
+**Proof.** As $t\downarrow0$, the points $x-t$ approach $x$ from the left and $x+t$ approach it from the right. Consequently $g(t)=(f(x-t)+f(x+t))/2$ tends to $(L+R)/2$. The translated and reflected functions are integrable on $[0,\pi]$. Exercise 15 expresses $\sigma_N(f;x)$ as $\int_0^\pi(K_N/\pi)g$; its half-interval approximate-identity theorem gives the limit.
+
+**Lean declarations:** `Rudin.Chapter08.exercise16_pointwise_fejer`.
+
+<a id="r08e17"></a>
+### 8.17 — Fourier convergence under monotonicity
+
+**Lean source:** [Exercise17.lean](../../Math/Rudin/Chapter08/Exercise17.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f:\mathbb R\to\mathbb R$ be either nondecreasing or nonincreasing on $[-\pi,\pi)$, with $|f|\le M$ there. For every integer $n$, including zero and negative integers,
+
+$$
+|n c_n(f)|\le\frac{2M}{\pi}.
+$$
+
+For its $2\pi$-periodic extension $F$, both finite one-sided limits exist at every real $x$, and
+
+$$
+s_N(f;x)\longrightarrow\frac{F(x-)+F(x+)}2.
+$$
+
+In particular, this holds for already periodic $f$. More locally, suppose $f$ is Riemann integrable on $[-\pi,\pi]$, $-\pi\le\alpha<\beta\le\pi$, and $f$ is monotone in either direction on $(\alpha,\beta)$. At each $x$ in that open interval both one-sided limits exist and $s_N(f;x)$ tends to their average. No monotonicity outside that interval is required. Existence of the local one-sided limits uses only the local monotonicity, without the global Riemann-integrability assumption.
+
+**Proof.** First let $f$ be nondecreasing on the closed fundamental interval. Apply the Chapter 6 Riemann–Stieltjes integration-by-parts theorem to $G(t)=e^{-int}$, whose modulus is one. It constructs the integrals and gives
+
+$$
+\int_{-\pi}^{\pi}f(t)G'(t)\,dt
+=f(\pi)G(\pi)-f(-\pi)G(-\pi)-\int_{-\pi}^{\pi}G\,df.
+$$
+
+The last integral has modulus at most $f(\pi)-f(-\pi)\le2M$, and the two boundary terms contribute at most $2M$. Since $G'=-inG$, division by $2\pi$ gives the asserted bound. For half-open data set the missing right endpoint to $M$; this preserves monotonicity and the bound. Changing that single endpoint does not change any Fourier coefficient. Apply the increasing result to $-f$ for the decreasing case. The estimate is trivial at $n=0$.
+
+Bounded monotone functions have finite endpoint and interior one-sided limits. Reduction modulo $2\pi$ and periodic translation transfer these limits to every real point, including the joined endpoints. They are also Riemann integrable: their interior discontinuities form a countable set, and endpoint changes do not affect integrability. Exercise 16 therefore gives convergence of the arithmetic Fourier means. If $S_N=s_N(f;x)$, the coefficient bound and $|e^{inx}|=1$ give
+
+$$
+|N(S_N-S_{N-1})|\le\frac{4M}{\pi}\quad(N\ge1).
+$$
+
+The bounded-increment Tauberian converse proved in Chapter 3, Exercise 14(e), then transfers convergence of the means to $S_N$ itself. This uses the valid final converse; the zero-bound correction to that earlier exercise's strict intermediate estimate does not require an additional assumption here.
+
+For the local assertion, choose $\alpha<c<x<d<\beta$ and put $g(t)=f(\max(c,\min(d,t)))$. This is globally monotone, bounded on the fundamental interval, and equal to $f$ near $x$. Its Fourier sums have the asserted limit, and local equality identifies its two limits with those of $f$.
+
+The proved localization result applies to interval-integrable complex functions $u,v$, an interior point $x\in(-\pi,\pi)$, a radius $\delta>0$ with $u=v$ whenever $|t-x|<\delta$, and a uniform bound on $|u-v|$ on the closed fundamental interval. Define $h(t)=(u(t)-v(t))/(1-\cos(x-t))$ away from that neighborhood and zero inside. The denominator is bounded away from zero on the remaining compact set, so $h$ is square integrable. The identity
+
+$$
+(1-\cos y)D_N(y)=\cos(Ny)-\cos((N+1)y)
+$$
+
+expresses $s_N(u;x)-s_N(v;x)$ as the difference of two normalized cosine integrals of $h$. Parseval implies that its Fourier coefficients tend to zero along both positive and negative frequencies, so both cosine integrals tend to zero. The boundedness required here follows for $f$ from its literal Riemann integrability and for $g$ from monotonicity. Localization completes the proof and also confirms existence of the local one-sided limits without assumptions at $\alpha$ or $\beta$.
+
+**Lean declarations:** `Rudin.Chapter08.exercise17_coefficient_bound`, `Rudin.Chapter08.exercise17_bounded_coefficients`, `Rudin.Chapter08.exercise17_fourier_limit`, `Rudin.Chapter08.exercise17_one_sided_limits`, `Rudin.Chapter08.exercise17_pointwise`, `Rudin.Chapter08.exercise17_periodic_extension_limit`, `Rudin.Chapter08.exercise17_local_monotone`, `Rudin.Chapter08.exercise17_local_one_sided_limits`, `Rudin.Chapter08.exercise17_localization`.
+
+<a id="r08e18"></a>
+### 8.18 — Two strict trigonometric signs
+
+**Lean source:** [Exercise18.lean](../../Math/Rudin/Chapter08/Exercise18.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Throughout $0<x<\pi/2$, both functions are strictly negative:
+
+$$
+x^3-\sin^2x\tan x<0,\qquad
+2x^2-\sin^2x-x\tan x<0.
+$$
+
+**Proof.** Set $A(t)=\sin t-t\cos t$. It vanishes at zero and $A'(t)=t\sin t>0$, so $A(t)>0$ on the stated interval. Next set $B(t)=t(1+2\cos^2t)-3\sin t\cos t$. Again $B(0)=0$, while $B'(t)=4\sin t\,A(t)>0$, hence $B(t)>0$.
+
+Use the continuous value $\operatorname{sinc}(0)=1$. For $0<t<\pi/2$, differentiation gives
+
+$$
+\frac{d}{dt}\frac{\operatorname{sinc}^3t}{\cos t}
+=\frac{\sin^2t\,t^2 B(t)}{(t^3\cos t)^2}>0.
+$$
+
+The quotient is continuous from zero to $x$ because cosine is positive there, and its value at zero is $1$. Thus $\sin^3x/(x^3\cos x)>1$, proving the first strict sign.
+
+Put $a=\sin^2x$ and $b=x\tan x$. Both are positive. Multiplication of the first inequality by $x>0$ gives $ab>x^4$. Since $(a-b)^2\ge0$, $(a+b)^2\ge4ab>4x^4$. Positivity of $a+b$ gives $a+b>2x^2$, which is the second strict sign. No endpoint assertion at $\pi/2$, where tangent is undefined, is used.
+
+**Lean declarations:** `Rudin.Chapter08.exercise18_first_sign`, `Rudin.Chapter08.exercise18_second_sign`.
+
+<a id="r08e19"></a>
+### 8.19 — Means along an irrational rotation
+
+**Lean source:** [Exercise19.lean](../../Math/Rudin/Chapter08/Exercise19.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** If $f:\mathbb R\to\mathbb C$ is continuous and $2\pi$-periodic and $\alpha/\pi$ is irrational, then for every real $x$,
+
+$$
+\frac1N\sum_{n=1}^{N}f(x+n\alpha)
+\longrightarrow\frac1{2\pi}\int_{-\pi}^{\pi}f(t)\,dt.
+$$
+
+The same statement holds for real-valued $f$. The displayed integral is also its tagged Riemann integral.
+
+**Proof.** Regard $f$ as a continuous function on $\mathbb R/(2\pi\mathbb Z)$. The zero Fourier mode is constant, so its average and mean are both $1$. For a nonzero integer $k$, irrationality implies $q=e^{ik\alpha}\ne1$: otherwise $k\alpha=2\pi m$ for an integer $m$, making $\alpha/\pi$ rational. The geometric-sum formula gives
+
+$$
+\frac1N\sum_{n=1}^{N}e^{ik(x+n\alpha)}
+=\frac{e^{ikx}q}{N}\frac{q^N-1}{q-1}\longrightarrow0,
+$$
+
+because $|q|=1$ and $|q^N-1|\le2$. This equals the period mean of the nonzero mode.
+
+Both the rotation average and normalized period integral have operator norm at most one in the supremum norm. Their difference therefore has Lipschitz constant at most two, independently of $N$. Convergence to zero holds on the linear span of the Fourier modes, which is dense in the continuous functions on the circle. The uniform operator bound makes the set of functions with this convergence closed, so it contains every continuous function. Conversion of normalized Haar measure on the circle to an interval of length $2\pi$ gives the displayed mean. Taking real parts gives the real version. Continuity on the closed interval constructs the tagged Riemann value and identifies it with the interval integral. The harmless $N=0$ value of the formal sequence has no effect on its limit.
+
+**Lean declarations:** `Rudin.Chapter08.exercise19_irrational_rotation_mean`, `Rudin.Chapter08.exercise19_real`, `Rudin.Chapter08.exercise19_riemann_integral`.
+
+<a id="r08e20"></a>
+### 8.20 — Factorial bounds from logarithmic graphs
+
+**Lean source:** [Exercise20.lean](../../Math/Rudin/Chapter08/Exercise20.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Define a lower graph $F$ by the straight chord from $(m,\log m)$ to $(m+1,\log(m+1))$, and an upper graph $G$ by the tangent at $m$, restricted to $[m-1/2,m+1/2)$, for integers $m\ge1$. Explicitly,
+
+$$
+F(x)=(m+1-x)\log m+(x-m)\log(m+1)\quad(m\le x\le m+1),
+$$
+
+$$
+G(x)=x/m-1+\log m\quad(m-1/2\le x<m+1/2).
+$$
+
+Then $F(x)\le\log x\le G(x)$ for $x\ge1$. For every integer $n\ge1$ the genuine Darboux integral values are
+
+$$
+\int_1^n F=\log(n!)-\tfrac12\log n,\qquad
+\int_1^n G=\log(n!)-\tfrac12\log n+\tfrac18-\frac1{8n},
+$$
+
+$$
+\int_1^n\log x\,dx=n\log n-n+1.
+$$
+
+For $n\ge2$ this gives $\int_1^n F>-1/8+\int_1^n G$ and
+
+$$
+\frac78<\log(n!)-(n+\tfrac12)\log n+n<1,
+$$
+
+$$
+e^{7/8}<\frac{n!}{(n/e)^n\sqrt n}<e.
+$$
+
+**Proof.** The graphs can be specified globally using $m=\lfloor x\rfloor$ for $F$ and $m=\lfloor x+1/2\rfloor$ for $G$ on $x\ge1$. Adjacent chord formulas agree at integer endpoints. The upper cells are half-open and select exactly one tangent value at each join. Concavity of logarithm puts each chord below its graph, strictly below inside a unit interval. The inequality $\log u\le u-1$, applied to $u=x/m>0$, puts logarithm below the selected tangent.
+
+The chord integral on $[m,m+1]$ is $(\log m+\log(m+1))/2$. Adding cells gives the formula for $\int F$. Split each interval $[m,m+1]$ at $m+1/2$ for $G$. Integrating its two affine pieces gives
+
+$$
+\int_m^{m+1}G=\frac{\log m+\log(m+1)}2+\frac1{8m}-\frac1{8(m+1)}.
+$$
+
+The correction telescopes. The finite endpoint changes in the tangent pieces do not affect the Darboux integral; boundedness and continuity except at those endpoints establish its existence. The formulas also cover $n=1$, where all integrals vanish. Their difference is $1/8-1/(8n)<1/8$, proving the strict integral comparison.
+
+Integration of $F\le\log\le G$ is legitimate for these constructed integrals. The first comparison is strict for $n\ge2$, because $F<\log$ throughout $(1,2)$, a set of positive length. If $A_n=\log(n!)-(n+1/2)\log n+n$, the two comparisons give $A_n<1$ and $A_n\ge7/8+1/(8n)>7/8$. Finally the positive factorial ratio has logarithm $A_n$, using $\log\sqrt n=(\log n)/2$. Exponentiation gives the two ratio bounds. No Stirling asymptotic is needed.
+
+**Lean declarations:** `Rudin.Chapter08.exercise20_lower_graph`, `Rudin.Chapter08.exercise20_upper_graph`, `Rudin.Chapter08.exercise20_log_bounds`, `Rudin.Chapter08.exercise20_lower_integral`, `Rudin.Chapter08.exercise20_upper_integral`, `Rudin.Chapter08.exercise20_integral_comparison`, `Rudin.Chapter08.exercise20_log_integral`, `Rudin.Chapter08.exercise20_log_factorial`, `Rudin.Chapter08.exercise20_factorial_ratio`.
+
+<a id="r08e21"></a>
+### 8.21 — Logarithmic growth of Dirichlet kernel norms
+
+**Lean source:** [Exercise21.lean](../../Math/Rudin/Chapter08/Exercise21.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Put $L_n=(2\pi)^{-1}\int_{-\pi}^{\pi}|D_n(t)|\,dt$. For every integer $n\ge1$,
+
+$$
+\frac4{\pi^2}\log n<L_n,\qquad
+0\le L_n-\frac4{\pi^2}\log n\le3+\frac4{\pi^2}.
+$$
+
+Thus the requested positive lower-bound constant can be $4/\pi^2$, and the error sequence is bounded in absolute value. More precisely, with $H_n=\sum_{j=1}^{n}1/j$, the source proves $4H_n/\pi^2\le L_n\le3+4H_n/\pi^2$ even for $n=0$.
+
+**Proof.** The sine addition formulas and induction give $\sin(t/2)D_n(t)=\sin((n+1/2)t)$. For $0<u\le\pi/2$, elementary sine estimates imply
+
+$$
+0\le\frac1{\sin u}-\frac1u\le1.
+$$
+
+For the upper bound use $\sin u\ge u/2$ and $\sin u\ge u-u^3/6$, which imply $u-\sin u\le u\sin u$ in this range. Since $|\sin v|\le1$, multiplication gives
+
+$$
+(2n+1)|\operatorname{sinc}((2n+1)u)|
+\le |D_n(2u)|
+\le(2n+1)|\operatorname{sinc}((2n+1)u)|+1.
+$$
+
+Evenness and the change of variables $t=2u$ express $L_n$ as $(2/\pi)\int_0^{\pi/2}|D_n(2u)|\,du$. The main comparison integral becomes $\int_0^{(n+1/2)\pi}|\operatorname{sinc}v|\,dv$.
+
+On each sine lobe $[k\pi,(k+1)\pi]$, $\int|\sin v|=2$. Dividing by the largest denominator gives a lower lobe bound $2/((k+1)\pi)$; for $k\ge1$, dividing by the smallest denominator gives an upper bound $2/(k\pi)$. The initial lobe is at most $\pi$ because $|\operatorname{sinc}|\le1$. Positivity permits comparison of the cutoff $(n+1/2)\pi$ with $n\pi$ and $(n+1)\pi$. Adding the lobe estimates and the additive kernel error gives precisely the stated harmonic bounds. All integrands used here are continuous at zero through the sinc value, so no singular integral is assumed.
+
+Finally $\log(n+1)\le H_n\le1+\log n$ for $n\ge1$, and $\log n<\log(n+1)$. Substitution gives the strict logarithmic lower bound, including $n=1$, and the explicit two-sided error estimate. Nonnegativity of that error converts its upper bound into an absolute-value bound.
+
+**Lean declarations:** `Rudin.Chapter08.e21_harmonic_bounds`, `Rudin.Chapter08.exercise21_log_lower_bound`, `Rudin.Chapter08.exercise21_error_bounds`, `Rudin.Chapter08.exercise21_bounded_error`.
 
 <a id="r08e22"></a>
 ### 8.22 — The binomial series and its differential equation
 **Lean source:** [Exercise22.lean](../../Math/Rudin/Chapter08/Exercise22.lean).
-**Inventory status:** Pending verification.
+**Inventory status:** Verified as stated.
 
 **Statement.** For $\alpha\in\mathbb R$, define
 
@@ -5442,11 +5811,291 @@ For $n=0$ the empty product gives one. Substitute exponent $-\alpha$ and argumen
 
 **Lean declarations:** `exercise22_coefficient`, `exercise22_hasSum`, `exercise22_ordered_convergence`, `exercise22_terminates`, `exercise22_differentiable`, `exercise22_series_ode`, `exercise22_initial_value`, `exercise22_ode_unique`, `exercise22_binomial_identity`, `exercise22_newton`, `exercise22_gamma_hasSum`, `exercise22_gamma_series`.
 
+<a id="r08e23"></a>
+### 8.23 — Integral index and signed turns
+
+**Lean source:** [Exercise23.lean](../../Math/Rudin/Chapter08/Exercise23.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $a\le b$ and let $\gamma:[a,b]\to\mathbb C$ be closed and nowhere zero. Assume a continuous velocity $v$ gives its derivative within $[a,b]$ at every point, including the endpoints. Then
+
+$$
+\operatorname{Ind}(\gamma)=\frac1{2\pi i}\int_a^b\frac{v(t)}{\gamma(t)}\,dt\in\mathbb Z.
+$$
+
+The logarithmic derivative has a genuine tagged Riemann integral on the whole interval and every closed subinterval. Its integral index agrees with that computed using the canonical within derivative. For every integer $n$, the curve $e^{int}$ on $[0,2\pi]$ has index $n$, including $n=0$ and negative $n$. There exist continuous real functions $\rho>0$ and $\theta$ on $[a,b]$, with $\theta(a)=0$, such that
+
+$$
+\gamma(t)=\gamma(a)\rho(t)e^{i\theta(t)},\qquad
+\theta(b)-\theta(a)=2\pi\operatorname{Ind}(\gamma).
+$$
+
+**Proof.** The derivative assumption makes $\gamma$ continuous; nonvanishing makes $v/\gamma$ continuous. This constructs its tagged Riemann integrals and identifies them with the interval integrals, also on every ordered subinterval. Put $\Phi(t)=\int_a^t v/\gamma$. The fundamental theorem of calculus supplies its within derivative $v/\gamma$, so differentiation gives
+
+$$
+\frac{d}{dt}\bigl(\gamma(t)e^{-\Phi(t)}\bigr)=0.
+$$
+
+The zero-derivative theorem on a segment makes this product equal to $\gamma(a)$. At $b$, closure and $\gamma(a)\ne0$ imply $e^{\Phi(b)}=1$. The kernel of the complex exponential is $2\pi i\mathbb Z$, hence $\Phi(b)=2\pi i n$ and the index is the integer $n$.
+
+For $e^{int}$ the continuous velocity is $in e^{int}$; its logarithmic derivative is the constant $in$, whose integral is $2\pi i n$. This verifies closure and the index for every integer sign. For the polar representation take $\rho(t)=e^{\operatorname{Re}\Phi(t)}$ and $\theta(t)=\operatorname{Im}\Phi(t)$. The product identity gives the representation, and $\Phi(b)=2\pi i n$ gives the total angular change. Thus positive and negative indices count net turns in opposite orientations, while zero means zero net angular change, not necessarily a constant curve.
+
+On a nondegenerate interval uniqueness of the within derivative identifies $v$ with that derivative. If $a=b$, the integral is zero independently of the nonunique derivative jet, and the index is zero; the same representation has $\rho(a)=1$ and $\theta(a)=0$.
+
+**Lean declarations:** `Rudin.Chapter08.exercise23_integer_index`, `Rudin.Chapter08.IsC1NonzeroLoop.riemann_logDerivative`, `Rudin.Chapter08.IsC1NonzeroLoop.riemann_logDerivative_subinterval`, `Rudin.Chapter08.IsC1NonzeroLoop.index_eq_riemann_value`, `Rudin.Chapter08.IsC1NonzeroLoop.index_eq_derivWithin`, `Rudin.Chapter08.IsC1NonzeroLoop.primitive_derivative`, `Rudin.Chapter08.IsC1NonzeroLoop.primitive_identity`, `Rudin.Chapter08.IsC1NonzeroLoop.exp_integral_eq_one`, `Rudin.Chapter08.exercise23_circle`, `Rudin.Chapter08.exercise23_signed_turns`.
+
+<a id="r08e24"></a>
+### 8.24 — Zero index in the slit plane
+
+**Lean source:** [Exercise24.lean](../../Math/Rudin/Chapter08/Exercise24.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** A closed nonzero curve on $[a,b]$, $a\le b$, with a continuous within derivative as in Exercise 23 has index zero if its entire range is in $\mathbb C\setminus(-\infty,0]$.
+
+**Proof.** The principal logarithm is differentiable on this slit plane. The chain rule gives within derivative $v(t)/\gamma(t)$ for $\log\gamma(t)$. The fundamental theorem of calculus, using the continuous logarithmic derivative, gives
+
+$$
+\int_a^b\frac{v(t)}{\gamma(t)}\,dt
+=\log\gamma(b)-\log\gamma(a)=0.
+$$
+
+The endpoint equality uses closure and the same single-valued logarithm throughout. Normalizing by $2\pi i$ gives index zero, also on a singleton interval.
+
+**Lean declarations:** `Rudin.Chapter08.exercise24_zero_index`.
+
+<a id="r08e25"></a>
+### 8.25 — Stability of the index under a strict perturbation
+
+**Lean source:** [Exercise25.lean](../../Math/Rudin/Chapter08/Exercise25.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $\gamma_1,\gamma_2$ be closed nonzero curves on the same ordered interval $[a,b]$, each with a continuous within derivative $v_1,v_2$. If
+
+$$
+|\gamma_1(t)-\gamma_2(t)|<|\gamma_1(t)|\quad(a\le t\le b),
+$$
+
+then their indices are equal. More generally, the index of their quotient is the difference of their indices.
+
+**Proof.** The quotient $q=\gamma_2/\gamma_1$ is again a closed nonzero curve with continuous within derivative
+
+$$
+q'=\frac{v_2\gamma_1-\gamma_2v_1}{\gamma_1^2},\qquad
+\frac{q'}q=\frac{v_2}{\gamma_2}-\frac{v_1}{\gamma_1}.
+$$
+
+All denominators are nonzero. Integration proves $\operatorname{Ind}(q)=\operatorname{Ind}(\gamma_2)-\operatorname{Ind}(\gamma_1)$. The strict hypothesis gives $|1-q(t)|<1$, and therefore $\operatorname{Re}q(t)>0$. Thus the quotient lies in the slit plane and Exercise 24 gives its index zero. Subtraction proves the claim.
+
+**Lean declarations:** `Rudin.Chapter08.IsC1NonzeroLoop.div`, `Rudin.Chapter08.curveIndex_div`, `Rudin.Chapter08.quotient_mem_slitPlane`, `Rudin.Chapter08.exercise25_index_stability`.
+
+<a id="r08e26"></a>
+### 8.26 — The index of a continuous loop
+
+**Lean source:** [Exercise26.lean](../../Math/Rudin/Chapter08/Exercise26.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $\gamma:[0,2\pi]\to\mathbb C$ be continuous, closed, and nowhere zero. There is $\delta>0$ with $|\gamma(t)|>\delta$ everywhere, and a finite complex trigonometric polynomial $P(t)=\sum_k a_ke^{ikt}$ with $|P(t)-\gamma(t)|<\delta/4$ throughout the closed interval. Such polynomials are closed, continuously differentiable, and nonzero. Their integral indices agree, independently of both the polynomial and the admissible $\delta$. This common integer defines $\operatorname{Ind}(\gamma)$.
+
+It agrees with the integral index when $\gamma$ has a continuous within derivative. Without any derivative assumption, a loop in the slit plane has index zero, and two continuous nonzero loops have equal indices under the strict perturbation condition of Exercise 25. Arbitrarily accurate polynomial approximations can also satisfy $|P-\gamma|<|\gamma|/4$ pointwise. Uniform trigonometric approximation itself needs only continuity and equal endpoint values, not nonvanishing.
+
+**Proof.** Compactness gives a positive minimum of $|\gamma|$; half that minimum is an admissible $\delta$. Identify the two interval endpoints to obtain a continuous function on the circle. Density of the linear span of the integer Fourier modes produces an actual finite trigonometric polynomial within any specified positive uniform error, including at the identified endpoints. Differentiating the finite sum gives continuous velocity $\sum_k a_k ik e^{ikt}$. The quarter-norm estimate excludes zero.
+
+If $p,q$ both approximate $z$ with errors less than $|z|/4$, then
+
+$$
+|p-q|<|z|/2<|p|,
+$$
+
+where the last inequality follows from $|p|>3|z|/4$. Exercise 25 therefore equates the integral indices of any two such polynomials. Every admissible $\delta/4$ approximation meets this relative estimate, even if the two chosen deltas differ. Choose one polynomial and take the integer supplied by Exercise 23; the equality just proved makes the definition independent of the choices. The same comparison works for any smooth quarter-norm approximation. Taking the smooth curve to be $\gamma$ itself proves agreement with its integral index.
+
+If the range of $\gamma$ is in the slit plane, its compact image has a uniform neighborhood still in that open set. Choose the polynomial both inside this neighborhood and within the relative quarter-norm bound. Exercise 24 gives its integral index zero, hence the continuous index is zero.
+
+For two strictly close loops, the positive continuous margin $m(t)=|\gamma_1(t)|-|\gamma_1(t)-\gamma_2(t)|$ has a positive uniform lower bound $\varepsilon$. Choose approximants $P,Q$ each within $\varepsilon/4$ of its loop and within its relative quarter-norm bound. Triangle inequalities give $|P-Q|<|P|$: the loss from the two approximation errors and the lower estimate for $|P|$ is less than $3\varepsilon/4<m(t)$. Smooth stability equates their integral indices, and each computes its original loop's continuous index.
+
+**Lean declarations:** `Rudin.Chapter08.exercise26_trigonometric_approximation`, `Rudin.Chapter08.IsContinuousNonzeroLoop.approximants`, `Rudin.Chapter08.IsContinuousNonzeroLoop.close_polynomial`, `Rudin.Chapter08.exercise26_approximant_index`, `Rudin.Chapter08.exercise26_independence`, `Rudin.Chapter08.continuousCurveIndex_spec`, `Rudin.Chapter08.continuousCurveIndex_eq_smooth`, `Rudin.Chapter08.exercise26_smooth_agreement`, `Rudin.Chapter08.exercise26_negative_axis_extension`, `Rudin.Chapter08.exercise26_perturbation_extension`.
+
+<a id="r08e27"></a>
+### 8.27 — A zero forced by positive asymptotic degree
+
+**Lean source:** [Exercise27.lean](../../Math/Rudin/Chapter08/Exercise27.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f:\mathbb C\to\mathbb C$ be continuous. Suppose $n$ is a positive integer, $c\ne0$, and
+
+$$
+z^{-n}f(z)\longrightarrow c\quad\text{as }|z|\longrightarrow\infty.
+$$
+
+Then $f$ has a zero. Under the hypothetical assumption that $f$ is nowhere zero, the loops $\gamma_r(t)=f(re^{it})$, $0\le t\le2\pi$, satisfy: $\operatorname{Ind}(\gamma_0)=0$; $\operatorname{Ind}(\gamma_r)=n$ for every sufficiently large positive $r$; and their integer index is continuous on $[0,\infty)$.
+
+**Proof.** A continuous family of nonzero loops has continuous, in fact locally constant, index. To prove this, fix one loop and a positive uniform lower bound $\delta$ for its modulus. Joint continuity on the compact parameter interval gives nearby loops within $\delta$ in the supremum norm. Exercise 26's strict perturbation theorem equates their indices. This argument applies to any topological family parameter space with the stated joint continuity. A constant nonzero loop has index zero by smooth agreement and zero velocity; this does not require its constant value to avoid the negative axis. These facts prove the zero-radius assertion and continuity of the radial index.
+
+The asymptotic hypothesis is used in its equivalent epsilon-radius form. Choose the error $|c|$. For every sufficiently large $r>0$ and every $z=re^{it}$,
+
+$$
+|f(z)-cz^n|=|z|^n|z^{-n}f(z)-c|<|c|\,|z|^n=|cz^n|.
+$$
+
+The comparison loop is $cr^ne^{int}$. Multiplication of the integer-speed circle by a nonzero constant cancels in the logarithmic derivative, so its index is $n$. Continuous perturbation stability gives the same index for $\gamma_r$. This proves the large-radius fact directly from the estimate, without using the eventual contradiction.
+
+Finally $[0,\infty)$ is connected, and a continuous integer-valued function on it is constant. Its value at zero is $0$, but its value at a sufficiently large radius is $n>0$, a contradiction. Therefore some $z$ satisfies $f(z)=0$. The formal result includes both the epsilon-radius and filter-limit formulations of the hypothesis.
+
+**Lean declarations:** `Rudin.Chapter08.continuous_family_index`, `Rudin.Chapter08.continuousCurveIndex_const`, `Rudin.Chapter08.scaled_circle_index`, `Rudin.Chapter08.exercise27_a`, `Rudin.Chapter08.exercise27_b`, `Rudin.Chapter08.hasPositiveAsymptoticDegree_iff`, `Rudin.Chapter08.exercise27_c`, `Rudin.Chapter08.exercise27_zero_existence`, `Rudin.Chapter08.exercise27_index_facts`, `Rudin.Chapter08.exercise27_zero_of_tendsto`.
+
+<a id="r08e28"></a>
+### 8.28 — An antipodal value on the boundary
+
+**Lean source:** [Exercise28.lean](../../Math/Rudin/Chapter08/Exercise28.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $D=\{z\in\mathbb C:|z|\le1\}$ and $T=\{z:|z|=1\}$, with their induced topologies. For every continuous $g:D\to T$, there is a boundary point $z\in T$ such that $g(z)=-z$.
+
+**Proof.** Suppose no boundary point has that property. The loops $H_r(t)=g(re^{it})$, $0\le r\le1$, are continuous, closed, and have modulus one. Their indices vary continuously with $r$, hence are constant. At $r=0$ the loop is constant, so every $H_r$ has index zero.
+
+Write $E(t)=e^{it}$, whose index is one. On the boundary $H_1(t)\ne-E(t)$. For unit vectors $w,z$, the identity
+
+$$
+|w-z|^2+|w+z|^2=4
+$$
+
+shows that non-antipodality implies $|w-z|<2$. Thus the midpoint loop $M=(H_1+E)/2$ is nonzero and satisfies both
+
+$$
+|E-M|<|E|=1,\qquad |H_1-M|<|H_1|=1.
+$$
+
+Apply continuous index stability first to $E,M$ and then to $H_1,M$. It gives $\operatorname{Ind}(H_1)=\operatorname{Ind}(E)=1$, contradicting the radial index zero. The contradiction concerns the boundary loop, so the resulting witness has modulus exactly one, not merely at most one.
+
+**Lean declarations:** `Rudin.Chapter08.unit_distance_lt_two`, `Rudin.Chapter08.exercise28_boundary_antipode`.
+
+<a id="r08e29"></a>
+### 8.29 — A disc fixed point from the ray construction
+
+**Lean source:** [Exercise29.lean](../../Math/Rudin/Chapter08/Exercise29.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Every continuous $f:D\to D$ has a fixed point. Under the contrary assumption, the ray starting at $f(z)$ and passing through $z$ defines a continuous boundary map $g:D\to T$ with $g(z)=z$ on $T$. Its explicit parameter and uniqueness include boundary inputs.
+
+**Proof.** For distinct $z,w\in D$, put
+
+$$
+A=|w-z|^2>0,\qquad B=\operatorname{Re}(\overline z(w-z)),\qquad C=|z|^2-1\le0.
+$$
+
+Expansion gives
+
+$$
+|z-s(w-z)|^2-1=As^2-2Bs+C,\qquad A+2B+C=|w|^2-1\le0.
+$$
+
+These coefficient conditions imply that the unique nonnegative quadratic root is
+
+$$
+s=\frac{B+\sqrt{B^2-AC}}A.
+$$
+
+Indeed, the discriminant is nonnegative, $\sqrt{B^2-AC}\ge-B$, and $\sqrt{B^2-AC}>B$. For $C<0$ the last inequality follows from $-AC>0$; for $C=0$ the geometric bound gives $B\le-A/2<0$. The other root is therefore negative. Equivalently, subtracting the root equations factors their difference by $A(t+s)-2B>0$ for $t\ge0$, proving uniqueness without a division by zero. Thus $g=z-s(w-z)$ is the unique circle intersection with a nonnegative parameter. Also $g=w+(1+s)(z-w)$ with $1+s\ge1$, so it is on the specified ray beyond or at $z$.
+
+Assume $f$ has no fixed point and take $w=f(z)$. Then $A(z)>0$ everywhere. The displayed root formula uses continuous coefficients, the continuous square root, and a nonzero denominator. Consequently $s(z)$ and $g(z)$ are continuous, and the quadratic identity gives $|g(z)|=1$. If $|z|=1$, then $C=0$ and $s=0$ is a nonnegative root; uniqueness gives $g(z)=z$. This explicitly covers the boundary case, where an arbitrary choice between quadratic roots would be insufficient.
+
+Exercise 28 supplies a boundary point with $g(z)=-z$. The boundary identity gives $z=-z$, hence $z=0$, contradicting $|z|=1$. Therefore $f$ has a fixed point. No library fixed-point theorem is used.
+
+**Lean declarations:** `Rudin.Chapter08.exercise29_ray_boundary_map`, `Rudin.Chapter08.rayRoot_unique`, `Rudin.Chapter08.ray_coefficients`, `Rudin.Chapter08.ray_quadratic`, `Rudin.Chapter08.rayBoundaryPoint_on_ray`, `Rudin.Chapter08.exercise29_ray_map_continuity`, `Rudin.Chapter08.exercise29_ray_boundary_identity`, `Rudin.Chapter08.exercise29_disc_fixed_point`.
+
+<a id="r08e30"></a>
+### 8.30 — A Gamma ratio for every real shift
+
+**Lean source:** [Exercise30.lean](../../Math/Rudin/Chapter08/Exercise30.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For every fixed real $c$,
+
+$$
+\frac{\Gamma(x+c)}{x^c\Gamma(x)}\longrightarrow1\quad(x\longrightarrow+\infty).
+$$
+
+On the explicit eventual domain $x>\max(0,-c)$, both Gamma arguments and the complete denominator are positive. The proof also establishes real-argument logarithmic Stirling asymptotics:
+
+$$
+R(x)=\log\Gamma(x+1)-(x+\tfrac12)\log x+x
+\longrightarrow\log\sqrt\pi+\tfrac12\log2.
+$$
+
+**Proof.** At positive integer $n$, the library factorial Stirling sequence gives $R(n)=\log(\mathrm{stirlingSeq}(n))+(\log2)/2$ and $\mathrm{stirlingSeq}(n)\to\sqrt\pi$. To pass to real arguments, log-convexity of Gamma and $\Gamma(x+1)=x\Gamma(x)$ give, for $n\ge1$ and $0\le t\le1$,
+
+$$
+t\log n\le\log\Gamma(n+t+1)-\log\Gamma(n+1)\le t\log(n+1).
+$$
+
+Together with $1-u^{-1}\le\log u\le u-1$ for $u>0$, these bounds imply $|R(n+t)-R(n)|\le2/n$. Taking $n=\lfloor x\rfloor$ transfers the integer limit to all real $x\to\infty$.
+
+On the positive eventual domain, Gamma recurrence and logarithm rules now give the exact identity
+
+$$
+\log\frac{\Gamma(x+c)}{x^c\Gamma(x)}
+=R(x+c)-R(x)+x\log(1+c/x)
++(c-\tfrac12)\log(1+c/x)-c.
+$$
+
+The two remainders have the same limit. Also $\log(1+c/x)\to0$ and the standard logarithmic limit gives $x\log(1+c/x)\to c$. Thus the logarithm of the ratio tends to zero. Positivity permits exponentiation, proving the ratio limit. Negative shifts and $c=0$ require no separate restriction beyond the eventual domain.
+
+**Lean declarations:** `Rudin.Chapter08.Exercise30.logGamma_interpolation`, `Rudin.Chapter08.Exercise30.remainder_interpolation`, `Rudin.Chapter08.Exercise30.tendsto_logStirlingRemainder`, `Rudin.Chapter08.Exercise30.eventually_gamma_ratio_domain`, `Rudin.Chapter08.Exercise30.log_gamma_ratio_eq`, `Rudin.Chapter08.Exercise30.exercise30_gamma_ratio`.
+
+<a id="r08e31"></a>
+### 8.31 — A scaled polynomial integral
+
+**Lean source:** [Exercise31.lean](../../Math/Rudin/Chapter08/Exercise31.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For every natural $n$, the polynomial integral exists and has value
+
+$$
+I_n=\int_{-1}^{1}(1-x^2)^n\,dx
+=\frac{\sqrt\pi\,\Gamma(n+1)}{\Gamma(n+3/2)}.
+$$
+
+This is also its Darboux and tagged Riemann value, including $n=0$. As $n\to\infty$ through positive integers,
+
+$$
+\sqrt n\,I_n\longrightarrow\sqrt\pi.
+$$
+
+The same limit holds for any sequence of literal tagged Riemann values of these integrands, and also when the sequence is indexed by all natural numbers.
+
+**Proof.** The beta integral identity of Theorem 8.20 at the positive arguments $n+1,n+1$ gives
+
+$$
+\int_0^1t^n(1-t)^n\,dt
+=\frac{\Gamma(n+1)^2}{\Gamma(2n+2)}.
+$$
+
+The integrand is a continuous polynomial, so integrability is established separately. The affine substitution $x=2t-1$ gives $I_n=2\cdot4^n\int_0^1t^n(1-t)^n\,dt$. Legendre's duplication formula at $n+1$, with all Gamma denominators positive, reduces this to the stated expression for $I_n$. Continuity on $[-1,1]$ also constructs both source Riemann values and identifies them with this integral; at $n=0$ the value is $2$.
+
+For $n>0$, Gamma recurrence and $n^{3/2}=n\sqrt n$ yield
+
+$$
+\sqrt n\,I_n
+=\sqrt\pi\left(\frac{\Gamma(n+3/2)}{n^{3/2}\Gamma(n)}\right)^{-1}.
+$$
+
+Exercise 30 with $c=3/2$, restricted to the natural-number sequence, makes the ratio tend to $1$. Its inverse also tends to $1$, proving the scaled limit. Omitting the single index zero gives the positive-integer formulation. Uniqueness and the proved Riemann-to-interval integral comparison identify any sequence of tagged values with $I_n$, so that formulation has the same limit.
+
+**Lean declarations:** `Rudin.Chapter08.Exercise31.beta_integral_nat`, `Rudin.Chapter08.Exercise31.integral_affine_beta`, `Rudin.Chapter08.Exercise31.integral_eq_gamma`, `Rudin.Chapter08.Exercise31.integral_integrable`, `Rudin.Chapter08.Exercise31.integral_riemann_value`, `Rudin.Chapter08.Exercise31.scaled_integral_eq_ratio`, `Rudin.Chapter08.Exercise31.exercise31_scaled_integral_limit_nat`, `Rudin.Chapter08.Exercise31.exercise31_scaled_integral_limit`, `Rudin.Chapter08.Exercise31.exercise31_riemann_limit`.
+
 <a id="chapter-09"></a>
 
 ## Chapter 9 — Functions of Several Variables
 
-**Exercises:** [1](#r09e01)
+**Exercises:** [1](#r09e01) · [2](#r09e02) · [3](#r09e03) · [4](#r09e04) · [5](#r09e05) · [6](#r09e06) · [7](#r09e07) · [8](#r09e08) · [9](#r09e09) · [10](#r09e10) · [11](#r09e11) · [12](#r09e12) · [13](#r09e13) · [14](#r09e14) · [15](#r09e15) · [16](#r09e16) · [17](#r09e17) · [18](#r09e18) · [19](#r09e19) · [20](#r09e20) · [21](#r09e21) · [22](#r09e22) · [23](#r09e23) · [24](#r09e24) · [25](#r09e25) · [26](#r09e26) · [27](#r09e27) · [28](#r09e28) · [29](#r09e29) · [30](#r09e30) · [31](#r09e31)
 
 <a id="r09e01"></a>
 ### 9.1 — Finite linear combinations form a vector space
@@ -5469,11 +6118,1910 @@ The file also identifies this explicit set with the usual span: every finite com
 
 **Lean declarations:** `exercise01`, `mem_finiteLinearCombinations_iff`.
 
+<a id="r09e02"></a>
+### 9.2 — Composition and inverses of linear maps
+
+**Lean source:** [Exercise02.lean](../../Math/Rudin/Chapter09/Exercise02.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $X,Y,Z$ be vector spaces over a field $K$. If $A:X\to Y$ and $B:Y\to Z$ are linear, then $B\circ A$ is linear. If $A:X\to X$ is bijective, its inverse is linear and bijective, with inverse $A$. No finite-dimensional or nonzero-space assumption is needed.
+
+**Proof.** For $x,y\in X$ and $c\in K$,
+
+$$
+B(A(x+y))=B(Ax)+B(Ay),\qquad B(A(cx))=cB(Ax).
+$$
+
+For the inverse claim, first take an ordinary function $g:X\to X$ with $gA=Ag=\operatorname{id}$. The identity $gA=\operatorname{id}$ makes $A$ injective. Applying $A$ to $g(x+y)$ and $g(x)+g(y)$ gives $x+y$ in both cases, so injectivity gives additivity of $g$. Applying $A$ to $g(cx)$ and $cg(x)$ gives $cx$ in both cases, so $g$ preserves scalar multiplication. The two inverse identities also make $g$ injective and surjective, and show that $A$ is its two-sided inverse. For bijective $A$, take the inverse function of its associated bijection and apply these results.
+
+**Lean declarations:** `Rudin.Chapter09.exercise02_composition`, `Rudin.Chapter09.exercise02_inverse_linearity`, `Rudin.Chapter09.exercise02_inverse_invertibility`, `Rudin.Chapter09.exercise02_inverse`.
+
+<a id="r09e03"></a>
+### 9.3 — A trivial kernel implies injectivity
+
+**Lean source:** [Exercise03.lean](../../Math/Rudin/Chapter09/Exercise03.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $A:X\to Y$ be linear between vector spaces over a field $K$. If $Ax=0$ implies $x=0$, then $A$ is injective. The assertion includes zero-dimensional spaces.
+
+**Proof.** If $Ax=Ay$, linearity gives $A(x-y)=Ax-Ay=0$. The hypothesis gives $x-y=0$, hence $x=y$.
+
+**Lean declarations:** `Rudin.Chapter09.exercise03`.
+
+<a id="r09e04"></a>
+### 9.4 — The kernel and range are vector subspaces
+
+**Lean source:** [Exercise04.lean](../../Math/Rudin/Chapter09/Exercise04.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For a linear map $A:X\to Y$ over any field $K$, the sets $\{x:Ax=0\}$ and $A(X)$ are vector subspaces of $X$ and $Y$, respectively, with the inherited operations. No dimension assumption is needed.
+
+**Proof.** The kernel contains zero. If $Ax=Ay=0$, then $A(x+y)=0$, and $A(cx)=cAx=0$ for every scalar $c$. Thus the kernel is closed under addition and scalar multiplication. The range contains $A0=0$; sums and scalar multiples of range elements have the forms $Ax+Ay=A(x+y)$ and $cAx=A(cx)$. These closure properties make both sets subspaces, so their inherited operations satisfy the vector-space axioms. The formal proofs use the library kernel and range subspaces and identify their carriers with these exact sets.
+
+**Lean declarations:** `Rudin.Chapter09.exercise04_kernel`, `Rudin.Chapter09.exercise04_range`.
+
+<a id="r09e05"></a>
+### 9.5 — Representing a linear functional by a vector
+
+**Lean source:** [Exercise05.lean](../../Math/Rudin/Chapter09/Exercise05.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For every real linear functional $A:\mathbb R^n\to\mathbb R$, there is a unique $y\in\mathbb R^n$ such that $Ax=x\cdot y$ for all $x$. With the Euclidean norm,
+
+$$
+\|A\|=\sup_{\|x\|\leq1}|Ax|=\|y\|.
+$$
+
+The result includes $n=0$ and the zero functional. Continuity of $A$ follows from finite dimension; it is not an additional assumption.
+
+**Proof.** Let $e_i$ be the coordinate vectors and set $y_i=Ae_i$. Expanding $x=\sum_i x_i e_i$ gives
+
+$$
+Ax=\sum_i x_iAe_i=\sum_i x_i y_i=x\cdot y.
+$$
+
+Any other representing vector has the same $i$th coordinate by evaluation at $e_i$, which proves uniqueness. The resulting continuous linear functional is the inner-product functional defined by $y$. Its standard norm theorem gives the norm equality: Cauchy–Schwarz gives $|Ax|\leq\|x\|\|y\|$, and for $y\neq0$ evaluation at $y/\|y\|$ gives equality on the unit ball. If $y=0$, the functional and both norms are zero. This also treats dimension zero. The library closed-unit-ball supremum formula identifies this operator norm with the displayed supremum.
+
+**Lean declarations:** `Rudin.Chapter09.exercise05Vector`, `Rudin.Chapter09.exercise05_representing_vector`, `Rudin.Chapter09.exercise05_uniqueness`, `Rudin.Chapter09.exercise05_existsUnique`, `Rudin.Chapter09.exercise05_norm`, `Rudin.Chapter09.exercise05_source_norm`.
+
+<a id="r09e06"></a>
+### 9.6 — Coordinate partials without continuity
+
+**Lean source:** [Exercise06.lean](../../Math/Rudin/Chapter09/Exercise06.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Define $f(0,0)=0$ and
+
+$$
+f(x,y)=\frac{xy}{x^2+y^2}\quad\text{for }(x,y)\neq(0,0).
+$$
+
+Both coordinate partial derivatives exist everywhere, but $f$ is not continuous at the origin. Away from the origin their values are
+
+$$
+D_1f(x,y)=\frac{y(y^2-x^2)}{(x^2+y^2)^2},\qquad
+D_2f(x,y)=\frac{x(x^2-y^2)}{(x^2+y^2)^2}.
+$$
+
+At the origin both partial derivatives are zero.
+
+**Proof.** For the first partial, fix $y$. If $y=0$, the function of $x$ is identically zero, so its derivative is zero at every $x$. If $y\neq0$, the denominator is positive and the quotient rule gives the first displayed formula. For the second partial, fix $x$. If $x=0$, the function of $y$ is identically zero; otherwise the quotient rule gives the second formula. This proves genuine one-variable derivative existence at every point, including both axes and the origin. Translating the coordinate parameter gives the equivalent derivatives along $p+te_j$ at $t=0$.
+
+On the punctured diagonal, $f(t,t)=1/2$. Were $f$ continuous at the origin, its composition with the continuous curve $t\mapsto(t,t)$ would tend to $f(0,0)=0$. Its punctured limit is instead $1/2$, a contradiction.
+
+**Lean declarations:** `Rudin.Chapter09.exercise06Function_zero`, `Rudin.Chapter09.exercise06_partial_one`, `Rudin.Chapter09.exercise06_partial_two`, `Rudin.Chapter09.exercise06_partials`, `Rudin.Chapter09.exercise06_diagonal`, `Rudin.Chapter09.exercise06_discontinuity`.
+
+<a id="r09e07"></a>
+### 9.7 — Bounded partial derivatives imply continuity
+
+**Lean source:** [Exercise07.lean](../../Math/Rudin/Chapter09/Exercise07.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^n$ be open. Suppose every coordinate partial derivative $p_i(x)=D_i f(x)$ exists on $E$, and for each $i$ there is a real bound $C_i$ with $|p_i(x)|\leq C_i$ for all $x\in E$. Then $f$ is continuous on $E$. The partial derivatives need not be continuous. A second formulation assumes one common nonnegative bound $C$.
+
+**Proof.** First use ordinary coordinate space with the supremum norm. Fix $a\in E$ and choose an open cube $Q=\{x:\|x-a\|_\infty<r\}$ contained in $E$. On a coordinate line in this cube, the one-variable function is differentiable throughout its interval. The mean value inequality gives
+
+$$
+|f(x)-f(x_1,\ldots,x_{i-1},t,x_{i+1},\ldots,x_n)|\leq C|x_i-t|
+$$
+
+whenever both points lie in $Q$. Change the coordinates one at a time from $x$ to $y$. Each intermediate point remains in $Q$, and the triangle inequality gives
+
+$$
+|f(x)-f(y)|\leq\sum_{i=1}^n C|x_i-y_i|\leq nC\|x-y\|_\infty.
+$$
+
+The formal finite-coordinate estimate is proved by induction on the set of coordinates to be changed. Taking $y=a$ proves continuity; for example, $\delta=\min\{r,\varepsilon/(nC+1)\}$ is sufficient. The continuous coordinate equivalence transfers this result to Euclidean space. For separate coordinate bounds, choose $C=\sum_i|C_i|$, which dominates every partial derivative. Empty domains and $n=0$ are included, with empty sums interpreted as zero.
+
+**Lean declarations:** `Rudin.Chapter09.coordinate_telescope`, `Rudin.Chapter09.continuousOn_of_bounded_coordinate_derivatives`, `Rudin.Chapter09.exercise07`, `Rudin.Chapter09.exercise07_of_coordinate_bounds`.
+
+<a id="r09e08"></a>
+### 9.8 — A derivative vanishes at an interior maximum
+
+**Lean source:** [Exercise08.lean](../../Math/Rudin/Chapter09/Exercise08.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^n$ be open and let $f:\mathbb R^n\to\mathbb R$ be differentiable on $E$. If $x\in E$ is a local maximum relative to $E$, then $f$ has the zero Fréchet derivative at $x$; in particular, $f'(x)=0$.
+
+**Proof.** Since $E$ is a neighborhood of $x$, differentiability on $E$ gives ordinary differentiability at $x$, and the relative local maximum is an ordinary local maximum. Apply the standard stationarity theorem for a differentiable real function at a local extremum. This theorem forces its derivative to be zero: restriction to any line through $x$ has a local maximum and hence zero one-variable derivative. The conclusion asserts actual derivative existence with value zero, not merely a value assigned by a total derivative operator.
+
+**Lean declarations:** `Rudin.Chapter09.exercise08`.
+
+<a id="r09e09"></a>
+### 9.9 — Zero derivative on a connected open set
+
+**Lean source:** [Exercise09.lean](../../Math/Rudin/Chapter09/Exercise09.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^n$ be open and preconnected, and let $f:\mathbb R^n\to\mathbb R^m$ be differentiable on $E$. If $f'(x)=0$ for every $x\in E$, then there is $c\in\mathbb R^m$ such that $f(x)=c$ for every $x\in E$. Both dimensions are arbitrary, and $E$ may be empty.
+
+**Proof.** Apply the standard zero-derivative constancy theorem on an open preconnected set. Its mean value argument makes $f$ constant on each sufficiently small ball contained in $E$, since such a ball is convex and the derivative vanishes there. Thus $f$ is locally constant on $E$. Preconnectedness makes a locally constant function constant on a nonempty domain. For $E=\varnothing$, choose any vector, for example zero; the assertion is vacuous. Differentiability is essential to the stated hypotheses and is not replaced by the equation for the total derivative operator alone.
+
+**Lean declarations:** `Rudin.Chapter09.exercise09`.
+
+<a id="r09e10"></a>
+### 9.10 — Independence of the first coordinate
+
+**Lean source:** [Exercise10.lean](../../Math/Rudin/Chapter09/Exercise10.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^{n+1}$ be open and convex. Suppose the first coordinate derivative of $f$ exists and equals zero everywhere on $E$. If $x,y\in E$ have the same coordinates other than the first, then $f(x)=f(y)$. Convexity can be replaced by the weaker requirement that every fiber parallel to the first coordinate axis is preconnected, allowing empty fibers. This weaker requirement is strictly weaker than convexity. Without a domain condition the conclusion can fail.
+
+**Proof.** For a fixed $x$, write $L_x(t)$ for $x$ with its first coordinate replaced by $t$. The set $J_x=L_x^{-1}(E)$ is open. The coordinate derivative assumption says that $t\mapsto f(L_x(t))$ has derivative zero at every $t\in J_x$. If $J_x$ is preconnected, the one-variable zero-derivative theorem makes this function constant on $J_x$. The numbers $x_1$ and $y_1$ belong to this same fiber, which gives $f(x)=f(y)$. For convex $E$, each $J_x$ is convex, because $L_x$ preserves affine combinations, so it is preconnected.
+
+For strict weakness, use $E=\{(x,y):y\neq0\}$. Each horizontal fiber is either all of $\mathbb R$ or empty, so the fiber condition holds. The midpoint of $(0,-1)$ and $(0,1)$ is missing, so $E$ is not convex.
+
+For failure without the fiber condition, use the different open set $E=\{(x,y):x\neq0\}$ and define $f(x,y)=1$ for $x>0$ and $f(x,y)=0$ for $x\leq0$. On $E$ the function is locally constant along each horizontal line, so its first partial derivative exists and is zero. However, $(-1,0)$ and $(1,0)$ have the same second coordinate and different function values. The proved example is this disconnected open set; no horseshoe construction is needed.
+
+**Lean declarations:** `Rudin.Chapter09.firstCoordinateLine`, `Rudin.Chapter09.exercise10_weaker_condition`, `Rudin.Chapter09.exercise10`, `Rudin.Chapter09.exercise10_weaker_not_convex`, `Rudin.Chapter09.exercise10_domain_counterexample`.
+
+<a id="r09e11"></a>
+### 9.11 — Gradient product and reciprocal rules
+
+**Lean source:** [Exercise11.lean](../../Math/Rudin/Chapter09/Exercise11.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** If real functions $f,g$ on $\mathbb R^n$ are differentiable at $x$, then their product has gradient
+
+$$
+\nabla(fg)(x)=f(x)\nabla g(x)+g(x)\nabla f(x).
+$$
+
+If $f$ is differentiable at $x$ and $f(x)\neq0$, then its reciprocal has gradient
+
+$$
+\nabla(1/f)(x)=-\frac{1}{f(x)^2}\nabla f(x).
+$$
+
+Both assertions include existence of the indicated gradient at $x$.
+
+**Proof.** Represent the derivatives of $f$ and $g$ by their gradients using the real inner product. The Fréchet product rule gives $D(fg)(x)=f(x)Dg(x)+g(x)Df(x)$. Linearity of the inner-product representation gives the first gradient. For the reciprocal, compose $f$ with the one-variable function $u\mapsto u^{-1}$, whose derivative at a nonzero $u$ is $-u^{-2}$. The chain rule and the same inner-product representation give the second formula. The nonzero assumption is needed only at the point in question.
+
+**Lean declarations:** `Rudin.Chapter09.exercise11_product`, `Rudin.Chapter09.exercise11_reciprocal`.
+
+<a id="r09e12"></a>
+### 9.12 — A torus, its coordinate extrema, and an irrational winding
+
+**Lean source:** [Exercise12.lean](../../Math/Rudin/Chapter09/Exercise12.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Fix $0<a<b$ and define
+
+$$
+F(s,t)=((b+a\cos s)\cos t,(b+a\cos s)\sin t,a\sin s),\qquad (s,t)\in\mathbb R^2.
+$$
+
+Its range is the compact ring torus
+
+$$
+K=\{(x,y,z):(\sqrt{x^2+y^2}-b)^2+z^2=a^2\}.
+$$
+
+For the first coordinate $F_1$, the points of $K$ whose entire fibers have zero parameter gradient are exactly
+
+$$
+(b+a,0,0),\quad (-(b+a),0,0),\quad (b-a,0,0),\quad (-(b-a),0,0).
+$$
+
+These four points are distinct. At every parameter in their respective fibers, the first is a global and local maximum of $F_1$, the second a global and local minimum, and the last two are saddles. There are no other local maxima or minima of $F_1$. The saddle assertion also holds for the first coordinate on $K$ with its relative topology.
+
+For $F_3$, the fibers with zero gradient are exactly the two circles
+
+$$
+x^2+y^2=b^2,\qquad z=a\ \text{or}\ z=-a.
+$$
+
+The upper circle gives all local maxima, which are global maxima; the lower circle gives all local minima, which are global minima. Finally, if $\lambda$ is irrational, $g(t)=F(t,\lambda t)$ is injective and has range dense in $K$. Its speed satisfies
+
+$$
+\|g'(t)\|^2=a^2+\lambda^2(b+a\cos t)^2.
+$$
+
+Here a fiber means the full inverse image of a point, not a chosen inverse function.
+
+**Proof.** The radius $r=b+a\cos s$ is strictly positive because $b>a$. The identity $x^2+y^2=r^2$ and $\sin^2s+\cos^2s=1$ show that $F(s,t)\in K$. Conversely, for $(x,y,z)\in K$, set $r=\sqrt{x^2+y^2}$. The surface equation and $b>a$ imply $r>0$. The pairs $((r-b)/a,z/a)$ and $(x/r,y/r)$ lie on the unit circle. Choose angles $s,t$ with these cosine and sine values; then $F(s,t)=(x,y,z)$. Periodicity in both parameters shows that the closed square $[0,2\pi]^2$ has the full range. Its continuous image is compact, proving compactness of $K$.
+
+Differentiation gives
+
+$$
+\nabla F_1(s,t)=(-a\sin s\cos t,-(b+a\cos s)\sin t),\qquad
+\nabla F_3(s,t)=(a\cos s,0).
+$$
+
+The first gradient vanishes exactly when $\sin s=\sin t=0$. Indeed, its second component first forces $\sin t=0$; then $\cos t\neq0$ and the first forces $\sin s=0$. The four choices of the corresponding cosine signs give exactly the four displayed points. Conversely, membership in any of those four fibers forces these sine values to vanish, using the zero second and third coordinates and positivity of the radius. The inequalities $0<a<b$ make all four first coordinates distinct. The third gradient vanishes exactly when $\cos s=0$, or equivalently $\sin s=\pm1$. Thus $z=\pm a$, and the torus equation reduces to $x^2+y^2=b^2$. These arguments apply to every parameter in each fiber.
+
+The bounds $-(b+a)\leq F_1\leq b+a$ and $-a\leq F_3\leq a$ prove the asserted global extrema. At an inner equatorial point, $\cos s=-1$ and $\cos t=\pm1$. For small $h>0$, changing $s$ to $s+h$ changes the radial factor from $b-a$ to $b-a\cos h$, which is larger. Changing $t$ to $t+h$ instead multiplies the first coordinate by $\cos h<1$. According to the sign of $\cos t$, these two perturbations give opposite strict inequalities. They stay in any prescribed parameter neighborhood for sufficiently small $h$. Hence both inner points are saddles and neither is an extremum. Continuity of $F$ transfers the two strict inequalities to points of $K$ in every ambient neighborhood of the corresponding surface point.
+
+Every parameter local extremum has zero gradient. The finite critical-point list therefore reduces the first-coordinate classification to the four cases already considered. At the outer negative point, a small change in $t$ increases the first coordinate, so it is not a maximum; at the outer positive point the same change decreases it, so it is not a minimum. For the third coordinate, at $\cos s=0$ a change from $s$ to $s+h$ multiplies its value by $\cos h$. This excludes a minimum on the upper circle and a maximum on the lower circle, and proves the complete classifications.
+
+To analyze fibers, equality of two torus values first determines the positive radial factors from $x^2+y^2$. It then determines $\cos s,\sin s$ and, after division by that radius, $\cos t,\sin t$. Equality of both sine and cosine is equality modulo $2\pi$. Consequently,
+
+$$
+F(s,t)=F(u,v)\quad\Longleftrightarrow\quad
+u=s+2\pi k,\quad v=t+2\pi m\quad\text{for some }k,m\in\mathbb Z.
+$$
+
+For $g(x)=g(y)$, the fiber equations give $y-x=2\pi k$ and $\lambda(y-x)=2\pi m$. Thus $\lambda k=m$. Irrationality forces $k=0$, and then $x=y$.
+
+For density, fix a target $F(s,t)$. At parameters $s+2\pi n$, with $n\in\mathbb Z$, the first torus angle is unchanged modulo a full turn, while the second angle is $\lambda s+2\pi n\lambda$. The standard irrational-rotation density theorem makes these second angles dense in the circle. The continuous circle parametrization therefore places $F(s,t)$ in the closure of the winding range. The reverse inclusion follows because $K$ is closed and contains the winding range.
+
+Finally, the coordinate product and chain rules give
+
+$$
+g'(t)=\bigl(-a\sin t\cos(\lambda t)-\lambda R\sin(\lambda t),\ -a\sin t\sin(\lambda t)+\lambda R\cos(\lambda t),\ a\cos t\bigr),\qquad R=b+a\cos t.
+$$
+
+Squaring the Euclidean norm cancels the cross terms. The sine-square and cosine-square identities give the stated speed formula. The derivative and speed formulas themselves hold for all real $a,b,\lambda,t$; irrationality is needed for injectivity and density, not for differentiation.
+
+**Lean declarations:** `Rudin.Chapter09.Exercise12.range_eq_surface`, `Rudin.Chapter09.Exercise12.fundamental_square`, `Rudin.Chapter09.Exercise12.compact_surface`, `Rudin.Chapter09.Exercise12.first_hasGradientAt`, `Rudin.Chapter09.Exercise12.third_hasGradientAt`, `Rudin.Chapter09.Exercise12.first_gradient_zero`, `Rudin.Chapter09.Exercise12.third_gradient_zero`, `Rudin.Chapter09.Exercise12.first_critical`, `Rudin.Chapter09.Exercise12.four_distinct`, `Rudin.Chapter09.Exercise12.first_critical_count`, `Rudin.Chapter09.Exercise12.third_critical`, `Rudin.Chapter09.Exercise12.third_critical_circles`, `Rudin.Chapter09.Exercise12.first_maximum`, `Rudin.Chapter09.Exercise12.first_minimum`, `Rudin.Chapter09.Exercise12.first_saddles`, `Rudin.Chapter09.Exercise12.first_surface_saddles`, `Rudin.Chapter09.Exercise12.first_local_max_iff`, `Rudin.Chapter09.Exercise12.first_local_min_iff`, `Rudin.Chapter09.Exercise12.third_maximum`, `Rudin.Chapter09.Exercise12.third_minimum`, `Rudin.Chapter09.Exercise12.third_local_max_iff`, `Rudin.Chapter09.Exercise12.third_local_min_iff`, `Rudin.Chapter09.Exercise12.fiber_trig`, `Rudin.Chapter09.Exercise12.fibers`, `Rudin.Chapter09.Exercise12.winding_injective`, `Rudin.Chapter09.Exercise12.winding_closure`, `Rudin.Chapter09.Exercise12.winding_hasDerivAt`, `Rudin.Chapter09.Exercise12.speed`.
+
+<a id="r09e13"></a>
+### 9.13 — Velocity is tangent to the unit sphere
+
+**Lean source:** [Exercise13.lean](../../Math/Rudin/Chapter09/Exercise13.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f:\mathbb R\to\mathbb R^3$ be differentiable and satisfy $\|f(t)\|=1$ for all $t$. Then $f'(t)\cdot f(t)=0$. In geometric terms, for every real $s$ the point $f(t)+sf'(t)$ lies in the affine tangent plane
+
+$$
+T_{f(t)}=\{q:(q-f(t))\cdot f(t)=0\}.
+$$
+
+Zero velocity is allowed, and $f(t)+s0$ also lies in this plane.
+
+**Proof.** The identity $f(t)\cdot f(t)=1$ has derivative zero. The inner-product product rule gives $f'(t)\cdot f(t)+f(t)\cdot f'(t)=0$. Symmetry of the real inner product makes this $2f'(t)\cdot f(t)=0$. Thus the velocity is perpendicular to the radius. Substituting $q=f(t)+sf'(t)$ into the plane equation gives $s(f'(t)\cdot f(t))=0$. The same substitution for zero velocity gives zero directly. The norm hypothesis also places $f(t)$ on the unit sphere.
+
+**Lean declarations:** `Rudin.Chapter09.exercise13_orthogonality`, `Rudin.Chapter09.sphereTangentPlane`, `Rudin.Chapter09.exercise13_geometry`.
+
+<a id="r09e14"></a>
+### 9.14 — Differentiability along curves without a total derivative
+
+**Lean source:** [Exercise14.lean](../../Math/Rudin/Chapter09/Exercise14.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Define $f(0,0)=0$ and $f(x,y)=x^3/(x^2+y^2)$ elsewhere. Its coordinate partials exist everywhere and have uniform absolute bounds $3$ and $2$, respectively. Off the origin they are
+
+$$
+A(x,y)=\frac{x^2(x^2+3y^2)}{(x^2+y^2)^2},\qquad
+B(x,y)=-\frac{2x^3y}{(x^2+y^2)^2}.
+$$
+
+At the origin the partials are $1$ and $0$. The function is continuous on the whole plane. For every direction $u$, the function $t\mapsto f(tu)$ has derivative $f(u)$ at zero; for $\|u\|=1$, this derivative has absolute value at most $1$.
+
+More strongly than the source's specified initial conditions on a curve, every differentiable $\gamma:\mathbb R\to\mathbb R^2$ makes $f\circ\gamma$ differentiable on all of $\mathbb R$. At any parameter $a$,
+
+$$
+(f\circ\gamma)'(a)=
+\begin{cases}
+f(\gamma'(a)),&\gamma(a)=0,\\
+A(\gamma(a))\gamma_1'(a)+B(\gamma(a))\gamma_2'(a),&\gamma(a)\neq0.
+\end{cases}
+$$
+
+If $\gamma$ is $C^1$, so is $f\circ\gamma$. These claims include repeated visits to zero and visits with zero velocity. Nevertheless, $f$ is not Fréchet differentiable at the origin.
+
+**Proof.** For nonzero $p=(x,y)$, the denominator is positive. Algebra gives homogeneity $f(sp)=sf(p)$ for every real $s$, including $s=0$ and $p=0$. Also,
+
+$$
+|f(x,y)|=\frac{|x|x^2}{x^2+y^2}\leq|x|.
+$$
+
+This bound proves continuity at zero by squeezing, and the quotient formula proves continuity elsewhere.
+
+At a zero of a differentiable curve, put $v=\gamma'(a)$. For $t\neq a$, homogeneity gives
+
+$$
+\frac{f(\gamma(t))-f(\gamma(a))}{t-a}=f\left(\frac{\gamma(t)-\gamma(a)}{t-a}\right).
+$$
+
+The vector difference quotient tends to $v$, so continuity of $f$ gives the derivative $f(v)$. This proof does not require $v\neq0$. Applying it to $\gamma(t)=tu$ proves all directional derivatives. For unit $u$, the bound $|f(u)|\leq|u_1|\leq\|u\|=1$ gives the required estimate.
+
+Away from zero, the quotient and chain rules give the stated coefficients $A,B$ and the curve derivative formula. Direct estimates give $|A|\leq3$ and $|B|\leq2$: the first follows by comparing $x^2(x^2+3y^2)$ with $3(x^2+y^2)^2$; for the second use $|x||y|\leq x^2+y^2$ and $x^2\leq x^2+y^2$. At zero, the coordinate restrictions are $f(t,0)=t$ and $f(0,t)=0$, which give partials $1,0$ and satisfy the same bounds. Thus the formulas for curves cover every parameter, and the bounded partials also meet the continuity criterion of Exercise 9.7. The direct continuity proof above is the one used in this file.
+
+For the $C^1$ assertion, $A$ and $B$ are continuous away from zero and unchanged by nonzero scalar multiplication. They satisfy the Euler identity
+
+$$
+A(p)p_1+B(p)p_2=f(p).
+$$
+
+The rational definitions assign $A(0)=B(0)=0$; these assigned coefficient values are not the pair of actual partials at zero. The identity and uniform bounds still hold there. At a parameter with $\gamma(a)\neq0$, the off-zero curve formula and continuity of $\gamma,\gamma'$ prove continuity of $(f\circ\gamma)'$. If $\gamma(a)=\gamma'(a)=0$, use the bound, valid for all $t$,
+
+$$
+|(f\circ\gamma)'(t)|\leq3|\gamma_1'(t)|+2|\gamma_2'(t)|.
+$$
+
+Its right side tends to zero, which is the derivative at $a$. If $\gamma(a)=0$ but $v=\gamma'(a)\neq0$, extend $w(t)=\gamma(t)/(t-a)$ by $w(a)=v$. Differentiability makes $w$ continuous at $a$ and nonzero nearby. For $t\neq a$ nearby, $\gamma(t)=(t-a)w(t)$, so scale invariance rewrites the derivative as $A(w(t))\gamma_1'(t)+B(w(t))\gamma_2'(t)$. Its limit is $A(v)v_1+B(v)v_2=f(v)$ by the Euler identity. The same formula agrees at $a$. This proves continuity of the derivative in every case.
+
+Finally, if a total derivative $L$ existed at zero, comparison with every line derivative would give $L(u)=f(u)$ for all $u$. For the coordinate vectors, $f(e_1)=1$ and $f(e_2)=0$, whereas $f(e_1+e_2)=1/2$. This contradicts additivity of $L$.
+
+**Lean declarations:** `Rudin.Chapter09.exercise14_value_zero`, `Rudin.Chapter09.exercise14_homogeneous`, `Rudin.Chapter09.exercise14_bound`, `Rudin.Chapter09.exercise14_partials`, `Rudin.Chapter09.exercise14_A_bound`, `Rudin.Chapter09.exercise14_B_bound`, `Rudin.Chapter09.exercise14_continuous`, `Rudin.Chapter09.exercise14_directional`, `Rudin.Chapter09.exercise14_unit_directional`, `Rudin.Chapter09.exercise14_curve_at_zero`, `Rudin.Chapter09.exercise14_curve_off_zero`, `Rudin.Chapter09.exercise14_curve_differentiable`, `Rudin.Chapter09.exercise14_coefficients_scale`, `Rudin.Chapter09.exercise14_euler`, `Rudin.Chapter09.exercise14_coefficients_continuous`, `Rudin.Chapter09.exercise14_curve_deriv_bound`, `Rudin.Chapter09.exercise14_curve_C1`, `Rudin.Chapter09.exercise14_not_differentiable`.
+
+<a id="r09e15"></a>
+### 9.15 — Strict minima on lines but not in the plane
+
+**Lean source:** [Exercise15.lean](../../Math/Rudin/Chapter09/Exercise15.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Define $f(0,0)=0$ and, away from zero,
+
+$$
+f(x,y)=x^2+y^2-2x^2y-\frac{4x^6y^2}{(x^4+y^2)^2}.
+$$
+
+Then $f$ is continuous on the plane. For every unit pair $a^2+b^2=1$, the line restriction $g(t)=f(ta,tb)$ is differentiable at every real parameter and satisfies
+
+$$
+g(0)=g'(0)=0,\qquad g''(0)=2.
+$$
+
+It has a strict local minimum at zero. In particular, these assertions hold for $a=\cos\theta,b=\sin\theta$ for every real $\theta$, including both endpoints of $[0,2\pi]$. However, $f(x,x^2)=-x^4$ for all real $x$, and zero is not a local minimum in the plane.
+
+**Proof.** Expanding the nonnegative square $(x^4-y^2)^2$ gives
+
+$$
+4x^4y^2\leq(x^4+y^2)^2.
+$$
+
+For a nonzero point the denominator is positive. Multiplication by $x^2$ and division by its square give
+
+$$
+0\leq\frac{4x^6y^2}{(x^4+y^2)^2}\leq x^2.
+$$
+
+The rational term is assigned zero at the origin, where the same bound holds. Squeezing makes it continuous there; the quotient rule for continuity applies away from zero. The remaining polynomial terms are continuous, proving continuity of $f$.
+
+For a unit pair, write $g(t)=t^2k(t)$. If $b=0$, then $a^2=1$ and $g(t)=t^2$, so take $k=1$. If $b\neq0$, cancellation for $t\neq0$, with direct checking at $t=0$, gives
+
+$$
+k(t)=1-2a^2bt-\frac{4a^6b^2t^2}{(a^4t^2+b^2)^2}.
+$$
+
+Its denominator is positive for all $t$, so $k$ is $C^2$ and $k(0)=1$. The product rule gives $g'(t)=2tk(t)+t^2k'(t)$ at every parameter. Differentiating this expression at zero gives $g''(0)=2k(0)=2$, and $g'(0)=g(0)=0$. Since $k$ is positive in a neighborhood of zero, $g(t)=t^2k(t)>0=g(0)$ for all sufficiently small nonzero $t$, proving strict local minimality. The trigonometric unit identity gives every angle case without an endpoint restriction.
+
+Direct substitution on the parabola gives $f(x,x^2)=-x^4$ when $x\neq0$, and both sides vanish when $x=0$. The continuous curve $x\mapsto(x,x^2)$ tends to the origin, but its nonzero points have negative values. A planar local minimum would force these values to be nonnegative for all sufficiently small $x$, which is impossible.
+
+**Lean declarations:** `Rudin.Chapter09.exercise15_zero`, `Rudin.Chapter09.exercise15_inequality`, `Rudin.Chapter09.exercise15_rational_bound`, `Rudin.Chapter09.exercise15_continuous`, `Rudin.Chapter09.exercise15_line_factor`, `Rudin.Chapter09.exercise15_factor_jet`, `Rudin.Chapter09.exercise15_line_derivatives`, `Rudin.Chapter09.exercise15_angles`, `Rudin.Chapter09.exercise15_line_strict_minimum`, `Rudin.Chapter09.exercise15_angle_strict_minimum`, `Rudin.Chapter09.exercise15_curved_values`, `Rudin.Chapter09.exercise15_no_minimum`.
+
+<a id="r09e16"></a>
+### 9.16 — An invertible derivative without local injectivity
+
+**Lean source:** [Exercise16.lean](../../Math/Rudin/Chapter09/Exercise16.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Define $f(0)=0$ and $f(x)=x+2x^2\sin(1/x)$ for $x\neq0$. Then $f$ is differentiable on $\mathbb R$, $f'(0)=1$, and
+
+$$
+f'(x)=1+4x\sin(1/x)-2\cos(1/x)\quad(x\neq0).
+$$
+
+On $(-1,1)$, $|f'(x)|\leq7$. Nevertheless, $f$ is not injective on any neighborhood of zero, despite its invertible derivative at zero.
+
+**Proof.** For $x\neq0$ the difference quotient at zero is $1+2x\sin(1/x)$. Since $|x\sin(1/x)|\leq|x|$, this tends to $1$. At nonzero $x$, the product and chain rules give the displayed derivative, so $f$ is differentiable everywhere. For $0<|x|<1$, the bounds $|\sin u|,|\cos u|\leq1$ give $|f'(x)|\leq1+4|x|+2\leq7$. At zero its derivative is $1$, which satisfies the same bound.
+
+Let
+
+$$
+x_n=\frac{1}{2\pi(n+1)},\qquad n=0,1,2,\ldots.
+$$
+
+These positive points tend to zero, and their reciprocal angles have sine zero and cosine one. Thus $f'(x_n)=-1$. Suppose $f$ were injective on some interval $(-r,r)$, $r>0$. Since differentiability makes it continuous, the standard theorem for continuous injective functions on an interval says it is strictly increasing or strictly decreasing there. In the increasing case, its derivative must be nonnegative at interior points; some $x_n\in(-r,r)$ contradicts this. In the decreasing case its derivative at zero must be nonpositive, contradicting $f'(0)=1$. Hence it is not injective on any such interval. Every neighborhood of zero contains one, so injectivity fails on every neighborhood. The same derivative sequence shows why derivative continuity at zero, required by the inverse function theorem, is absent here.
+
+**Lean declarations:** `Rudin.Chapter09.exercise16_source`, `Rudin.Chapter09.exercise16_zero`, `Rudin.Chapter09.exercise16_derivative_at_zero`, `Rudin.Chapter09.exercise16_derivative_nonzero`, `Rudin.Chapter09.exercise16_differentiable`, `Rudin.Chapter09.exercise16_bounded_derivative`, `Rudin.Chapter09.exercise16Point_pos`, `Rudin.Chapter09.exercise16Point_limit`, `Rudin.Chapter09.exercise16Point_derivative`, `Rudin.Chapter09.exercise16_not_injOn_interval`, `Rudin.Chapter09.exercise16_not_locally_injective`.
+
+<a id="r09e17"></a>
+### 9.17 — The exponential map of the plane
+
+**Lean source:** [Exercise17.lean](../../Math/Rudin/Chapter09/Exercise17.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For $F(x,y)=(e^x\cos y,e^x\sin y)$, the range is $\mathbb R^2\setminus\{0\}$. The map is locally injective everywhere but is not globally injective. At $a=(0,\pi/3)$, put $b=F(a)=(1/2,\sqrt3/2)$. A local inverse taking $b$ to $a$ is
+
+$$
+G(w)=(\log|w|,\operatorname{Arg}w),
+$$
+
+with principal argument in $(-\pi,\pi)$. Its derivative and the forward derivative are
+
+$$
+F'(a)=\begin{pmatrix}1/2&-\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\qquad
+G'(b)=\begin{pmatrix}1/2&\sqrt3/2\\-\sqrt3/2&1/2\end{pmatrix}=F'(a)^{-1}.
+$$
+
+Each horizontal line $y=c$ maps onto the open ray $\{r(\cos c,\sin c):r>0\}$; each vertical line $x=c$ maps onto the circle of radius $e^c$.
+
+**Proof.** Identify the Euclidean plane with $\mathbb C$. Then $F(z)=\exp z$, and its real derivative sends $h$ to $e^zh$. In real coordinates its matrix is
+
+$$
+\begin{pmatrix}e^x\cos y&-e^x\sin y\\e^x\sin y&e^x\cos y\end{pmatrix},
+$$
+
+whose determinant is $e^{2x}>0$. The inverse function theorem gives local injectivity. Global injectivity fails because $F(0)=F(2\pi i)$. The exponential never vanishes, and every nonzero $w$ is $\exp(\log w)$, proving the range claim.
+
+On the strip $-\pi<\operatorname{Im}z<\pi$, the exponential and principal logarithm are continuous inverse maps onto the slit plane. This strip contains $a$, so this is an actual inverse branch near $b$, not just a right inverse. The logarithm derivative is multiplication by $b^{-1}=1/2-i\sqrt3/2$. The displayed matrices therefore represent the actual real derivatives; multiplication in either order gives the identity. Finally, $F(x+ic)=e^xe^{ic}$, and $e^x$ ranges over all positive numbers. For $F(c+iy)$ the norm is $e^c$, and the argument runs around the whole circle.
+
+**Lean declarations:** `Rudin.Chapter09.exercise17_coordinates`, `Rudin.Chapter09.exercise17_euclidean_norm`, `Rudin.Chapter09.exercise17_range`, `Rudin.Chapter09.exercise17_hasFDerivAt`, `Rudin.Chapter09.exercise17_matrix_action`, `Rudin.Chapter09.exercise17_jacobian`, `Rudin.Chapter09.exercise17_jacobian_ne_zero`, `Rudin.Chapter09.exercise17_locally_injective`, `Rudin.Chapter09.exercise17_not_injective`, `Rudin.Chapter09.exercise17_inverse_formula`, `Rudin.Chapter09.exercise17_inverse_branch`, `Rudin.Chapter09.exercise17_inverse_value`, `Rudin.Chapter09.exercise17_b_value`, `Rudin.Chapter09.exercise17_forward_matrix`, `Rudin.Chapter09.exercise17_inverse_hasFDerivAt`, `Rudin.Chapter09.exercise17_inverse_matrix_action`, `Rudin.Chapter09.exercise17_inverse_identity`, `Rudin.Chapter09.exercise17_inverse_eq_matrix_inv`, `Rudin.Chapter09.exercise17_horizontal_image`, `Rudin.Chapter09.exercise17_vertical_image`.
+
+<a id="r09e18"></a>
+### 9.18 — The square map and its singular point
+
+**Lean source:** [Exercise18.lean](../../Math/Rudin/Chapter09/Exercise18.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For $F(x,y)=(x^2-y^2,2xy)$, the range is all of $\mathbb R^2$. Its derivative matrix and determinant are
+
+$$
+F'(x,y)=\begin{pmatrix}2x&-2y\\2y&2x\end{pmatrix},\qquad \det F'(x,y)=4(x^2+y^2).
+$$
+
+It is locally injective exactly away from zero, and it is not globally injective. For $a=(0,\pi/3)$ and $b=(-(\pi/3)^2,0)$, an inverse branch, in complex notation, is
+
+$$
+G(w)=i\exp\bigl(\tfrac12\log(-w)\bigr),\qquad w\notin[0,\infty).
+$$
+
+This branch takes values in the upper half-plane and satisfies $G(b)=a$. The derivative matrices are
+
+$$
+F'(a)=\begin{pmatrix}0&-2\pi/3\\2\pi/3&0\end{pmatrix},\qquad
+G'(b)=\begin{pmatrix}0&3/(2\pi)\\-3/(2\pi)&0\end{pmatrix}=F'(a)^{-1}.
+$$
+
+Writing image coordinates as $(u,v)$, the image of $y=c\ne0$ is $u=(v/(2c))^2-c^2$, and that of $x=c\ne0$ is $u=c^2-(v/(2c))^2$. The horizontal axis maps onto $v=0$, $u\ge0$; the vertical axis maps onto $v=0$, $u\le0$.
+
+**Proof.** Here $F(z)=z^2$, with real derivative $h\mapsto2zh$, giving the matrix and determinant. For any nonzero $w$, the formula $i\exp(\log(-w)/2)$ has square $w$ by $\exp(\log(-w))=-w$, even outside the continuous branch domain; zero is the square of zero. This proves surjectivity. The inverse function theorem applies at every nonzero $z$. At zero, every neighborhood contains a small nonzero real number and its negative, which have the same square. The pair $1,-1$ also disproves global injectivity.
+
+If $-w$ is in the slit plane, its principal argument lies strictly between $-\pi$ and $\pi$. Thus $\cos(\operatorname{Arg}(-w)/2)>0$, and $G(w)$ has positive imaginary part. Squaring is injective on the upper half-plane: equal squares imply equality or opposite values, and two upper-half-plane points cannot be opposites. It follows that $G(F(z))=z$ there. These open sets give a continuous two-sided branch. The inverse derivative is multiplication by $(2a)^{-1}=-3i/(2\pi)$, which gives the stated matrix; both matrix products are the identity.
+
+On a horizontal line, $u=x^2-c^2$ and $v=2cx$; when $c\ne0$, eliminating $x$ gives the whole stated parabola. The vertical-line calculation is the same with the sign reversed. For $c=0$, squares attain exactly the indicated closed half-axes, including the origin.
+
+**Lean declarations:** `Rudin.Chapter09.exercise18_coordinates`, `Rudin.Chapter09.exercise18_range`, `Rudin.Chapter09.exercise18_hasFDerivAt`, `Rudin.Chapter09.exercise18_matrix_action`, `Rudin.Chapter09.exercise18_jacobian`, `Rudin.Chapter09.exercise18_jacobian_zero_iff`, `Rudin.Chapter09.exercise18_locally_injective_iff`, `Rudin.Chapter09.exercise18_not_injOn_nhds_zero`, `Rudin.Chapter09.exercise18_not_injective`, `Rudin.Chapter09.exercise18_inverse_branch`, `Rudin.Chapter09.exercise18_inverse_value`, `Rudin.Chapter09.exercise18_b_value`, `Rudin.Chapter09.exercise18_forward_matrix`, `Rudin.Chapter09.exercise18_inverse_hasFDerivAt`, `Rudin.Chapter09.exercise18_inverse_matrix_action`, `Rudin.Chapter09.exercise18_inverse_identity`, `Rudin.Chapter09.exercise18_inverse_eq_matrix_inv`, `Rudin.Chapter09.exercise18_horizontal_image`, `Rudin.Chapter09.exercise18_vertical_image`, `Rudin.Chapter09.exercise18_real_axis_image`, `Rudin.Chapter09.exercise18_imaginary_axis_image`.
+
+<a id="r09e19"></a>
+### 9.19 — Local graphs of two solution branches
+
+**Lean source:** [Exercise19.lean](../../Math/Rudin/Chapter09/Exercise19.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** The solutions of
+
+$$
+3x+y-z+u^2=0,\qquad x-y+2z+u=0,\qquad 2x+2y-3z+2u=0
+$$
+
+are exactly
+
+$$
+u\in\{0,3\},\qquad x=-z/4-u,\qquad y=7z/4.
+$$
+
+Near every solution $(x_0,y_0,z_0,u_0)$, the full solution set is a unique smooth graph over any one of $x,y,z$, but not over $u$. Solvability here is local to a branch; it is not global uniqueness across the two lines.
+
+**Proof.** Linear elimination gives $x=-z/4-u$ and $y=7z/4$; substitution leaves $u(u-3)=0$. Conversely, each of these two choices satisfies all three equations. In the open band $|u-u_0|<1$, the other branch is excluded. All solutions in that band therefore have each of the following equivalent descriptions:
+
+$$
+(x,y,z,u)=(-z/4-u_0,7z/4,z,u_0),
+$$
+
+$$
+(x,y,z,u)=(-y/7-u_0,y,4y/7,u_0),
+$$
+
+$$
+(x,y,z,u)=(x,-7(x+u_0),-4(x+u_0),u_0).
+$$
+
+These maps are affine, hence smooth on the open parameter domain $\mathbb R$. Their identities characterize all solutions in the band, so they give local uniqueness as well as existence. To disprove a graph over $u$, vary $x$ slightly in the last formula. Continuity puts a distinct such solution in every prescribed neighborhood of the base solution, while $u$ remains $u_0$. Thus failure follows from actual multiple solutions in the same fiber, not just from a vanishing Jacobian minor.
+
+**Lean declarations:** `Rudin.Chapter09.exercise19_classification`, `Rudin.Chapter09.exercise19_solve_in_z`, `Rudin.Chapter09.exercise19_solve_in_y`, `Rudin.Chapter09.exercise19_solve_in_x`, `Rudin.Chapter09.exercise19_local_graphs`, `Rudin.Chapter09.exercise19_smooth_graphs`, `Rudin.Chapter09.exercise19_failure_in_u`.
+
+<a id="r09e20"></a>
+### 9.20 — Geometry of the scalar implicit function theorem
+
+**Lean source:** [Exercise20.lean](../../Math/Rudin/Chapter09/Exercise20.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Suppose $f$ is $C^1$ near $(a,b)\in\mathbb R^2$, $f(a,b)=0$, and $D_1f(a,b)\ne0$. The nearby zero set is the unique $C^1$ graph $x=g(y)$, with $g(b)=a$ and
+
+$$
+g'(b)=-\frac{D_2f(a,b)}{D_1f(a,b)}.
+$$
+
+The coordinate change $H(x,y)=(f(x,y),y)$ maps this local zero graph onto a segment of the vertical line with first coordinate zero. The same construction is proved for $y$ in any real Banach space $Y$, with derivative $g'(b)v=-L(0,v)/L(1,0)$, where $L=f'(a,b)$.
+
+**Proof.** Split the differential as $L(h,v)=L(1,0)h+L(0,v)$. The derivative of $H$ sends $(h,v)$ to $(L(h,v),v)$ and is invertible, with inverse
+
+$$
+(s,v)\longmapsto\left(\frac{s-L(0,v)}{L(1,0)},v\right).
+$$
+
+Apply the $C^1$ inverse function theorem at $(a,b)$. Its open source and target contain $(a,b)$ and $(0,b)$, respectively. For $y$ in a sufficiently small open neighborhood $W$ of $b$, define $g(y)$ to be the first coordinate of $H^{-1}(0,y)$. The second coordinate is $y$, so $f(g(y),y)=0$. Injectivity of the local coordinate change proves that every zero in its source with $y\in W$ has $x=g(y)$. Its inverse is $C^1$, and evaluating its derivative on $(0,v)$ gives the derivative formula. In the scalar case, restriction of the genuine differential to the two coordinate lines identifies its coefficients with the two partial derivatives. This also explains the graphical proof: invert the coordinate change and pull back the zero line, with uniqueness only inside the chosen local source.
+
+**Lean declarations:** `Rudin.Chapter09.scalarImplicitGraph_exists`, `Rudin.Chapter09.exercise20_graph`, `Rudin.Chapter09.exercise20_partials`, `Rudin.Chapter09.exercise20_proof_graph`.
+
+<a id="r09e21"></a>
+### 9.21 — A cubic with a line and an ellipse of zeros
+
+**Lean source:** [Exercise21.lean](../../Math/Rudin/Chapter09/Exercise21.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f(x,y)=2x^3-3x^2+2y^3+3y^2$. Its stationary points are $(0,0)$, $(0,-1)$, $(1,0)$, and $(1,-1)$. Its only local minimum is the strict minimum $(1,0)$; its only local maximum is the strict maximum $(0,-1)$. The other two stationary points are saddles. Its zero set is exactly
+
+$$
+S=\{y=-x\}\ \cup\ \{(x+y)^2+3(x-y-1)^2=3\}.
+$$
+
+The ellipse has $-1/2\le x\le3/2$, with branches
+
+$$
+y=\frac{2x-3\pm\sqrt{9+12x-12x^2}}4.
+$$
+
+The line and ellipse intersect exactly at $(0,0)$ and $(1,-1)$, the only singular zeros. At these nodes the tangent directions are $(h,k)$ with $k=\pm h$.
+
+The full local zero set fails to be a graph $y=y(x)$ exactly at
+
+$$
+(0,0),\ (1,-1),\ (3/2,0),\ (-1/2,-1),
+$$
+
+and fails to be a graph $x=x(y)$ exactly at
+
+$$
+(0,0),\ (1,-1),\ (0,-3/2),\ (1,1/2).
+$$
+
+Here a graph means a continuous local graph containing all nearby zeros, not a selected branch.
+
+**Proof.** Differentiation gives $f_x=6x(x-1)$ and $f_y=6y(y+1)$, and the full differential is $f_xh+f_yk$. This gives the four stationary points. The exact increment at $(1,0)$ is
+
+$$
+f(x,y)-f(1,0)=(x-1)^2(2x+1)+y^2(2y+3).
+$$
+
+Both coefficients are positive near $(1,0)$, and at least one square is positive at every distinct point. The identity $f(1-x,-1-y)=-f(x,y)$ gives the strict maximum at $(0,-1)$. Near zero the two coordinate axes give values of opposite sign. The same reflection gives a saddle at $(1,-1)$. Every local extremum must have zero coordinate derivatives, so this list is exhaustive.
+
+Factorization gives
+
+$$
+f(x,y)=(x+y)(2x^2-2xy+2y^2-3x+3y).
+$$
+
+Completing squares in the second factor gives the ellipse equation. Solving its quadratic equation in $y$ gives the stated branches and their closed $x$ interval. Substitution of $y=-x$ gives exactly the two intersections. The expansions at them are
+
+$$
+f(th,tk)=3t^2(k^2-h^2)+2t^3(h^3+k^3),
+$$
+
+$$
+f(1+th,-1+tk)=3t^2(h^2-k^2)+2t^3(h^3+k^3).
+$$
+
+Thus both intersections have two distinct leading tangent lines.
+
+For graph existence, the implicit function theorem applies wherever the appropriate partial is nonzero. On $S$, solving $f_y=0$ gives exactly the four listed obstructions for $y=y(x)$; solving $f_x=0$ gives the four for $x=x(y)$. Nonzero partials alone do not prove the converse failure. At a node, a continuous ellipse arc and the crossing line give distinct zeros with equal independent coordinate arbitrarily near the node. At $(3/2,0)$, write the two nearby $y$ values as $s(t)\pm t$, where $s(t)=(\sqrt{1-4t^2/3}-1)/2$. Then $6s(t)^2+6s(t)+2t^2=0$, which makes their $y$ contributions equal. A local implicit curve supplies their common $x$ coordinate, giving distinct zeros in the same vertical fiber. Reflection gives the other vertical fold. The symmetry $f(-y,-x)=-f(x,y)$ gives both horizontal folds. These collisions in every neighborhood rule out the full local graph at each listed point.
+
+**Lean declarations:** `Rudin.Chapter09.exercise21_partials`, `Rudin.Chapter09.exercise21_differential`, `Rudin.Chapter09.exercise21_frechet_stationary`, `Rudin.Chapter09.exercise21_extrema`, `Rudin.Chapter09.exercise21_minimum`, `Rudin.Chapter09.exercise21_maximum`, `Rudin.Chapter09.exercise21_stationary_saddles`, `Rudin.Chapter09.exercise21_graph_y`, `Rudin.Chapter09.exercise21_graph_x`, `Rudin.Chapter09.exercise21_zero_set`, `Rudin.Chapter09.exercise21_all_branches`, `Rudin.Chapter09.exercise21_intersections`, `Rudin.Chapter09.exercise21_singular`, `Rudin.Chapter09.exercise21_node_expansions`.
+
+<a id="r09e22"></a>
+### 9.22 — A nodal cubic with a loop and two unbounded arms
+
+**Lean source:** [Exercise22.lean](../../Math/Rudin/Chapter09/Exercise22.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f(x,y)=2x^3+6xy^2-3x^2+3y^2$. Its stationary points are $(0,0)$, a saddle, and $(1,0)$, its unique local minimum, which is strict. There are no local maxima. The zero set $S=\{f=0\}$ is exactly
+
+$$
+-1/2<x\le3/2,\qquad y=\pm\sqrt{\frac{x^2(3-2x)}{3+6x}}.
+$$
+
+These branches meet only at $(0,0)$ and $(3/2,0)$. The origin is the only singular zero, with tangent lines $y=\pm x$. A parametrization of the entire curve is
+
+$$
+P(t)=\left(\frac{3(1-t^2)}{2+6t^2},\frac{3t(1-t^2)}{2+6t^2}\right),\qquad t\in\mathbb R.
+$$
+
+The interval $|t|\le1$ gives the loop with $x\ge0$. The remaining parameters give two unbounded arms, both asymptotic to $x=-1/2$: as $t\to+\infty$, $y\to-\infty$, and as $t\to-\infty$, $y\to+\infty$.
+
+On the full zero set, $y=y(x)$ fails locally exactly at $(0,0)$ and $(3/2,0)$. The representation $x=x(y)$ fails exactly at the origin and at
+
+$$
+x=\sqrt3/2,\qquad y=\pm\sqrt{\sqrt3/2-3/4}.
+$$
+
+**Proof.** The partial derivatives and full differential are
+
+$$
+f_x=6(x^2+y^2-x),\qquad f_y=6y(2x+1),\qquad df(h,k)=f_xh+f_yk.
+$$
+
+Solving both equations forces $y=0$ and $x=0$ or $1$; the alternative $x=-1/2$ is incompatible with $x^2+y^2-x=0$. The coordinate axes give both signs near zero. At $(1,0)$,
+
+$$
+f(x,y)-f(1,0)=(x-1)^2(2x+1)+y^2(6x+3),
+$$
+
+which is strictly positive nearby except at the base point. Stationarity is necessary for any local extremum, so there are no others.
+
+The equation $f=0$ rearranges to $(3+6x)y^2=x^2(3-2x)$. Positivity and signs imply $-1/2<x\le3/2$, and division then gives the two branches, including both meeting points. Substitution verifies $f(P(t))=0$. Conversely, a zero with $x\ne0$ is $P(y/x)$; a zero with $x=0$ is the origin, obtained at $t=1$ and $t=-1$. The exact identity
+
+$$
+P_1(t)+1/2=\frac2{1+3t^2}
+$$
+
+proves the asymptotic $x$ behavior. Since $P_2(t)=tP_1(t)$, it also gives the two limits of $y$. The sign of $1-t^2$ gives the loop parameter interval. At the node,
+
+$$
+f(th,tk)=3t^2(k^2-h^2)+2t^3h(h^2+3k^2),
+$$
+
+whose quadratic zero directions are precisely $k=\pm h$.
+
+Away from zeros of the relevant partial, the implicit function theorem gives the local graph. On $S$, $f_y=0$ gives only the node and the rightmost point. Reflection in the $x$ axis provides two distinct nearby zeros with the same $x$ at both points. For the other projection, $f_x=0$ on $S$ gives the node or $x>0$, $4x^2=3$, $y^2=x-x^2$, yielding the stated two folds. To prove actual failure, not just failure of an implicit-function hypothesis, divide the cubic in $x$ by a known root. The other roots are
+
+$$
+z=\frac{3-2x\pm\sqrt{9+12x-12x^2-48y^2}}4.
+$$
+
+Near the node, a parametrized zero and the minus choice give distinct roots in the same horizontal fiber that converge to the node. At either fold, an implicit zero curve and the plus choice do the same. The discriminant is positive nearby; equality of the two roots would force $f_x=0$, which the punctured curves exclude. Thus all listed points, and only those points, fail the full local graph condition.
+
+**Lean declarations:** `Rudin.Chapter09.exercise22_partials`, `Rudin.Chapter09.exercise22_differential`, `Rudin.Chapter09.exercise22_frechet_stationary`, `Rudin.Chapter09.exercise22_extrema`, `Rudin.Chapter09.exercise22_minimum`, `Rudin.Chapter09.exercise22_stationary_saddles`, `Rudin.Chapter09.exercise22_graph_y`, `Rudin.Chapter09.exercise22_graph_x_explicit`, `Rudin.Chapter09.exercise22_zero_set`, `Rudin.Chapter09.exercise22_branches`, `Rudin.Chapter09.exercise22_param_surjective`, `Rudin.Chapter09.exercise22_singular`, `Rudin.Chapter09.exercise22_branch_meetings`, `Rudin.Chapter09.exercise22_node_expansion`, `Rudin.Chapter09.exercise22_tangent_cone`, `Rudin.Chapter09.exercise22_loop_parameters`, `Rudin.Chapter09.exercise22_asymptotes`.
+
+<a id="r09e23"></a>
+### 9.23 — Derivatives of an implicitly defined function
+
+**Lean source:** [Exercise23.lean](../../Math/Rudin/Chapter09/Exercise23.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For $f(x,y_1,y_2)=x^2y_1+e^x+y_2$, there is an open neighborhood $W$ of $(1,-1)$ and a $C^1$ function $g:W\to\mathbb R$ such that
+
+$$
+g(1,-1)=0,\qquad g(y_1,y_2)^2y_1+e^{g(y_1,y_2)}+y_2=0.
+$$
+
+This graph is unique inside a suitable open neighborhood of $(0,1,-1)$. At the base point, $D_1g=0$ and $D_2g=-1$.
+
+**Proof.** The function is $C^1$, $f(0,1,-1)=0$, and its differential there is $(h,k_1,k_2)\mapsto h+k_2$. In particular the $x$ partial exists and equals $1\ne0$. Apply the scalar implicit-graph construction, grouping $(y_1,y_2)$ as a Banach-space variable. Its derivative formula gives $g'(1,-1)(k_1,k_2)=-k_2$. Restriction to each coordinate line gives the asserted partial derivatives as actual one-variable derivatives. The inverse-function construction supplies the open domain, $C^1$ regularity, equation, base value, and local uniqueness for this same function $g$.
+
+**Lean declarations:** `Rudin.Chapter09.exercise23_zero_value`, `Rudin.Chapter09.exercise23_differential`, `Rudin.Chapter09.exercise23_nonzero_partial`, `Rudin.Chapter09.exercise23_implicit_function`, `Rudin.Chapter09.exercise23_graph_differential`, `Rudin.Chapter09.exercise23_first_partial`, `Rudin.Chapter09.exercise23_second_partial`.
+
+<a id="r09e24"></a>
+### 9.24 — A rank-one map onto an ellipse
+
+**Lean source:** [Exercise24.lean](../../Math/Rudin/Chapter09/Exercise24.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** On the punctured Euclidean plane let
+
+$$
+F(x,y)=\left(\frac{x^2-y^2}{x^2+y^2},\frac{xy}{x^2+y^2}\right).
+$$
+
+Its derivative has rank $1$ at every point of its domain. Its exact range is the ellipse $u^2+4v^2=1$; the second numerator is $xy$, not $2xy$.
+
+**Proof.** Put $d=x^2+y^2>0$. The quotient rule factors the actual derivative as
+
+$$
+F'(x,y)(h,k)=(yh-xk)\left(\frac{4xy}{d^2},\frac{y^2-x^2}{d^2}\right).
+$$
+
+The linear functional is nonzero because $(x,y)\ne0$. The vector is nonzero as well: if $xy=0$ and $y^2=x^2$, then both coordinates vanish. The range of this derivative is therefore exactly the one-dimensional span of that vector, proving the rank statement even on either coordinate axis.
+
+Direct expansion gives $F_1^2+4F_2^2=1$. Conversely, take $(u,v)$ on the ellipse. If $u=-1$, the equation gives $v=0$, and $F(0,1)=(-1,0)$. Otherwise use the nonzero preimage $(1+u,2v)$. The ellipse equation gives $(1+u)^2+(2v)^2=2(1+u)$, and substitution into $F$ gives $(u,v)$. This includes all boundary points of the ellipse and proves equality of ranges.
+
+**Lean declarations:** `Rudin.Chapter09.exercise24_hasFDerivAt`, `Rudin.Chapter09.exercise24_rank`, `Rudin.Chapter09.exercise24_on_ellipse`, `Rudin.Chapter09.exercise24_range`.
+
+<a id="r09e25"></a>
+### 9.25 — A projection from a right inverse on the range
+
+**Lean source:** [Exercise25.lean](../../Math/Rudin/Chapter09/Exercise25.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $A:E\to F$ be real linear. There is a linear map $S:\operatorname{range}A\to E$ with $AS=\operatorname{id}$ on the range. For any such $S$, the map $P=SA:E\to E$ satisfies
+
+$$
+P^2=P,\qquad \ker P=\ker A,\qquad \operatorname{range}P=\operatorname{range}S.
+$$
+
+If $E$ is finite-dimensional, then $\dim\ker A+\dim\operatorname{range}A=\dim E$. In particular, for $A:\mathbb R^n\to\mathbb R^m$ of rank $r$, $\dim\ker A+r=n$, including rank zero and dimension zero.
+
+**Proof.** The surjective linear map $A:E\to\operatorname{range}A$ has a linear right inverse, obtained by choosing preimages of a basis. Its right-inverse identity gives $P^2=S(AS)A=SA$. If $Px=0$, applying $A$ gives $Ax=0$; the converse follows from linearity of $S$. Every $Px$ lies in the range of $S$, and every $Sz$ is $SAx$ for a preimage $x$ of $z$, proving the range identity.
+
+An idempotent splits $E$ into the complementary subspaces $\ker P$ and $\operatorname{range}P$: $x=(x-Px)+Px$, and their intersection is zero. Also $S$ is injective because $AS$ is the identity. Thus $\dim\operatorname{range}S=\dim\operatorname{range}A$, and taking dimensions in this splitting proves the formula. No division by $r$ occurs. For $A=0$, $S$ is the unique map from the zero range and $P=0$, so the same argument applies.
+
+**Lean declarations:** `Rudin.Chapter09.exercise25_right_inverse`, `Rudin.Chapter09.exercise25_projection`, `Rudin.Chapter09.exercise25_kernel`, `Rudin.Chapter09.exercise25_range`, `Rudin.Chapter09.exercise25_dimension`, `Rudin.Chapter09.exercise25_b`.
+
+<a id="r09e26"></a>
+### 9.26 — A continuous mixed partial without a first partial
+
+**Lean source:** [Exercise26.lean](../../Math/Rudin/Chapter09/Exercise26.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For any nowhere differentiable $g:\mathbb R\to\mathbb R$, let $f(x,y)=g(x)$. Then $D_2f=0$ everywhere, and $D_{12}f=D_1(D_2f)=0$ is continuous everywhere, although $D_1f$ exists nowhere. The source also supplies a concrete such $g$: it is $1$ on rational numbers and $0$ on irrational numbers. Continuity of $f$ is not asserted or required.
+
+**Proof.** For fixed $x$, the function of $y$ is constant, so its derivative genuinely exists and equals zero. For fixed $y$, this proved inner derivative is the zero function of $x$, so its derivative also exists and equals zero. Hence the mixed partial is a continuous constant function. In contrast, the $x$ slice is exactly $g$, and is nowhere differentiable by hypothesis.
+
+For the concrete example, every interval contains both a rational and an irrational number. If $g$ were continuous at any $x$, a sufficiently small neighborhood would force $|g(t)-g(x)|<1/2$. Choosing $t$ of the opposite rationality gives difference $1$, a contradiction. Thus $g$ is nowhere continuous and therefore nowhere differentiable. This verifies that the construction has an actual example, rather than only a conditional hypothesis.
+
+**Lean declarations:** `Rudin.Chapter09.exercise26_second_partial`, `Rudin.Chapter09.exercise26_mixed_partial`, `Rudin.Chapter09.exercise26_mixed_continuous`, `Rudin.Chapter09.exercise26_first_nowhere`, `Rudin.Chapter09.exercise26_nowhere_not_continuous`, `Rudin.Chapter09.exercise26_nowhere_not_differentiable`, `Rudin.Chapter09.exercise26_example`.
+
+<a id="r09e27"></a>
+### 9.27 — Continuous first partials and unequal mixed partials
+
+**Lean source:** [Exercise27.lean](../../Math/Rudin/Chapter09/Exercise27.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Set $f(0,0)=0$ and, elsewhere,
+
+$$
+f(x,y)=\frac{xy(x^2-y^2)}{x^2+y^2}.
+$$
+
+The function is $C^1$ on the entire plane. Both mixed partials exist everywhere and are continuous off the origin, but both are discontinuous there. With the rightmost derivative taken first,
+
+$$
+D_{12}f(0,0)=1,\qquad D_{21}f(0,0)=-1.
+$$
+
+**Proof.** The first partials have $P(0,0)=Q(0,0)=0$ and, off the origin, are
+
+$$
+P(x,y)=\frac{y(x^4+4x^2y^2-y^4)}{(x^2+y^2)^2},\qquad Q(x,y)=-P(y,x).
+$$
+
+For the first partial, the slice $y=0$ is constant zero; for $y\ne0$, the quotient rule gives $P$. Antisymmetry $f(x,y)=-f(y,x)$ gives the second partial. The estimates
+
+$$
+|f(x,y)|\le |x||y|,\qquad |P(x,y)|\le3|y|,\qquad |Q(x,y)|\le3|x|
+$$
+
+prove continuity of all three at zero. Away from zero they are rational functions with nonzero denominator. Continuous first partials then give the actual continuous total derivative, hence $C^1$ regularity.
+
+For $(x,y)\ne(0,0)$ put
+
+$$
+K(x,y)=\frac{x^6+9x^4y^2-9x^2y^4-y^6}{(x^2+y^2)^3}.
+$$
+
+For $(x,y)\ne(0,0)$, direct differentiation gives $D_{21}f=K(x,y)$ and $D_{12}f=-K(y,x)$. On the vertical axis, the identity $P(0,y)=-y$ proves the derivative of $P$ directly, including $D_{21}f(0,0)=-1$; the swapped identity gives $D_{12}f(0,0)=1$. Thus these are derivatives of the actual first partials, not values assigned to nonexistent derivatives.
+
+The formulas with $K$ prove continuity away from zero. For nonzero $x$, $D_{21}f(x,0)=1$, contrary to its value $-1$ at zero. For nonzero $y$, $D_{12}f(0,y)=-1$, contrary to its value $1$ at zero. Restricting any alleged continuity to these axes gives contradictions.
+
+**Lean declarations:** `Rudin.Chapter09.exercise27_zero`, `Rudin.Chapter09.exercise27_continuous`, `Rudin.Chapter09.exercise27_first_partials`, `Rudin.Chapter09.exercise27_actual_first_partials`, `Rudin.Chapter09.exercise27_C1`, `Rudin.Chapter09.exercise27_mixed_existence`, `Rudin.Chapter09.exercise27_mixed_continuous_off_zero`, `Rudin.Chapter09.exercise27_mixed_discontinuous`, `Rudin.Chapter09.exercise27_D12_zero`, `Rudin.Chapter09.exercise27_D21_zero`, `Rudin.Chapter09.exercise27_mixed_values`, `Rudin.Chapter09.exercise27_D12_formula`, `Rudin.Chapter09.exercise27_D21_formula`.
+
+<a id="r09e28"></a>
+### 9.28 — Failure to interchange differentiation and integration
+
+**Lean source:** [Exercise28.lean](../../Math/Rudin/Chapter09/Exercise28.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For $t\ge0$, define
+
+$$
+\phi(x,t)=\begin{cases}
+x,&0\le x\le\sqrt t,\\
+-x+2\sqrt t,&\sqrt t\le x\le2\sqrt t,\\
+0,&\text{otherwise},
+\end{cases}
+$$
+
+and for $t<0$ set $\phi(x,t)=-\phi(x,|t|)$. The closed pieces agree at their shared endpoints. This function is jointly continuous on $\mathbb R^2$, and $D_2\phi(x,0)=0$ for every real $x$. Nevertheless, if $I(t)=\int_{-1}^1\phi(x,t)\,dx$, then $I(t)=t$ for $|t|<1/4$, so
+
+$$
+I'(0)=1\ne0=\int_{-1}^1D_2\phi(x,0)\,dx.
+$$
+
+The integrals are verified both as ordinary interval integrals and as the source's closed-cell Darboux and tagged-refinement integrals.
+
+**Proof.** Write $T(x,r)=\max(0,\min(x,2r-x))$. For $r\ge0$, it equals $x$ on $[0,r]$, $2r-x$ on $[r,2r]$, and zero outside, with matching endpoint values. Also $0\le T(x,r)\le r$. Away from $t=0$, continuity follows from the min/max formula and the locally constant choice of sign. At every point of the whole $t=0$ axis, the bound $|\phi(x,t)|\le\sqrt{|t|}$ proves continuity, since $\phi(x,0)=0$.
+
+For fixed $x\le0$, $\phi(x,t)$ is always zero. For fixed $x>0$, $2\sqrt{|t|}<x$ for all sufficiently small $t$, so the function is again identically zero near $t=0$. Its parameter derivative is therefore an actual derivative equal to zero for every $x$.
+
+Every slice in $x$ is continuous and hence integrable on each finite interval. If $r\ge0$ and $2r\le1$, split $[-1,1]$ at $0,r,2r$. The two nonzero integrals are each $r^2/2$, so the total is $r^2$, including the degenerate case $r=0$. Take $r=\sqrt{|t|}$ and use the sign in the definition: the result is $t$ when $|t|<1/4$. Thus $I$ agrees with the identity near zero and $I'(0)=1$.
+
+For completeness, the source integral is the supremum of lower sums over weakly increasing partitions of $[-1,1]$, using infima on closed cells. The continuous-integrand bridge for the integrator $\alpha(x)=x$ identifies this value with the interval integral, and also proves equality with upper sums and the tagged-refinement criterion. The parameter partial is identically zero, so its Darboux and interval integrals both equal zero. Hence neither side of the failed interchange relies on an undefined derivative or an unproved integrability assumption.
+
+**Lean declarations:** `Rudin.Chapter09.exercise28_piecewise`, `Rudin.Chapter09.exercise28_source_nonnegative`, `Rudin.Chapter09.exercise28_source_negative`, `Rudin.Chapter09.exercise28_continuous`, `Rudin.Chapter09.exercise28_parameter_partial`, `Rudin.Chapter09.exercise28_slice_integrable`, `Rudin.Chapter09.exercise28_darboux_bridge`, `Rudin.Chapter09.exercise28_source_integral`, `Rudin.Chapter09.exercise28_integral_value`, `Rudin.Chapter09.exercise28_failed_interchange`, `Rudin.Chapter09.exercise28_failed_interchange_interval`, `Rudin.Chapter09.exercise28_tent_integral`, `Rudin.Chapter09.exercise28_integral_derivative`, `Rudin.Chapter09.exercise28_partial_integral`.
+
+<a id="r09e29"></a>
+### 9.29 — Permutation of coordinate derivatives
+
+**Lean source:** [Exercise29.lean](../../Math/Rudin/Chapter09/Exercise29.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^n$ be open and $f\in C^m(E)$. Every ordered coordinate derivative of length $k\le m$ is unchanged by a permutation of its indices, including repeated indices. In particular, for $f\in C^k(E)$,
+
+$$
+D_{i_{\sigma(1)}}\cdots D_{i_{\sigma(k)}}f(a)=D_{i_1}\cdots D_{i_k}f(a),\qquad a\in E.
+$$
+
+The empty list gives $f$ itself. All intermediate derivatives used here genuinely exist: a derivative of length $j$ is $C^r$ whenever $j+r\le m$.
+
+**Proof.** Define a coordinate derivative by applying the Fréchet derivative to the corresponding Euclidean coordinate vector, and iterate from the right. Induction on the list length proves the remaining regularity statement by differentiating a $C^{r+1}$ function and evaluating on a fixed vector. If the length is less than $m$, this gives an existing Fréchet derivative. Composition with $t\mapsto a+te_i$ proves that the next coordinate derivative is also the ordinary one-variable partial at $t=0$.
+
+For a $C^2$ function, symmetry of the continuous second Fréchet derivative gives $D_iD_jg=D_jD_ig$. Now use that adjacent swaps generate permutations. A swap of two leading indices is valid because the remaining inner derivative is $C^2$. If a permutation is already valid for an inner list, the resulting functions agree throughout $E$; openness makes them equal near every $a\in E$, so their next derivatives agree there too. Transitivity completes the induction over permutations. This proves equality of actual coordinate derivatives without assuming symmetry of a higher differential as a separate hypothesis.
+
+**Lean declarations:** `Rudin.Chapter09.mixedPartial_contDiffOn`, `Rudin.Chapter09.mixedPartial_hasFDerivAt`, `Rudin.Chapter09.mixedPartial_hasDerivAt`, `Rudin.Chapter09.coordinatePartial_comm`, `Rudin.Chapter09.exercise29_permutation_invariance`, `Rudin.Chapter09.exercise29_ordered_permutation`.
+
+<a id="r09e30"></a>
+### 9.30 — Ordered and multi-index Taylor expansions
+
+**Lean source:** [Exercise30.lean](../../Math/Rudin/Chapter09/Exercise30.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^n$ be open, $m\ge1$, $f\in C^m(E)$, and $a\in E$. For $h(t)=f(a+tx)$, at every parameter with $a+tx\in E$ and for $0\le k\le m$,
+
+$$
+h^{(k)}(t)=\sum_{i_1,\ldots,i_k=1}^n(D_{i_1}\cdots D_{i_k}f)(a+tx)x_{i_1}\cdots x_{i_k}.
+$$
+
+The $k=0$ expression is $f(a+tx)$. If the entire segment $a+tx$, $0\le t\le1$, lies in $E$, then
+
+$$
+f(a+x)=\sum_{k=0}^{m-1}\frac1{k!}\sum_{i_1,\ldots,i_k=1}^n(D_{i_1}\cdots D_{i_k}f)(a)x_{i_1}\cdots x_{i_k}+r(x).
+$$
+
+The actual remainder has both forms
+
+$$
+r(x)=\frac1{(m-1)!}\int_0^1(1-t)^{m-1}D^mf(a+tx)[x,\ldots,x]\,dt
+=\frac1{m!}D^mf(a+\theta x)[x,\ldots,x]
+$$
+
+for some $0<\theta<1$. Locally $r(x)=O(|x|^m)$, and hence
+
+$$
+\frac{r(x)}{|x|^{m-1}}\longrightarrow0\qquad(x\to0,\ x\ne0).
+$$
+
+The same polynomial, with the same remainder, is
+
+$$
+\sum_{s_1+\cdots+s_n\le m-1}\frac{(D_1^{s_1}\cdots D_n^{s_n}f)(a)}{s_1!\cdots s_n!}x_1^{s_1}\cdots x_n^{s_n},
+$$
+
+where all $s_i$ are nonnegative integers. These results include $m=1$ and dimension zero, with the usual empty-sum and empty-product conventions.
+
+**Proof.** First identify each ordered coordinate derivative with $D^kf$ evaluated on its coordinate vectors. Induction uses the existing derivative of $D^{k-1}f$ and local equality on the open domain. Expand each copy of $x=\sum_i x_ie_i$ by multilinearity. The resulting diagonal evaluation is exactly the ordered coordinate sum.
+
+The chain rule gives a genuine derivative jet along the line: the derivative of $D^kf(a+tx)[x,\ldots,x]$ is $D^{k+1}f(a+tx)[x,\ldots,x]$ for $k<m$. The inverse image of $E$ under the line map is open, so local equality and induction identify this jet with the iterated scalar derivatives of $h$. This proves the formula wherever the line is in $E$, not just inside the specified segment.
+
+Apply one-variable Taylor theory on $[0,1]$ to obtain the integral and Lagrange remainders. The integral remainder integrand is continuous on the whole segment, hence integrable. Continuity of $D^mf$ near $a$ gives a ball on which its operator norm is bounded by a constant $C$. For sufficiently small $x$, the full segment is in this ball. Multilinearity gives $|D^mf(a+tx)[x,\ldots,x]|\le C|x|^m$; also $0\le(1-t)^{m-1}\le1$. The integral formula therefore bounds $|r(x)|$ by a fixed constant times $|x|^m$. Since $|x|^m=o(|x|^{m-1})$, the required little-o estimate and punctured limit follow. When $m=1$, this is $r(x)\to0$; in dimension zero the punctured limit has no nonzero points.
+
+Finally group the ordered $k$-tuples by their coordinate multiplicities $s=(s_1,\ldots,s_n)$. The exact number with these multiplicities is $k!/(s_1!\cdots s_n!)$. The source proves this count by comparing the coefficient of the corresponding monomial in the ordered and multinomial expansions of $(X_1+\cdots+X_n)^k$. Exercise 29 makes the derivative identical for all tuples in a group, and their products all equal $x_1^{s_1}\cdots x_n^{s_n}$. Cancel the factor $k!$ against the Taylor coefficient. Taking the union of the groups for $0\le k<m$ gives exactly total degree at most $m-1$, including the constant term, and proves equality of the two polynomials.
+
+**Lean declarations:** `Rudin.Chapter09.mixedPartial_eq_iteratedFDeriv`, `Rudin.Chapter09.orderedCoordinateSum_eq`, `Rudin.Chapter09.exercise30_sourceJet`, `Rudin.Chapter09.line_iteratedDeriv`, `Rudin.Chapter09.exercise30_a`, `Rudin.Chapter09.exercise30_b_expansion`, `Rudin.Chapter09.exercise30_b_lagrange`, `Rudin.Chapter09.orderedCoordinateSum_zero`, `Rudin.Chapter09.taylorRemainder_intervalIntegrable`, `Rudin.Chapter09.taylorRemainder_isBigO`, `Rudin.Chapter09.exercise30_b_remainder_isLittleO`, `Rudin.Chapter09.exercise30_b_remainder`, `Rudin.Chapter09.Exercise30Combinatorics.card_counts_fiber`, `Rudin.Chapter09.Exercise30Combinatorics.sum_list_perm_invariant`, `Rudin.Chapter09.mem_taylorMultiIndices_iff`, `Rudin.Chapter09.exercise30_c`, `Rudin.Chapter09.exercise30_multiIndex_expansion`.
+
+<a id="r09e31"></a>
+### 9.31 — Corrected second-derivative tests and a singular obstruction
+
+**Lean source:** [Exercise31.lean](../../Math/Rudin/Chapter09/Exercise31.lean).
+
+**Inventory status:** Verified refutation and correction.
+
+**Statement.** The printed claim is false: $C^3$ regularity near a stationary point and at least one nonzero second partial do not ensure that the quadratic Taylor polynomial determines the type of local extremum. The smooth planar functions
+
+$$
+f_+(x,y)=x^2+y^4,\qquad f_-(x,y)=x^2-y^4
+$$
+
+have the same value, zero gradient, nonzero singular Hessian $\operatorname{diag}(2,0)$, and quadratic Taylor polynomial $x^2$ at zero. The first has a strict global minimum there; the second has neither a local minimum nor a local maximum. The obstruction extends to every dimension at least two, and negation gives the corresponding negative-semidefinite obstruction.
+
+The valid tests are as follows. Suppose $f$ is $C^3$ near $a$ in a finite-dimensional real normed space and $f'(a)=0$, and let $B=f''(a)$ be its actual Hessian. If $B(v,v)>0$ for every $v\ne0$, then $a$ is a strict local minimum. If $B(v,v)<0$ for every $v\ne0$, it is a strict local maximum. If $B$ has both a positive and a negative quadratic direction, it is neither a local minimum nor a local maximum. A nonzero positive-semidefinite Hessian excludes a local maximum but does not decide whether a local minimum exists; reverse the signs for a negative-semidefinite Hessian. In dimension one a nonzero Hessian is decisive by its sign. In dimension zero the nonzero-Hessian hypothesis is impossible.
+
+**Proof.** The source first derives the genuine quadratic expansion
+
+$$
+f(a+h)-f(a)=\tfrac12B(h,h)+o(|h|^2).
+$$
+
+Local $C^3$ regularity supplies first derivatives in a neighborhood and differentiability of the derivative at $a$. Symmetry of this second derivative makes the derivative of $B(x-a,x-a)/2$ equal to $B(x-a,\cdot)$. Subtract this quadratic function and $f(a)$ from $f$. The resulting derivative is $o(|x-a|)$. The mean-value estimate on a small convex ball then gives an error $o(|x-a|^2)$, proving the expansion rather than assuming it.
+
+For positive definite $B$, continuity and compactness of the unit sphere give $c>0$ with $B(h,h)\ge c|h|^2$. Choose the error smaller than $(c/4)|h|^2$. The increment is then positive for every sufficiently small nonzero $h$, giving a strict minimum on a full punctured neighborhood. Negation proves the negative definite test. A positive direction $v$ gives $f(a+tv)>f(a)$ for sufficiently small nonzero $t$, so it excludes a local maximum; a negative direction excludes a local minimum. Both directions give the indefinite conclusion. These directional exclusions do not require finite dimension.
+
+For the semidefinite conclusion, a symmetric nonzero positive-semidefinite form has a positive direction. Otherwise all diagonal values vanish, and expansion of $B(v+w,v+w)$ with symmetry forces every $B(v,w)$ to vanish, a contradiction. Apply the directional exclusion, and negate for the negative case. In one dimension $B(x,y)=xyB(1,1)$, so $B\ne0$ implies $B(1,1)\ne0$ and one of the definite tests applies. On a zero-dimensional space every bilinear form is zero.
+
+To show exactly why the singular cases remain inconclusive, in dimension $d\ge2$ define
+
+$$
+F_c(p)=\sum_{j\ne2}p_j^2+c\,p_2^4.
+$$
+
+For every $c$, these polynomial functions have value and first derivative zero at the origin and the same Hessian
+
+$$
+B(v,w)=2\sum_{j\ne2}v_jw_j.
+$$
+
+This Hessian is nonnegative, is nonzero on the first coordinate vector, and has the nonzero second coordinate vector in its kernel. The actual quadratic Taylor polynomial is $\sum_{j\ne2}h_j^2$, independent of $c$. For $c=1$, every nonzero point has positive value, giving a strict global and local minimum. For $c=-1$, the first axis has values $t^2>0$ and the second has values $-t^4<0$ arbitrarily close to zero, giving neither extremum. Their negatives have the same negative-semidefinite quadratic polynomial; one has a strict local maximum and the other has neither extremum. For $d=2$ these are exactly the displayed planar examples. Thus the source's original classification is refuted, while all stated corrected tests retain their full hypotheses and singular cases.
+
+**Lean declarations:** `Rudin.Chapter09.exercise31_counterexample`, `Rudin.Chapter09.exercise31_planar_formula`, `Rudin.Chapter09.exercise31_counter_hessian_axis`, `Rudin.Chapter09.exercise31_zero_dimension`, `Rudin.Chapter09.exercise31_one_dimension`, `Rudin.Chapter09.exercise31_counter_hessian_nonnegative`, `Rudin.Chapter09.exercise31_counter_hessian_nonzero`, `Rudin.Chapter09.exercise31_counter_hessian_kernel`, `Rudin.Chapter09.exercise31_counter_same_jet`, `Rudin.Chapter09.exercise31_counter_taylor`, `Rudin.Chapter09.exercise31_counter_negative_jet`, `Rudin.Chapter09.exercise31_counter_negative_taylor`, `Rudin.Chapter09.exercise31_counter_negative_behavior`, `Rudin.Chapter09.exercise31_quadratic_expansion`, `Rudin.Chapter09.exercise31_positive_test`, `Rudin.Chapter09.exercise31_negative_test`, `Rudin.Chapter09.exercise31_indefinite_test`, `Rudin.Chapter09.exercise31_semidefinite_exclusions`, `Rudin.Chapter09.exercise31_counter_minimum`, `Rudin.Chapter09.exercise31_counter_neither`.
+
+<a id="chapter-10"></a>
+
+## Chapter 10 — Integration of Differential Forms
+
+**Exercises:** [1](#r10e01) · [2](#r10e02) · [3](#r10e03) · [4](#r10e04) · [5](#r10e05) · [6](#r10e06) · [7](#r10e07) · [8](#r10e08) · [9](#r10e09) · [10](#r10e10) · [11](#r10e11) · [12](#r10e12) · [13](#r10e13) · [14](#r10e14) · [15](#r10e15) · [16](#r10e16) · [17](#r10e17) · [18](#r10e18) · [19](#r10e19) · [20](#r10e20) · [21](#r10e21) · [23](#r10e23) · [28](#r10e28) · [29](#r10e29) · [30](#r10e30) · [32](#r10e32)
+
+<a id="r10e01"></a>
+### 10.1 — Integration order for a convex zero extension
+
+**Lean source:** [Exercise01.lean](../../Math/Rudin/Chapter10/Exercise01.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Let $H\subset\mathbb R^n$ be compact and convex, and let $f:H\to\mathbb R$ or $\mathbb C$ be continuous. Retain the values of $f$ on the boundary and extend it by zero outside $H$. There is an enclosing coordinate cell on which every repeated integral exists, at every remaining parameter, in every coordinate order. Each order has value $\int_H f$. Order independence also holds on any coordinate cell with ordered bounds, whether or not it contains $H$.
+
+The results do not require nonempty interior. They include empty sets, lower-dimensional sets, dimension zero, and cells with degenerate sides. In dimension zero, integration is evaluation.
+
+**Proof.** The zero extension is bounded and measurable. For every finite-dimensional affine parameter map $L$, the inverse image $L^{-1}(H)$ is closed and convex. Its frontier has measure zero in the parameter space. Away from that frontier, the composite zero extension is continuous: inside, use the continuity of $f$ on $H$; outside, the composite is locally zero. This argument applies to every affine section, including boundary sections and collapsed sections.
+
+This regularity is preserved by integration in one coordinate. Indeed, apply Fubini to the almost-everywhere continuity statement in the joint parameter and integration variables. For almost every parameter, the integrand is continuous in the parameter at almost every integration point. Its uniform bound then permits dominated convergence. The resulting marginal is bounded, measurable, and almost everywhere continuous on every affine parameter space. Each individual coordinate row is bounded and almost everywhere continuous, so the one-dimensional Darboux criterion supplies its actual Riemann integral. Induction gives all repeated source integrals, not just almost-everywhere row integrals. Fubini, now with integrability established, identifies their values with the cell measure integral.
+
+For the approximation argument, extend $f$ continuously to an ambient function $g$. Choose continuous cutoffs $c_j$ with $0\le c_j\le1$, zero outside $H$ and on its frontier, tending to $1$ in its interior. The source uses distance-based thickened indicators with width $1/(j+1)$. The functions $c_jg$ are continuous, have topological support in $H$, and have a common bound. They converge to the literal zero extension outside the null convex frontier. No uniform convergence at nonzero boundary values is asserted. Dominated convergence transfers this approximation to each repeated value. The continuous-cell theorem gives the same value for all orders at each $j$; uniqueness of limits gives order independence for the zero extension.
+
+For complex values, apply the real argument to the real and imaginary parts. The component equivalence for complex tagged sums supplies actual complex one-dimensional source integrals at each stage. Compactness supplies strictly ordered enclosing bounds, and the volume-preserving Euclidean coordinate map identifies the common enclosing-cell value with $\int_H f$. The plane-coordinate conclusions give the same witnesses in $\mathbb R\times\mathbb R$.
+
+Inventory obligations `R10E01.existence` and `R10E01.order_independence` remain marked in progress; the current source contains the results above.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise01.existence_real`, `Rudin.Chapter10.Exercise01.existence_complex`, `Rudin.Chapter10.Exercise01.plane_source_real`, `Rudin.Chapter10.Exercise01.plane_source_complex`, `Rudin.Chapter10.Exercise01.order_independence_real`, `Rudin.Chapter10.Exercise01.order_independence_complex`, `Rudin.Chapter10.Exercise01.real_existence`, `Rudin.Chapter10.Exercise01.complex_existence`, `Rudin.Chapter10.Exercise01.continuous_approximations`, `Rudin.Chapter10.Exercise01.continuous_approximations_complex`, `Rudin.Chapter10.Exercise01.approximation_source_limit`, `Rudin.Chapter10.Exercise01.real_order_independence`, `Rudin.Chapter10.Exercise01.complex_order_independence`.
+
+<a id="r10e02"></a>
+### 10.2 — Unequal repeated integrals near a singular point
+
+**Lean source:** [Exercise02.lean](../../Math/Rudin/Chapter10/Exercise02.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $\phi_i:\mathbb R\to\mathbb C$ be continuous, supported in $(2^{-i},2^{1-i})$, with $\int_{\mathbb R}\phi_i=1$, for $i\ge1$. Real functions are included; positivity is not assumed. Set
+
+$$
+f(x,y)=\sum_{i\ge1}\bigl(\phi_i(x)-\phi_{i+1}(x)\bigr)\phi_i(y).
+$$
+
+The series is pointwise finite, its ordered partial sums converge to $f$, and it is locally finite away from $(0,0)$. The function has compact support in $[0,1]^2$ and is continuous away from the origin. Every coordinate section is continuous and compactly supported, and both integrations in each order exist, including their source Riemann integrals. Their values are
+
+$$
+\int_{\mathbb R}\left(\int_{\mathbb R}f(x,y)\,dx\right)dy=0,
+\qquad
+\int_{\mathbb R}\left(\int_{\mathbb R}f(x,y)\,dy\right)dx=1.
+$$
+
+Moreover, $f(0,0)=0$, but $f$ is unbounded in every neighborhood of the origin, is discontinuous there, and is not integrable on the plane. The geometric conclusions also hold in Euclidean plane coordinates.
+
+**Proof.** Write $r_n=2^{-n}$, with source index $i=n+1$. At any fixed nonzero coordinate, sufficiently small dyadic intervals miss that coordinate and a whole neighborhood of it. At coordinate zero, every $\phi_i$ vanishes. Thus every point kills a tail of the series. Away from the origin, at least one coordinate kills the tail on a neighborhood. The remaining terms form a finite sum of continuous functions. All terms vanish outside $[0,1]^2$, so the closure of the nonzero set is compact.
+
+For fixed $y$, only finitely many terms remain as functions of $x$. Integrating each gives $(1-1)\phi_i(y)=0$. For fixed $x$, choose a finite cutoff with vanishing tail. Integration in $y$ gives the telescoping sum
+
+$$
+\sum_{i=1}^{N}\bigl(\phi_i(x)-\phi_{i+1}(x)\bigr)=\phi_1(x).
+$$
+
+The outer integrals are therefore the integrals of zero and $\phi_1$, respectively. Each section is continuous and supported in $[0,1]$. The continuous-function bridge supplies Darboux integrals for its real and imaginary parts and complex tagged-sum convergence. The real case also has explicit witnesses in the recursive two-coordinate source predicate for both orders.
+
+Distinct dyadic support intervals do not overlap. If $\phi_i(x)\ne0$, then all other $\phi_j(x)$ vanish, and
+
+$$
+f(x,x)=\phi_i(x)^2,\qquad |f(x,x)|=|\phi_i(x)|^2.
+$$
+
+Integral one on an interval contained in $[0,2^{1-i}]$ rules out a uniform bound $M$ whenever $M2^{1-i}<1$: otherwise the norm of that integral would be less than one. Choose $i$ so large that this interval is inside a prescribed diagonal neighborhood and the resulting squared value exceeds any prescribed bound. This proves local unboundedness without positivity, even for complex functions. It also proves discontinuity at the origin. Finally, plane integrability would permit Fubini and force the two repeated values to agree, contradicting $0\ne1$. Complexification preserves the actual real series and transfers all the real conclusions.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise02.Family.well_defined`, `Rudin.Chapter10.Exercise02.Family.ordered_convergence`, `Rudin.Chapter10.Exercise02.Family.locally_finite_off_origin`, `Rudin.Chapter10.Exercise02.Family.compact_support`, `Rudin.Chapter10.Exercise02.Family.continuous_off_origin`, `Rudin.Chapter10.Exercise02.Family.x_then_y`, `Rudin.Chapter10.Exercise02.Family.y_then_x`, `Rudin.Chapter10.Exercise02.Family.unbounded_every_neighborhood`, `Rudin.Chapter10.Exercise02.Family.discontinuous_origin`, `Rudin.Chapter10.Exercise02.Family.not_integrable`, `Rudin.Chapter10.Exercise02.Family.euclidean_conclusions`, `Rudin.Chapter10.Exercise02.RealFamily.complex_f`, `Rudin.Chapter10.Exercise02.RealFamily.real_case`, `Rudin.Chapter10.Exercise02.RealFamily.source_orders`.
+
+<a id="r10e03"></a>
+### 10.3 — Local factorization into primitive maps
+
+**Lean source:** [Exercise03.lean](../../Math/Rudin/Chapter10/Exercise03.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E\subset\mathbb R^n$ be open and contain zero. Suppose $F$ is $C^1$ on $E$, $F(0)=0$, and $A=F'(0)$ is invertible. Then $F_1=A^{-1}F$ has derivative $I$ at zero. On a neighborhood of zero it is a composition of exactly $n$ primitive $C^1$ maps:
+
+$$
+F_1=G_n\circ\cdots\circ G_1,\qquad
+F=A\circ G_n\circ\cdots\circ G_1.
+$$
+
+Each factor fixes zero, has derivative $I$ there, and has an open primitive domain containing zero. A primitive map changes at most one coordinate. For $n=0$, the factor family is empty and the composition is the identity.
+
+The planar flip $(x,y)\mapsto(y,x)$ cannot be a composition $H\circ G$ of two primitive maps on any neighborhood $U$ of zero, provided $G(U)$ lies in the primitive domain of $H$. This obstruction requires no regularity of $G$ or $H$.
+
+**Proof.** The chain rule gives $(A^{-1}F)'(0)=A^{-1}A=I$. For the normalized map, let $P_m$ replace the first $m$ input coordinates by their values under $F_1$, leaving the others unchanged. Every $P_m$ fixes zero and has derivative $I$ there. The inverse function theorem supplies a $C^1$ local inverse $H_m$ with derivative $I$ at zero and both inverse identities on neighborhoods.
+
+Define the next factor by replacing only coordinate $m+1$ of $z$ by the corresponding coordinate of $F_1(H_m(z))$. All other coordinates remain unchanged. Near zero, this factor sends $P_m(x)$ to $P_{m+1}(x)$. The chain rule gives derivative $I$ for the factor. Its $C^1$ germ can be restricted to an open neighborhood. Induction identifies the first $m$ factors with $P_m$ near zero. Since $P_0=I$ and $P_n=F_1$, exactly $n$ factors suffice. Multiplying by $A$ recovers $F$.
+
+For the flip, consider which coordinate each primitive factor can change. If both change the same coordinate, the other coordinate remains fixed, contrary to a flip at a small point on the other axis. If $G$ changes the first coordinate and $H$ the second, the first output coordinate forces $G(x,y)=(y,y)$ on $U$. Thus $G(a,0)=G(0,0)$ for a sufficiently small nonzero $a$, while their flipped images are distinct. The composition cannot have both values. The case where $G$ changes the second coordinate and $H$ the first is the same argument using $(0,a)$.
+
+**Lean declarations:** `Rudin.Chapter10.exercise03_normalization`, `Rudin.Chapter10.exercise03_partial_inverse`, `Rudin.Chapter10.exercise03_factorization`, `Rudin.Chapter10.exercise03_a`, `Rudin.Chapter10.exercise03_a_finite`, `Rudin.Chapter10.exercise03_b`.
+
+<a id="r10e04"></a>
+### 10.4 — Two explicit primitive factorizations
+
+**Lean source:** [Exercise04.lean](../../Math/Rudin/Chapter10/Exercise04.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Define
+
+$$
+\begin{aligned}
+F(x,y)&=(e^x\cos y-1,e^x\sin y),\\
+G_1(x,y)&=(e^x\cos y-1,y),&G_2(u,v)&=(u,(1+u)\tan v),\\
+H_2(x,y)&=(x,e^x\sin y),&H_1(u,v)&=(\sqrt{e^{2u}-v^2}-1,v).
+\end{aligned}
+$$
+
+On $U=\{(x,y):-\pi/2<y<\pi/2\}$, one has $F=G_2\circ G_1=H_1\circ H_2$. Here $G_1(U)\subset U$ and $H_2(U)\subset V=\{(u,v):e^{2u}-v^2>0\}$. Both $U$ and $V$ are open neighborhoods of zero. The four factors are primitive on these domains. The maps $F,G_1,H_2$ are globally smooth; $G_2$ is smooth on $U$, and $H_1$ is smooth on $V$. The derivatives of $F,G_1,G_2$ at zero are $I$, so all three Jacobians there are $1$.
+
+**Proof.** On $U$, $\cos y>0$. The first factor leaves $y$ unchanged, and
+
+$$
+(1+(e^x\cos y-1))\tan y=e^x\sin y.
+$$
+
+This proves the first factorization and its domain condition. For the second, use
+
+$$
+e^{2x}-(e^x\sin y)^2=(e^x\cos y)^2.
+$$
+
+The right side is positive on $U$. Thus $H_2$ lands in $V$, and its positive square root is $e^x\cos y$, not its negative. This gives the stated formula for $H_1\circ H_2$. Each primitive assertion follows from the unchanged coordinate. Standard composition rules give smoothness, using the nonzero cosine and positive square-root arguments on the specified domains. Differentiating the displayed coordinates at zero gives the two coordinate projections as rows for each of $F,G_1,G_2$. Their derivative matrices are therefore $I$, with determinant $1$.
+
+**Lean declarations:** `Rudin.Chapter10.exercise04_domains`, `Rudin.Chapter10.exercise04_primitive_maps`, `Rudin.Chapter10.exercise04_smooth`, `Rudin.Chapter10.exercise04_first_factorization`, `Rudin.Chapter10.exercise04_alternative_factor`, `Rudin.Chapter10.exercise04_derivatives`, `Rudin.Chapter10.exercise04_jacobians`.
+
+<a id="r10e05"></a>
+### 10.5 — A finite partition of unity in a metric space
+
+**Lean source:** [Exercise05.lean](../../Math/Rudin/Chapter10/Exercise05.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $K$ be a compact subset of an arbitrary metric space $X$, and let $(U_i)_{i\in I}$ be an open cover of $K$. There are a finite index set $J$, a choice $a:J\to I$, and continuous functions $\psi_j:X\to[0,1]$ such that
+
+$$
+\operatorname{supp}\psi_j\subset U_{a(j)},\qquad
+\sum_{j\in J}\psi_j(x)=1\quad(x\in K).
+$$
+
+Support means the closure of the nonzero set. Neither local compactness of $X$ nor compact support of the functions is required. Empty $K$ is allowed.
+
+**Proof.** For disjoint nonempty closed sets $A,B$, the metric separator
+
+$$
+s(x)=\frac{d(x,A)}{d(x,A)+d(x,B)}
+$$
+
+is continuous, lies in $[0,1]$, is zero on $A$, and is one on $B$. Its denominator is positive at each point because the sets are closed and disjoint. If $A$ is empty use the constant one; if only $B$ is empty use zero.
+
+Given $x\in U_i$, normality of metric spaces supplies open neighborhoods $V,W$ with $x\in V$, $\overline V\subset W$, and $\overline W\subset U_i$. Separate $W^c$ and $\overline V$. The resulting bump is one on $V$, zero outside $W$, and has support in $\overline W\subset U_i$. Compactness selects finitely many such $V$ covering $K$, with bumps $b_1,\ldots,b_N$. Use the ordered-product construction
+
+$$
+\psi_j=b_j\prod_{\ell<j}(1-b_\ell).
+$$
+
+Every function is continuous, lies in $[0,1]$, and has support contained in that of its own bump. The identity $\sum_j\psi_j=1-\prod_j(1-b_j)$ gives sum one on $K$, since some bump is one at each point of $K$. The empty compact set permits an empty family. The finite-bump extraction is also proved separately and reused for smooth bumps.
+
+**Lean declarations:** `Rudin.Chapter10.exercise05_separator_spec`, `Rudin.Chapter10.exercise05_bump`, `Rudin.Chapter10.exercise05_finite_bumps`, `Rudin.Chapter10.exercise05_metric_partition`.
+
+<a id="r10e06"></a>
+### 10.6 — A smooth finite partition of unity
+
+**Lean source:** [Exercise06.lean](../../Math/Rudin/Chapter10/Exercise06.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** For compact $K\subset\mathbb R^n$ and any open cover $(U_i)$ of $K$, the finite subordinate partition in Exercise 10.5 can be chosen globally $C^\infty$. Each function also has compact support, is differentiable, takes values in $[0,1]$, and the functions sum to one on $K$. Empty $K$ and dimension zero are included.
+
+**Proof.** Let $g(s)$ be the flat function from Chapter 8, equal to $e^{-1/s^2}$ for $s\ne0$ and zero at zero. Then $b(t)=g(\sqrt t)$ is $e^{-1/t}$ for $t>0$ and zero for $t\le0$. The source identifies this function exactly with the smooth positive-side flat function. Consequently
+
+$$
+\eta(t)=\frac{b(t)}{b(t)+b(1-t)}
+$$
+
+is the standard smooth transition: it lies in $[0,1]$, is zero for $t\le0$, and one for $t\ge1$.
+
+Given $x\in U_i$, choose $r>0$ with $B(x,r)\subset U_i$ and set
+
+$$
+h(y)=\eta\left(\frac{(r/2)^2-\|y-x\|^2}{(r/2)^2-(r/4)^2}\right).
+$$
+
+The denominator is positive. The squared norm is smooth, so $h$ is globally smooth. It equals one on $B(x,r/4)$ and vanishes when $\|y-x\|\ge r/2$. Its support is a closed subset of the compact ball $\overline B(x,r/2)$, which is contained in $U_i$. Finite extraction gives bumps covering $K$. Apply the same ordered-product formula as in Exercise 10.5. Finite products preserve smoothness; support containment preserves compact support and subordination. The telescoping product proves the sum condition. Smoothness implies differentiability.
+
+The source contains this construction, but `R10E06.smooth_partition` remains marked in progress in the inventory.
+
+**Lean declarations:** `Rudin.Chapter10.exercise06_source_glue`, `Rudin.Chapter10.exercise06_transition_eq`, `Rudin.Chapter10.exercise06_auxiliary_smooth`, `Rudin.Chapter10.exercise06_bump`, `Rudin.Chapter10.exercise06_product_smooth`, `Rudin.Chapter10.exercise06_smooth_partition`.
+
+<a id="r10e07"></a>
+### 10.7 — The standard simplex as a convex hull
+
+**Lean source:** [Exercise07.lean](../../Math/Rudin/Chapter10/Exercise07.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** The closed standard simplex
+
+$$
+Q^n=\{x\in\mathbb R^n:x_i\ge0,\ \sum_i x_i\le1\}
+$$
+
+is the smallest convex set containing $0,e_1,\ldots,e_n$. Equivalently, it is their convex hull. The image of any convex set under any real affine map is convex, without openness or nonemptiness assumptions. The simplex assertion includes $n=0$.
+
+**Proof.** Nonnegative convex combinations preserve each coordinate inequality and the inequality on the coordinate sum, so $Q^n$ is convex. It contains all the listed vertices. Conversely, for $x\in Q^n$,
+
+$$
+x=\left(1-\sum_i x_i\right)0+\sum_i x_i e_i.
+$$
+
+These weights are nonnegative and sum to one. Every convex set containing the vertices therefore contains $x$. When $n=0$, the only vertex and the only point of the simplex are zero. Finally, if $T$ is affine, then $T(ax+by)=aT(x)+bT(y)$ for $a,b\ge0$ with $a+b=1$. This proves convexity of the affine image.
+
+**Lean declarations:** `Rudin.Chapter10.exercise07_convex`, `Rudin.Chapter10.exercise07_minimal`, `Rudin.Chapter10.exercise07_a`, `Rudin.Chapter10.exercise07_b`.
+
+<a id="r10e08"></a>
+### 10.8 — An exponential integral over a parallelogram
+
+**Lean source:** [Exercise08.lean](../../Math/Rudin/Chapter10/Exercise08.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Let $H$ have vertices $(1,1),(3,2),(4,5),(2,4)$. The affine map
+
+$$
+T(u,v)=(1+2u+v,1+u+3v)
+$$
+
+sends the unit square onto $H$, takes $0,e_1,e_2$ to the prescribed vertices, and has Jacobian $5$. Moreover,
+
+$$
+\int_H e^{x-y}\,dx\,dy
+=\int_{[0,1]^2}5e^{u-2v}\,du\,dv
+=\frac52(e-1)(1-e^{-2}).
+$$
+
+The original integrand is integrable on $H$. The transformed square integrand also has an explicit repeated Darboux source integral with this value.
+
+**Proof.** Write $T(u,v)=(1,1)+u(2,1)+v(1,3)$. This gives all four vertices and identifies its square image with the stated parallelogram, including its boundary. The actual derivative is the constant matrix
+
+$$
+\begin{pmatrix}2&1\\1&3\end{pmatrix},
+$$
+
+whose determinant is $6-1=5$. The same two linear equations show that $T$ is injective. Compactness of its square image and continuity of the exponential give integrability independently of the substitution. Change of variables applies to this injective differentiable map, and $T_1-T_2=u-2v$. Separating the exponential gives
+
+$$
+5\left(\int_0^1 e^u\,du\right)\left(\int_0^1 e^{-2v}\,dv\right)
+=5(e-1)\frac{1-e^{-2}}2.
+$$
+
+Continuity on the square gives every stage of the transformed repeated Darboux integral, and the same one-dimensional calculation gives its value.
+
+All four `R10E08` obligations remain todo with no mapped declarations, although the current file proves these results. The explicit source-integral witness is for the transformed square; the file expresses the original-region substitution as a measure-integral theorem, not as a separate source witness for the zero extension on $H$.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise08.vertices`, `Rudin.Chapter10.Exercise08.image_square`, `Rudin.Chapter10.Exercise08.affine_formula`, `Rudin.Chapter10.Exercise08.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise08.jacobian`, `Rudin.Chapter10.Exercise08.injective`, `Rudin.Chapter10.Exercise08.integrand_transform`, `Rudin.Chapter10.Exercise08.transformed_integral`, `Rudin.Chapter10.Exercise08.integrable_integrand`, `Rudin.Chapter10.Exercise08.square_integral_value`, `Rudin.Chapter10.Exercise08.integral_value`, `Rudin.Chapter10.Exercise08.transformed_source`.
+
+<a id="r10e09"></a>
+### 10.9 — Polar integration and the correct slit
+
+**Lean source:** [Exercise09.lean](../../Math/Rudin/Chapter10/Exercise09.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** For $a\ge0$, let $D_a=\{(x,y):x^2+y^2\le a^2\}$ and $T(r,\theta)=(r\cos\theta,r\sin\theta)$. The image of $[0,a]\times[0,2\pi]$ is $D_a$. The map is injective on $(0,a)\times(0,2\pi)$, and its Jacobian is $r$. If $f$ is continuous on $D_a$, with real or complex values, then
+
+$$
+\int_{D_a}f(x,y)\,dx\,dy
+=\int_0^a\left(\int_0^{2\pi}r f(r\cos\theta,r\sin\theta)\,d\theta\right)dr.
+$$
+
+The finite-disk measure identity also holds for real Banach-valued coefficients. For real $f$, the right side has explicit repeated Darboux witnesses; for complex $f$, such witnesses are supplied for both components. Continuous cutoffs with compact support in the open slit disk remove a compact-interior-support restriction. All assertions about integration include $a=0$.
+
+The printed differential/bound assignment is not this formula. With its literal usual nested binding, $f=1$ and $a=1$ give $2\pi^2$ instead of $\pi$. The angular interval $(0,2\pi)$ requires a positive-$x$-axis slit, not the positive-$y$-axis slit in the hint.
+
+**Proof.** The identity $\|T(r,\theta)\|_2^2=r^2$ proves containment. Conversely, represent $x+iy$ by its modulus and argument, adding $2\pi$ to negative arguments. Its modulus lies in $[0,a]$, and the adjusted angle lies in $[0,2\pi]$. This includes the origin. Shifting the angle by $-\pi$ and negating the target reduces injectivity on the open parameter rectangle to the standard polar chart. Differentiation gives columns $(\cos\theta,\sin\theta)$ and $(-r\sin\theta,r\cos\theta)$, with determinant $r$.
+
+The map is also injective on $(0,a]\times(0,2\pi)$, whose image is the closed disk with the positive-$x$-axis radius removed. The omitted set is null; the proof bounds it by the horizontal coordinate line. Change of variables gives the disk integral as the integral of $r f(T(r,\theta))$ over this parameter set. Continuity on the compact closed disk proves integrability. The transformed integrand is continuous on the closed parameter rectangle and hence integrable there. Fubini and the irrelevance of interval endpoints give the displayed angular-inner, radial-outer formula.
+
+For the approximation assertion, the open slit disk is the disk interior with that same radius removed. Its difference from the closed disk is null, since both the convex frontier and the slit are null. Exhaust the open slit by compact subsets and choose continuous cutoffs $0\le\chi_n\le1$, equal to one on each selected compact set and supported compactly inside the open slit. Every point of the open slit eventually has cutoff one. Although $f$ is assumed continuous only on the disk, each $\chi_nf$ is globally continuous: its support lies in the disk interior. Domination by $|f|$ proves convergence of the cutoff integrals to the full disk integral. Thus no boundary-vanishing hypothesis on $f$ is needed. At radius zero the disk is a null singleton and the radial integral is zero.
+
+For the source witnesses, use coordinates $(\theta,r)$ on $[0,2\pi]\times[0,a]$ so that coordinate zero is integrated first. Continuity gives all real Darboux stages. Applying this to the real and imaginary parts and commuting those projections with integration gives the complex component statements.
+
+Finally, the literal printed reading integrates $r$ from $0$ to $2\pi$ and the angle from $0$ to $1$, giving $2\pi^2$. The corrected unit-disk formula gives $\pi$. These values are unequal.
+
+All five `R10E09` obligations remain todo and unmapped in the inventory. The file proves the geometry, correction, approximation, and measure identity above. Its explicit source witnesses concern the polar side, with component witnesses rather than a direct recursive complex tagged-sum predicate; no separate source witness for the disk zero extension is stated here.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise09.range`, `Rudin.Chapter10.Exercise09.interior_injective`, `Rudin.Chapter10.Exercise09.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise09.jacobian`, `Rudin.Chapter10.Exercise09.image_slit`, `Rudin.Chapter10.Exercise09.slit_ae_disk`, `Rudin.Chapter10.Exercise09.disk_integral`, `Rudin.Chapter10.Exercise09.polar_integrable`, `Rudin.Chapter10.Exercise09.polar_integral`, `Rudin.Chapter10.Exercise09.slit_approximation`, `Rudin.Chapter10.Exercise09.polar_source_real`, `Rudin.Chapter10.Exercise09.polar_source_complex`, `Rudin.Chapter10.Exercise09.corrected_constant_value`, `Rudin.Chapter10.Exercise09.disk_area_one`, `Rudin.Chapter10.Exercise09.literal_value`, `Rudin.Chapter10.Exercise09.literal_order_obstruction`, `Rudin.Chapter10.Exercise09.literal_disk_obstruction`.
+
+<a id="r10e10"></a>
+### 10.10 — Decay, improper polar integration, and the Gaussian
+
+**Lean source:** [Exercise10.lean](../../Math/Rudin/Chapter10/Exercise10.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** A sufficient decay condition for a continuous real or complex function on the Euclidean plane is
+
+$$
+|f(x)|\le C(1+\|x\|)^{-q}\quad(x\in\mathbb R^2),\qquad C\ge0,\quad q>2.
+$$
+
+Under this condition, $f$ and $|f|$ are integrable. Integrals over expanding closed disks and coordinate squares $[-R,R]^2$ converge to the same plane integral, for both functions. Defining the improper polar integral by keeping the full angular interval at each radial cutoff gives
+
+$$
+\int_{\mathbb R^2}f
+=\lim_{a\to\infty}\int_0^a\left(\int_0^{2\pi}r f(r\cos\theta,r\sin\theta)\,d\theta\right)dr,
+$$
+
+with absolute convergence in the same cutoff sense. In particular,
+
+$$
+\int_{\mathbb R}e^{-s^2}\,ds=\sqrt\pi,
+\qquad
+\lim_{R\to\infty}\int_{-R}^{R}e^{-s^2}\,ds=\sqrt\pi.
+$$
+
+Each finite one-dimensional Gaussian cut has a Darboux source integral. The printed reversed radial/angular binding instead gives a divergent Gaussian cutoff.
+
+**Proof.** The standard integrability criterion for $(1+\|x\|)^{-q}$ in dimension two applies because $q>2$. The bound and continuity then prove integrability of $f$ and its norm. This includes $C=0$. Disks and coordinate squares are increasing measurable exhaustions of the plane. Convergence of set integrals of an integrable function proves agreement of their limits, also for the norm. The finite-disk formula from Exercise 10.9 identifies each nonnegative-radius disk integral with the correctly bound polar cutoff. Passing to the limit proves the polar formula and its absolute version.
+
+For $G(x)=e^{-\|x\|^2}$, the source verifies the explicit decay bound $G(x)\le24(1+\|x\|)^{-4}$. It follows from the exponential power estimate and $(1+t)^4\le24e^{t^2}$ for $t\ge0$. In polar coordinates $G=e^{-r^2}$. The antiderivative $-e^{-r^2}/2$ gives
+
+$$
+\int_0^a r e^{-r^2}\,dr=\frac{1-e^{-a^2}}2,
+\qquad
+\int_0^a\int_0^{2\pi}r e^{-r^2}\,d\theta\,dr=\pi(1-e^{-a^2}).
+$$
+
+The limit is $\pi$, so the plane Gaussian integral is $\pi$. The one-dimensional Gaussian is integrable by the library integrability theorem. In Cartesian coordinates $G(x,y)=e^{-x^2}e^{-y^2}$; product integration gives $I^2=\pi$, where $I=\int_{\mathbb R}e^{-s^2}\,ds\ge0$. Thus $I=\sqrt\pi$. Continuity supplies the Darboux witness on every ordered finite interval, including singleton intervals. Integrability then identifies the symmetric finite-cut limit with $I$.
+
+With the literal printed binding, the Gaussian cutoff is instead
+
+$$
+L(A)=\int_0^A\left(\int_0^{2\pi}r e^{-r^2}\,dr\right)d\theta
+=A\frac{1-e^{-(2\pi)^2}}2.
+$$
+
+Its coefficient is positive. Hence $L(A)\to+\infty$ and it has no finite limit, unlike the corrected plane integral.
+
+All four `R10E10` obligations remain todo and unmapped. The general improper integrals here are explicitly defined as limits of finite measure integrals, with their convergence proved. The file does not supply a separate literal repeated-Riemann comparison for every general decay function and every Cartesian cutoff; its direct finite source witnesses are for the one-dimensional Gaussian. This distinguishes the established improper-measure formulation from a broader source-integral certification.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise10.integrable_of_decay`, `Rudin.Chapter10.Exercise10.disk_exhaustion`, `Rudin.Chapter10.Exercise10.rectangle_exhaustion`, `Rudin.Chapter10.Exercise10.decay_convergence`, `Rudin.Chapter10.Exercise10.disk_polar`, `Rudin.Chapter10.Exercise10.whole_plane_polar`, `Rudin.Chapter10.Exercise10.absolute_polar_convergence`, `Rudin.Chapter10.Exercise10.gaussian_decay`, `Rudin.Chapter10.Exercise10.gaussian_polar`, `Rudin.Chapter10.Exercise10.radial_gaussian_integral`, `Rudin.Chapter10.Exercise10.gaussian_cutoff`, `Rudin.Chapter10.Exercise10.gaussian_plane_integral`, `Rudin.Chapter10.Exercise10.gaussian_integral`, `Rudin.Chapter10.Exercise10.gaussian_finite_source`, `Rudin.Chapter10.Exercise10.gaussian_improper`, `Rudin.Chapter10.Exercise10.literal_cutoff_value`, `Rudin.Chapter10.Exercise10.literal_order_obstruction`, `Rudin.Chapter10.Exercise10.literal_no_finite_value`.
+
+<a id="r10e11"></a>
+### 10.11 — The beta–gamma substitution
+
+**Lean source:** [Exercise11.lean](../../Math/Rudin/Chapter10/Exercise11.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** The map $T(s,t)=(s-st,st)$ is a bijection from $S=(0,\infty)\times(0,1)$ onto $Q=(0,\infty)^2$, with inverse $(u,v)\mapsto(u+v,v/(u+v))$ and Jacobian $s$. For an integrable coefficient on $Q$, substitution is valid on the full strip and along every increasing compact exhaustion of it. For $x,y>0$,
+
+$$
+\int_0^1 t^{x-1}(1-t)^{y-1}\,dt
+=\frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}.
+$$
+
+The beta integrand is absolutely integrable on $(0,1)$, including when it is unbounded near an endpoint. Each compact interior interval has a Darboux source integral. Those finite source values converge to the displayed value along any increasing compact-interval exhaustion of $(0,1)$.
+
+**Proof.** For $s>0$ and $0<t<1$, both $s(1-t)$ and $st$ are positive. Conversely, $u,v>0$ give $s=u+v>0$ and $0<v/(u+v)<1$. Direct substitution verifies both inverse identities. Differentiation gives
+
+$$
+DT=\begin{pmatrix}1-t&-s\\t&s\end{pmatrix},\qquad \det DT=s.
+$$
+
+The injective differentiable change-of-variables theorem gives the measure-integral identity, and its integrability version gives
+
+$$
+f\in L^1(Q)\quad\Longleftrightarrow\quad s f(T(s,t))\in L^1(S).
+$$
+
+The convergence assertion assumes $f\in L^1(Q)$ and compact sets $K_n$ with $K_n\subset K_{n+1}$ and $\bigcup_nK_n=S$. Finite substitution holds on each $K_n$, and integrability makes both the transformed cut integrals and their image integrals tend to $\int_Q f$. Such compact exhaustions exist because the strip is open in the plane. Equality of totalized integrals alone is not used to infer convergence.
+
+Put $g_z(u)=e^{-u}u^{z-1}$. To obtain the displayed beta integrand with this choice of $T$, the source uses the quadrant kernel $g_y(u)g_x(v)$. Its integral is $\Gamma(y)\Gamma(x)$ and it is integrable by the gamma-integral convergence theorem. The transformed kernel factors as
+
+$$
+s\,g_y(s-st)g_x(st)
+=e^{-s}s^{x+y-1}t^{x-1}(1-t)^{y-1}.
+$$
+
+All bases are positive on the strip, so the real-power product rules apply. Product integration therefore gives
+
+$$
+\Gamma(x)\Gamma(y)=\Gamma(x+y)\int_0^1t^{x-1}(1-t)^{y-1}\,dt.
+$$
+
+Divide by $\Gamma(x+y)>0$. This derives the beta value from the substitution rather than invoking a beta–gamma evaluation theorem. Transported integrability of the two-dimensional kernel, followed by integration in $s$, shows that $\Gamma(x+y)$ times the beta integrand is integrable; division by this positive constant proves beta integrability. Endpoints have measure zero, so the open-interval and interval-integral values agree.
+
+On $[a,b]\subset(0,1)$, the integrand is continuous for arbitrary real exponents, and hence has the literal Darboux integral. For $x,y>0$, integrability and increasing exhaustion by such intervals prove convergence of these source values, including all singular endpoint cases allowed by the strict positivity assumptions.
+
+All four `R10E11` obligations remain todo and unmapped. The full-strip change of variables and compact-exhaustion extension are measure-integral statements with explicit integrability hypotheses. The file additionally proves the one-dimensional improper beta source bridge; it does not state a general multidimensional source-Riemann theorem for arbitrary integrable coefficients on arbitrary compact exhaustion sets.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise11.bijection`, `Rudin.Chapter10.Exercise11.left_inverse`, `Rudin.Chapter10.Exercise11.right_inverse`, `Rudin.Chapter10.Exercise11.hasFDerivAt_transform`, `Rudin.Chapter10.Exercise11.jacobian`, `Rudin.Chapter10.Exercise11.integral_transform`, `Rudin.Chapter10.Exercise11.integrable_transform_iff`, `Rudin.Chapter10.Exercise11.improper_extension`, `Rudin.Chapter10.Exercise11.exists_strip_exhaustion`, `Rudin.Chapter10.Exercise11.kernel_transform`, `Rudin.Chapter10.Exercise11.quadrant_integrable`, `Rudin.Chapter10.Exercise11.quadrant_integral`, `Rudin.Chapter10.Exercise11.beta_gamma_Ioo`, `Rudin.Chapter10.Exercise11.beta_gamma`, `Rudin.Chapter10.Exercise11.strip_kernel_integrable`, `Rudin.Chapter10.Exercise11.beta_integrable`, `Rudin.Chapter10.Exercise11.beta_source_cut`, `Rudin.Chapter10.Exercise11.beta_source_improper`.
+
+<a id="r10e12"></a>
+### 10.12 — A triangular map from the cube to the simplex
+
+**Lean source:** [Exercise12.lean](../../Math/Rudin/Chapter10/Exercise12.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Define, in source coordinate order,
+
+$$
+x_i=T(u)_i=u_i\prod_{j<i}(1-u_j),\qquad
+S(x)_i=\frac{x_i}{1-\sum_{j<i}x_j}.
+$$
+
+Then
+
+$$
+\sum_{i=1}^n x_i=1-\prod_{i=1}^n(1-u_i),\qquad
+T([0,1]^n)=Q^n.
+$$
+
+The map is injective on the cube interior and maps that interior bijectively onto the simplex interior, with inverse $S$. On the entire closed simplex, $S$ is a chosen right inverse of $T$, using value zero for a quotient whose denominator is zero. The actual Jacobians are
+
+$$
+J_T(u)=\prod_{i=1}^{n-1}(1-u_i)^{n-i},\qquad
+J_S(x)=\left[\prod_{i=1}^{n-1}\left(1-\sum_{j=1}^{i}x_j\right)\right]^{-1},
+$$
+
+where the second formula is asserted on the simplex interior. The forward formula holds for all $u$. Empty sums and products cover $n=0$ and $n=1$; both determinants are $1$ in these cases.
+
+**Proof.** Expanding the ordered product $\prod_i(1-u_i)$ by successive subtraction gives the sum identity. The same identity on each initial segment gives
+
+$$
+1-\sum_{j<i}T(u)_j=\prod_{j<i}(1-u_j).
+$$
+
+For $u\in[0,1]^n$, all coordinates of $T(u)$ are nonnegative, and the full sum is at most one. Conversely, for $x\in Q^n$, let $R_i=1-\sum_{j<i}x_j$. Nonnegativity of the remaining coordinates gives $0\le x_i\le R_i$. Thus $x_i/R_i\in[0,1]$ when $R_i>0$; when $R_i=0$, one also has $x_i=0$ and the chosen quotient is zero. Induction on $i$, using the prefix identity and previously recovered coordinates, proves $T(S(x))=x$ on the whole closed simplex. This proves closed-domain surjectivity without dividing by a zero denominator.
+
+On the open cube, every prefix product is positive, so the same identity permits cancellation and gives $S(T(u))=u$. The forward coordinates are positive and their sum is strictly less than one. Conversely, the strict simplex inequalities give $0<x_i<R_i$, so $S(x)$ lies in the open cube. These sets are the actual topological interiors: the strict inequalities define open subsets, while a point in the closed simplex interior must have positive coordinates; a small positive change in one coordinate also forces its sum to be strictly less than one. Dimension zero is handled separately in this last argument.
+
+The product and reciprocal differentiation rules give genuine Fréchet derivatives. Their matrices are lower triangular. The forward diagonal entry in row $i$ is $\prod_{j<i}(1-u_j)$, so multiplication of diagonal entries counts each factor $1-u_j$ exactly $n-j$ times. The inverse diagonal entry is $R_i^{-1}$. Its first denominator is one, leaving precisely the displayed product through $n-1$. Positivity of the denominators justifies differentiation of $S$ on the interior.
+
+All six `R10E12` obligations remain marked in progress, although the current source includes the closed boundary and interior results above.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise12.coordinate_sum`, `Rudin.Chapter10.Exercise12.surjectivity`, `Rudin.Chapter10.Exercise12.S_mem_cube`, `Rudin.Chapter10.Exercise12.T_S`, `Rudin.Chapter10.Exercise12.S_T`, `Rudin.Chapter10.Exercise12.interior_injectivity`, `Rudin.Chapter10.Exercise12.injective_on_interior`, `Rudin.Chapter10.Exercise12.openCube_eq_interior`, `Rudin.Chapter10.Exercise12.interior_inverse`, `Rudin.Chapter10.Exercise12.openSimplex_eq_interior`, `Rudin.Chapter10.Exercise12.T_mem_openSimplex`, `Rudin.Chapter10.Exercise12.S_mem_openCube`, `Rudin.Chapter10.Exercise12.forward_jacobian`, `Rudin.Chapter10.Exercise12.hasFDerivAt_T`, `Rudin.Chapter10.Exercise12.inverse_jacobian`, `Rudin.Chapter10.Exercise12.hasFDerivAt_S`.
+
+<a id="r10e13"></a>
+### 10.13 — Monomial moments and simplex volume
+
+**Lean source:** [Exercise13.lean](../../Math/Rudin/Chapter10/Exercise13.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** For nonnegative integers $r_1,\ldots,r_n$ and $q$, the current source proves the stronger barycentric moment formula
+
+$$
+\int_{Q^n}\left(\prod_{i=1}^n x_i^{r_i}\right)\left(1-\sum_{i=1}^n x_i\right)^q dx
+=\frac{\left(\prod_{i=1}^n r_i!\right)q!}{\left(n+\sum_{i=1}^n r_i+q\right)!}.
+$$
+
+In particular,
+
+$$
+\int_{Q^n}\prod_i x_i^{r_i}\,dx
+=\frac{\prod_i r_i!}{(n+\sum_i r_i)!},\qquad
+\operatorname{vol}(Q^n)=\frac1{n!}.
+$$
+
+The monomial is integrable. Its literal zero extension to the unit cube has repeated Darboux integrals in every coordinate order and a multidimensional tagged Riemann integral, all with the stated monomial value. Dimension zero and zero exponents are included.
+
+**Proof.** The beta–gamma theorem at positive integer parameters gives
+
+$$
+\int_0^1 t^p(1-t)^q\,dt=\frac{p!q!}{(p+q+1)!}.
+$$
+
+Scaling the polynomial integral yields, for every real $a$,
+
+$$
+\int_0^a t^p(a-t)^q\,dt
+=a^{p+q+1}\frac{p!q!}{(p+q+1)!}.
+$$
+
+This includes $a=0$ and uses oriented interval integration when $a<0$.
+
+Induct on the dimension for the stronger moment formula. Separate the first coordinate $t$ from the remaining coordinates $z\in Q^{n-1}$, and write $a=1-\sum z_i\ge0$. The simplex slicing theorem gives the inner integral
+
+$$
+\left(\prod_{i=2}^n z_i^{r_i}\right)\int_0^a t^{r_1}(a-t)^q\,dt
+=\left(\prod_{i=2}^n z_i^{r_i}\right)a^{r_1+q+1}
+\frac{r_1!q!}{(r_1+q+1)!}.
+$$
+
+Apply the induction hypothesis with final barycentric exponent $r_1+q+1$. The factorial $(r_1+q+1)!$ cancels, giving the displayed formula. A slice with $a=0$ causes no exception. In dimension zero the domain has its normalized singleton measure, the empty monomial is one, and both sides equal one.
+
+Taking $q=0$ gives the monomial formula; taking every $r_i=0$ gives volume. Continuity on the compact simplex proves integrability independently of the evaluated total integral. The local support results for the simplex zero extension supply every source Darboux stage, preserve the actual boundary values, and identify every permuted order with the set integral. The tagged-box comparison gives the multidimensional Riemann witness with the same value.
+
+Both `R10E13` obligations remain marked in progress in the inventory.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise13.beta_natural`, `Rudin.Chapter10.Exercise13.beta_scaled`, `Rudin.Chapter10.Exercise13.mixed_moment`, `Rudin.Chapter10.Exercise13.monomial_integral`, `Rudin.Chapter10.Exercise13.monomial_integrable`, `Rudin.Chapter10.Exercise13.monomial_source`, `Rudin.Chapter10.Exercise13.monomial_riemann`, `Rudin.Chapter10.Exercise13.simplex_volume`.
+
+<a id="r10e14"></a>
+### 10.14 — The wedge sorting sign equals the determinant sign
+
+**Lean source:** [Exercise14.lean](../../Math/Rudin/Chapter10/Exercise14.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Let $j=(j_1,\ldots,j_k)$ be coordinate indices and $\sigma$ a permutation of their positions. Define $s(\sigma)$ as the determinant of the corresponding permutation matrix. Then
+
+$$
+dx_{j_{\sigma(1)}}\wedge\cdots\wedge dx_{j_{\sigma(k)}}
+=s(\sigma)\,dx_{j_1}\wedge\cdots\wedge dx_{j_k},
+\qquad s(\sigma)=\operatorname{sgn}(\sigma).
+$$
+
+Thus the sign obtained by sorting distinct coordinate differentials is the determinant sign in the source equation. A transposition of distinct positions negates the wedge. The permutation identity also applies to repeated coordinate indices, when the alternating wedge vanishes, and to the empty wedge.
+
+**Proof.** Regard each $dx_i$ as the coordinate covector and their wedge as the canonical alternating multilinear product in the exterior algebra of the dual space. The alternating-map permutation law multiplies this product by the permutation sign. The determinant permutation law gives exactly the same sign for the row-permuted identity matrix, since the identity determinant is one. This identifies the two definitions of sign. The alternating-map interchange law gives the transposition assertion directly. Alternation also makes a tuple with equal covectors in distinct positions vanish, so repeated indices introduce no exception.
+
+`R10E14.permutation_sign` remains marked in progress in the inventory.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise14.permutation_sign`, `Rudin.Chapter10.Exercise14.determinantSign_eq`, `Rudin.Chapter10.Exercise14.interchange`.
+
+<a id="r10e15"></a>
+### 10.15 — Graded commutation of differential forms
+
+**Lean source:** [Exercise15.lean](../../Math/Rudin/Chapter10/Exercise15.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** If $\omega$ is a real $k$-form and $\lambda$ a real $m$-form on a common domain, then
+
+$$
+\omega\wedge\lambda=(-1)^{km}\lambda\wedge\omega.
+$$
+
+The wedge has degree $k+m$. Products of coordinate wedges with a repeated index vanish. Forms are represented as sections of homogeneous exterior powers of the dual space, and the wedge is actual exterior-algebra multiplication. The result is pointwise: it requires neither coefficient regularity nor an open domain, and it includes degree zero. More generally, the homogeneous-element identity holds in the exterior algebra of any real module.
+
+**Proof.** First consider decomposable homogeneous elements $a=u_1\wedge\cdots\wedge u_k$ and $b=v_1\wedge\cdots\wedge v_m$. Moving the first block past the second makes $km$ interchanges, so the exterior-algebra anticommutation law gives $ab=(-1)^{km}ba$. The source uses this standard law for the canonical alternating products. Such products span each homogeneous exterior power. Bilinearity, addition, and compatibility with scalar multiplication extend the identity by induction on these spans to arbitrary homogeneous elements.
+
+Apply that identity to $\omega(x)$ and $\lambda(x)$ at every point $x$. The source first states the sign using integer units, then converts it to the literal real scalar $(-1)^{km}$. Multiplication of the degree-$k$ and degree-$m$ submodules lies in the degree-$(k+m)$ submodule. If one factor in the first block equals one factor in the second, their concatenated tuple has two equal entries in distinct positions. Its alternating product is zero, proving the repeated-index assertion without a distinctness restriction on the original tuples.
+
+`R10E15.graded_commutation` remains marked in progress in the inventory.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise15.homogeneous_commutation`, `Rudin.Chapter10.Exercise15.graded_commutation`, `Rudin.Chapter10.Exercise15.graded_commutation_real`, `Rudin.Chapter10.Exercise15.wedge_mem`, `Rudin.Chapter10.Exercise15.wedge_repeated_index`.
+
+<a id="r10e16"></a>
+### 10.16 — The boundary of a boundary
+
+**Lean source:** [Exercise16.lean](../../Math/Rudin/Chapter10/Exercise16.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** For an oriented affine simplex $\sigma=[p_0,\ldots,p_k]$ of dimension $k\geq2$, the alternating face boundary satisfies $\partial^2\sigma=0$. The same identity holds for every finite integer chain. In the ordinary, unaugmented convention, a zero-chain has zero boundary, so the identity also includes dimensions zero and one. These statements also hold for chains of full parameter maps, not only affine vertex lists. The algebraic result requires no differentiability assumption.
+
+**Proof.** The boundary is
+
+$$
+\partial[p_0,\ldots,p_k]=\sum_{i=0}^k(-1)^i[p_0,\ldots,\widehat p_i,\ldots,p_k].
+$$
+
+For $i<j$, deleting $p_i$ and then $p_j$ has sign $(-1)^{i+j-1}$, whereas deleting $p_j$ and then $p_i$ has sign $(-1)^{i+j}$. Both operations give the same ordered face. Thus every term cancels with its other occurrence. In the ordered-list proof this cancellation is encoded by $\partial(a*c)=c-a*\partial c$ and induction. It holds before the orientation quotient and therefore after it. Additivity extends it to all signed chains, including all integer multiplicities.
+
+For full maps, a face is restriction along the affine inclusion that omits a parameter vertex. The two deletion orders give equal full composite maps, and the same fixed-point-free pairing cancels the signed terms. Restriction commutes with arbitrary postcomposition, and the boundary commutes with both postcomposition and integer multiplication. This includes differentiable maps without imposing an extra $C^2$ condition.
+
+The comparison with the source simplex is exact on the closed domain. If $u_i\geq0$ and $\sum u_i\leq1$, its barycentric coordinates are $(1-\sum u_i,u_1,\ldots,u_k)$. Every nonnegative barycentric tuple of sum one arises this way, and its realization is $p_0+\sum u_i(p_i-p_0)$. Inserting a zero weight realizes the deleted-vertex face. Consequently the Cartesian and barycentric ranges agree, including their boundaries, and every parameter face remains in the closed simplex. The empty-list generator belongs only to the augmented auxiliary model; the ordinary boundary in degree zero is the zero map.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise16.source_boundary`, `Rudin.Chapter10.Exercise16.deleted_pairs_cancel`, `Rudin.Chapter10.Exercise16.simplex_boundary_squared`, `Rudin.Chapter10.Exercise16.chain_boundary_squared`, `Rudin.Chapter10.Exercise16.ordinary_second_boundary`, `Rudin.Chapter10.Exercise16.zero_chain_boundary`, `Rudin.Chapter10.Exercise16.source_face`, `Rudin.Chapter10.Exercise16.barycentric_surjective`, `Rudin.Chapter10.Exercise16.source_range`, `Rudin.Chapter10.Exercise16.Parameterized.face_face`, `Rudin.Chapter10.Exercise16.Parameterized.boundary_squared`, `Rudin.Chapter10.Exercise16.Parameterized.ordinaryBoundary_squared`, `Rudin.Chapter10.Exercise16.Parameterized.boundary_multiplicity`, `Rudin.Chapter10.Exercise16.Parameterized.boundary_map`, `Rudin.Chapter10.Exercise16.Parameterized.source_face`, `Rudin.Chapter10.Exercise16.Parameterized.source_map`, `Rudin.Chapter10.Exercise16.Parameterized.face_domain`.
+
+<a id="r10e17"></a>
+### 10.17 — Two oriented triangles form a square
+
+**Lean source:** [Exercise17.lean](../../Math/Rudin/Chapter10/Exercise17.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Set $q_0=(0,0)$, $q_1=(1,0)$, $q_2=(1,1)$, $q_3=(0,1)$, and let $\tau_1=[q_0,q_1,q_2]$, $\tau_2=-[q_0,q_3,q_2]$. Their sum $J^2$ is the positively oriented unit square: their closed ranges cover the square and have disjoint interiors. Its boundary is
+
+$$
+\partial J^2=[q_0,q_1]+[q_1,q_2]+[q_2,q_3]+[q_3,q_0].
+$$
+
+In contrast,
+
+$$
+\partial(\tau_1-\tau_2)=[q_0,q_1]+[q_1,q_2]+[q_0,q_3]+[q_3,q_2]-2[q_0,q_2].
+$$
+
+**Proof.** The first affine triangle has range $0\leq y\leq x\leq1$: the inverse barycentric weights are $(1-x,x-y,y)$. The second has range $0\leq x\leq y\leq1$, with weights $(1-y,y-x,x)$. These formulas retain the diagonal, edges, and vertices. The two possible orders of $x,y$ prove coverage. An interior point of a region constrained by $x\leq y$ must satisfy $x<y$: the nonzero linear map $(x,y)\mapsto x-y$ is open, so the interior maps into the interior of $(-\infty,0]$. Applying this to both triangles proves disjointness of their interiors.
+
+The two vertex-difference matrices have determinants $1$ and $-1$. The coefficient $-1$ in $\tau_2$ therefore makes both signed triangles positive; it does not change their geometric ranges. Expand each triangle boundary. In the sum the diagonal cancels and reversed outer edges acquire their cyclic signs. In the difference the diagonal occurs with coefficient $-2$, which gives the second displayed formula.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise17.lower_range`, `Rudin.Chapter10.Exercise17.upper_range`, `Rudin.Chapter10.Exercise17.range₁`, `Rudin.Chapter10.Exercise17.range₂`, `Rudin.Chapter10.Exercise17.square_coverage`, `Rudin.Chapter10.Exercise17.interior_coordinate_lt`, `Rudin.Chapter10.Exercise17.disjoint_interiors`, `Rudin.Chapter10.Exercise17.positive_orientations`, `Rudin.Chapter10.Exercise17.J2_value`, `Rudin.Chapter10.Exercise17.square_boundary`, `Rudin.Chapter10.Exercise17.difference_boundary`.
+
+<a id="r10e18"></a>
+### 10.18 — Six tetrahedra form a cube
+
+**Lean source:** [Exercise18.lean](../../Math/Rudin/Chapter10/Exercise18.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** For each permutation $p=(i,j,k)$ of $(1,2,3)$, take
+
+$$
+\sigma_p=\operatorname{sgn}(p)[0,e_i,e_i+e_j,e_1+e_2+e_3].
+$$
+
+All six signed tetrahedra have positive orientation. Their ranges cover $[0,1]^3$ with pairwise disjoint interiors, and the range in order $(1,2,3)$ is $0\leq x_3\leq x_2\leq x_1\leq1$. The boundary of their sum $J^3$ consists of twelve oriented triangles on the six square faces.
+
+**Proof.** The six orders $123,132,213,231,312,321$ have signs $+,-,-,+,+,-$ and exhaust all permutations exactly once. The cumulative-sum vertex matrix has the determinant of the corresponding permutation matrix. The first determinant is $1$; multiplying any determinant by its prescribed sign gives $1$.
+
+For order $(i,j,k)$, the affine coordinates of barycentric weights are $(w_1+w_2+w_3,w_2+w_3,w_3)$ in that order. Thus its exact range is $0\leq x_k\leq x_j\leq x_i\leq1$. Conversely, such a point has weights
+
+$$
+(1-x_i,\ x_i-x_j,\ x_j-x_k,\ x_k).
+$$
+
+Sorting three real coordinates proves cube coverage, including ties and coordinates zero or one. Interior points have strict coordinate order, by the open-linear-map argument of Exercise 17. Different orders cannot both hold strictly, so the interiors are disjoint.
+
+Write $S(a,b,c,d)=[a,b,c]-[a,d,c]$ and $s=e_1+e_2+e_3$. Expanding the twenty-four signed faces gives
+
+$$
+\begin{aligned}
+\partial J^3={}&S(e_1,e_1+e_2,s,e_1+e_3)-S(0,e_2,e_2+e_3,e_3)\\
+&-S(e_2,e_1+e_2,s,e_2+e_3)+S(0,e_1,e_1+e_3,e_3)\\
+&+S(e_3,e_1+e_3,s,e_2+e_3)-S(0,e_1,e_1+e_2,e_2).
+\end{aligned}
+$$
+
+The twelve internal face occurrences cancel in pairs, leaving two triangles on each coordinate face. More precisely, insert $r$ into coordinate $i$ of each of the two triangle maps from Exercise 17. Affine realization commutes with this insertion. Their combined range is exactly $x_i=r$ with the remaining coordinates in $[0,1]$. Taking $r=0,1$ gives exactly the cube surface, including all edges and corners. This establishes geometric coverage as well as the chain identity.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise18.order_bijective`, `Rudin.Chapter10.Exercise18.all_permutations`, `Rudin.Chapter10.Exercise18.vertices_permutation`, `Rudin.Chapter10.Exercise18.sign_determinant`, `Rudin.Chapter10.Exercise18.first_orientation`, `Rudin.Chapter10.Exercise18.positive_orientations`, `Rudin.Chapter10.Exercise18.coordinates`, `Rudin.Chapter10.Exercise18.range_iff`, `Rudin.Chapter10.Exercise18.first_range`, `Rudin.Chapter10.Exercise18.cube_coverage`, `Rudin.Chapter10.Exercise18.interior_order`, `Rudin.Chapter10.Exercise18.disjoint_interiors`, `Rudin.Chapter10.Exercise18.J3_value`, `Rudin.Chapter10.Exercise18.cube_boundary`, `Rudin.Chapter10.Exercise18.faceTriangle_realize`, `Rudin.Chapter10.Exercise18.face_coverage`, `Rudin.Chapter10.Exercise18.surface_coverage`.
+
+<a id="r10e19"></a>
+### 10.19 — The alternating cube-face formula
+
+**Lean source:** [Exercise19.lean](../../Math/Rudin/Chapter10/Exercise19.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Define the affine coordinate insertions $B_{r1}(u,v)=(r,u,v)$, $B_{r2}(u,v)=(u,r,v)$, $B_{r3}(u,v)=(u,v,r)$, and let $\beta_{ri}=B_{ri}(J^2)$ as an oriented affine two-chain. Then
+
+$$
+\partial J^3=\sum_{i=1}^3(-1)^i(\beta_{0i}-\beta_{1i}).
+$$
+
+This is equality of chains, with their signs and multiplicities, not only equality of ranges or integral values.
+
+**Proof.** Affine maps preserve barycentric combinations of weights summing to one. Thus mapping the vertices by $B_{ri}$ is exactly postcomposition of each full affine triangle map. In particular, $\beta_{ri}$ is the square chain on the four inserted vertices, or equivalently the first inserted triangle minus the second inserted triangle. Substitute these six square chains in the boundary expansion from Exercise 18. The faces with fixed first and third coordinates occur as upper minus lower, and the faces with fixed second coordinate as lower minus upper. These are precisely the signs in the displayed formula. The formal indexing starts at zero, so its exponent is the coordinate index plus one.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise19.insertion_formulas`, `Rudin.Chapter10.Exercise19.insertion_realize`, `Rudin.Chapter10.Exercise19.β_value`, `Rudin.Chapter10.Exercise19.β_triangles`, `Rudin.Chapter10.Exercise19.face_chain_value`, `Rudin.Chapter10.Exercise19.face_triangles`, `Rudin.Chapter10.Exercise19.cube_face_formula`.
+
+<a id="r10e20"></a>
+### 10.20 — Integration by parts for differential forms
+
+**Lean source:** [Exercise20.lean](../../Math/Rudin/Chapter10/Exercise20.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $U$ be open in a real normed space, $f:U\to\mathbb R$ be $C^1$, and $\omega$ be a $C^1$ differential $n$-form on $U$. Let $\Phi$ be a finite integer chain of $(n+1)$-simplex maps, each $C^2$ on an open neighborhood of its closed parameter simplex, whose entire closed images lie in $U$. With the signed restriction boundary,
+
+$$
+\int_\Phi f\,d\omega=\int_{\partial\Phi}f\omega-\int_\Phi df\wedge\omega.
+$$
+
+Every coefficient integral and each boundary-face integral exists; the simplex integrals also have the source repeated Riemann interpretation in every coordinate order. The formula descends to the oriented quotient for any chain with such an admissible representative. It includes zero chains and integer multiplicities.
+
+**Proof.** The differential wedge is the usual unnormalized alternation:
+
+$$
+(df\wedge\omega)_x(v_0,\ldots,v_n)=\sum_{i=0}^n(-1)^i df_x(v_i)\,\omega_x(v_0,\ldots,\widehat v_i,\ldots,v_n).
+$$
+
+The derivative product rule and linearity of alternation give $d(f\omega)=f\,d\omega+df\wedge\omega$. Both summands and $f\omega$ are continuous on $U$. Their pullback coefficients are continuous on the compact closed parameter simplexes, including every face, which supplies integrability and the repeated Riemann witnesses. Apply Stokes to $f\omega$, split its integral using that integrability, and rearrange. Linearity extends the calculation from a simplex to the full integer chain. Integration and boundary respect the orientation relations, so the quotient statement follows from any admissible representative.
+
+For $n=0$, take the zero-form $g$ on $\mathbb R$ and the affine segment from $a$ to $b$. Its one-form integral is the oriented interval integral; its zero-dimensional signed boundary evaluates to $f(b)g(b)-f(a)g(a)$, and $df\wedge g=g\,df$. Consequently, for globally $C^1$ real functions $f,g$ and any $a,b$,
+
+$$
+\int_a^b f(x)g'(x)\,dx=f(b)g(b)-f(a)g(a)-\int_a^b f'(x)g(x)\,dx.
+$$
+
+This holds for either endpoint order. For $a\leq b$, including $a=b$, both terms have actual Darboux Riemann integral witnesses, obtained from their continuous coefficients.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise20.validity_conditions`, `Rudin.Chapter10.Exercise20.continuous_terms`, `Rudin.Chapter10.Exercise20.differentialWedge_apply`, `Rudin.Chapter10.Exercise20.exterior_product`, `Rudin.Chapter10.Exercise20.form_identity`, `Rudin.Chapter10.Exercise20.oriented_form_identity`, `Rudin.Chapter10.Exercise20.differentialWedge_zero`, `Rudin.Chapter10.Exercise20.segment_integral`, `Rudin.Chapter10.Exercise20.segment_boundary`, `Rudin.Chapter10.Exercise20.one_variable_identity`, `Rudin.Chapter10.Exercise20.one_variable_case`.
+
+<a id="r10e21"></a>
+### 10.21 — The angular form and winding number
+
+**Lean source:** [Exercise21.lean](../../Math/Rudin/Chapter10/Exercise21.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** On $\mathbb R^2\setminus\{0\}$, identify $z=x+iy$ and define
+
+$$
+\eta=\frac{x\,dy-y\,dx}{x^2+y^2}.
+$$
+
+The form is $C^1$ and closed, and its integral on the positive circle $\gamma_r(t)=(r\cos t,r\sin t)$, $r>0$, $0\leq t\leq2\pi$, is $2\pi$. If a closed curve $\Gamma$ is $C^2$ on an open neighborhood of $[0,2\pi]$ and every segment $[\gamma_r(t),\Gamma(t)]$ avoids zero, then $\int_\Gamma\eta=2\pi$. In particular, for $a,b>0$,
+
+$$
+\int_0^{2\pi}\frac{ab}{a^2\cos^2t+b^2\sin^2t}\,dt=2\pi.
+$$
+
+Locally, $\eta=d(\arctan(y/x))$ wherever $x\ne0$, and $\eta=d(-\arctan(x/y))$ wherever $y\ne0$. There is no single differentiable real potential on the punctured plane. Finally, for every closed $C^1$ curve $\Gamma:[a,b]\to\mathbb C\setminus\{0\}$, $a\leq b$, with continuous derivative jet $v$ satisfying the genuine within-derivative condition at all points, including endpoints,
+
+$$
+\frac1{2\pi}\int_a^b\eta_{\Gamma(t)}(v(t))\,dt=\operatorname{Ind}(\Gamma).
+$$
+
+The index is exactly the Chapter 8 index. Source Darboux Riemann witnesses are supplied for this angular integral, for the circle, for the homotopy conclusion, and for the ellipse.
+
+**Proof.** The angular covector satisfies $\eta_z(v)=\operatorname{Im}(v/z)$. On the circle, $\gamma_r'=(-r\sin t,r\cos t)$ and the quotient coefficient is identically one, proving the circle value. Direct differentiation of the two arctangent charts gives the displayed covector. Each chart is $C^2$ where its denominator is nonzero, so $d\eta=d^2\theta=0$ locally. At least one chart applies at every nonzero point. If a global differentiable potential existed, its composition with the unit circle would have derivative one. The fundamental theorem of calculus would then give a change of $2\pi$ between equal endpoint values, a contradiction.
+
+For the Stokes proof, rescale the parameter rectangle positively to the unit square and use
+
+$$
+H(s,u)=(1-u)\Gamma(2\pi s)+u\gamma_r(2\pi s).
+$$
+
+The segment hypothesis puts its closed image in the punctured plane. It is $C^2$ near the parameter square. Triangulate that square into two actual smooth triangles, apply simplex Stokes and $d\eta=0$, and cancel the internal diagonal. The two side restrictions coincide because both curves are closed, so their integrals cancel. The remaining two restrictions give equality with the circle integral. Positive linear rescaling preserves these path integrals. For the ellipse, the straight segment to the unit circle has coordinates $((u+va)\cos t,(u+vb)\sin t)$ with $u,v\geq0$, $u+v=1$; both factors are positive. It cannot vanish because sine and cosine cannot both vanish. Its angular coefficient is the displayed rational function, so the homotopy result applies.
+
+There is also a proof without Stokes. Segment avoidance implies $\Gamma(t)/\gamma_r(t)$ lies off the nonpositive real axis. On this slit domain, the half-angle primitive
+
+$$
+A(z)=2\arctan\frac{y}{\sqrt{x^2+y^2}+x}
+$$
+
+has derivative $\eta$. Its denominator is positive. Along the quotient curve its derivative is $\eta_{\Gamma(t)}(\Gamma'(t))-1$, by the quotient rule and the circle calculation. The quotient has equal endpoints, so the fundamental theorem of calculus makes the integral of this difference zero.
+
+For the general $C^1$ loop, the logarithmic derivative $v/\Gamma$ is continuous on the closed interval and integrable. Chapter 8 proves that its integral is $2\pi i n$ for an integer $n$, and defines the index as that integral divided by $2\pi i$. Taking imaginary parts gives the asserted angular identity, including the singleton interval case. The full-map path integral on $[0,1]$ agrees with this expression whenever $v$ is the actual ambient derivative. Continuity of the real angular coefficients supplies all stated source Riemann integrals.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise21.eta_eq_im_div`, `Rudin.Chapter10.Exercise21.circle_integral`, `Rudin.Chapter10.Exercise21.circle_derivative`, `Rudin.Chapter10.Exercise21.circle_coefficient`, `Rudin.Chapter10.Exercise21.circle_source_integral`, `Rudin.Chapter10.Exercise21.eta_closed`, `Rudin.Chapter10.Exercise21.eta_smooth`, `Rudin.Chapter10.Exercise21.closed_triangle_boundary`, `Rudin.Chapter10.Exercise21.closed_square_boundary`, `Rudin.Chapter10.Exercise21.straight_homotopy_stokes`, `Rudin.Chapter10.Exercise21.straight_homotopy_source`, `Rudin.Chapter10.Exercise21.ellipse_integral`, `Rudin.Chapter10.Exercise21.ellipse_source_integral`, `Rudin.Chapter10.Exercise21.xAngle_exterior`, `Rudin.Chapter10.Exercise21.xAngle_derivative`, `Rudin.Chapter10.Exercise21.yAngle_exterior`, `Rudin.Chapter10.Exercise21.yAngle_derivative`, `Rudin.Chapter10.Exercise21.local_angles_not_global`, `Rudin.Chapter10.Exercise21.not_globally_exact`, `Rudin.Chapter10.Exercise21.straight_homotopy_local_primitives`, `Rudin.Chapter10.Exercise21.cutAngle_curve_derivative`, `Rudin.Chapter10.Exercise21.winding_index`, `Rudin.Chapter10.Exercise21.angularIntegral_source`, `Rudin.Chapter10.Exercise21.pathIntegral_bridge`, `Rudin.Chapter10.Exercise21.angularIntegral_eq_im`, `Rudin.Chapter10.Exercise21.integral_rescale`.
+
+<a id="r10e23"></a>
+### 10.23 — Radial forms: closedness and partial exactness coverage
+
+**Lean source:** [Exercise23.lean](../../Math/Rudin/Chapter10/Exercise23.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** For $1\leq k\leq N$, set $r_k=(\sum_{i=1}^k x_i^2)^{1/2}$ and $E_k=\{r_k>0\}$. The source radial form is
+
+$$
+\omega_k=r_k^{-k}\sum_{i=1}^k(-1)^{i-1}x_i\,dx_1\wedge\cdots\wedge\widehat{dx_i}\wedge\cdots\wedge dx_k.
+$$
+
+The completed source proves $d\omega_k=0$ on $E_k$ for every such $k$. For $k=1$ it also proves that $\omega_1=x_1/|x_1|$ is locally constant there. For $k\geq2$ and $-1<t<1$, it proves convergence, the derivative, and the improper-endpoint interpretation of
+
+$$
+g_k(t)=\int_{-1}^t(1-s^2)^{(k-3)/2}\,ds.
+$$
+
+In degree zero the added exactness convention is image $\{0\}$: a zero-form is exact on a domain if and only if it vanishes there. Positive-degree exactness means the exterior derivative of an actual $C^1$ form one degree lower. Under this explicit convention, the one-dimensional form on the punctured line is closed but not exact.
+
+Further completed results concern sphere patches and radial rescaling. Let $K\subset\mathbb R^m$ be compact, $U$ an open neighborhood of $K$, and let $\sigma:U\to\mathbb R^{m+1}$ and $\rho:U\to\mathbb R$ be $C^2$, with $\|\sigma(u)\|=1$ and $\rho(u)>0$ on $K$. The two maps avoid zero on $K$, their pullbacks of $\omega_{m+1}$ agree on $K$, both flux coefficients are integrable over $K$, and their flux integrals over $K$ agree. No rank condition on $\sigma$ is required.
+
+If additionally $K$ has unique differentiation at each point and the normal-first determinant $\det[\sigma,D_1\sigma,\ldots,D_m\sigma]$ is nonnegative on $K$, then its flux is its geometric parametric area
+
+$$
+\int_K\sqrt{\det\bigl(\langle D_i\sigma,D_j\sigma\rangle\bigr)}\,du.
+$$
+
+For a $C^2$ map from a neighborhood of a compact set of positive Lebesgue measure, this area is strictly positive if its parameter derivative columns are linearly independent at every point of that set.
+
+This file has **partial source coverage**, not a complete solution. For `R10E23.b`, only the scalar integral facts above are proved; with the prescribed $f_k(x)=(-1)^k g_k(x_k/r_k)$, the identity $\omega_k=d(f_k\omega_{k-1})=df_k\wedge\omega_{k-1}$ on $E_{k-1}$ is not proved. For `R10E23.c`, nonexactness in dimensions at least two is not proved. For `R10E23.d.formulation` and `R10E23.d.generalization`, the results prove radial invariance and the sphere-patch flux/area comparison, but do not construct a whole-sphere chain, prove its face cancellation, or establish the global positive sphere integral required by the selected contract. The zero-degree convention is an explicit addition, not a source-defined negative-degree primitive.
+
+**Proof.** In its own $k$ coordinates, write $\omega_k(x)=\|x\|^{-k}\iota_x\mathrm{vol}$; the ambient form is its pullback by projection to the first $k$ coordinates. Expanding the determinant in its first row proves the coordinate formula and the Euclidean norm formula proves the radius identity.
+
+Alternation removes any multiple of the radial vector added to a tangent argument. Hence, for a positive scale $\rho$,
+
+$$
+\mathrm{vol}(\rho\sigma,\rho D_1\sigma+(D_1\rho)\sigma,\ldots)
+=\rho^{m+1}\mathrm{vol}(\sigma,D_1\sigma,\ldots).
+$$
+
+The denominator scales by the same positive power. This proves radial pullback invariance, including nonconstant scales and rank-deficient maps. Apply it to normalization $x\mapsto x/\|x\|$, which preserves the form away from zero. Its derivative is tangent to the unit sphere: differentiation of the squared norm gives orthogonality to the unit radial vector. Any $k$ such tangent vectors in $\mathbb R^k$ are linearly dependent, since they lie in the proper kernel of a nonzero inner-product functional. Thus every top-degree alternating form vanishes on them. Naturality of exterior differentiation under the smooth normalization map now proves closedness, and pullback by the coordinate projection proves ambient closedness. For $k=1$, the sign function is constant on a neighborhood of each point of $E_1$, which also supplies derivative existence directly.
+
+For $g_k$, the exponent $\alpha=(k-3)/2$ is greater than $-1$, including $\alpha=-1/2$ when $k=2$. Factor $(1-s^2)^\alpha=(1+s)^\alpha(1-s)^\alpha$. The first factor is integrable at $-1$; the second is continuous and bounded on $[-1,t]$. This proves endpoint integrability. The integrand is continuous at every interior $t$, so the fundamental theorem gives $g_k'(t)=(1-t^2)^\alpha$. Continuity of the interval primitive gives the limit of $\int_a^t$ as $a\downarrow-1$. No form-primitive identity follows in the current file.
+
+For the degree-zero convention, evaluate the form at the first positive coordinate unit vector: its value is one. It therefore cannot be the zero form on $E_1$. At top index the radial domain is exactly punctured Euclidean space, so this also proves the stated punctured-line result. No negative-degree form is introduced.
+
+For the area comparison, the square of the normal-first determinant is the Gram determinant of the normal and tangents. A unit normal orthogonal to the tangents makes this determinant equal to the tangent Gram determinant. Outward nonnegative orientation selects its nonnegative square root. Tangency on the compact domain, including boundary points, follows from the unit-norm identity and unique differentiation. This proves the pointwise flux-density identity. The $C^2$ neighborhood extensions give continuous area and flux densities; compactness gives their integrability and hence the integral identities. Linear independence makes the tangent Gram determinant positive, and positive measure then gives strictly positive area.
+
+The file also checks normalization on the standard frame: the coordinate volume and the radial form on an outward orthonormal frame are one. A concrete radial-invariance example uses a constant unit direction and radius $1+\|u\|^2$ on any compact parameter set. These are normalization and rescaling checks, not a replacement for a whole-sphere integral.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise23.omega_source_formula`, `Rudin.Chapter10.Exercise23.radius_source_formula`, `Rudin.Chapter10.Exercise23.omega_closed`, `Rudin.Chapter10.Exercise23.topRadial_closed`, `Rudin.Chapter10.Exercise23.omega_one_apply`, `Rudin.Chapter10.Exercise23.omega_one_locally_constant`, `Rudin.Chapter10.Exercise23.omega_one_closed`, `Rudin.Chapter10.Exercise23.omega_one_not_exact`, `Rudin.Chapter10.Exercise23.g_integrable`, `Rudin.Chapter10.Exercise23.g_hasDerivAt`, `Rudin.Chapter10.Exercise23.g_improper_limit`, `Rudin.Chapter10.Exercise23.exactOn_zero_iff`, `Rudin.Chapter10.Exercise23.exactOn_zero_image`, `Rudin.Chapter10.Exercise23.exactOn_succ_iff`, `Rudin.Chapter10.Exercise23.dimension_one_closed_not_exact`, `Rudin.Chapter10.Exercise23.radialDomain_top`, `Rudin.Chapter10.Exercise23.radial_pullback_at`, `Rudin.Chapter10.Exercise23.normalize_pullback`, `Rudin.Chapter10.Exercise23.top_alternating_tangent_zero`, `Rudin.Chapter10.Exercise23.compact_radial_invariance`, `Rudin.Chapter10.Exercise23.normal_flux_eq_gram_area`, `Rudin.Chapter10.Exercise23.sphere_flux_density`, `Rudin.Chapter10.Exercise23.compact_sphere_flux_area`, `Rudin.Chapter10.Exercise23.parametricArea_pos`, `Rudin.Chapter10.Exercise23.coordinateVolume_standard`, `Rudin.Chapter10.Exercise23.topRadial_standard`, `Rudin.Chapter10.Exercise23.compact_radial_model`.
+
+<a id="r10e28"></a>
+### 10.28 — Stokes on a parametrized annulus
+
+**Lean source:** [Exercise28.lean](../../Math/Rudin/Chapter10/Exercise28.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Let $0<a<b$, let $\Phi(r,\theta)=(r\cos\theta,r\sin\theta)$ on the closed rectangle $[a,b]\times[0,2\pi]$, with parameter order $(r,\theta)$, and put $\omega=x^3\,dy$. Then
+
+$$
+\int_\Phi d\omega=\int_{\partial\Phi}\omega=\frac{3\pi}{4}(b^4-a^4).
+$$
+
+The four induced parameter edges have integrals $0$, $3\pi b^4/4$, $0$, $-3\pi a^4/4$, respectively. The repeated surface integral with $r$ outermost, every angular slice, and all signed boundary integrals have source Riemann witnesses. The current source completes these results although the inventory declaration lists are still empty.
+
+**Proof.** Differentiation gives $d\omega=3x^2\,dx\wedge dy$. The polar derivative has determinant $r$, so the pulled-back surface coefficient is $3r^3\cos^2\theta$. Also
+
+$$
+\Phi^*\omega=r^3\cos^3\theta\sin\theta\,dr+r^4\cos^4\theta\,d\theta.
+$$
+
+The standard trigonometric integral formulas give $\int_0^{2\pi}\cos^2\theta\,d\theta=\pi$ and $\int_0^{2\pi}\cos^4\theta\,d\theta=3\pi/4$. Integrating $3\pi r^3$ from $a$ to $b$ gives the surface value. On both radial edges the sine factor is zero, so their individual integrals vanish. Their image paths also coincide with opposite induced signs. On the outer circle the integral is $3\pi b^4/4$; the reversed inner circle gives $-3\pi a^4/4$. Their sum is the same surface value.
+
+Independently of this numerical comparison, the proof applies rectangle Stokes to the actual pullback form. Naturality gives $d(\Phi^*\omega)=\Phi^*(d\omega)$, and Fubini identifies the continuous coefficient's area integral with the repeated integral. Its four induced boundary terms are exactly those just computed. The coefficient is continuous on the compact rectangle, so it is integrable; the same continuous-coefficient bridge gives each source Riemann witness. The algebraic numerical formulas hold for arbitrary real endpoints as oriented interval integrals. The area/Stokes comparison and source witnesses are proved for $a\leq b$, including $a=b$; the exercise theorem specializes to $0<a<b$. Finally $\|\Phi(r,\theta)\|^2=r^2$, which verifies the annular radius bounds on the closed domain.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise28.exterior`, `Rudin.Chapter10.Exercise28.polar_derivative`, `Rudin.Chapter10.Exercise28.pullback_value`, `Rudin.Chapter10.Exercise28.surface_coefficient`, `Rudin.Chapter10.Exercise28.angular_two`, `Rudin.Chapter10.Exercise28.angular_four`, `Rudin.Chapter10.Exercise28.surface_value`, `Rudin.Chapter10.Exercise28.radial_edges`, `Rudin.Chapter10.Exercise28.circular_edges`, `Rudin.Chapter10.Exercise28.boundary_value`, `Rudin.Chapter10.Exercise28.seam_paths`, `Rudin.Chapter10.Exercise28.annular_radius`, `Rudin.Chapter10.Exercise28.coefficient_integrable`, `Rudin.Chapter10.Exercise28.surface_area`, `Rudin.Chapter10.Exercise28.actual_stokes`, `Rudin.Chapter10.Exercise28.surface_source`, `Rudin.Chapter10.Exercise28.boundary_source`, `Rudin.Chapter10.Exercise28.exercise28`.
+
+<a id="r10e29"></a>
+### 10.29 — A smooth section and a varying-endpoint primitive
+
+**Lean source:** [Exercise29.lean](../../Math/Rudin/Chapter10/Exercise29.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Let $X$ be a finite-dimensional real normed space and $V\subset X\times\mathbb R$ be open and convex. Its projection $U$ onto $X$ is open, and there is a $C^1$ function $\alpha:U\to\mathbb R$ with $(x,\alpha(x))\in V$. For $\varphi\in C^1(V)$,
+
+$$
+F(x,z)=\int_{\alpha(x)}^z\varphi(x,t)\,dt
+$$
+
+is $C^1$ on $V$, and each oriented fiber integral exists. The section is constructed, not assumed.
+
+For the setting of Theorem 10.38, let $E\subset (X\times\mathbb R)\times Y$ be open and convex, where $Y$ is a real normed space, and let $f\in C^1(E)$ factor as $f((x,z),y)=\varphi(x,z)$. The constructed section on the projection of $E$ gives a $C^1$ primitive $F((x,z),y)$ on $E$ with all unused coordinates retained. For $p=1$, nonempty $E\subset\mathbb R\times Y$ supplies a fixed endpoint $c$ in its projection and the primitive $\int_c^x\varphi(t)\,dt$. On an empty domain regularity is vacuous; no endpoint in an empty projection is asserted. These completed results are not yet mapped in the inventory.
+
+**Proof.** Each fiber of $V$ is a nonempty convex interval over its projection. For every $x\in U$, choose one fiber value $c_x$. Openness makes the same constant $c_x$ valid for all base points in a neighborhood of $x$. The smooth partition-of-unity selection theorem combines these locally constant choices into a locally finite smooth weighted sum. The weights sum to one, so convexity of each fiber keeps that sum in the fiber. This produces the $C^1$ section, also when $U$ is empty; an extension outside $U$ is used only to give a total function, without asserting smoothness outside $U$.
+
+Convexity keeps the entire interval between $\alpha(x)$ and $z$ in the fiber, regardless of endpoint order. Use the affine substitution
+
+$$
+F(x,z)=\int_0^1(z-\alpha(x))\,\varphi\bigl(x,\alpha(x)+(z-\alpha(x))s\bigr)\,ds.
+$$
+
+It remains valid for equal or reversed endpoints. The integrand is $C^1$ near every point over the compact interval $0\leq s\leq1$. To justify differentiation under the integral, take a compact closed ball inside the open base domain. Continuity of the parameter derivative on its product with $[0,1]$ supplies a uniform bound. Dominated differentiation gives the derivative as the integral of that parameter derivative, and dominated continuity makes the derivative continuous. Thus the fixed-interval integral, and hence $F$, is $C^1$. The bound is derived locally, not an added global hypothesis. Continuity on each compact fiber interval gives integrability and Darboux Riemann witnesses. If the displayed bounds are $a>b$, the source witness on $[b,a]$ has value $-\int_a^b\varphi(x,t)\,dt$.
+
+In the factorized setting, $\varphi$ is itself $C^1$ on the projection: near a projected point fix one admissible unused coordinate $y_0$ and use the local lift $z\mapsto(z,y_0)$ into $E$. The factorization identifies $\varphi$ locally with the $C^1$ function $f(z,y_0)$. Apply the preceding section and varying-integral results on the open convex projection, and compose with projection from $E$.
+
+For $p=1$ and nonempty $E$, choose any point of $E$ and its first coordinate $c$. Convexity contains every integration interval in the projection. The fundamental theorem gives derivative $\varphi$ for $x\mapsto\int_c^x\varphi$, and continuity gives $C^1$ regularity. Compose with the first projection to retain unused coordinates. On the empty domain both the zero function and every fixed-endpoint displayed primitive are $C^1$ there, without a nonexistent choice from its projection.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise29.projection_open`, `Rudin.Chapter10.Exercise29.fiber_convex`, `Rudin.Chapter10.Exercise29.section_exists`, `Rudin.Chapter10.Exercise29.integral_c1_data`, `Rudin.Chapter10.Exercise29.integral_c1`, `Rudin.Chapter10.Exercise29.integral_hasFDerivAt`, `Rudin.Chapter10.Exercise29.fiber_interval`, `Rudin.Chapter10.Exercise29.integral_affine`, `Rudin.Chapter10.Exercise29.varying_integral_c1`, `Rudin.Chapter10.Exercise29.fiber_integrable`, `Rudin.Chapter10.Exercise29.fiber_source`, `Rudin.Chapter10.Exercise29.factor_c1`, `Rudin.Chapter10.Exercise29.exercise29`, `Rudin.Chapter10.Exercise29.fixed_lower_c1`, `Rudin.Chapter10.Exercise29.exercise29_p_one`, `Rudin.Chapter10.Exercise29.exercise29_empty`.
+
+<a id="r10e30"></a>
+### 10.30 — The Euclidean surface normal
+
+**Lean source:** [Exercise30.lean](../../Math/Rudin/Chapter10/Exercise30.lean).
+
+**Inventory status:** Verified as stated.
+
+**Statement.** For arbitrary $\alpha,\beta\in\mathbb R^3$, let
+
+$$
+N=(\alpha_2\beta_3-\alpha_3\beta_2,\ \alpha_3\beta_1-\alpha_1\beta_3,\ \alpha_1\beta_2-\alpha_2\beta_1),\qquad T(u,v)=u\alpha+v\beta.
+$$
+
+Then $\det[\alpha\ \beta\ N]=\|N\|^2$, and $N\cdot T(e_1)=N\cdot T(e_2)=0$. The statements use the Euclidean inner product and norm and require no independence or nondegeneracy assumption.
+
+**Proof.** The coordinate vector $N$ is $\alpha\times\beta$. The scalar triple-product identity gives
+
+$$
+\det[\alpha\ \beta\ N]=(\alpha\times\beta)\cdot N=N\cdot N=\|N\|^2.
+$$
+
+The cross product is perpendicular to each factor, so $N\cdot\alpha=N\cdot\beta=0$. The linear map $T$ sends the two parameter basis vectors to $\alpha$ and $\beta$, proving the stated orthogonality. These identities remain valid when the two factors are dependent, including zero vectors: the cross product then vanishes.
+
+**Lean declarations:** `Rudin.Chapter10.exercise30_normal_coordinates`, `Rudin.Chapter10.exercise30_determinant`, `Rudin.Chapter10.exercise30_basis`, `Rudin.Chapter10.exercise30_normal_perpendicular`, `Rudin.Chapter10.exercise30_orthogonality`.
+
+<a id="r10e32"></a>
+### 10.32 — The Möbius band and its two boundary notions
+
+**Lean source:** [Exercise32.lean](../../Math/Rudin/Chapter10/Exercise32.lean).
+
+**Inventory status:** Pending verification.
+
+**Statement.** Let $0<\delta<1$, $D=[0,\pi]\times[-\delta,\delta]$, and
+
+$$
+\Phi(\theta,t)=\bigl((1-t\sin\theta)\cos2\theta,\ (1-t\sin\theta)\sin2\theta,\ t\cos\theta\bigr).
+$$
+
+Its image is a regular Möbius band avoiding the $z$-axis. The only identifications are equal parameters and the reversed seam $\Phi(\pi,t)=\Phi(0,-t)$. It admits no continuous nowhere-zero normal field orthogonal to its actual parameter tangents.
+
+Let $p_1=(0,-\delta)$, $p_2=(\pi,-\delta)$, $p_3=(\pi,\delta)$, $p_4=(0,\delta)$, $p_5=p_1$, and let $\Gamma_i$ be the full map $\Phi\circ[p_i,p_{i+1}]$, with its oriented affine unit-interval parametrization. Put $a=(1,0,-\delta)$ and $b=(1,0,\delta)$. Then $\Phi(p_1)=\Phi(p_3)=a$, $\Phi(p_2)=\Phi(p_4)=b$, and both $\Gamma_1,\Gamma_3$ run from $a$ to $b$. Their planar projections are loops with indices $+1,-1$, respectively. Both seam maps equal $[b,a]$, and the actual parameter boundary is
+
+$$
+\partial\Phi=\Gamma_1+\Gamma_2+\Gamma_3+\Gamma_4=\Gamma_1+\Gamma_3+2\Gamma_2.
+$$
+
+The single free rim instead has oriented chain $\Gamma=\Gamma_1-\Gamma_3$ and closed parametrization
+
+$$
+G(\theta)=\bigl((1+\delta\sin\theta)\cos2\theta,\ (1+\delta\sin\theta)\sin2\theta,\ -\delta\cos\theta\bigr),\qquad0\leq\theta\leq2\pi.
+$$
+
+For $\eta=(x\,dy-y\,dx)/(x^2+y^2)$, defined off the $z$-axis,
+
+$$
+\int_{\partial\Phi}\eta=0,\qquad\int_\Gamma\eta=\int_G\eta=4\pi.
+$$
+
+All four edge integrals and the displayed closed rim integral have source Riemann witnesses. Thus the free rim chain is not the parameter boundary chain.
+
+**Proof.** Since $|t\sin\theta|\leq\delta<1$, the planar radius $1-t\sin\theta$ is positive on all of $D$, including its seam and rim. In particular the image avoids the $z$-axis. If two image points agree, their positive planar radii agree, and their planar angles $2\theta,2\psi$ have the same sine and cosine. For $\theta,\psi\in[0,\pi]$, this means either $\theta=\psi$ or the two opposite interval endpoints. In the first case equality of radius and height, together with $\sin^2\theta+\cos^2\theta=1$, gives equal transverse parameters. At the two endpoints it gives the reversed transverse parameter. Direct substitution proves the seam formula.
+
+Differentiating $\Phi$ gives independent tangents everywhere on $D$. Indeed, in a relation $A\Phi_\theta+B\Phi_t=0$, the planar angular component is $2A(1-t\sin\theta)$, so $A=0$ by radius positivity. The transverse tangent has nonzero length, so $B=0$. This includes all boundary points.
+
+To prove nonorientability, restrict a proposed continuous normal field to the core $c(\theta)=(\cos2\theta,\sin2\theta,0)$. Its two tangents are $(-2\sin2\theta,2\cos2\theta,0)$ and $(-\sin\theta\cos2\theta,-\sin\theta\sin2\theta,\cos\theta)$. Every vector perpendicular to both is a scalar multiple of the unit vector
+
+$$
+n(\theta)=(\cos\theta\cos2\theta,\cos\theta\sin2\theta,\sin\theta).
+$$
+
+The scalar is the dot product with $n(\theta)$ and is continuous and nonzero. But $c(0)=c(\pi)$ while $n(\pi)=-n(0)$, so its endpoint values are opposites. The intermediate value theorem forces a zero, a contradiction. This proves the stated normal-field formulation of nonorientability, not just a sign mismatch in a drawing.
+
+Substitute the four corners to obtain their images. Rescale $D$ positively to the unit square by $(s,u)\mapsto(\pi s,\delta(2u-1))$. Its four signed full-map restrictions give the asserted boundary decomposition; the same boundary is obtained by triangulating the square into smooth simplexes. Substitution on the vertical edges shows that both are literally the same segment from $b$ to $a$. They therefore add with multiplicity two, rather than cancel. Endpoint substitution gives both rim arcs from $a$ to $b$.
+
+The first half of $G$ is $\Gamma_1$ after positive linear rescaling, and the second half is the reverse of $\Gamma_3$. Splitting $[0,2\pi]$ at $\pi$ proves that its image is exactly the union of the two free-edge images, with no seam added. That union lies in the band, and $G(0)=G(2\pi)$.
+
+The form $\eta$ is the pullback of the closed angular form of Exercise 21 by planar projection. It is $C^1$ off the axis and closed there. Apply analytic Stokes to the rescaled square, using its two smooth triangle maps and the axis-avoidance result, to obtain zero on its actual parameter boundary.
+
+For direct values, a positive-radius planar curve of angular speed $k$ has angular coefficient $k$: the derivative of its radius contributes a radial vector, whose alternating numerator is zero. The first arc on the unit interval has coefficient $2\pi$, the third has coefficient $-2\pi$, and both seam coefficients are zero. Their source Riemann integrals are therefore $2\pi,0,-2\pi,0$. Exercise 21 identifies the two projected-loop indices as $+1$ and $-1$. The closed parametrization $G$ has coefficient $2$ throughout $[0,2\pi]$, giving $4\pi$ and its Riemann witness. Equivalently, the chain $\Gamma_1-\Gamma_3$ has integral $2\pi-(-2\pi)=4\pi$. Since integration is an additive function on these signed full-map chains, this nonzero value distinguishes it from the parameter boundary. There is no conflict with Stokes: the band is nonorientable, and its geometric free rim is not the signed boundary of this rectangular parametrization.
+
+**Lean declarations:** `Rudin.Chapter10.Exercise32.seam`, `Rudin.Chapter10.Exercise32.injective_modulo_seam`, `Rudin.Chapter10.Exercise32.theta_derivative`, `Rudin.Chapter10.Exercise32.transverse_derivative`, `Rudin.Chapter10.Exercise32.tangent_independence`, `Rudin.Chapter10.Exercise32.avoids_axis`, `Rudin.Chapter10.Exercise32.nonorientable`, `Rudin.Chapter10.Exercise32.core_normal_multiple`, `Rudin.Chapter10.Exercise32.boundary_decomposition`, `Rudin.Chapter10.Exercise32.triangulated_boundary`, `Rudin.Chapter10.Exercise32.corner_images`, `Rudin.Chapter10.Exercise32.edge_endpoints`, `Rudin.Chapter10.Exercise32.first_edge_winding`, `Rudin.Chapter10.Exercise32.edge1_projection`, `Rudin.Chapter10.Exercise32.third_edge_winding`, `Rudin.Chapter10.Exercise32.edge3_full`, `Rudin.Chapter10.Exercise32.repeated_seam_maps`, `Rudin.Chapter10.Exercise32.boundary_repeated_seam`, `Rudin.Chapter10.Exercise32.geometricEdge_closed`, `Rudin.Chapter10.Exercise32.geometricEdge_first_half`, `Rudin.Chapter10.Exercise32.geometricEdge_second_half`, `Rudin.Chapter10.Exercise32.geometric_edge_range`, `Rudin.Chapter10.Exercise32.rim_subset_band`, `Rudin.Chapter10.Exercise32.parametrized_boundary_integral`, `Rudin.Chapter10.Exercise32.boundary_source_integrals`, `Rudin.Chapter10.Exercise32.edge1_integral`, `Rudin.Chapter10.Exercise32.edge3_integral`, `Rudin.Chapter10.Exercise32.geometric_edge_integral`, `Rudin.Chapter10.Exercise32.geometric_edge_chain_integral`, `Rudin.Chapter10.Exercise32.geometric_edge_source_integral`, `Rudin.Chapter10.Exercise32.geometric_edge_ne_parameter_boundary`.
+
 <a id="chapter-11"></a>
 
 ## Chapter 11 — The Lebesgue Theory
 
-**Exercises:** [1](#r11e01) · [18](#r11e18)
+**Exercises:** [1](#r11e01) · [2](#r11e02) · [3](#r11e03) · [4](#r11e04) · [5](#r11e05) · [6](#r11e06) · [7](#r11e07) · [8](#r11e08) · [9](#r11e09) · [10](#r11e10) · [11](#r11e11) · [12](#r11e12) · [13](#r11e13) · [14](#r11e14) · [15](#r11e15) · [16](#r11e16) · [17](#r11e17) · [18](#r11e18)
 
 <a id="r11e01"></a>
 ### 11.1 — Zero nonnegative integral implies zero almost everywhere
@@ -5505,6 +8053,398 @@ Hence every $E_n$ has measure zero. Since $f\ge0$ on $E$, its nonzero set there 
 **Scope.** For real-valued $f$, the file uses the nonnegative integral after embedding the nonnegative values into $[0,\infty]$. Nonnegativity on $E$ ensures that this loses no values. A separate Bochner-integral version assumes explicitly that $f$ is integrable on $E$. For a nonnegative integrable function this integral agrees with the nonnegative integral, so the same conclusion follows. The integrability assumption is necessary for that formulation because Lean assigns the Bochner integral the default value zero for nonintegrable functions; that default is not the source's zero-integral hypothesis.
 
 **Lean declarations:** `exercise01`, `exercise01_ennreal`, `exercise01_integrable`.
+
+<a id="r11e02"></a>
+### 11.2 — Vanishing integrals on measurable subsets
+**Lean source:** [Exercise02.lean](../../Math/Rudin/Chapter11/Exercise02.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E$ be measurable in a measure space $(X,\mu)$, and let $f$ be integrable on $E$. If $\int_A f\,d\mu=0$ for every measurable $A\subseteq E$, then $f=0$ almost everywhere on $E$. The result holds for real and complex functions, and for functions with values in a complete real normed space. The measure need not be finite or sigma-finite.
+
+**Proof.** Apply the standard uniqueness criterion for an integrable function from its integrals over measurable sets, using the restricted measure $\mu|_E$. For every measurable $A\subseteq X$, restriction of the set integral gives
+
+$$
+\int_A f\,d(\mu|_E)=\int_{A\cap E}f\,d\mu=0.
+$$
+
+The criterion gives $f=0$ almost everywhere for $\mu|_E$. Since $E$ is measurable, this is exactly $f=0$ almost everywhere on $E$ for $\mu$. The explicit integrability hypothesis excludes the default value assigned to a nonintegrable Bochner integral.
+
+**Lean declarations:** `Rudin.Chapter11.exercise02`.
+
+<a id="r11e03"></a>
+### 11.3 — Measurability of the convergence set
+**Lean source:** [Exercise03.lean](../../Math/Rudin/Chapter11/Exercise03.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** For measurable real functions $f_n$ on a measurable space $X$, the set of $x$ for which $f_n(x)$ has a finite real limit is measurable. The same assertion holds for complex functions and finite complex limits.
+
+**Proof.** The standard measurable convergence-set theorem applies to real-valued measurable functions. Its countable Cauchy criterion can be written as
+
+$$
+\bigcap_{j\ge1}\ \bigcup_{N\ge0}\ \bigcap_{m,n\ge N}
+\{x:|f_m(x)-f_n(x)|<1/j\}.
+$$
+
+Each set in this expression is measurable, and completeness of $\mathbb R$ identifies the Cauchy condition with convergence to a real number. This excludes divergence to either infinity.
+
+A complex sequence converges if and only if its real and imaginary parts both converge to finite real limits. Necessity follows from continuity of the coordinate maps. Conversely, limits $a,b$ of the coordinates give the limit $a+ib$ by addition and multiplication by $i$. The complex convergence set is therefore the intersection of the two measurable real convergence sets.
+
+**Lean declarations:** `Rudin.Chapter11.exercise03_real`, `Rudin.Chapter11.exercise03_complex_iff`, `Rudin.Chapter11.exercise03_complex`.
+
+<a id="r11e04"></a>
+### 11.4 — A bounded measurable multiplier
+**Lean source:** [Exercise04.lean](../../Math/Rudin/Chapter11/Exercise04.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $E$ be measurable, $f$ integrable on $E$, and $g$ measurable and bounded on $E$. Then $fg$ is integrable on $E$, for real or complex functions. More generally, the integrability result needs only almost-everywhere strong measurability of $g$ for $\mu|_E$, together with a pointwise bound $\|g(x)\|\le C$ on $E$. Separate results establish ordinary measurability of the product on the subtype $E$ when both factors are measurable there.
+
+**Proof.** Multiplication is continuous over either scalar field, so the product of two measurable functions on $E$ is measurable. For the almost-everywhere formulation, multiply almost-everywhere strongly measurable representatives. On $E$,
+
+$$
+\|f(x)g(x)\|\le C\|f(x)\|.
+$$
+
+The bounded-multiplier integrability theorem, applied to the restricted measure, now gives integrability and almost-everywhere strong measurability of the product. If $E$ is empty, both conclusions hold without a sign condition on the chosen bound.
+
+**Lean declarations:** `Rudin.Chapter11.exercise04`, `Rudin.Chapter11.exercise04_measurable_real`, `Rudin.Chapter11.exercise04_measurable_complex`.
+
+<a id="r11e05"></a>
+### 11.5 — Strict inequality in Fatou's lemma
+**Lean source:** [Exercise05.lean](../../Math/Rudin/Chapter11/Exercise05.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** On $[0,1]$, let $g$ be zero on $[0,1/2]$ and one on $(1/2,1]$. Set $f_{2k}(x)=g(x)$ and $f_{2k+1}(x)=g(1-x)$. Then $0\le f_n\le1$, each $f_n$ is integrable, and
+
+$$
+\liminf_{n\to\infty}f_n(x)=0\quad(x\in[0,1]),
+\qquad \int_{[0,1]}f_n(x)\,dx=\frac12.
+$$
+
+**Proof.** Extend $g$ to the real line as the indicator of $(1/2,1]$. Reflection gives $g(1-x)=\mathbf1_{[0,1/2)}(x)$. Thus both parities take only the values zero and one. If $x\le1/2$, all even terms vanish. If $x>1/2$, all odd terms vanish. There are arbitrarily large indices of either parity, so nonnegativity and these zero subsequences give the stated lower limit. At $x=1/2$ every term is zero; at $0$ and $1$ the values alternate between zero and one. This includes all boundary cases of the closed interval.
+
+Both indicator sets are measurable and have length $1/2$, so their indicators are integrable and have integral $1/2$. Hence the integral of the pointwise lower limit is zero, whereas the lower limit of the integrals is $1/2$.
+
+**Lean declarations:** `Rudin.Chapter11.exercise05_even`, `Rudin.Chapter11.exercise05_odd`, `Rudin.Chapter11.exercise05_reflection`, `Rudin.Chapter11.exercise05_bounds`, `Rudin.Chapter11.exercise05_lower_limit`, `Rudin.Chapter11.exercise05_integrable`, `Rudin.Chapter11.exercise05_integrals`.
+
+<a id="r11e06"></a>
+### 11.6 — Uniform convergence on infinite and finite measure spaces
+**Lean source:** [Exercise06.lean](../../Math/Rudin/Chapter11/Exercise06.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** For $n\ge1$, define $f_n(x)=1/n$ when $|x|\le n$, and $f_n(x)=0$ otherwise. These functions converge uniformly to zero on $\mathbb R$, but every integral equals $2$. There is no integrable function $g$ with $|f_n|\le g$ almost everywhere for every $n\ge1$.
+
+In contrast, let $E$ be a measurable set of finite measure. Suppose $F_n:E\to V$ are almost-everywhere strongly measurable, each is bounded, and $F_n\to f$ uniformly on $E$. For a complete real normed space $V$, this includes real and complex values. Then a single nonnegative constant bounds every $F_n$ and $f$ on $E$. This constant is integrable on $E$, all these functions are integrable there, and
+
+$$
+\lim_{n\to\infty}\int_E F_n\,d\mu=\int_E f\,d\mu.
+$$
+
+**Proof.** The estimate $\|f_n(x)\|\le1/n$ proves uniform convergence. The indicator of $[-n,n]$ times $1/n$ is integrable, and its integral is $(2n)/n=2$ for $n\ge1$. The formal sequence also has an auxiliary index $n=0$; its value is zero, and the integral formula is asserted only for positive indices. If an integrable common majorant existed, dominated convergence applied to $f_{n+1}$ would make its integrals tend to zero. Their constant value $2$ gives a contradiction.
+
+For the finite-measure assertion, write $\|F_n(x)\|\le C_n$. Choose $N$ so that $\|F_n(x)-f(x)\|<1$ on $E$ for $n\ge N$. First $\|f(x)\|\le|C_N|+1$, and then $\|F_n(x)\|\le|C_N|+2$ for all $n\ge N$. The finitely many earlier bounds can be included by taking
+
+$$
+B=\sum_{i=0}^{N}|C_i|+2.
+$$
+
+Thus $B\ge0$ bounds the entire sequence and its limit. This common-bound argument itself needs neither measurability nor finite measure. Finite measure makes the constant function $B$ integrable on $E$. Pointwise convergence on $E$ gives almost-everywhere strong measurability of $f$ from that of the terms. Domination proves integrability of all terms and the limit, and the dominated convergence theorem gives the integral limit. Zero measure and the empty set require no separate exclusion.
+
+**Lean declarations:** `Rudin.Chapter11.exercise06_literal`, `Rudin.Chapter11.exercise06_bound`, `Rudin.Chapter11.exercise06_uniform_limit`, `Rudin.Chapter11.exercise06_integrable`, `Rudin.Chapter11.exercise06_integrals`, `Rudin.Chapter11.exercise06_no_domination`, `Rudin.Chapter11.exercise06_common_bound`, `Rudin.Chapter11.exercise06_finite_measure_domination`, `Rudin.Chapter11.exercise06_finite_measure_convergence`.
+
+<a id="r11e07"></a>
+### 11.7 — A criterion for raw Riemann–Stieltjes integrability
+**Lean source:** [Exercise07.lean](../../Math/Rudin/Chapter11/Exercise07.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $a\le b$, let $f:\mathbb R\to\mathbb R$, and let $\alpha:\mathbb R\to\mathbb R$ be nondecreasing on $[a,b]$. No continuity of $\alpha$ is assumed. For a weak partition $P=(a=x_0\le\cdots\le x_m=b)$, put
+
+$$
+\omega_i(f,P)=\sup_{[x_i,x_{i+1}]}f-\inf_{[x_i,x_{i+1}]}f,
+\qquad
+W_P(y)=\sum_{i=0}^{m-1}\omega_i(f,P)
+\mathbf1_{(\alpha(x_i),\alpha(x_{i+1})]}(y).
+$$
+
+Then $f$ has a Riemann–Stieltjes integral with the actual values of $\alpha$ if and only if $f$ is bounded on $[a,b]$ and there is a sequence of weak partitions $P_n$ such that $W_{P_n}(y)\to0$ for Lebesgue-almost every mass coordinate $y$. This criterion is proved for both the Darboux definition and the equivalent definition that controls every tagged refinement of a partition. No measurability assumption on $f$ is imposed.
+
+The criterion also implies the necessary one-sided conditions: a positive left jump of $\alpha$ at $c\in(a,b]$ requires left continuity of $f$ at $c$, and a positive right jump at $c\in[a,b)$ requires right continuity. At the two endpoints, only the inward condition applies. At an interior point with both jump parts positive, $f$ must be continuous relative to $[a,b]$. One can include these conditions explicitly in the equivalence; they already follow from boundedness and almost-everywhere vanishing of $W_{P_n}$.
+
+**Proof.** If $|f|\le M$ on $[a,b]$, each closed-cell oscillation lies between zero and $2M$. The half-open mass intervals are disjoint apart from empty cells. Thus $W_P$ is integrable and
+
+$$
+0\le W_P\le2M\mathbf1_{(\alpha(a),\alpha(b)]},
+\qquad
+\int_{\mathbb R}W_P(y)\,dy=U(P,f,\alpha)-L(P,f,\alpha).
+$$
+
+The equality follows by integrating each indicator; its length is the raw increment $\alpha(x_{i+1})-\alpha(x_i)$. If an integral exists, choose partitions whose Darboux gaps are less than $1/(n+1)$. The nonnegative functions $W_{P_n}$ tend to zero in $L^1$. The standard subsequence theorem for convergence in measure gives a subsequence tending to zero almost everywhere. Conversely, if such a sequence tends to zero almost everywhere, the displayed integrable bound and dominated convergence make its Darboux gaps tend to zero. Arbitrarily small gaps give existence of the Darboux integral. The proved equivalence of the Darboux and tagged-refinement definitions gives the second formulation.
+
+For the left jump condition, the precise local assumption is that some $d>0$ satisfies $d\le\alpha(c)-\alpha(t)$ for every $t\in[a,c)$. Any partition has a closed cell containing $c$ with left endpoint less than $c$. Its mass is at least $d$, and its oscillation times its mass is at most the full Darboux gap. A gap smaller than $d\varepsilon$ therefore gives oscillation less than $\varepsilon$ on a left neighborhood of $c$, including its value at $c$. This is left continuity. The right-side argument uses a cell whose right endpoint is greater than $c$ and the condition $d\le\alpha(t)-\alpha(c)$ for $t\in(c,b]$. Combining the two sides proves relative continuity when both jumps are positive. For globally nondecreasing $\alpha$, these assumptions follow respectively from $\alpha(c-)<\alpha(c)$ and $\alpha(c)<\alpha(c+)$.
+
+To compare with the source's measure hint, suppose now that $\alpha$ is globally nondecreasing. Its source measure $\mu_\alpha$, formed from the right-limit normalization, has the following interval values for $u<v$:
+
+$$
+\begin{aligned}
+\mu_\alpha((u,v))&=\alpha(v-)-\alpha(u+),\\
+\mu_\alpha((u,v])&=\alpha(v+)-\alpha(u+),\\
+\mu_\alpha([u,v))&=\alpha(v-)-\alpha(u-),\\
+\mu_\alpha([u,v])&=\alpha(v+)-\alpha(u-),\\
+\mu_\alpha(\{c\})&=(\alpha(c)-\alpha(c-))+(\alpha(c+)-\alpha(c)).
+\end{aligned}
+$$
+
+The formal formulas use the nonnegative part when endpoints are not ordered. In particular, the raw mass of a nonempty cell is
+
+$$
+\alpha(v)-\alpha(u)=\mu_\alpha((u,v))
+ +(\alpha(u+)-\alpha(u))+(\alpha(v)-\alpha(v-)).
+$$
+
+The two endpoint terms retain the split of each atom at the actual value of $\alpha$. Dropping them changes the criterion. Repeated nodes give empty mass intervals and contribute nothing. On a singleton interval every $W_P$ is zero and every real $f,\alpha$ has both integrals equal to zero. More generally, if $\alpha(a)=\alpha(b)$, integrability is equivalent to boundedness and the integral is zero; no continuity is needed.
+
+For $\alpha(x)=x$, the criterion is precisely boundedness and continuity almost everywhere on $[a,b]$. To see necessity, discard the countable union of all partition nodes and the null set where $W_{P_n}$ fails to vanish. At a remaining point $x$, choose a partition whose oscillation at $x$ is small. The point is in the interior of one cell, so that small oscillation bounds $|f(z)-f(x)|$ for all sufficiently close $z$. This proves relative continuity almost everywhere. Conversely, on uniform grids the closed-cell oscillations tend to zero at every relative continuity point. Dominated convergence gives small Darboux gaps, and hence integrability. This includes $a=b$.
+
+The file also proves concrete tests of the jump and endpoint conventions. Let $D(x)=\mathbf1_{(0,\infty)}(x)$ and $H(x)=\mathbf1_{[0,\infty)}(x)$. On $[-1,1]$, $D$ is integrable with respect to $H$ with integral zero: on $[-1,0]$ the integrand is zero, and on $[0,1]$ the integrator is constant. Yet $\mu_H(\{0\})=1$ and $D$ is discontinuous at zero. Thus continuity $\mu_\alpha$-almost everywhere is not necessary. In contrast, $D$ is not integrable with respect to $D$ on $[0,1]$ or $[-1,1]$, and $H$ is not integrable with respect to $H$ on $[-1,0]$. The corresponding inward jump conditions would require the false right or left continuity at zero. Moreover $D$ and $H$ give exactly the same source measure, so a change only in the raw value at a jump can change integrability without changing that measure. Even for the constant integrand $1$ on $[-1,0]$, the raw integral with respect to $D$ is zero while its normalized measure integral is one. These are limitations of the naive measure substitution, not limitations of the criterion above.
+
+**Lean declarations:** `Rudin.Chapter11.Exercise07.exercise07`, `Rudin.Chapter11.Exercise07.exercise07_tagged`, `Rudin.Chapter11.Exercise07.exercise07_with_one_sided_conditions`, `Rudin.Chapter11.Exercise07.exercise07_id`, `Rudin.Chapter11.Exercise07.vanishingMassOscillation_of_integral`, `Rudin.Chapter11.Exercise07.integral_of_vanishingMassOscillation`, `Rudin.Chapter11.Exercise07.integral_massOscillation`, `Rudin.Chapter11.Exercise07.cellOscillation_bounds`, `Rudin.Chapter11.Exercise07.massOscillation_bounds`, `Rudin.Chapter11.Exercise07.integrable_massOscillation`, `Rudin.Chapter11.Exercise07.ae_continuous_of_vanishing_id`, `Rudin.Chapter11.Exercise07.left_continuous_of_positive_jump`, `Rudin.Chapter11.Exercise07.right_continuous_of_positive_jump`, `Rudin.Chapter11.Exercise07.continuous_of_two_positive_jumps`, `Rudin.Chapter11.Exercise07.left_continuous_of_leftLim_lt`, `Rudin.Chapter11.Exercise07.right_continuous_of_lt_rightLim`, `Rudin.Chapter11.Exercise07.sourceMeasure_Ioo`, `Rudin.Chapter11.Exercise07.sourceMeasure_Ioc`, `Rudin.Chapter11.Exercise07.sourceMeasure_Ico`, `Rudin.Chapter11.Exercise07.sourceMeasure_Icc`, `Rudin.Chapter11.Exercise07.sourceMeasure_atom`, `Rudin.Chapter11.Exercise07.raw_increment_sourceMeasure`, `Rudin.Chapter11.Exercise07.repeated_node_mass`, `Rudin.Chapter11.Exercise07.massOscillation_self`, `Rudin.Chapter11.Exercise07.exercise07_self`, `Rudin.Chapter11.Exercise07.exercise07_zero_mass`, `Rudin.Chapter11.Exercise07.exercise07_normalization_endpoint`, `Rudin.Chapter11.Exercise07.monotone_immediateStep`, `Rudin.Chapter11.Exercise07.opposite_jump_integrable`, `Rudin.Chapter11.Exercise07.shared_right_endpoint_jump_not_integrable`, `Rudin.Chapter11.Exercise07.shared_left_endpoint_jump_not_integrable`, `Rudin.Chapter11.Exercise07.shared_right_interior_jump_not_integrable`, `Rudin.Chapter11.Exercise07.positive_atom_discontinuous_integrable`, `Rudin.Chapter11.Exercise07.source_ae_continuity_not_necessary`, `Rudin.Chapter11.Exercise07.raw_value_changes_integrability`.
+
+<a id="r11e08"></a>
+### 11.8 — The derivative of a Riemann primitive almost everywhere
+**Lean source:** [Exercise08.lean](../../Math/Rudin/Chapter11/Exercise08.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Suppose $a\le b$ and $f$ has an ordinary Riemann integral on $[a,b]$. For every $x\in[a,b]$ the Riemann integral defining $F(x)=\int_a^x f(t)\,dt$ exists, including at the endpoints. Moreover $F$ has a genuine derivative $F'(x)=f(x)$ for Lebesgue-almost every $x\in[a,b]$. Both the Darboux and tagged-refinement hypotheses are covered.
+
+**Proof.** Split the given Darboux integral at $x$. The ordinary Riemann-to-Lebesgue bridge proves interval integrability and equality of the two integral values on $[a,x]$, without adding a measurability assumption. Thus the displayed Lebesgue primitive is the actual Riemann primitive at each point of the closed interval. Apply the standard almost-everywhere differentiation theorem for the indefinite Lebesgue integral to the interval-integrable function. It gives existence of the derivative and its value $f(x)$ almost everywhere on $[a,b]$, not merely an assigned value for a derivative operator. Endpoints are null and require no imposed derivative convention. For $a=b$ the almost-everywhere assertion is vacuous and the primitive integral is zero. The tagged version follows from its proved equivalence with Darboux integrability.
+
+**Lean declarations:** `Rudin.Chapter11.exercise08_riemann_primitive`, `Rudin.Chapter11.exercise08_almost_everywhere_derivative`, `Rudin.Chapter11.exercise08_tagged_almost_everywhere_derivative`.
+
+<a id="r11e09"></a>
+### 11.9 — Continuity of an indefinite Lebesgue integral
+**Lean source:** [Exercise09.lean](../../Math/Rudin/Chapter11/Exercise09.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** If $a\le b$ and $f$ is Lebesgue integrable on $[a,b]$, then $F(x)=\int_a^x f(t)\,dt$ is continuous on the entire closed interval. This includes both endpoints and holds for functions with values in any complete real normed space, including $\mathbb R$ and $\mathbb C$. Riemann integrability is not assumed.
+
+**Proof.** Apply the standard continuity theorem for an interval-integral primitive to the integrable function on the unordered closed interval, which equals $[a,b]$ because $a\le b$. The theorem follows from dominated convergence for moving interval indicators: as $x$ tends to $x_0$ within $[a,b]$, the indicators converge away from the single point $x_0$, and the norms of the integrands are bounded by the integrable function $\|f\|$. This also proves the one-sided continuity required at each endpoint. On a singleton interval the primitive is zero.
+
+**Lean declarations:** `Rudin.Chapter11.exercise09_continuity`.
+
+<a id="r11e10"></a>
+### 11.10 — The finite-measure inclusion and an infinite-measure counterexample
+**Lean source:** [Exercise10.lean](../../Math/Rudin/Chapter11/Exercise10.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** On a finite measure space, every $L^2$ function is integrable. This includes zero measure and normed-group-valued functions under the usual almost-everywhere strong measurability convention. On $\mathbb R$ with Lebesgue measure,
+
+$$
+f(x)=\frac1{1+|x|}
+$$
+
+is continuous and belongs to $L^2$, but is not integrable. The total measure of this space is infinite.
+
+**Proof.** The standard comparison of $L^p$ exponents on finite measure spaces gives $L^2\subseteq L^1$, and membership in $L^1$ is equivalent to integrability. It does not require positive total measure. For the example, continuity follows from positivity of $1+|x|$. The standard integrability theorem for $(1+\|x\|)^{-r}$ in dimension one, with $r=2>1$, proves integrability of $f^2$ and hence $L^2$ membership.
+
+If $f$ were integrable, then $2f$ would be integrable. For $x>1$,
+
+$$
+\frac1x\le\frac2{1+x}=2f(x).
+$$
+
+Domination would make $x^{-1}$ integrable on $(1,\infty)$. The power-integral criterion says $x^r$ is integrable there only for $r<-1$, contradicting $r=-1$. Thus infinite measure does not permit the unrestricted inclusion.
+
+**Lean declarations:** `Rudin.Chapter11.exercise10_finite_measure_inclusion`, `Rudin.Chapter11.exercise10_continuous`, `Rudin.Chapter11.exercise10_square_integrable`, `Rudin.Chapter11.exercise10_memLp_two`, `Rudin.Chapter11.exercise10_nonintegrable`, `Rudin.Chapter11.exercise10_infinite_measure`.
+
+<a id="r11e11"></a>
+### 11.11 — The complete metric space of integrable function classes
+**Lean source:** [Exercise11.lean](../../Math/Rudin/Chapter11/Exercise11.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Identify integrable functions that agree almost everywhere. On these $L^1(\mu)$ classes,
+
+$$
+d(f,g)=\int_X\|f(x)-g(x)\|\,d\mu
+$$
+
+is a complete metric when the values lie in a complete real normed space, including real and complex scalars. No finiteness assumption on $\mu$ is required. On actual functions the same formula is only a pseudometric, as the chapter's almost-everywhere quotient convention requires.
+
+**Proof.** The difference of two integrable representatives is integrable, and so is its norm. If either representative is replaced by an almost-everywhere equal function, the integrand changes only on a null set, so its integral is unchanged. The $L^1$ distance formula identifies this integral exactly with the norm distance on the library's quotient space at exponent one. Thus nonnegativity, symmetry, and the triangle inequality follow from the norm metric, and distance zero means equality of classes. For raw integrable functions it means exactly equality almost everywhere. Mapping each raw function to its $L^1$ class preserves the displayed distance.
+
+The standard completeness theorem for $L^p$, at $p=1$ and for complete target space, supplies completeness of this metric. Consequently a Cauchy sequence of classes has a class $f\in L^1$ such that
+
+$$
+\int_X\|f_n(x)-f(x)\|\,d\mu\longrightarrow0.
+$$
+
+Finally, on $[0,1]$ with Lebesgue measure take the actual functions $f=\mathbf1_{\{0\}}$ and $g=0$. Both are integrable and agree almost everywhere, but $f(0)=1\ne0=g(0)$. Their distance is zero. This proves the failure of pointwise separation without the quotient; it is not a refutation of the source under its stated convention.
+
+**Lean declarations:** `Rudin.Chapter11.exercise11_distance`, `Rudin.Chapter11.exercise11_norm_difference`, `Rudin.Chapter11.exercise11_distance_integrable`, `Rudin.Chapter11.exercise11_metric_axioms`, `Rudin.Chapter11.exercise11_representative_independence`, `Rudin.Chapter11.exercise11_toL1_distance`, `Rudin.Chapter11.exercise11_zero_iff_ae`, `Rudin.Chapter11.exercise11_complete`, `Rudin.Chapter11.exercise11_cauchy_converges`, `Rudin.Chapter11.exercise11_raw_function_degeneracy`.
+
+<a id="r11e12"></a>
+### 11.12 — Integrating a separately continuous function
+**Lean source:** [Exercise12.lean](../../Math/Rudin/Chapter11/Exercise12.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $f:[0,1]^2\to\mathbb R$ or $\mathbb C$ be separately continuous and satisfy $\|f(x,y)\|\le1$. Then
+
+$$
+g(x)=\int_0^1 f(x,y)\,dy
+$$
+
+is continuous on the closed interval $[0,1]$, including its endpoints. Every section integral exists. The continuity result also holds with values in any complete real normed space. Joint continuity and joint measurability are not assumed. Separate results identify the real and complex section integrals as actual Riemann integrals, not just totalized Lebesgue values.
+
+**Proof.** For each fixed $x$, continuity of $y\mapsto f(x,y)$ on a compact interval proves its interval integrability and supplies its measurability. At a fixed $x_0\in[0,1]$, continuity of $x\mapsto f(x,y)$ for each $y$ gives convergence of the sections as $x\to x_0$ within $[0,1]$. Their norms are bounded by the integrable constant $1$. The parameter form of dominated convergence therefore proves continuity of $g$ relative to $[0,1]$, so the same argument covers one-sided endpoint limits.
+
+For real sections, boundedness and continuity imply the closed-cell Darboux Riemann criterion and equality with the Lebesgue interval integral. For complex sections, apply the real result to real and imaginary parts; each is bounded by the complex norm. The proved equivalence between complex tagged sums and their two real components then gives the complex Riemann integral, with the same value because integration commutes with the two coordinates.
+
+**Lean declarations:** `Rudin.Chapter11.exercise12_section_integrable`, `Rudin.Chapter11.exercise12_continuity`, `Rudin.Chapter11.exercise12_real_riemann`, `Rudin.Chapter11.exercise12_complex_riemann`.
+
+<a id="r11e13"></a>
+### 11.13 — A closed bounded noncompact set in L²
+**Lean source:** [Exercise13.lean](../../Math/Rudin/Chapter11/Exercise13.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** In real $L^2([-\pi,\pi])$ with Lebesgue measure and equality almost everywhere, let $s_n$ be the class of $x\mapsto\sin(nx)$, $n\ge1$. The set $\{s_n:n\ge1\}$ is closed and bounded but not compact. More precisely,
+
+$$
+\|s_n\|^2=\pi,\qquad d(s_n,s_m)=\sqrt{2\pi}\quad(n\ne m).
+$$
+
+The file also proves that the normalized sine classes are orthonormal and that the sine coefficients of every fixed $L^2$ vector tend to zero. In particular, for every Lebesgue-measurable $E\subseteq[-\pi,\pi]$,
+
+$$
+\int_E\sin(nx)\,dx\longrightarrow0\quad(n\to\infty).
+$$
+
+**Proof.** The literal sine functions are measurable and bounded by one on a finite-measure interval, so they define $L^2$ classes. The integral of $\cos(kx)$ on $[-\pi,\pi]$ is zero for every nonzero integer $k$. The identity
+
+$$
+\sin(nx)\sin(mx)=\frac{\cos((n-m)x)-\cos((n+m)x)}2
+$$
+
+therefore gives inner product $\pi$ when $n=m$ and zero otherwise. The diagonal identity gives norm $\sqrt\pi$; expanding the squared norm of a difference gives squared distance $2\pi$ for distinct indices. The classes are represented by the displayed literal functions almost everywhere, so these are their actual $L^2$ distances.
+
+A sequence with pairwise distances at least the positive constant $\sqrt{2\pi}$ is a closed embedding of the discrete index space. Its range is closed, and its constant norm makes it bounded. If the range were compact, this embedding would make the infinite discrete space of natural-number indices compact. A compact discrete space is finite, which is a contradiction.
+
+Dividing the sine classes by $\sqrt\pi$ gives an orthonormal family. Bessel's inequality makes the squared inner products with any fixed vector summable, so the coefficients tend to zero. The indicator of any Lebesgue-measurable subset $E$ belongs to this $L^2$ space. Its inner products with the sine classes are exactly the displayed set integrals, proving their limit. The formal indicator results use null measurability, so they do not restrict $E$ to Borel sets. The formal indices are $n+1$ with $n\in\mathbb N$.
+
+**Lean declarations:** `Rudin.Chapter11.exercise13_closedness`, `Rudin.Chapter11.exercise13_boundedness`, `Rudin.Chapter11.exercise13_noncompactness`, `Rudin.Chapter11.SineL2.memLp_sin`, `Rudin.Chapter11.SineL2.sine_ae`, `Rudin.Chapter11.SineL2.integral_cos_int`, `Rudin.Chapter11.SineL2.integral_sine_mul`, `Rudin.Chapter11.SineL2.inner_sine`, `Rudin.Chapter11.SineL2.norm_sine_sq`, `Rudin.Chapter11.SineL2.norm_sine`, `Rudin.Chapter11.SineL2.dist_sine`, `Rudin.Chapter11.SineL2.closedEmbedding_sine`, `Rudin.Chapter11.SineL2.orthonormal_normalized`, `Rudin.Chapter11.SineL2.tendsto_inner_sine`, `Rudin.Chapter11.SineL2.memLp_indicator`, `Rudin.Chapter11.SineL2.inner_sine_indicator`, `Rudin.Chapter11.SineL2.tendsto_setIntegral_sine`.
+
+<a id="r11e14"></a>
+### 11.14 — Complex measurability and open preimages
+**Lean source:** [Exercise14.lean](../../Math/Rudin/Chapter11/Exercise14.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** For a function $f:X\to\mathbb C$ on a measurable space, measurability of both $\operatorname{Re}f$ and $\operatorname{Im}f$ is equivalent to measurability of $f^{-1}(V)$ for every open $V\subseteq\mathbb C$.
+
+**Proof.** The standard coordinate characterization of the Borel measurable structure on $\mathbb C$ says that measurable real and imaginary parts make $f$ measurable. The preimage of any open set is then measurable, since open sets are Borel. Conversely, the Borel sigma-algebra is generated by open sets. Measurable preimages of all open sets therefore imply measurability of $f$. Composing it with the continuous real and imaginary coordinate maps gives both coordinate measurability assertions. Combining these directions gives the equivalence.
+
+**Lean declarations:** `Rudin.Chapter11.exercise14_open_preimages`, `Rudin.Chapter11.exercise14_coordinate_measurability`, `Rudin.Chapter11.exercise14`.
+
+<a id="r11e15"></a>
+### 11.15 — An additive elementary charge with no countably additive extension
+**Lean source:** [Exercise15.lean](../../Math/Rudin/Chapter11/Exercise15.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** On the ring of elementary subsets of $(0,1]$, the following prescriptions determine a well-defined, finite, nonnegative, finitely additive real set function $\phi$. Each of $[a,b]$, $[a,b)$, $(a,b]$, and $(a,b)$ has value $b-a$ when $0<a\le b\le1$. Both $(0,b)$ and $(0,b]$ have value $1+b$ when $0<b\le1$. Empty intervals and all singletons in $(0,1]$ have value zero. The charge is not regular in the sense of ambient-real closed inner sets and open outer sets. It has no countably additive extension to any sigma-ring containing the elementary ring, even if signed extended-real values are permitted.
+
+**Proof.** An elementary set is a finite union of order-connected subsets of $(0,1]$. Each such subset is one of the four interval types, including empty intervals and singletons. Intersections remain intervals, and the difference of two intervals splits into at most two disjoint intervals. Thus the finite unions form a ring, and every elementary set has a finite disjoint interval decomposition.
+
+Say that $A$ contains the right germ at zero if it contains every sufficiently small positive number. For an interval in $(0,1]$, either it or its complement contains this germ. To prove this, if the interval has points arbitrarily close to zero, fix any one of its positive points and use order-connectedness between that point and smaller points. This gives a whole right neighborhood of zero inside the interval. Otherwise some right neighborhood misses the interval. Finite unions preserve this dichotomy. Hence the literal indicator of every elementary set is eventually constant, with value zero or one, as $x\downarrow0$.
+
+Define canonically on sets
+
+$$
+\phi(A)=m(A)+\mathbf1_{\{A\text{ contains the right germ at }0\}}.
+$$
+
+Every elementary set is measurable and contained in $(0,1]$, so this value is finite. Intervals bounded away from zero have no germ and have their usual length, including the degenerate cases. The two intervals starting at zero contain the germ and have value $1+b$. For disjoint elementary sets, both cannot contain the germ, and their union contains it exactly when one does. Thus the germ term is additive on disjoint pairs, as is length. Induction gives finite additivity for every finite disjoint family. The sum over any disjoint interval decomposition equals this canonical set value, so different decompositions give the same sum. The file proves these statements both for a finite nonnegative extended-value encoding and for the real charge, with a proved comparison between them.
+
+For nonregularity, take $A=(0,1/2)$, whose charge is $3/2$. Every ambient-real closed $F\subseteq(0,1]$ is compact and bounded away from zero: the open complement of $F$ contains a neighborhood of zero. Therefore a closed elementary $F\subseteq A$ has no germ and $\phi(F)=m(F)\le1/2$. The inner regularity inequality with $\varepsilon=1/2$ would give $3/2\le\phi(F)+1/2\le1$, a contradiction. The same witness disproves the weaker variant with relative openness of outer sets at the endpoint $1$; the inner sets must still be closed in $\mathbb R$. Relative closedness of the inner sets would be a different condition.
+
+Finally, the elementary intervals
+
+$$
+D_n=(2^{-(n+1)},2^{-n}],\qquad n\ge0,
+$$
+
+are pairwise disjoint and have union $(0,1]$. Each is bounded away from zero, so its charge equals its length. Consequently
+
+$$
+\sum_{n=0}^{\infty}\phi(D_n)=1,
+\qquad \phi\!\left(\bigcup_{n=0}^{\infty}D_n\right)=\phi((0,1])=2.
+$$
+
+Any countably additive extension agreeing on the elementary sets would contradict these equalities. This argument needs only that the extension's domain contain the elementary ring, not additional topology. For a signed extended-real extension, its ordered partial sums on this same family are finite real sums tending to $1$, while countable additivity would make them tend to the union's value $2$. Uniqueness of limits gives the same contradiction. Thus the obstruction covers the source's signed extension convention as well as nonnegative measures.
+
+**Lean declarations:** `Rudin.Chapter11.ElementaryCharge.elementary_ring`, `Rudin.Chapter11.ElementaryCharge.intervals_semiring`, `Rudin.Chapter11.ElementaryCharge.intervals_eq_fourIntervals`, `Rudin.Chapter11.ElementaryCharge.elementary_eq_fourIntervals`, `Rudin.Chapter11.ElementaryCharge.disjoint_decomposition`, `Rudin.Chapter11.ElementaryCharge.elementary_iff_finite_disjoint`, `Rudin.Chapter11.ElementaryCharge.interval_germ_constant`, `Rudin.Chapter11.ElementaryCharge.germ_union_constant`, `Rudin.Chapter11.ElementaryCharge.germ_constant`, `Rudin.Chapter11.ElementaryCharge.indicator_germ_constant`, `Rudin.Chapter11.ElementaryCharge.eventual_membership`, `Rudin.Chapter11.ElementaryCharge.subset_domain`, `Rudin.Chapter11.ElementaryCharge.measurable`, `Rudin.Chapter11.ElementaryCharge.finite_value`, `Rudin.Chapter11.ElementaryCharge.germ_not_compl`, `Rudin.Chapter11.ElementaryCharge.germ_add`, `Rudin.Chapter11.ElementaryCharge.additive`, `Rudin.Chapter11.ElementaryCharge.φ_empty`, `Rudin.Chapter11.ElementaryCharge.finite_additivity`, `Rudin.Chapter11.ElementaryCharge.well_defined`, `Rudin.Chapter11.ElementaryCharge.not_germ_of_away`, `Rudin.Chapter11.ElementaryCharge.interval_prescriptions`, `Rudin.Chapter11.ElementaryCharge.intervals_elementary`, `Rudin.Chapter11.ElementaryCharge.singleton_value`, `Rudin.Chapter11.ElementaryCharge.zero_interval_prescriptions`, `Rudin.Chapter11.ElementaryCharge.zero_intervals_elementary`, `Rudin.Chapter11.ElementaryCharge.charge_nonneg`, `Rudin.Chapter11.ElementaryCharge.ofReal_charge`, `Rudin.Chapter11.ElementaryCharge.charge_formula`, `Rudin.Chapter11.ElementaryCharge.charge_interval_prescriptions`, `Rudin.Chapter11.ElementaryCharge.charge_zero_interval_prescriptions`, `Rudin.Chapter11.ElementaryCharge.charge_finite_additivity`, `Rudin.Chapter11.ElementaryCharge.charge_well_defined`, `Rudin.Chapter11.ElementaryCharge.charge_empty`, `Rudin.Chapter11.ElementaryCharge.closed_away_zero`, `Rudin.Chapter11.ElementaryCharge.compact_away_zero`, `Rudin.Chapter11.ElementaryCharge.closed_subset_compact`, `Rudin.Chapter11.ElementaryCharge.regular_implies_endpoint_regular`, `Rudin.Chapter11.ElementaryCharge.nonregular_endpoint`, `Rudin.Chapter11.ElementaryCharge.nonregular`, `Rudin.Chapter11.ElementaryCharge.dyadic_elementary`, `Rudin.Chapter11.ElementaryCharge.dyadic_disjoint`, `Rudin.Chapter11.ElementaryCharge.dyadic_union`, `Rudin.Chapter11.ElementaryCharge.dyadic_value`, `Rudin.Chapter11.ElementaryCharge.no_countable_extension`, `Rudin.Chapter11.ElementaryCharge.dyadic_charge_hasSum`, `Rudin.Chapter11.ElementaryCharge.no_extendedReal_countable_extension`.
+
+<a id="r11e16"></a>
+### 11.16 — Sine subsequences converge only on a null set
+**Lean source:** [Exercise16.lean](../../Math/Rudin/Chapter11/Exercise16.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** Let $(n_k)$ be a strictly increasing sequence of positive integers. The exact pointwise convergence set
+
+$$
+E=\{x\in(-\pi,\pi):\sin(n_kx)\text{ converges to a finite real limit}\}
+$$
+
+is measurable and has Lebesgue measure zero. Its measurability holds for every natural-number frequency sequence, without the increasing or positivity assumptions.
+
+**Proof.** Each $x\mapsto\sin(n_kx)$ is continuous and measurable. The measurable convergence-set theorem, intersected with $(-\pi,\pi)$, proves measurability of the exact set $E$; no exceptional points are removed from its definition. It has finite measure.
+
+The cosine classes of positive integer frequencies on $[-\pi,\pi]$ have inner product $\pi$ at equal frequencies and zero otherwise, by the cosine product identity and the zero integrals of nonconstant integer-frequency cosines. Normalizing them gives an orthonormal family. Bessel's inequality makes the coefficients of the $L^2$ indicator of $E$ tend to zero. After identifying the classes with their literal representatives almost everywhere, this says
+
+$$
+\int_E\cos(rx)\,dx\longrightarrow0\quad(r\in\mathbb N,\ r\to\infty).
+$$
+
+Put $a_k=n_{2k+1}$ and $b_k=n_k$. On $E$, convergence of the sine sequence implies
+
+$$
+h_k(x)=(\sin(a_kx)-\sin(b_kx))^2\longrightarrow0.
+$$
+
+Since $0\le h_k\le4$ and $m(E)<\infty$, dominated convergence gives $\int_Eh_k\to0$. On the other hand,
+
+$$
+h_k(x)=1-\frac12\cos(2a_kx)-\frac12\cos(2b_kx)
+-\cos((a_k-b_k)x)+\cos((a_k+b_k)x).
+$$
+
+Strict increase of the natural-number frequencies gives $n_k\ge k$ and $n_{2k+1}-n_k\ge k+1$. Thus all four cosine frequencies in this identity tend to infinity. Their set integrals tend to zero by the preceding Bessel argument, so $\int_Eh_k\to m(E)$. Uniqueness of limits gives $m(E)=0$. Finiteness of $m(E)$ ensures that a zero real-valued measure is indeed zero measure, not the default real value of infinity.
+
+**Lean declarations:** `Rudin.Chapter11.exercise16_measurability`, `Rudin.Chapter11.exercise16_null_convergence_set`, `Rudin.Chapter11.CosineL2.memLp_cos`, `Rudin.Chapter11.CosineL2.cosine_ae`, `Rudin.Chapter11.CosineL2.integral_cosine_mul`, `Rudin.Chapter11.CosineL2.inner_cosine`, `Rudin.Chapter11.CosineL2.orthonormal_normalized`, `Rudin.Chapter11.CosineL2.tendsto_inner_cosine`, `Rudin.Chapter11.CosineL2.inner_cosine_indicator`, `Rudin.Chapter11.CosineL2.tendsto_setIntegral_cosine`.
+
+<a id="r11e17"></a>
+### 11.17 — Only finitely many uniformly positive sine frequencies
+**Lean source:** [Exercise17.lean](../../Math/Rudin/Chapter11/Exercise17.lean).
+**Inventory status:** Verified as stated.
+
+**Statement.** If $E\subseteq(-\pi,\pi)$ is Lebesgue measurable with positive measure and $\delta>0$, then
+
+$$
+\{n\in\mathbb Z:\sin(nx)\ge\delta\text{ for every }x\in E\}
+$$
+
+is finite. The condition is pointwise on all of $E$, includes equality with $\delta$, and allows negative as well as positive integer frequencies. The formal assumption is null measurability, so arbitrary Lebesgue-measurable sets are included.
+
+**Proof.** Since $E$ is contained in a bounded interval, $0<m(E)<\infty$. Apply the sine coefficient limit proved from Bessel's inequality in Exercise 13 to the actual $L^2$ indicator of $E$. With $c=\delta m(E)>0$, choose $N$ such that
+
+$$
+-c<\int_E\sin((k+1)x)\,dx<c\qquad(k\ge N).
+$$
+
+For any real frequency $t$ whose sine is at least $\delta$ on $E$, monotonicity of the integral gives
+
+$$
+c\le\int_E\sin(tx)\,dx.
+$$
+
+All integrals exist because sine is bounded and $E$ has finite measure. For a positive integer $n=k+1$ satisfying the pointwise condition, the upper bound above forces $k<N$. For a negative integer $n=-(k+1)$, oddness of sine makes its integral the negative of the positive-frequency integral; the lower bound above again forces $k<N$. Frequency zero is impossible because its integral is zero while $c>0$. Hence all admissible integers lie in the finite interval $[-N,N]$.
+
+**Lean declarations:** `Rudin.Chapter11.exercise17_finite_frequencies`.
 
 <a id="r11e18"></a>
 ### 11.18 — Schwarz equality and the missing zero case
